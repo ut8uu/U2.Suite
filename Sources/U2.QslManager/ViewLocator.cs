@@ -1,7 +1,6 @@
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
 using System;
-using U2.QslManager.ViewModels;
 
 namespace U2.QslManager
 {

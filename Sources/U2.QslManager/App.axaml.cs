@@ -1,7 +1,6 @@
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
-using U2.QslManager.ViewModels;
 using U2.QslManager.Views;
 
 namespace U2.QslManager

@@ -7,7 +7,7 @@
         x:Class="U2.QslManager.Views.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
         Title="U2.QslManager"
-        xmlns:views="using:U2.QslManager.Views">
+        xmlns:views="using:U2.QslManager">
 
     <Design.DataContext>
         <vm:MainWindowViewModel/>

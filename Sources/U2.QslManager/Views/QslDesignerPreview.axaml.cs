@@ -2,7 +2,7 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 
-namespace U2.QslManager.Views
+namespace U2.QslManager
 {
     public partial class QslDesignerPreview : UserControl
     {
