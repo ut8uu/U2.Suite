@@ -1,0 +1,36 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:U2.Suite.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        x:Class="U2.Suite.Views.MainWindow"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="U2.Suite"
+        Height="200"
+        Width="200"
+        Foreground="{DynamicResource ThemeForegroundBrush}"
+        >
+  <Design.DataContext>
+    <vm:MainWindowViewModel/>
+  </Design.DataContext>
+
+  <Window.Styles>
+    <Styles>
+      <Style Selector="Button">
+        <Setter Property="Height" Value="150"></Setter>
+        <Setter Property="Width" Value="150"></Setter>
+        <Setter Property="VerticalAlignment" Value="Center"></Setter>
+        <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+      </Style>
+    </Styles>
+  </Window.Styles>
+
+  <StackPanel VerticalAlignment="Center"
+              HorizontalAlignment="Center">
+    <Button>
+        <Image Source="../Images/qslmanager.png"></Image>
+    </Button>
+  </StackPanel>
+
+</Window>

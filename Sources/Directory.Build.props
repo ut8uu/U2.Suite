@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project>
+  <PropertyGroup Label="OS Detection">
+    <IsWindows Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Windows)))'=='true'">true</IsWindows>
+    <IsOSX Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::OSX)))'=='true'">true</IsOSX>
+    <IsLinux Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Linux)))'=='true'">true</IsLinux>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <BaseIntermediateOutputPath>..\..\Intermediate\$(MSBuildProjectName)</BaseIntermediateOutputPath>
+    <IntermediateOutputPath>$(BaseIntermediateOutputPath)\$(Configuration)\</IntermediateOutputPath>
+
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <OutputPath>..\..\Binaries\$(Platform)\$(Configuration)\</OutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Label="Versioning">
+    <!-- override Version, VersionPrefix and VersionSuffix which are derived from 1.0.0 in Microsoft.NET.DefaultAssemblyInfo.targets -->
+    <Version>$([System.IO.File]::ReadAllText("$(MSBuildThisFileDirectory)ProductVersion.txt"))</Version>
+    <!-- <version>[-<pre-release>][+<build>] -->
+    <VersionPrefix>$(Version)</VersionPrefix>
+    <VersionPrefix Condition="$(VersionPrefix.Contains('-'))">$(VersionPrefix.Substring(0, $(VersionPrefix.IndexOf('-'))))</VersionPrefix>
+    <VersionPrefix Condition="$(VersionPrefix.Contains('+'))">$(VersionPrefix.Substring(0, $(VersionPrefix.IndexOf('+'))))</VersionPrefix>
+    <VersionBuildMetadata></VersionBuildMetadata>
+    <VersionBuildMetadata Condition="$(Version.Contains('+'))">$(Version.Substring($([MSBuild]::Add($(Version.IndexOf('+')), 1))))</VersionBuildMetadata>
+    <VersionSuffix></VersionSuffix>
+    <VersionSuffix Condition="$(Version.Contains('-'))">$(Version.Substring($([MSBuild]::Add($(Version.IndexOf('-')), 1))))</VersionSuffix>
+    <VersionSuffix Condition="$(VersionSuffix.Contains('+'))">$(VersionSuffix.Substring(0, $(VersionSuffix.IndexOf('+'))))</VersionSuffix>
+    <VersionSuffixWithHyphen></VersionSuffixWithHyphen>
+    <VersionSuffixWithHyphen Condition="'$(VersionSuffix)'!=''">-$(VersionSuffix)</VersionSuffixWithHyphen>
+    <FileVersion>$(VersionPrefix)</FileVersion>
+  </PropertyGroup>
+
+  <ItemGroup Label="Suppressed Warnings">
+    <!-- Missing XML comment for publicly visible type or member 'Type_or_Member' -->
+    <SuppressedWarnings Include="1591"/>
+    <!-- Assuming assembly reference "Assembly Name #1" matches "Assembly Name #2", you may need to supply runtime policy -->
+    <SuppressedWarnings Include="1701"/>
+    <!-- Assuming assembly reference "Assembly Name #1" matches "Assembly Name #2", you may need to supply runtime policy -->
+    <SuppressedWarnings Include="1702"/>
+  </ItemGroup>
+
+  <PropertyGroup Label="Suppressed Warnings">
+    <NoWarn>@(SuppressedWarnings);$(NoWarn)</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup Label="Warnings as Errors">
+    <!-- The event 'event' is never used -->
+    <WarningsAsErrors Include="67"/>
+    <!-- 'member1' hides inherited member 'member2'. Use the new keyword if hiding was intended -->
+    <WarningsAsErrors Include="108"/>
+    <!-- Unreachable code detected -->
+    <WarningsAsErrors Include="162"/>
+    <!-- The variable 'variable' is declared but never used -->
+    <WarningsAsErrors Include="168"/>
+    <!-- The field 'field' is never used -->
+    <WarningsAsErrors Include="169"/>
+    <!-- The variable 'variable' is assigned but its value is never used -->
+    <WarningsAsErrors Include="219"/>
+    <!-- The field 'field' is assigned but its value is never used -->
+    <WarningsAsErrors Include="414"/>
+    <!-- Ambiguous reference in cref attribute: 'Method Name1'. Assuming 'Method Name2', but could have also matched other overloads including 'Method Name3'. -->
+    <WarningsAsErrors Include="419"/>
+    <!-- Unreachable expression code detected -->
+    <WarningsAsErrors Include="429"/>
+    <!-- Field 'field' is never assigned to, and will always have its default value 'value' -->
+    <WarningsAsErrors Include="649"/>
+    <!-- XML comment on 'construct' has badly formed XML — 'reason' -->
+    <WarningsAsErrors Include="1570"/>
+    <!-- XML comment on 'construct' has a param tag for 'parameter', but there is no parameter by that name -->
+    <WarningsAsErrors Include="1572"/>
+    <!-- Parameter 'parameter' has no matching param tag in the XML comment for 'parameter' (but other parameters do) -->
+    <WarningsAsErrors Include="1573"/>
+    <!-- XML comment on 'construct' has syntactically incorrect cref attribute 'name' -->
+    <WarningsAsErrors Include="1574"/>
+    <!-- Invalid type for parameter 'parameter number' in XML comment cref attribute -->
+    <WarningsAsErrors Include="1580"/>
+    <!-- Invalid return type in XML comment cref attribute -->
+    <WarningsAsErrors Include="1581"/>
+    <!-- XML comment on 'member' has syntactically incorrect cref attribute 'invalid_syntax' -->
+    <WarningsAsErrors Include="1584"/>
+    <!-- XML comment is not placed on a valid language element -->
+    <WarningsAsErrors Include="1587"/>
+  </ItemGroup>
+
+  <PropertyGroup Label="Warnings as Errors">
+    <WarningsAsErrors>@(WarningsAsErrors);$(WarningsAsErrors)</WarningsAsErrors>
+  </PropertyGroup>
+
+</Project>
