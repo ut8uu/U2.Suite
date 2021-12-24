@@ -6,7 +6,8 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="U2.QslManager.Views.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
-        Title="U2.QslManager">
+        Title="U2.QslManager"
+        xmlns:views="using:U2.QslManager.Views">
 
     <Design.DataContext>
         <vm:MainWindowViewModel/>
@@ -16,6 +17,7 @@
       <TabControl>
           <TabItem Header="{Binding TabDesignerTitle}" 
                    VerticalContentAlignment="Center">
+            <views:QslDesigner></views:QslDesigner>
           </TabItem>
       </TabControl>
     </StackPanel>

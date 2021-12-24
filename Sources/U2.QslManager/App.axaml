@@ -7,9 +7,11 @@
     </Application.DataTemplates>
 
     <Application.Styles>
-        <FluentTheme Mode="Light"/>
+        <FluentTheme Mode="Dark"/>
         <StyleInclude Source="avares://Avalonia.Themes.Default/DefaultTheme.xaml"/>
-        <StyleInclude Source="avares://Avalonia.Themes.Default/Accents/BaseLight.xaml"/>
-        <StyleInclude Source="avares://U2.Resources/Styles/DarkTheme.axaml"></StyleInclude>
+        <StyleInclude Source="avares://Avalonia.Themes.Default/Accents/BaseDark.xaml"/>
+      <StyleInclude Source="avares://U2.Resources/Styles/Controls/PanelStyles.axaml"></StyleInclude>
+      <StyleInclude Source="avares://U2.Resources/Styles/Controls/TextStyles.axaml"></StyleInclude>
+
     </Application.Styles>
 </Application>

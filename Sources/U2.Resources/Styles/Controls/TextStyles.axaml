@@ -1,0 +1,20 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Design.PreviewWith>
+        <Border Padding="20">
+            <!-- Add Controls for Previewer Here -->
+          <StackPanel>
+            <TextBlock Classes="font20">123</TextBlock>
+            <TextBlock Classes="font30">123</TextBlock>
+          </StackPanel>
+        </Border>
+    </Design.PreviewWith>
+
+    <!-- Add Styles Here -->
+  <Style Selector="TextBlock.font20">
+    <Setter Property="FontSize" Value="20"></Setter>
+  </Style>
+  <Style Selector="TextBlock.font30">
+    <Setter Property="FontSize" Value="30"></Setter>
+  </Style>
+</Styles>
