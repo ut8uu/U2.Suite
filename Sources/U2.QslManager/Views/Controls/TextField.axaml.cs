@@ -13,6 +13,7 @@ namespace U2.QslManager
             DataContext = new TextFieldViewModel
             {
                 Name = "callsign",
+                Title = "Callsign",
                 Text = "UT8UU"
             };
         }

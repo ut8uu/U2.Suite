@@ -1,0 +1,20 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.Text;
+
+namespace U2.QslManager
+{
+    public class QslCardFieldsModel
+    {
+        public string? Callsign { get; set; }
+        public string? CqZone { get; set; }
+        public string? ItuZone { get; set; }
+        public string? Grid { get; set; }
+        public string? Qth { get; set; }
+        public string? OperatorName { get; set; }
+        public string? Text1 { get; set; }
+        public string? Text2 { get; set; }
+    }
+}

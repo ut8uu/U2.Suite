@@ -4,10 +4,11 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="50"
              x:Class="U2.QslManager.TextField"
-             Height="50"
+             Height="25"
              >
-  <StackPanel Orientation="Horizontal">
-    <TextBlock Text=""></TextBlock>
-    <Button Content="..."></Button>
-  </StackPanel>
+  <Grid ColumnDefinitions="100,100,*">
+    <TextBlock Grid.Column="0" Grid.Row="0" Classes="font20 bold" Text="{Binding Title}" Padding="10 2"></TextBlock>
+    <TextBlock Grid.Column="1" Grid.Row="0" Classes="font20" Text="{Binding Text}" Padding="10 2"></TextBlock>
+    <Button Grid.Column="2" Grid.Row="0" Content="..." ToolTip.Tip="Edit this field."></Button>
+  </Grid>
 </UserControl>

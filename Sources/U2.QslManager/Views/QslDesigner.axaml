@@ -6,7 +6,7 @@
              x:Class="U2.QslManager.QslDesigner"
              xmlns:views="using:U2.QslManager">
   <StackPanel>
-    <Grid ColumnDefinitions="*,Auto">
+    <Grid ColumnDefinitions="350,Auto">
       <views:QslDesignerControls Grid.Column="0" Grid.Row="0"></views:QslDesignerControls>
       <views:QslDesignerPreview Grid.Column="1" Grid.Row="0"></views:QslDesignerPreview>
     </Grid>

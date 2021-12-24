@@ -10,6 +10,7 @@ namespace U2.QslManager
     {
         private string? _name;
         private string? _text;
+        private string? _title;
         private string? _fontFamily;
         private string? _fontColor;
         private int _fontSize;
@@ -28,6 +29,19 @@ namespace U2.QslManager
             set
             {
                 _name = value;
+                OnPropertyChanged();
+            }
+        }
+
+        /// <summary>
+        /// A text to be displayed
+        /// </summary>
+        public string? Title
+        {
+            get => _title;
+            set
+            {
+                _title = value;
                 OnPropertyChanged();
             }
         }
