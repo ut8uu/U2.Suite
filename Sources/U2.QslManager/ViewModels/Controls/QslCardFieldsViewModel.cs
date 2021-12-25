@@ -22,6 +22,7 @@ namespace U2.QslManager
         public QslCardFieldsViewModel(QslCardFieldsModel qslCardFields)
         {
             ClearFieldsCommand = ReactiveCommand.Create(ClearFields);
+            PreviewCardCommand = ReactiveCommand.Create(PreviewCard);
 
             QslCardFields = qslCardFields;
             Callsign = qslCardFields.Callsign;
@@ -122,6 +123,7 @@ namespace U2.QslManager
 
         public QslCardFieldsModel QslCardFields { get; }
         public ReactiveCommand<Unit, Unit> ClearFieldsCommand { get; }
+        public ReactiveCommand<Unit, Unit> PreviewCardCommand { get; }
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -133,6 +135,11 @@ namespace U2.QslManager
         private void ClearFields()
         {
             Clear();
+        }
+
+        private void PreviewCard()
+        {
+
         }
     }
 }
