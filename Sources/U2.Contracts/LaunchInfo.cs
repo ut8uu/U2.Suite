@@ -8,5 +8,6 @@ namespace U2.Contracts
     {
         public string WindowsApplicationPath { get; set; }
         public string OsxApplicationPath { get; set; }
+        public string LinuxApplicationPath { get; set; }
     }
 }

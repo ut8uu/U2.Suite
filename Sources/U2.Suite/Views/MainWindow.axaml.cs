@@ -2,7 +2,7 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 
-namespace U2.Suite.Views
+namespace U2.Suite
 {
     public partial class MainWindow : Window
     {
@@ -12,6 +12,8 @@ namespace U2.Suite.Views
 #if DEBUG
             this.AttachDevTools();
 #endif
+
+            DataContext = new MainWindowViewModel();
         }
 
         private void InitializeComponent()

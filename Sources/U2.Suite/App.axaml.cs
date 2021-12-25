@@ -1,8 +1,6 @@
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
-using U2.Suite.ViewModels;
-using U2.Suite.Views;
 
 namespace U2.Suite
 {

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Text;
 using U2.Contracts;
 
@@ -21,14 +22,14 @@ namespace U2.Core
                 case PlatformID.Win32Windows:
                     throw new NotImplementedException("This OS is not supported.");
                 case PlatformID.Win32NT:
-                    Process.Start(launchInfo.WindowsApplicationPath);
+                    Launch(FileSystemHelper.GetFullPath(launchInfo.WindowsApplicationPath));
                     break;
                 case PlatformID.WinCE:
                     // not used anymore
                     throw new NotImplementedException("This OS is not supported.");
                 case PlatformID.Unix:
                     // MacOS falls here
-                    Process.Start(launchInfo.OsxApplicationPath);
+                    Launch(FileSystemHelper.GetFullPath(launchInfo.OsxApplicationPath));
                     break;
                 case PlatformID.Xbox:
                     // not used anymore
@@ -36,6 +37,17 @@ namespace U2.Core
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+        }
+
+        private static void Launch(string path)
+        {
+            Debug.Assert(File.Exists(path));
+            var startInfo = new ProcessStartInfo(path)
+            {
+                UseShellExecute = true,
+                WorkingDirectory = Path.GetDirectoryName(typeof(Launcher).Assembly.Location)
+            };
+            Process.Start(startInfo);
         }
     }
 }

@@ -1,7 +1,6 @@
 using System;
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
-using U2.Suite.ViewModels;
 
 namespace U2.Suite
 {
