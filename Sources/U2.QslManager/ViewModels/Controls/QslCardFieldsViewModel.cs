@@ -1,6 +1,8 @@
-﻿using System;
+﻿using ReactiveUI;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Reactive;
 using System.Runtime.CompilerServices;
 using System.Text;
 
@@ -19,6 +21,8 @@ namespace U2.QslManager
 
         public QslCardFieldsViewModel(QslCardFieldsModel qslCardFields)
         {
+            ClearFieldsCommand = ReactiveCommand.Create(ClearFields);
+
             QslCardFields = qslCardFields;
             Callsign = qslCardFields.Callsign;
             CqZone = qslCardFields.CqZone;
@@ -39,6 +43,19 @@ namespace U2.QslManager
                 OnPropertyChanged();
             }
         }
+
+        internal void Clear()
+        {
+            Callsign = string.Empty;
+            OperatorName = string.Empty;
+            CqZone = string.Empty;
+            ItuZone = string.Empty;
+            Grid = string.Empty;
+            Qth = string.Empty;
+            Text1 = string.Empty;
+            Text2 = string.Empty;
+        }
+
         public string? CqZone
         {
             get => _cqZone;
@@ -104,12 +121,18 @@ namespace U2.QslManager
         }
 
         public QslCardFieldsModel QslCardFields { get; }
+        public ReactiveCommand<Unit, Unit> ClearFieldsCommand { get; }
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
         protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        private void ClearFields()
+        {
+            Clear();
         }
     }
 }

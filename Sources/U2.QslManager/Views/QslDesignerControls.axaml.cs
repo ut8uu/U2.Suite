@@ -1,12 +1,15 @@
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
+using ReactiveUI;
+using System.Reactive;
 
 namespace U2.QslManager
 {
     public partial class QslDesignerControls : UserControl
     {
         private readonly QslCardFieldsModel _qslCardFields;
+        private readonly QslCardFieldsViewModel _viewModel;
 
         public QslDesignerControls()
         {
@@ -23,7 +26,8 @@ namespace U2.QslManager
                 Text1 = string.Empty,
                 Text2 = string.Empty
             };
-            DataContext = new QslCardFieldsViewModel(qslCardFields);
+            _viewModel = new QslCardFieldsViewModel(qslCardFields);
+            DataContext = _viewModel;
             this._qslCardFields = qslCardFields;
         }
 
