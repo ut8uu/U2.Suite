@@ -1,0 +1,235 @@
+{
+  "design_name": "Demo Design",
+  "card_size_mm": {
+    "is_empty": false,
+    "width": 150,
+    "height": 100
+  },
+  "density_dpi": 300,
+  "elements": [
+    {
+      "element_type": 0,
+      "element_name": "Callsign",
+      "start_position_mm": {
+        "has_value": true,
+        "value": {
+          "is_empty": false,
+          "x": 10,
+          "y": 80
+        }
+      },
+      "end_position_mm": {
+        "has_value": true,
+        "value": {
+          "is_empty": true,
+          "x": 0,
+          "y": 0
+        }
+      },
+      "transformation_angle": 0,
+      "font": {
+        "name": "Arial",
+        "size": 32,
+        "color": "White",
+        "bold": true,
+        "italic": false
+      }
+    },
+    {
+      "element_type": 0,
+      "element_name": "OperatorName",
+      "start_position_mm": {
+        "has_value": true,
+        "value": {
+          "is_empty": false,
+          "x": 20,
+          "y": 70
+        }
+      },
+      "end_position_mm": {
+        "has_value": true,
+        "value": {
+          "is_empty": true,
+          "x": 0,
+          "y": 0
+        }
+      },
+      "transformation_angle": 0,
+      "font": {
+        "name": "Arial",
+        "size": 16,
+        "color": "White",
+        "bold": true,
+        "italic": false
+      }
+    },
+    {
+      "element_type": 0,
+      "element_name": "CqZone",
+      "start_position_mm": {
+        "has_value": true,
+        "value": {
+          "is_empty": false,
+          "x": 20,
+          "y": 65
+        }
+      },
+      "end_position_mm": {
+        "has_value": true,
+        "value": {
+          "is_empty": true,
+          "x": 0,
+          "y": 0
+        }
+      },
+      "transformation_angle": 0,
+      "font": {
+        "name": "Arial",
+        "size": 12,
+        "color": "White",
+        "bold": true,
+        "italic": false
+      }
+    },
+    {
+      "element_type": 0,
+      "element_name": "ItuZone",
+      "start_position_mm": {
+        "has_value": true,
+        "value": {
+          "is_empty": false,
+          "x": 30,
+          "y": 65
+        }
+      },
+      "end_position_mm": {
+        "has_value": true,
+        "value": {
+          "is_empty": true,
+          "x": 0,
+          "y": 0
+        }
+      },
+      "transformation_angle": 0,
+      "font": {
+        "name": "Arial",
+        "size": 12,
+        "color": "White",
+        "bold": true,
+        "italic": false
+      }
+    },
+    {
+      "element_type": 0,
+      "element_name": "Grid",
+      "start_position_mm": {
+        "has_value": true,
+        "value": {
+          "is_empty": false,
+          "x": 60,
+          "y": 65
+        }
+      },
+      "end_position_mm": {
+        "has_value": true,
+        "value": {
+          "is_empty": true,
+          "x": 0,
+          "y": 0
+        }
+      },
+      "transformation_angle": 0,
+      "font": {
+        "name": "Arial",
+        "size": 12,
+        "color": "White",
+        "bold": true,
+        "italic": false
+      }
+    },
+    {
+      "element_type": 0,
+      "element_name": "Qth",
+      "start_position_mm": {
+        "has_value": true,
+        "value": {
+          "is_empty": false,
+          "x": 90,
+          "y": 65
+        }
+      },
+      "end_position_mm": {
+        "has_value": true,
+        "value": {
+          "is_empty": true,
+          "x": 0,
+          "y": 0
+        }
+      },
+      "transformation_angle": 0,
+      "font": {
+        "name": "Arial",
+        "size": 12,
+        "color": "White",
+        "bold": true,
+        "italic": false
+      }
+    },
+    {
+      "element_type": 0,
+      "element_name": "Text1",
+      "start_position_mm": {
+        "has_value": true,
+        "value": {
+          "is_empty": false,
+          "x": 20,
+          "y": 15
+        }
+      },
+      "end_position_mm": {
+        "has_value": true,
+        "value": {
+          "is_empty": true,
+          "x": 0,
+          "y": 0
+        }
+      },
+      "transformation_angle": 0,
+      "font": {
+        "name": "Arial",
+        "size": 12,
+        "color": "White",
+        "bold": true,
+        "italic": false
+      }
+    },
+    {
+      "element_type": 0,
+      "element_name": "Text2",
+      "start_position_mm": {
+        "has_value": true,
+        "value": {
+          "is_empty": false,
+          "x": 20,
+          "y": 5
+        }
+      },
+      "end_position_mm": {
+        "has_value": true,
+        "value": {
+          "is_empty": true,
+          "x": 0,
+          "y": 0
+        }
+      },
+      "transformation_angle": 0,
+      "font": {
+        "name": "Arial",
+        "size": 12,
+        "color": "White",
+        "bold": true,
+        "italic": false
+      }
+    }
+  ]
+}

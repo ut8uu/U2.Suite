@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Reactive;
 using System.Runtime.CompilerServices;
 using System.Text;
+using U2.Core;
 
 namespace U2.QslManager
 {
