@@ -51,6 +51,8 @@ namespace U2.QslManager
 
     public sealed class Position
     {
+        public Position() { }
+
         public Position(int x, int y)
         {
             X = x;

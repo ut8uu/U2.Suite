@@ -1,7 +1,10 @@
-﻿using JorgeSerrano.Json;
+﻿using Avalonia.Controls;
+using JorgeSerrano.Json;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Text;
 using System.Text.Json;
 using static System.Windows.Forms.AxHost;
@@ -90,7 +93,7 @@ namespace U2.QslManager
             return JsonSerializer.Serialize(template, GetJsonSerializerOptions());
         }
 
-        public static bool TryParseDesignTemplate(string json, out QslCardDesign? qslCardDesign)
+        public static bool TryParseDesignTemplateFromString(string json, out QslCardDesign? qslCardDesign)
         {
             qslCardDesign = null;
             try
@@ -98,10 +101,47 @@ namespace U2.QslManager
                 qslCardDesign = JsonSerializer.Deserialize<QslCardDesign>(json, GetJsonSerializerOptions());
                 return true;
             }
+            catch (Exception ex)
+            {
+                if (ex != null)
+                {
+
+                }
+                return false;
+            }
+        }
+
+        public static bool TryParseDesignTemplateFromFile(string pathToTemplate, out QslCardDesign? qslCardDesign)
+        {
+            qslCardDesign = null;
+            try
+            {
+                var content = File.ReadAllText(pathToTemplate);
+                return TryParseDesignTemplateFromString(content, out qslCardDesign);
+            }
             catch
             {
                 return false;
             }
+        }
+
+        public static List<QslCardDesign> GetDesigns()
+        {
+            var designs = new List<QslCardDesign>();
+
+            var assemblyDirectory = Path.GetDirectoryName(typeof(Utilities).Assembly.Location);
+            var designsDirectory = Path.Combine(assemblyDirectory, "Designs");
+            var files = Directory.GetFiles(designsDirectory, "*.json");
+            foreach (var file in files)
+            {
+                if (TryParseDesignTemplateFromFile(file, out var cardDesign))
+{
+                    Debug.Assert(cardDesign != null);
+                    designs.Add(cardDesign);
+                }
+            }
+
+            return designs;
         }
     }
 }

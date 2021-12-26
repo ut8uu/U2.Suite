@@ -19,13 +19,17 @@ namespace U2.QslManager
         private string? _operatorName;
         private string? _text1;
         private string? _text2;
+        private List<QslCardDesign>? _designs;
 
-        public QslCardFieldsViewModel(QslCardFieldsModel qslCardFields)
+        public QslCardFieldsViewModel(QslCardFieldsModel qslCardFields,
+            List<QslCardDesign> designs)
         {
             ClearFieldsCommand = ReactiveCommand.Create(ClearFields);
             PreviewCardCommand = ReactiveCommand.Create(PreviewCard);
 
             QslCardFields = qslCardFields;
+            Designs = designs;
+
             Callsign = qslCardFields.Callsign;
             CqZone = qslCardFields.CqZone;
             ItuZone = qslCardFields.ItuZone;
@@ -123,6 +127,14 @@ namespace U2.QslManager
         }
 
         public QslCardFieldsModel QslCardFields { get; }
+        public List<QslCardDesign>? Designs { 
+            get => _designs;
+            set
+            {
+                _designs = value;
+                OnPropertyChanged();
+            }
+        }
         public ReactiveCommand<Unit, Unit> ClearFieldsCommand { get; }
         public ReactiveCommand<Unit, Unit> PreviewCardCommand { get; }
 

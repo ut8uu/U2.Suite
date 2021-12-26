@@ -26,7 +26,7 @@ namespace U2.QslManager
                 Text1 = string.Empty,
                 Text2 = string.Empty
             };
-            _viewModel = new QslCardFieldsViewModel(qslCardFields);
+            _viewModel = new QslCardFieldsViewModel(qslCardFields, Utilities.GetDesigns());
             DataContext = _viewModel;
             this._qslCardFields = qslCardFields;
         }

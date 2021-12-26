@@ -9,7 +9,7 @@ namespace U2.QslManager
     {
         public string? DesignName { get; set; }
 
-        public Dimensions CardSizeMM { get; set; }
+        public Dimensions? CardSizeMM { get; set; }
         public int DensityDpi { get; set; }
 
         public QslCardElement[]? Elements { get; set; }
@@ -17,6 +17,11 @@ namespace U2.QslManager
 
     public sealed class Dimensions
     {
+        public Dimensions()
+        {
+
+        }
+
         public int Height { get; set; }
         public int Width { get; set; }
 
