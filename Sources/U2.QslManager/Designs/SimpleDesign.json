@@ -1,30 +1,22 @@
 {
   "design_name": "Demo Design",
   "card_size_mm": {
-    "is_empty": false,
-    "width": 150,
-    "height": 100
+    "height": 150,
+    "width": 100
   },
   "density_dpi": 300,
   "elements": [
     {
+      "order": 0,
       "element_type": 0,
       "element_name": "Callsign",
       "start_position_mm": {
-        "has_value": true,
-        "value": {
-          "is_empty": false,
-          "x": 10,
-          "y": 80
-        }
+        "x": 10,
+        "y": 80
       },
       "end_position_mm": {
-        "has_value": true,
-        "value": {
-          "is_empty": true,
-          "x": 0,
-          "y": 0
-        }
+        "x": 0,
+        "y": 0
       },
       "transformation_angle": 0,
       "font": {
@@ -36,23 +28,16 @@
       }
     },
     {
+      "order": 0,
       "element_type": 0,
       "element_name": "OperatorName",
       "start_position_mm": {
-        "has_value": true,
-        "value": {
-          "is_empty": false,
-          "x": 20,
-          "y": 70
-        }
+        "x": 20,
+        "y": 70
       },
       "end_position_mm": {
-        "has_value": true,
-        "value": {
-          "is_empty": true,
-          "x": 0,
-          "y": 0
-        }
+        "x": 0,
+        "y": 0
       },
       "transformation_angle": 0,
       "font": {
@@ -64,23 +49,16 @@
       }
     },
     {
+      "order": 0,
       "element_type": 0,
       "element_name": "CqZone",
       "start_position_mm": {
-        "has_value": true,
-        "value": {
-          "is_empty": false,
-          "x": 20,
-          "y": 65
-        }
+        "x": 20,
+        "y": 65
       },
       "end_position_mm": {
-        "has_value": true,
-        "value": {
-          "is_empty": true,
-          "x": 0,
-          "y": 0
-        }
+        "x": 0,
+        "y": 0
       },
       "transformation_angle": 0,
       "font": {
@@ -92,23 +70,16 @@
       }
     },
     {
+      "order": 0,
       "element_type": 0,
       "element_name": "ItuZone",
       "start_position_mm": {
-        "has_value": true,
-        "value": {
-          "is_empty": false,
-          "x": 30,
-          "y": 65
-        }
+        "x": 30,
+        "y": 65
       },
       "end_position_mm": {
-        "has_value": true,
-        "value": {
-          "is_empty": true,
-          "x": 0,
-          "y": 0
-        }
+        "x": 0,
+        "y": 0
       },
       "transformation_angle": 0,
       "font": {
@@ -120,23 +91,16 @@
       }
     },
     {
+      "order": 0,
       "element_type": 0,
       "element_name": "Grid",
       "start_position_mm": {
-        "has_value": true,
-        "value": {
-          "is_empty": false,
-          "x": 60,
-          "y": 65
-        }
+        "x": 60,
+        "y": 65
       },
       "end_position_mm": {
-        "has_value": true,
-        "value": {
-          "is_empty": true,
-          "x": 0,
-          "y": 0
-        }
+        "x": 0,
+        "y": 0
       },
       "transformation_angle": 0,
       "font": {
@@ -148,23 +112,16 @@
       }
     },
     {
+      "order": 0,
       "element_type": 0,
       "element_name": "Qth",
       "start_position_mm": {
-        "has_value": true,
-        "value": {
-          "is_empty": false,
-          "x": 90,
-          "y": 65
-        }
+        "x": 90,
+        "y": 65
       },
       "end_position_mm": {
-        "has_value": true,
-        "value": {
-          "is_empty": true,
-          "x": 0,
-          "y": 0
-        }
+        "x": 0,
+        "y": 0
       },
       "transformation_angle": 0,
       "font": {
@@ -176,23 +133,16 @@
       }
     },
     {
+      "order": 0,
       "element_type": 0,
       "element_name": "Text1",
       "start_position_mm": {
-        "has_value": true,
-        "value": {
-          "is_empty": false,
-          "x": 20,
-          "y": 15
-        }
+        "x": 20,
+        "y": 15
       },
       "end_position_mm": {
-        "has_value": true,
-        "value": {
-          "is_empty": true,
-          "x": 0,
-          "y": 0
-        }
+        "x": 0,
+        "y": 0
       },
       "transformation_angle": 0,
       "font": {
@@ -204,23 +154,16 @@
       }
     },
     {
+      "order": 0,
       "element_type": 0,
       "element_name": "Text2",
       "start_position_mm": {
-        "has_value": true,
-        "value": {
-          "is_empty": false,
-          "x": 20,
-          "y": 5
-        }
+        "x": 20,
+        "y": 5
       },
       "end_position_mm": {
-        "has_value": true,
-        "value": {
-          "is_empty": true,
-          "x": 0,
-          "y": 0
-        }
+        "x": 0,
+        "y": 0
       },
       "transformation_angle": 0,
       "font": {
@@ -230,6 +173,34 @@
         "bold": true,
         "italic": false
       }
+    },
+    {
+      "order": 0,
+      "element_type": 0,
+      "element_name": "BackgroundImage",
+      "start_position_mm": {
+        "x": 0,
+        "y": 0
+      },
+      "end_position_mm": {
+        "x": 150,
+        "y": 100
+      },
+      "transformation_angle": 0
+    },
+    {
+      "order": 10,
+      "element_type": 0,
+      "element_name": "Image1",
+      "start_position_mm": {
+        "x": 100,
+        "y": 20
+      },
+      "end_position_mm": {
+        "x": 140,
+        "y": 80
+      },
+      "transformation_angle": 0
     }
   ]
 }
