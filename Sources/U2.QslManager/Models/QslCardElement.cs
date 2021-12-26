@@ -14,9 +14,15 @@ namespace U2.QslManager
     public class QslCardElement
     {
         /// <summary>
+        /// An order of the element during the processing.
+        /// Can be either positive or negative.
+        /// By default is 0.
+        /// </summary>
+        public int Order { get; set; } = 0;
+        /// <summary>
         /// A type of the element.
         /// </summary>
-        public QslCardElementType ElementType { get; set; }
+        public QslCardElementType ElementType { get; set; } = QslCardElementType.Text;
         /// <summary>
         /// A name of the element
         /// </summary>
@@ -25,13 +31,13 @@ namespace U2.QslManager
         /// Coordinates of the lower bottom corner of the element boundary.
         /// Values are in millimeters.
         /// </summary>
-        public Point StartPositionMM { get; set; }
+        public Position? StartPositionMM { get; set; }
         /// <summary>
         /// Coordinates of the upper-right corner of the element's boundaries.
         /// Values are in millimeters.
         /// Used for images. 
         /// </summary>
-        public Point EndPositionMM { get; set; }
+        public Position? EndPositionMM { get; set; }
         /// <summary>
         /// A non-negative value indicating the angle of the text transformation.
         /// The value is related to the left-to-right way of the text representation.
@@ -41,6 +47,18 @@ namespace U2.QslManager
         /// Information about the used font (size, color, etc.)
         /// </summary>
         public QslCardElementFont? Font { get; set; }
+    }
+
+    public sealed class Position
+    {
+        public Position(int x, int y)
+        {
+            X = x;
+            Y = y;
+        }
+
+        public int X { get; set; }
+        public int Y { get; set; }
     }
 
     public sealed class QslCardElementFont

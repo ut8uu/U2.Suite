@@ -16,5 +16,9 @@ namespace U2.QslManager
         public string? OperatorName { get; set; }
         public string? Text1 { get; set; }
         public string? Text2 { get; set; }
+        public string? BackgroundImage { get; set; }
+        public string? Image1 { get; set; }
+        public string? Image2 { get; set; }
+        public string? Image3 { get; set; }
     }
 }

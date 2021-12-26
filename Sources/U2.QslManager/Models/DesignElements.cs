@@ -14,5 +14,9 @@ namespace U2.QslManager
         public const string OperatorName = nameof(OperatorName);
         public const string Text1 = nameof(Text1);
         public const string Text2 = nameof(Text2);
+        public const string BackgroundImage = nameof(BackgroundImage);
+        public const string Image1 = nameof(Image1);
+        public const string Image2 = nameof(Image2);
+        public const string Image3 = nameof(Image3);
     }
 }
