@@ -9,7 +9,7 @@ namespace U2.QslManager
 {
     public class QslDesignerPreviewViewModel : ViewModelBase
     {
-        public Image? Image { get; set; }
+        public Image? RenderedImage { get; set; }
 
         public void PreviewQsl()
         {

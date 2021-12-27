@@ -9,7 +9,7 @@
       <TextBlock Text="Preview" Classes="font20"></TextBlock>
     </Panel>
     <Border Height="10" Width="10">
-      <Image Source="{Binding Image}"></Image>
+      <Image Source="{Binding RenderedImage}"></Image>
     </Border>
   </StackPanel>
 </UserControl>
