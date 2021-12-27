@@ -130,6 +130,7 @@ namespace U2.QslManager
             var designs = new List<QslCardDesign>();
 
             var assemblyDirectory = Path.GetDirectoryName(typeof(Utilities).Assembly.Location);
+            Debug.Assert(!string.IsNullOrEmpty(assemblyDirectory));
             var designsDirectory = Path.Combine(assemblyDirectory, "Designs");
             var files = Directory.GetFiles(designsDirectory, "*.json");
             foreach (var file in files)

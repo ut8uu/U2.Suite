@@ -6,6 +6,7 @@ using System.Reactive;
 
 namespace U2.QslManager
 {
+    [PropertyChanged.DoNotNotify]
     public partial class QslDesignerControls : UserControl
     {
         private readonly QslCardFieldsModel _qslCardFields;

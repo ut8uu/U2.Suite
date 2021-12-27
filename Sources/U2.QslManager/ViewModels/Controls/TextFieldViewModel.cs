@@ -6,160 +6,54 @@ using System.Text;
 
 namespace U2.QslManager
 {
-    public class TextFieldViewModel : INotifyPropertyChanged
+    public class TextFieldViewModel : ViewModelBase
     {
-        private string? _name;
-        private string? _text;
-        private string? _title;
-        private string? _fontFamily;
-        private string? _fontColor;
-        private int _fontSize;
-        private int _angle;
-        private bool _bold;
-        private bool _italic;
-        private int _maxWidth;
-        private bool _visible;
-
         /// <summary>
         /// A name of the control
         /// </summary>
-        public string? Name
-        {
-            get => _name;
-            set
-            {
-                _name = value;
-                OnPropertyChanged();
-            }
-        }
+        public string? Name { get; set; }
 
         /// <summary>
         /// A text to be displayed
         /// </summary>
-        public string? Title
-        {
-            get => _title;
-            set
-            {
-                _title = value;
-                OnPropertyChanged();
-            }
-        }
+        public string? Title { get; set; }
         /// <summary>
         /// A text to be displayed
         /// </summary>
-        public string? Text
-        {
-            get => _text;
-            set
-            {
-                _text = value;
-                OnPropertyChanged();
-            }
-        }
+        public string? Text { get; set; }
         /// <summary>
         /// A name of the used font
         /// </summary>
-        public string? FontFamily
-        {
-            get => _fontFamily;
-            set
-            {
-                _fontFamily = value;
-                OnPropertyChanged();
-            }
-        }
+        public string? FontFamily { get; set; }
         /// <summary>
         /// A color of the text
         /// </summary>
-        public string? FontColor
-        {
-            get => _fontColor;
-            set
-            {
-                _fontColor = value;
-                OnPropertyChanged();
-            }
-        }
+        public string? FontColor { get; set; }
         /// <summary>
         /// A positive size of the font
         /// </summary>
-        public int FontSize
-        {
-            get => _fontSize; set
-            {
-                _fontSize = value;
-                OnPropertyChanged();
-            }
-        }
+        public int FontSize { get; set; }
         /// <summary>
         /// A non-negative value indicating the direction of the text.
         /// 0 - up, 90 - right, 180 - down, 270 - left, upside down
         /// 45 - up-right, and so on
         /// </summary>
-        public int Angle
-        {
-            get => _angle; 
-            set
-            {
-                _angle = value;
-                OnPropertyChanged();
-            }
-        }
+        public int Angle { get; set; }
         /// <summary>
         /// Indicates whether the text should be bold
         /// </summary>
-        public bool Bold
-        {
-            get => _bold; 
-            set
-            {
-                _bold = value;
-                OnPropertyChanged();
-            }
-        }
+        public bool Bold { get; set; }
         /// <summary>
         /// Indicates whether the text should be italic
         /// </summary>
-        public bool Italic
-        {
-            get => _italic; 
-            set
-            {
-                _italic = value;
-                OnPropertyChanged();
-            }
-        }
+        public bool Italic { get; set; }
         /// <summary>
         /// A maximal width of the displayed text
         /// </summary>
-        public int MaxWidth
-        {
-            get => _maxWidth; 
-            set
-            {
-                _maxWidth = value;
-                OnPropertyChanged();
-            }
-        }
+        public int MaxWidth { get; set; }
         /// <summary>
         /// Indicates whether the field should be rendered
         /// </summary>
-        public bool Visible
-        {
-            get => _visible; 
-            set
-            {
-                _visible = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public event PropertyChangedEventHandler? PropertyChanged;
-
-        protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+        public bool Visible { get; set; }
     }
 }

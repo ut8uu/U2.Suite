@@ -8,8 +8,8 @@
     <Panel Classes="HeaderPanel">
       <TextBlock Text="Preview" Classes="font20"></TextBlock>
     </Panel>
-    <Panel>
-
-    </Panel>
+    <Border Height="10" Width="10">
+      <Image Source="{Binding Image}"></Image>
+    </Border>
   </StackPanel>
 </UserControl>

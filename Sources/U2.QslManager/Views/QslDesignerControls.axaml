@@ -16,7 +16,7 @@
         </StackPanel>
         <TextBlock Grid.Column="0" Grid.Row="1" Text="Design template" Classes="font20"></TextBlock>
         <DropDown Grid.Column="2" Grid.Row="1" 
-                  Items="{Binding Path=Designs}" SelectedIndex="0">
+                  Items="{Binding Path=Designs, Mode=TwoWay}" SelectedIndex="0">
           <DropDown.ItemTemplate>
             <DataTemplate>
               <TextBlock Text="{Binding DesignName}"></TextBlock>
@@ -30,28 +30,28 @@
       <Grid ColumnDefinitions="180,20,*" 
             RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto">
         <TextBlock Grid.Column="0" Grid.Row="0" Text="Callsign" Classes="font20"></TextBlock>
-        <TextBox Grid.Column="2" Grid.Row="0" Text="{Binding Callsign}" Height="30"></TextBox>
+        <TextBox Grid.Column="2" Grid.Row="0" Text="{Binding Callsign, Mode=TwoWay}" Height="30"></TextBox>
 
         <TextBlock Grid.Column="0" Grid.Row="1" Text="Operator Name" Classes="font20"></TextBlock>
-        <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding OperatorName}" Height="30"></TextBox>
+        <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding OperatorName, Mode=TwoWay}" Height="30"></TextBox>
 
         <TextBlock Grid.Column="0" Grid.Row="2" Text="Grid" Classes="font20"></TextBlock>
-        <TextBox Grid.Column="2" Grid.Row="2" Text="{Binding Grid}" Height="30"></TextBox>
+        <TextBox Grid.Column="2" Grid.Row="2" Text="{Binding Grid, Mode=TwoWay}" Height="30"></TextBox>
 
         <TextBlock Grid.Column="0" Grid.Row="3" Text="QTH" Classes="font20"></TextBlock>
-        <TextBox Grid.Column="2" Grid.Row="3" Text="{Binding Qth}" Height="30"></TextBox>
+        <TextBox Grid.Column="2" Grid.Row="3" Text="{Binding Qth, Mode=TwoWay}" Height="30"></TextBox>
 
         <TextBlock Grid.Column="0" Grid.Row="4" Text="CQ zone" Classes="font20"></TextBlock>
-        <TextBox Grid.Column="2" Grid.Row="4" Text="{Binding CqZone}" Height="30"></TextBox>
+        <TextBox Grid.Column="2" Grid.Row="4" Text="{Binding CqZone, Mode=TwoWay}" Height="30"></TextBox>
 
         <TextBlock Grid.Column="0" Grid.Row="5" Text="ITU zone" Classes="font20"></TextBlock>
-        <TextBox Grid.Column="2" Grid.Row="5" Text="{Binding ItuZone}" Height="30"></TextBox>
+        <TextBox Grid.Column="2" Grid.Row="5" Text="{Binding ItuZone, Mode=TwoWay}" Height="30"></TextBox>
 
         <TextBlock Grid.Column="0" Grid.Row="6" Text="Text line 1" Classes="font20"></TextBlock>
-        <TextBox Grid.Column="2" Grid.Row="6" Text="{Binding Text1}" Height="30"></TextBox>
+        <TextBox Grid.Column="2" Grid.Row="6" Text="{Binding Text1, Mode=TwoWay}" Height="30"></TextBox>
 
         <TextBlock Grid.Column="0" Grid.Row="7" Text="Text line 2" Classes="font20"></TextBlock>
-        <TextBox Grid.Column="2" Grid.Row="7" Text="{Binding Text2}" Height="30"></TextBox>
+        <TextBox Grid.Column="2" Grid.Row="7" Text="{Binding Text2, Mode=TwoWay}" Height="30"></TextBox>
 
       </Grid>
     </Border>

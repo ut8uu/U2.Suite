@@ -9,18 +9,8 @@ using U2.Core;
 
 namespace U2.QslManager
 {
-    public class QslCardFieldsViewModel : INotifyPropertyChanged
+    public class QslCardFieldsViewModel : ViewModelBase
     {
-        private string? _callsign;
-        private string? _cqZone;
-        private string? _ituZone;
-        private string? _grid;
-        private string? _qth;
-        private string? _operatorName;
-        private string? _text1;
-        private string? _text2;
-        private List<QslCardDesign>? _designs;
-
         public QslCardFieldsViewModel(QslCardFieldsModel qslCardFields,
             List<QslCardDesign> designs)
         {
@@ -40,16 +30,6 @@ namespace U2.QslManager
             Text2 = qslCardFields.Text2;
         }
 
-        public string? Callsign
-        {
-            get => _callsign;
-            set
-            {
-                _callsign = value;
-                OnPropertyChanged();
-            }
-        }
-
         internal void Clear()
         {
             Callsign = string.Empty;
@@ -62,88 +42,19 @@ namespace U2.QslManager
             Text2 = string.Empty;
         }
 
-        public string? CqZone
-        {
-            get => _cqZone;
-            set
-            {
-                _cqZone = value;
-                OnPropertyChanged();
-            }
-        }
-        public string? ItuZone
-        {
-            get => _ituZone;
-            set
-            {
-                _ituZone = value;
-                OnPropertyChanged();
-            }
-        }
-        public string? Grid
-        {
-            get => _grid;
-            set
-            {
-                _grid = value;
-                OnPropertyChanged();
-            }
-        }
-        public string? Qth
-        {
-            get => _qth;
-            set
-            {
-                _qth = value;
-                OnPropertyChanged();
-            }
-        }
-        public string? OperatorName
-        {
-            get => _operatorName;
-            set
-            {
-                _operatorName = value;
-                OnPropertyChanged();
-            }
-        }
-        public string? Text1
-        {
-            get => _text1;
-            set
-            {
-                _text1 = value;
-                OnPropertyChanged();
-            }
-        }
-        public string? Text2
-        {
-            get => _text2;
-            set
-            {
-                _text2 = value;
-                OnPropertyChanged();
-            }
-        }
+        public string? Callsign { get; set; }
+        public string? CqZone { get; set; }
+        public string? ItuZone { get; set; }
+        public string? Grid { get; set; }
+        public string? Qth { get; set; }
+        public string? OperatorName { get; set; }
+        public string? Text1 { get; set; }
+        public string? Text2 { get; set; }
 
         public QslCardFieldsModel QslCardFields { get; }
-        public List<QslCardDesign>? Designs { 
-            get => _designs;
-            set
-            {
-                _designs = value;
-                OnPropertyChanged();
-            }
-        }
+        public List<QslCardDesign>? Designs { get; set; }
         public ReactiveCommand<Unit, Unit> ClearFieldsCommand { get; }
         public ReactiveCommand<Unit, Unit> PreviewCardCommand { get; }
-
-        public event PropertyChangedEventHandler? PropertyChanged;
-
-        protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
 
         private void ClearFields()
         {
@@ -152,7 +63,7 @@ namespace U2.QslManager
 
         private void PreviewCard()
         {
-
+            var a = Callsign;
         }
     }
 }

@@ -4,6 +4,7 @@ using Avalonia.Markup.Xaml;
 
 namespace U2.QslManager
 {
+    [PropertyChanged.DoNotNotify]
     public partial class TextField : UserControl
     {
         public TextField()

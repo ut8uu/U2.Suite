@@ -9,10 +9,8 @@ using System.Text;
 
 namespace U2.QslManager
 {
-    public class QslDesignerControlsViewModel : INotifyPropertyChanged
+    public class QslDesignerControlsViewModel : ViewModelBase
     {
-        public event PropertyChangedEventHandler? PropertyChanged;
-
         private List<TextFieldViewModel>? _fields = new List<TextFieldViewModel>();
 
         private List<QslCardDesign> _designs = Utilities.GetDesigns();
@@ -22,29 +20,8 @@ namespace U2.QslManager
             
         }
 
-        public List<TextFieldViewModel>? Fields
-        {
-            get => _fields;
-            set
-            {
-                _fields = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public List<QslCardDesign>? Designs
-        {
-            get => _designs;
-            set
-            {
-                _designs = value;
-                OnPropertyChanged();
-            }
-        }
-
-        protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+        public List<TextFieldViewModel>? Fields { get; set; }
+        
+        public List<QslCardDesign>? Designs { get; set; }
     }
 }

@@ -3,23 +3,12 @@
         xmlns:vm="using:U2.QslManager.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-        x:Class="U2.QslManager.Views.MainWindow"
+        mc:Ignorable="d" d:DesignWidth="500" d:DesignHeight="450"
+        x:Class="U2.QslManager.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
         Title="U2.QslManager"
         xmlns:views="using:U2.QslManager">
 
-    <Design.DataContext>
-        <vm:MainWindowViewModel/>
-    </Design.DataContext>
-
-    <StackPanel>
-      <TabControl>
-          <TabItem Header="{Binding TabDesignerTitle}" 
-                   VerticalContentAlignment="Center">
-            <views:QslDesigner></views:QslDesigner>
-          </TabItem>
-      </TabControl>
-    </StackPanel>
+  <views:QslDesignerControls></views:QslDesignerControls>
 
 </Window>
