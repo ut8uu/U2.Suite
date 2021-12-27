@@ -88,6 +88,52 @@ namespace U2.QslManager
                     GetTextElement(string.Empty, DesignElements.Text2, 20, 5, 12),
                     GetImageElement(DesignElements.BackgroundImage, 0, 0, 150, 100, order: 0),
                     GetImageElement(DesignElements.Image1, 100, 20, 140, 80, order: 10),
+                },
+                GridInfo = new QslCardGridInfo
+                {
+                    StartPositionMM = new Position
+                    {
+                        X = 10,
+                        Y = 10
+                    },
+                    BackgroundColor = "#FFFFFF",
+                    LineColor = "#000000",
+                    RowCount = 1,
+                    HeaderHeightMM = 10,
+                    RowHeightMM = 10,
+                    Columns = new List<QslCardGridColumn>
+                    {
+                        new QslCardGridColumn
+                        {
+                            Title = "To radio",
+                            WidthMM = 50,
+                        },
+                        new QslCardGridColumn
+                        {
+                            Title = "Date",
+                            WidthMM = 30,
+                        },
+                        new QslCardGridColumn
+                        {
+                            Title = "Time",
+                            WidthMM = 20,
+                        },
+                        new QslCardGridColumn
+                        {
+                            Title = "Freq",
+                            WidthMM = 20,
+                        },
+                        new QslCardGridColumn
+                        {
+                            Title = "Report",
+                            WidthMM = 25,
+                        },
+                        new QslCardGridColumn
+                        {
+                            Title = "Mode",
+                            WidthMM = 25,
+                        },
+                    }
                 }
             };
 

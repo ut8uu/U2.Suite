@@ -13,6 +13,8 @@ namespace U2.QslManager
         public int DensityDpi { get; set; }
 
         public QslCardElement[]? Elements { get; set; }
+
+        public QslCardGridInfo? GridInfo { get; set; }
     }
 
     public sealed class Dimensions
