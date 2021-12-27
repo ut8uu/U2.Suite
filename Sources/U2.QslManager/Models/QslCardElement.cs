@@ -28,6 +28,10 @@ namespace U2.QslManager
         /// </summary>
         public string? ElementName { get; set; }
         /// <summary>
+        /// A title of the element to be shown on the card.
+        /// </summary>
+        public string? ElementTitle { get; set; }
+        /// <summary>
         /// Coordinates of the lower bottom corner of the element boundary.
         /// Values are in millimeters.
         /// </summary>

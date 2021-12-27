@@ -14,12 +14,13 @@ namespace U2.QslManager
 {
     public static class Utilities
     {
-        private static QslCardElement GetTextElement(string name,
+        private static QslCardElement GetTextElement(string title, string name,
             int startX, int startY, int fontSize)
         {
             return new QslCardElement
             {
                 ElementType = QslCardElementType.Text,
+                ElementTitle = title,
                 ElementName = name,
                 TransformationAngle = 0,
                 StartPositionMM = new Position(startX, startY),
@@ -77,14 +78,14 @@ namespace U2.QslManager
                 DensityDpi = 300,
                 Elements = new[]
                 {
-                    GetTextElement(DesignElements.Callsign, 10, 80, 32),
-                    GetTextElement(DesignElements.OperatorName, 20, 70, 16),
-                    GetTextElement(DesignElements.CqZone, 20, 65, 12),
-                    GetTextElement(DesignElements.ItuZone, 30, 65, 12),
-                    GetTextElement(DesignElements.Grid, 60, 65, 12),
-                    GetTextElement(DesignElements.Qth, 90, 65, 12),
-                    GetTextElement(DesignElements.Text1, 20, 15, 12),
-                    GetTextElement(DesignElements.Text2, 20, 5, 12),
+                    GetTextElement(string.Empty, DesignElements.Callsign, 10, 80, 32),
+                    GetTextElement("op.", DesignElements.OperatorName, 20, 70, 16),
+                    GetTextElement("CQ zone:", DesignElements.CqZone, 20, 65, 12),
+                    GetTextElement("ITU zone:", DesignElements.ItuZone, 30, 65, 12),
+                    GetTextElement("Grid:", DesignElements.Grid, 60, 65, 12),
+                    GetTextElement("QTH:", DesignElements.Qth, 90, 65, 12),
+                    GetTextElement(string.Empty, DesignElements.Text1, 20, 15, 12),
+                    GetTextElement(string.Empty, DesignElements.Text2, 20, 5, 12),
                     GetImageElement(DesignElements.BackgroundImage, 0, 0, 150, 100, order: 0),
                     GetImageElement(DesignElements.Image1, 100, 20, 140, 80, order: 10),
                 }
@@ -101,12 +102,8 @@ namespace U2.QslManager
                 qslCardDesign = JsonSerializer.Deserialize<QslCardDesign>(json, GetJsonSerializerOptions());
                 return true;
             }
-            catch (Exception ex)
+            catch
             {
-                if (ex != null)
-                {
-
-                }
                 return false;
             }
         }
