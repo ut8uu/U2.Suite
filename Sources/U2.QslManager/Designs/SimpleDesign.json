@@ -210,5 +210,42 @@
       },
       "transformation_angle": 0
     }
-  ]
+  ],
+  "grid_info": {
+    "background_color": "#FFFFFF",
+    "line_color": "#000000",
+    "row_count": 1,
+    "header_height_mm": 10,
+    "row_height_mm": 10,
+    "start_position_mm": {
+      "x": 10,
+      "y": 10
+    },
+    "columns": [
+      {
+        "title": "To radio",
+        "width_mm": 50
+      },
+      {
+        "title": "Date",
+        "width_mm": 30
+      },
+      {
+        "title": "Time",
+        "width_mm": 20
+      },
+      {
+        "title": "Freq",
+        "width_mm": 20
+      },
+      {
+        "title": "Report",
+        "width_mm": 25
+      },
+      {
+        "title": "Mode",
+        "width_mm": 25
+      }
+    ]
+  }
 }
