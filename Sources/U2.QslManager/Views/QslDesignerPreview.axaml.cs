@@ -10,13 +10,13 @@ using System.Runtime.InteropServices;
 using Avalonia.Platform;
 using GalaSoft.MvvmLight.Messaging;
 using Avalonia.LogicalTree;
+using U2.QslManager.Helpers;
 
 namespace U2.QslManager
 {
     [PropertyChanged.DoNotNotify]
     public partial class QslDesignerPreview : UserControl
     {
-        private bool _drawn = false;
         private QslCardFieldsModel _fields = null;
         private QslCardDesign _design = null;
         private RenderTargetBitmap _bitmap;
@@ -37,7 +37,6 @@ namespace U2.QslManager
 
             _fields = inputMessage.Fields;
             _design = inputMessage.Design;
-            _drawn = false;
             this.InvalidateVisual();
         }
 
@@ -63,25 +62,20 @@ namespace U2.QslManager
         {
             base.Render(context);
 
-            context.FillRectangle(Brushes.Yellow, new Rect(0, 0, 800, 600));
+            using var ctxi = _bitmap.CreateDrawingContext(null);
+            using var ctx = new DrawingContext(ctxi, false);
 
-            if (!_drawn && _fields != null)
+            ctxi.Clear(default);
+            ctx.FillRectangle(Brushes.White, new Rect(0, 0, 800, 600));
+
+            if (_fields != null)
             {
-                using var ctxi = _bitmap.CreateDrawingContext(null);
-                using var ctx = new DrawingContext(ctxi, false);
-
-                ctxi.Clear(default);
-                ctx.FillRectangle(Brushes.White, new Rect(0, 0, 800, 600));
-                var brush = new SolidColorBrush(Colors.Black);
-                var point = new Point(50, 10);
-                var text = new FormattedText
-                {
-                    Text = _fields.Callsign,
-                    FontSize = 40,
-                    Typeface = new Typeface("Arial"),
-                };
-                ctx.DrawText(brush, point, text);
-                _drawn = true;
+                DrawingHelper.DrawText(ctx, _fields.Callsign, 40, 50, 10, Colors.Black);
+            }
+            else
+            {
+                DrawingHelper.DrawText(ctx, "Press 'Preview QSL' to display the QSL.",
+                    20, 30, 100, Colors.Red);
             }
 
             context.DrawImage(_bitmap,
