@@ -2,60 +2,67 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d" d:DesignWidth="500" d:DesignHeight="450"
+             mc:Ignorable="d" d:DesignWidth="850" d:DesignHeight="450"
              x:Class="U2.QslManager.QslDesignerControls"
              xmlns:views="using:U2.QslManager"
-             Width="500" Height="450">
-
-  <StackPanel>
+             Width="850" Height="450">
+  <StackPanel Orientation="Horizontal">
     <Border Padding="10">
-      <Grid ColumnDefinitions="180,20,*"
-            RowDefinitions="Auto,Auto">
-        <StackPanel Grid.Column="2" Grid.Row="0" Orientation="Horizontal">
-          <Button Command="{Binding ClearFieldsCommand}">Clear</Button>
-          <Button Command="{Binding PreviewCardCommand}">Preview QSL</Button>
-        </StackPanel>
-        <TextBlock Grid.Column="0" Grid.Row="1" Text="Design template" Classes="font20"></TextBlock>
-        <DropDown Grid.Column="2" Grid.Row="1"
-                  Items="{Binding Path=Designs, Mode=TwoWay}" SelectedIndex="0">
-          <DropDown.ItemTemplate>
-            <DataTemplate>
-              <TextBlock Text="{Binding DesignName}"></TextBlock>
-            </DataTemplate>
-          </DropDown.ItemTemplate>
-        </DropDown>
+      <StackPanel>
+        <Border Padding="10">
+          <Grid ColumnDefinitions="180,20,*"
+                RowDefinitions="Auto,Auto">
+            <StackPanel Grid.Column="2" Grid.Row="0" Orientation="Horizontal">
+              <Button Command="{Binding ClearFieldsCommand}">Clear</Button>
+              <Button Command="{Binding PreviewCardCommand}">Preview QSL</Button>
+            </StackPanel>
+            <TextBlock Grid.Column="0" Grid.Row="1" Text="Design template" Classes="font20"></TextBlock>
+            <ComboBox Grid.Column="2" Grid.Row="1"
+                      Items="{Binding Path=Designs, Mode=TwoWay}"
+                      SelectedIndex="{Binding SelectedDesignIndex, Mode=TwoWay}">
+              <ComboBox.ItemTemplate>
+                <DataTemplate>
+                  <TextBlock Text="{Binding DesignName}"></TextBlock>
+                </DataTemplate>
+              </ComboBox.ItemTemplate>
+            </ComboBox>
 
-      </Grid>
+          </Grid>
+        </Border>
+        <Border Padding="10">
+          <Grid ColumnDefinitions="180,20,*"
+                RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto">
+            <TextBlock Grid.Column="0" Grid.Row="0" Text="Callsign" Classes="font20"></TextBlock>
+            <TextBox Grid.Column="2" Grid.Row="0" Text="{Binding Callsign, Mode=TwoWay}" Height="30"></TextBox>
+
+            <TextBlock Grid.Column="0" Grid.Row="1" Text="Operator Name" Classes="font20"></TextBlock>
+            <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding OperatorName, Mode=TwoWay}" Height="30"></TextBox>
+
+            <TextBlock Grid.Column="0" Grid.Row="2" Text="Grid" Classes="font20"></TextBlock>
+            <TextBox Grid.Column="2" Grid.Row="2" Text="{Binding Grid, Mode=TwoWay}" Height="30"></TextBox>
+
+            <TextBlock Grid.Column="0" Grid.Row="3" Text="QTH" Classes="font20"></TextBlock>
+            <TextBox Grid.Column="2" Grid.Row="3" Text="{Binding Qth, Mode=TwoWay}" Height="30"></TextBox>
+
+            <TextBlock Grid.Column="0" Grid.Row="4" Text="CQ zone" Classes="font20"></TextBlock>
+            <TextBox Grid.Column="2" Grid.Row="4" Text="{Binding CqZone, Mode=TwoWay}" Height="30"></TextBox>
+
+            <TextBlock Grid.Column="0" Grid.Row="5" Text="ITU zone" Classes="font20"></TextBlock>
+            <TextBox Grid.Column="2" Grid.Row="5" Text="{Binding ItuZone, Mode=TwoWay}" Height="30"></TextBox>
+
+            <TextBlock Grid.Column="0" Grid.Row="6" Text="Text line 1" Classes="font20"></TextBlock>
+            <TextBox Grid.Column="2" Grid.Row="6" Text="{Binding Text1, Mode=TwoWay}" Height="30"></TextBox>
+
+            <TextBlock Grid.Column="0" Grid.Row="7" Text="Text line 2" Classes="font20"></TextBlock>
+            <TextBox Grid.Column="2" Grid.Row="7" Text="{Binding Text2, Mode=TwoWay}" Height="30"></TextBox>
+          </Grid>
+        </Border>
+      </StackPanel>
     </Border>
-    <Border Padding="10">
-      <Grid ColumnDefinitions="180,20,*"
-            RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto">
-        <TextBlock Grid.Column="0" Grid.Row="0" Text="Callsign" Classes="font20"></TextBlock>
-        <TextBox Grid.Column="2" Grid.Row="0" Text="{Binding Callsign, Mode=TwoWay}" Height="30"></TextBox>
+    <StackPanel Margin="20">
+      <views:QslDesignerPreview Width="400" Height="300"></views:QslDesignerPreview>
+    </StackPanel>
 
-        <TextBlock Grid.Column="0" Grid.Row="1" Text="Operator Name" Classes="font20"></TextBlock>
-        <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding OperatorName, Mode=TwoWay}" Height="30"></TextBox>
-
-        <TextBlock Grid.Column="0" Grid.Row="2" Text="Grid" Classes="font20"></TextBlock>
-        <TextBox Grid.Column="2" Grid.Row="2" Text="{Binding Grid, Mode=TwoWay}" Height="30"></TextBox>
-
-        <TextBlock Grid.Column="0" Grid.Row="3" Text="QTH" Classes="font20"></TextBlock>
-        <TextBox Grid.Column="2" Grid.Row="3" Text="{Binding Qth, Mode=TwoWay}" Height="30"></TextBox>
-
-        <TextBlock Grid.Column="0" Grid.Row="4" Text="CQ zone" Classes="font20"></TextBlock>
-        <TextBox Grid.Column="2" Grid.Row="4" Text="{Binding CqZone, Mode=TwoWay}" Height="30"></TextBox>
-
-        <TextBlock Grid.Column="0" Grid.Row="5" Text="ITU zone" Classes="font20"></TextBlock>
-        <TextBox Grid.Column="2" Grid.Row="5" Text="{Binding ItuZone, Mode=TwoWay}" Height="30"></TextBox>
-
-        <TextBlock Grid.Column="0" Grid.Row="6" Text="Text line 1" Classes="font20"></TextBlock>
-        <TextBox Grid.Column="2" Grid.Row="6" Text="{Binding Text1, Mode=TwoWay}" Height="30"></TextBox>
-
-        <TextBlock Grid.Column="0" Grid.Row="7" Text="Text line 2" Classes="font20"></TextBlock>
-        <TextBox Grid.Column="2" Grid.Row="7" Text="{Binding Text2, Mode=TwoWay}" Height="30"></TextBox>
-
-      </Grid>
-    </Border>
   </StackPanel>
 
 </UserControl>

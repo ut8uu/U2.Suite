@@ -1,11 +1,7 @@
-﻿using ReactiveUI;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.Collections.Generic;
 using System.Reactive;
-using System.Runtime.CompilerServices;
-using System.Text;
-using U2.Core;
+using GalaSoft.MvvmLight.Messaging;
+using ReactiveUI;
 
 namespace U2.QslManager
 {
@@ -16,6 +12,8 @@ namespace U2.QslManager
         {
             ClearFieldsCommand = ReactiveCommand.Create(ClearFields);
             PreviewCardCommand = ReactiveCommand.Create(PreviewCard);
+
+            SelectedDesignIndex = 0;
 
             QslCardFields = qslCardFields;
             Designs = designs;
@@ -30,18 +28,6 @@ namespace U2.QslManager
             Text2 = qslCardFields.Text2;
         }
 
-        internal void Clear()
-        {
-            Callsign = string.Empty;
-            OperatorName = string.Empty;
-            CqZone = string.Empty;
-            ItuZone = string.Empty;
-            Grid = string.Empty;
-            Qth = string.Empty;
-            Text1 = string.Empty;
-            Text2 = string.Empty;
-        }
-
         public string? Callsign { get; set; }
         public string? CqZone { get; set; }
         public string? ItuZone { get; set; }
@@ -53,8 +39,23 @@ namespace U2.QslManager
 
         public QslCardFieldsModel QslCardFields { get; }
         public List<QslCardDesign>? Designs { get; set; }
+        public int SelectedDesignIndex { get; set; }
+
         public ReactiveCommand<Unit, Unit> ClearFieldsCommand { get; }
         public ReactiveCommand<Unit, Unit> PreviewCardCommand { get; }
+
+        internal void Clear()
+        {
+            SelectedDesignIndex = 0;
+            Callsign = string.Empty;
+            OperatorName = string.Empty;
+            CqZone = string.Empty;
+            ItuZone = string.Empty;
+            Grid = string.Empty;
+            Qth = string.Empty;
+            Text1 = string.Empty;
+            Text2 = string.Empty;
+        }
 
         private void ClearFields()
         {
@@ -63,7 +64,23 @@ namespace U2.QslManager
 
         private void PreviewCard()
         {
-            var a = Callsign;
+            var fields = new QslCardFieldsModel
+            {
+                Callsign = this.Callsign,
+                CqZone = this.CqZone,
+                ItuZone = this.ItuZone,
+                Grid = this.Grid,
+                OperatorName = this.OperatorName,
+                Qth = this.Qth,
+                Text1 = this.Text1,
+                Text2 = this.Text2,
+            };
+            var message = new RenderQslMessage
+            {
+                Fields = fields,
+                Design = Designs?[SelectedDesignIndex],
+            };
+            Messenger.Default.Send(message);
         }
     }
 }

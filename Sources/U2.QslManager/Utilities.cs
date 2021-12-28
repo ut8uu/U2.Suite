@@ -7,8 +7,6 @@ using System.Drawing;
 using System.IO;
 using System.Text;
 using System.Text.Json;
-using static System.Windows.Forms.AxHost;
-using static System.Windows.Forms.Design.AxImporter;
 
 namespace U2.QslManager
 {

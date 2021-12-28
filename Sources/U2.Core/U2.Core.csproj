@@ -6,10 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MaterialThemeCore" Version="0.1.0" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\U2.Contracts\U2.Contracts.csproj" />
   </ItemGroup>
 

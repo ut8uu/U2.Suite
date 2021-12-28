@@ -4,12 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="500" d:DesignHeight="450"
              x:Class="U2.QslManager.QslDesignerPreview">
-  <StackPanel>
-    <Panel Classes="HeaderPanel">
-      <TextBlock Text="Preview" Classes="font20"></TextBlock>
-    </Panel>
-    <Border Height="10" Width="10">
-      <Image Source="{Binding RenderedImage}"></Image>
-    </Border>
-  </StackPanel>
+
+    
+
 </UserControl>
