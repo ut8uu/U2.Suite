@@ -13,6 +13,7 @@ using Avalonia.Platform;
 using GalaSoft.MvvmLight.Messaging;
 using Avalonia.LogicalTree;
 using U2.QslManager.Helpers;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace U2.QslManager
 {
@@ -81,8 +82,34 @@ namespace U2.QslManager
 
             DrawTexts(ctx);
             DrawDataGrid(ctx);
+            DrawToRadio(ctx);
 
             Dispatcher.UIThread.Post(InvalidateVisual, DispatcherPriority.Background);
+        }
+
+        private void DrawToRadio(DrawingContext ctx)
+        {
+            var toRadioBlock = _design.ToRadioBlock;
+            var dotsPerMM = Convert.ToInt32(_design.DensityDpi / 25.4);
+            var point = toRadioBlock.StartPositionMM.ToPoint() * dotsPerMM;
+            var size = toRadioBlock.Size.ToSize() * dotsPerMM;
+            var rectangle = new Rect(point, size);
+            if (!string.IsNullOrEmpty(toRadioBlock.BackgroundColor))
+            {
+                var bgColor = Color.Parse(toRadioBlock.BackgroundColor);
+                DrawingHelper.DrawRectangle(ctx, rectangle, bgColor);
+            }
+            var txt = new FormattedText
+            {
+                Text = toRadioBlock.ElementTitle,
+                FontSize = _design.GridInfo.FontSize.Value / _scale,
+                Typeface = new Typeface(_design.GridInfo.FontName),
+            };
+            var dx = rectangle.X + (rectangle.Height - txt.Bounds.Height)/2;
+            var dy = rectangle.Y + rectangle.Height / 2 - txt.Bounds.Height / 2;
+            var textPosition = new Point(dx, dy);
+            var textBrush = Brush.Parse(toRadioBlock.Font.Color);
+            ctx.DrawText(textBrush, textPosition, txt);
         }
 
         private void DrawDataGrid(DrawingContext ctx)

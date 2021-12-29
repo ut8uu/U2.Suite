@@ -37,7 +37,7 @@
       "element_title": "op.",
       "start_position_mm": {
         "x": 80,
-        "y": 35
+        "y": 85
       },
       "end_position_mm": {
         "x": 0,
@@ -203,8 +203,8 @@
     "background_color": "white",
     "foreground_color": "DarkGreen",
     "font_name": "Arial",
-    "font_size": 12, 
-    "row_count": 3,
+    "font_size": 12,
+    "row_count": 2,
     "header_height_mm": 10,
     "row_height_mm": 10,
     "start_position_mm": {
@@ -233,5 +233,28 @@
         "width_mm": 20
       }
     ]
-  }
+  },
+  "to_radio_block": {
+    "order": 0,
+    "background_color": "#e0e0e0", 
+    "element_type": 0,
+    "element_name": "ToRadio",
+    "element_title": "To radio",
+    "start_position_mm": {
+      "x": 10,
+      "y": 32
+    },
+    "size": {
+      "width": 70,
+      "height": 10
+    },
+    "transformation_angle": 0,
+    "font": {
+      "name": "Calibri",
+      "size": 72,
+      "color": "DarkGreen",
+      "bold": true,
+      "italic": false
+    }
+  } 
 }

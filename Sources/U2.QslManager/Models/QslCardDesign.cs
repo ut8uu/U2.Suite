@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Text;
+using U2.QslManager.Models;
 
 namespace U2.QslManager
 {
@@ -16,6 +17,8 @@ namespace U2.QslManager
         public string? BackgroundImage { get; set; }
 
         public QslCardElement[]? Elements { get; set; }
+
+        public QslCardToRadio ToRadioBlock { get; set; }
 
         public QslCardGridInfo? GridInfo { get; set; }
     }
@@ -34,6 +37,11 @@ namespace U2.QslManager
         {
             Height = height;
             Width = width;
+        }
+
+        public Avalonia.Size ToSize()
+        {
+            return new Avalonia.Size(Width, Height);
         }
     }
 }

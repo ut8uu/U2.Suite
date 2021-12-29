@@ -43,6 +43,10 @@ namespace U2.QslManager
         /// </summary>
         public Position? EndPositionMM { get; set; }
         /// <summary>
+        /// A size of the bounding box.
+        /// </summary>
+        public Dimensions? Size { get; set; }
+        /// <summary>
         /// A non-negative value indicating the angle of the text transformation.
         /// The value is related to the left-to-right way of the text representation.
         /// </summary>
@@ -65,6 +69,11 @@ namespace U2.QslManager
 
         public int X { get; set; }
         public int Y { get; set; }
+
+        public Avalonia.Point ToPoint()
+        {
+            return new Avalonia.Point(X, Y);
+        }
     }
 
     public sealed class QslCardElementFont
