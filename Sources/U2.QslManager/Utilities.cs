@@ -71,17 +71,20 @@ namespace U2.QslManager
         {
             var template = new QslCardDesign
             {
+                AuthoredBy = "Sergey Usmanov, UT8UU",
                 DesignName = "Demo Design",
                 CardSizeMM = new Dimensions(150, 100),
                 DensityDpi = 96,
+                BackgroundColor = "DarkGreen",
+                BackgroundImage = string.Empty,
                 Elements = new[]
                 {
-                    GetTextElement(string.Empty, DesignElements.Callsign, 20, 10, 72),
-                    GetTextElement("op.", DesignElements.OperatorName, 80, 40, 16),
-                    GetTextElement("CQ zone:", DesignElements.CqZone, 20, 12, 12),
-                    GetTextElement("ITU zone:", DesignElements.ItuZone, 40, 12, 12),
-                    GetTextElement("Grid:", DesignElements.Grid, 60, 12, 12),
-                    GetTextElement("QTH:", DesignElements.Qth, 90, 12, 12),
+                    GetTextElement(string.Empty, DesignElements.Callsign, 50, 5, 72),
+                    GetTextElement("op.", DesignElements.OperatorName, 80, 35, 16),
+                    GetTextElement("CQ zone:", DesignElements.CqZone, 30, 5, 12),
+                    GetTextElement("ITU zone:", DesignElements.ItuZone, 50, 5, 12),
+                    GetTextElement("Grid:", DesignElements.Grid, 70, 5, 12),
+                    GetTextElement("QTH:", DesignElements.Qth, 100, 5, 12),
                     GetTextElement(string.Empty, DesignElements.Text1, 20, 80, 12),
                     GetTextElement(string.Empty, DesignElements.Text2, 20, 90, 12),
                     GetImageElement(DesignElements.BackgroundImage, 0, 0, 150, 100, order: 0),

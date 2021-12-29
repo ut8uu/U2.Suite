@@ -7,10 +7,13 @@ namespace U2.QslManager
 {
     public sealed class QslCardDesign
     {
+        public string? AuthoredBy { get; set; }
         public string? DesignName { get; set; }
 
         public Dimensions? CardSizeMM { get; set; }
         public int DensityDpi { get; set; }
+        public string? BackgroundColor { get; set; }
+        public string? BackgroundImage { get; set; }
 
         public QslCardElement[]? Elements { get; set; }
 

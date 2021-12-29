@@ -5,6 +5,8 @@
     "width": 150
   },
   "density_dpi": 96,
+  "background_color": "DarkGreen",
+  "background_image": "",
   "elements": [
     {
       "order": 0,
@@ -12,8 +14,8 @@
       "element_name": "Callsign",
       "element_title": "",
       "start_position_mm": {
-        "x": 20,
-        "y": 10
+        "x": 50,
+        "y": 5
       },
       "end_position_mm": {
         "x": 0,
@@ -35,7 +37,7 @@
       "element_title": "op.",
       "start_position_mm": {
         "x": 80,
-        "y": 40
+        "y": 35
       },
       "end_position_mm": {
         "x": 0,
@@ -56,8 +58,8 @@
       "element_name": "CqZone",
       "element_title": "CQ:",
       "start_position_mm": {
-        "x": 20,
-        "y": 12
+        "x": 30,
+        "y": 5
       },
       "end_position_mm": {
         "x": 0,
@@ -78,8 +80,8 @@
       "element_name": "ItuZone",
       "element_title": "ITU:",
       "start_position_mm": {
-        "x": 40,
-        "y": 12
+        "x": 50,
+        "y": 5
       },
       "end_position_mm": {
         "x": 0,
@@ -100,8 +102,8 @@
       "element_name": "Grid",
       "element_title": "Grid:",
       "start_position_mm": {
-        "x": 60,
-        "y": 12
+        "x": 70,
+        "y": 5
       },
       "end_position_mm": {
         "x": 0,
@@ -122,8 +124,8 @@
       "element_name": "Qth",
       "element_title": "QTH:",
       "start_position_mm": {
-        "x": 90,
-        "y": 12
+        "x": 100,
+        "y": 5
       },
       "end_position_mm": {
         "x": 0,
@@ -181,20 +183,6 @@
         "bold": true,
         "italic": false
       }
-    },
-    {
-      "order": 0,
-      "element_type": 0,
-      "element_name": "BackgroundImage",
-      "start_position_mm": {
-        "x": 0,
-        "y": 0
-      },
-      "end_position_mm": {
-        "x": 150,
-        "y": 100
-      },
-      "transformation_angle": 0
     },
     {
       "order": 10,

@@ -74,20 +74,21 @@ namespace U2.QslManager
             using var ctx = new DrawingContext(ctxi, false);
 
             ctxi.Clear(default);
-            ctx.FillRectangle(Brushes.White, new Rect(0, 0, _cardWidth, _cardHeight));
+            if (!string.IsNullOrEmpty(_design.BackgroundColor))
+            {
+                ctx.FillRectangle(Brush.Parse(_design.BackgroundColor), new Rect(0, 0, _cardWidth, _cardHeight));
+            }
 
             if (_fields != null)
             {
-                DrawingHelper.DrawRectangle(ctx, _design.DensityDpi, 10, 10, 140, 90, Colors.DarkBlue);
-                
-                DrawText(ctx, _fields.Callsign, DesignElements.Callsign);
-                DrawText(ctx, _fields.OperatorName, DesignElements.OperatorName);
-                DrawText(ctx, _fields.CqZone, DesignElements.CqZone);
-                DrawText(ctx, _fields.ItuZone, DesignElements.ItuZone);
-                DrawText(ctx, _fields.Grid, DesignElements.Grid);
-                DrawText(ctx, _fields.Qth, DesignElements.Qth);
-                DrawText(ctx, _fields.Text1, DesignElements.Text1);
-                DrawText(ctx, _fields.Text2, DesignElements.Text2);
+                DrawText(ctx, text: _fields.Callsign, DesignElements.Callsign);
+                DrawText(ctx, text: _fields.OperatorName, DesignElements.OperatorName);
+                DrawText(ctx, text: _fields.CqZone, DesignElements.CqZone);
+                DrawText(ctx, text: _fields.ItuZone, DesignElements.ItuZone);
+                DrawText(ctx, text: _fields.Grid, DesignElements.Grid);
+                DrawText(ctx, text: _fields.Qth, DesignElements.Qth);
+                DrawText(ctx, text: _fields.Text1, DesignElements.Text1);
+                DrawText(ctx, text: _fields.Text2, DesignElements.Text2);
             }
             else
             {
