@@ -60,7 +60,7 @@
       </StackPanel>
     </Border>
     <StackPanel Margin="20">
-      <views:QslDesignerPreview Width="400" Height="300"></views:QslDesignerPreview>
+      <views:QslDesignerPreview Width="400" Height="450"></views:QslDesignerPreview>
     </StackPanel>
 
   </StackPanel>

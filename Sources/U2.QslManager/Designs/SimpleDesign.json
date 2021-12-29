@@ -1,10 +1,10 @@
 {
   "design_name": "Demo Design",
   "card_size_mm": {
-    "height": 150,
-    "width": 100
+    "height": 100,
+    "width": 150
   },
-  "density_dpi": 300,
+  "density_dpi": 96,
   "elements": [
     {
       "order": 0,

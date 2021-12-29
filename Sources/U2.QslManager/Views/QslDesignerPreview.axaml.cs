@@ -1,3 +1,4 @@
+using System;
 using System.Diagnostics;
 using Avalonia;
 using Avalonia.Controls;
@@ -17,9 +18,16 @@ namespace U2.QslManager
     [PropertyChanged.DoNotNotify]
     public partial class QslDesignerPreview : UserControl
     {
+
         private QslCardFieldsModel _fields = null;
         private QslCardDesign _design = null;
         private RenderTargetBitmap _bitmap;
+        private int _cardWidth;
+        private int _cardHeight;
+        private int _viewPortWidth;
+        private int _viewPortHeight;
+
+        private const int ControlWidth = 400;
 
         public QslDesignerPreview()
         {
@@ -36,8 +44,49 @@ namespace U2.QslManager
             Debug.Assert(inputMessage.Design != null);
 
             _fields = inputMessage.Fields;
+            var designHasChanged = (_design == null
+                                    || _design.DensityDpi != inputMessage.Design.DensityDpi
+                                    || _design.CardSizeMM.Width != inputMessage.Design.CardSizeMM.Width
+                                    || _design.CardSizeMM.Height != inputMessage.Design.CardSizeMM.Height);
             _design = inputMessage.Design;
-            this.InvalidateVisual();
+
+            var dotsPerMM = _design.DensityDpi / 25.4;
+            _cardWidth = Convert.ToInt32(_design.CardSizeMM.Width * dotsPerMM);
+            _cardHeight = Convert.ToInt32(_design.CardSizeMM.Height * dotsPerMM);
+            var scale = 1.0 * ControlWidth / _cardWidth;
+            _viewPortWidth = Convert.ToInt32(_cardWidth * scale);
+            _viewPortHeight = Convert.ToInt32(_cardHeight * scale);
+
+            if (designHasChanged)
+            {
+                if (_bitmap != null)
+                {
+                    _bitmap.Dispose();
+                    _bitmap = null;
+                }
+                _bitmap = new RenderTargetBitmap(new PixelSize(_cardWidth, _cardHeight),
+                    new Vector(_design.DensityDpi, _design.DensityDpi));
+            }
+
+            using var ctxi = _bitmap.CreateDrawingContext(null);
+            using var ctx = new DrawingContext(ctxi, false);
+
+            ctxi.Clear(default);
+            ctx.FillRectangle(Brushes.White, new Rect(0, 0, _cardWidth, _cardHeight));
+
+            if (_fields != null)
+            {
+                DrawingHelper.DrawRectangle(ctx, _design.DensityDpi, 10, 10, 100, 100, Colors.Aqua);
+                DrawingHelper.DrawText(ctx, _design.DensityDpi, scale*2, 
+                    _fields.Callsign, textSize:72, 20, 10, Colors.Black);
+            }
+            else
+            {
+                DrawingHelper.DrawText(ctx, _design.DensityDpi, scale, "Press 'Preview QSL' to display the QSL.",
+                    20, 30, 100, Colors.Red);
+            }
+
+            Dispatcher.UIThread.Post(InvalidateVisual, DispatcherPriority.Background);
         }
 
         private void InitializeComponent()
@@ -47,14 +96,17 @@ namespace U2.QslManager
 
         protected override void OnAttachedToLogicalTree(LogicalTreeAttachmentEventArgs e)
         {
-            _bitmap = new RenderTargetBitmap(new PixelSize(800, 600), new Vector(96, 96));
             base.OnAttachedToLogicalTree(e);
         }
 
         protected override void OnDetachedFromLogicalTree(LogicalTreeAttachmentEventArgs e)
         {
-            _bitmap.Dispose();
-            _bitmap = null;
+            if (_bitmap != null)
+            {
+                _bitmap.Dispose();
+                _bitmap = null;
+            }
+
             base.OnDetachedFromLogicalTree(e);
         }
 
@@ -62,27 +114,12 @@ namespace U2.QslManager
         {
             base.Render(context);
 
-            using var ctxi = _bitmap.CreateDrawingContext(null);
-            using var ctx = new DrawingContext(ctxi, false);
-
-            ctxi.Clear(default);
-            ctx.FillRectangle(Brushes.White, new Rect(0, 0, 800, 600));
-
-            if (_fields != null)
+            if (_bitmap != null)
             {
-                DrawingHelper.DrawText(ctx, _fields.Callsign, 40, 50, 10, Colors.Black);
+                context.DrawImage(_bitmap,
+                    new Rect(0, 0, _cardWidth, _cardHeight),
+                    new Rect(0, 0, _viewPortWidth, _viewPortHeight));
             }
-            else
-            {
-                DrawingHelper.DrawText(ctx, "Press 'Preview QSL' to display the QSL.",
-                    20, 30, 100, Colors.Red);
-            }
-
-            context.DrawImage(_bitmap,
-                new Rect(0, 0, 800, 600),
-                new Rect(0, 0, 800, 600));
-
-            Dispatcher.UIThread.Post(InvalidateVisual, DispatcherPriority.Background);
         }
     }
 }

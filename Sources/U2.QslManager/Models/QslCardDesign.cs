@@ -27,7 +27,7 @@ namespace U2.QslManager
         public int Height { get; set; }
         public int Width { get; set; }
 
-        public Dimensions(int height, int width)
+        public Dimensions(int width, int height)
         {
             Height = height;
             Width = width;
