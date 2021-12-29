@@ -2,10 +2,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d" d:DesignWidth="850" d:DesignHeight="450"
+             mc:Ignorable="d" d:DesignWidth="850" d:DesignHeight="550"
              x:Class="U2.QslManager.QslDesignerControls"
              xmlns:views="using:U2.QslManager"
-             Width="850" Height="450">
+             Width="850" Height="550">
   <StackPanel Orientation="Horizontal">
     <Border Padding="10">
       <StackPanel>
@@ -29,9 +29,9 @@
 
           </Grid>
         </Border>
-        <Border Padding="10">
+        <Border Padding="10" Width="350">
           <Grid ColumnDefinitions="180,20,*"
-                RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto">
+                RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto">
             <TextBlock Grid.Column="0" Grid.Row="0" Text="Callsign" Classes="font20"></TextBlock>
             <TextBox Grid.Column="2" Grid.Row="0" Text="{Binding Callsign, Mode=TwoWay}" Height="30"></TextBox>
 
@@ -55,6 +55,24 @@
 
             <TextBlock Grid.Column="0" Grid.Row="7" Text="Text line 2" Classes="font20"></TextBlock>
             <TextBox Grid.Column="2" Grid.Row="7" Text="{Binding Text2, Mode=TwoWay}" Height="30"></TextBox>
+
+            <TextBlock Grid.Column="0" Grid.Row="8" Text="Background image" Classes="font20"></TextBlock>
+            <StackPanel Grid.Column="2" Grid.Row="8" Orientation="Horizontal">
+              <TextBox Width="100" Text="{Binding BackgroundImage, Mode=TwoWay}" Height="30"></TextBox>
+              <Button Content="..." Command="{Binding SelectBackgroundImageAsync}"></Button>
+            </StackPanel>
+
+            <TextBlock Grid.Column="0" Grid.Row="9" Text="Image 1" Classes="font20"></TextBlock>
+            <StackPanel Grid.Column="2" Grid.Row="9" Orientation="Horizontal">
+              <TextBox Width="100" Text="{Binding Image1, Mode=TwoWay}" Height="30"></TextBox>
+              <Button Content="..." Command="{Binding SelectImage1Async}"></Button>
+            </StackPanel>
+
+            <TextBlock Grid.Column="0" Grid.Row="10" Text="Image 2" Classes="font20"></TextBlock>
+            <StackPanel Grid.Column="2" Grid.Row="10" Orientation="Horizontal">
+              <TextBox Width="100" Text="{Binding Image2, Mode=TwoWay}" Height="30"></TextBox>
+              <Button Content="..." Command="{Binding SelectImage2Async}"></Button>
+            </StackPanel>
           </Grid>
         </Border>
       </StackPanel>

@@ -1,5 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Reactive;
+using System.Threading.Tasks;
+using Avalonia.Controls;
 using GalaSoft.MvvmLight.Messaging;
 using ReactiveUI;
 
@@ -7,12 +10,14 @@ namespace U2.QslManager
 {
     public class QslCardFieldsViewModel : ViewModelBase
     {
+        public Window Owner { get; set; }
+
         public QslCardFieldsViewModel(QslCardFieldsModel qslCardFields,
             List<QslCardDesign> designs)
         {
             ClearFieldsCommand = ReactiveCommand.Create(ClearFields);
             PreviewCardCommand = ReactiveCommand.Create(PreviewCard);
-
+            
             SelectedDesignIndex = 0;
 
             QslCardFields = qslCardFields;
@@ -28,6 +33,38 @@ namespace U2.QslManager
             Text2 = qslCardFields.Text2;
         }
 
+        private async Task<string?> SelectImage()
+        {
+            var openFileDialog = new OpenFileDialog
+            {
+                Filters = new List<FileDialogFilter>
+                {
+                    new FileDialogFilter
+                    {
+                        Extensions = new[] {"gif", "png", "jpg", "jpeg", "tif", "tiff"}.ToList(),
+                        Name = "Image files"
+                    }
+                }
+            };
+            var list = await openFileDialog.ShowAsync(new Window());
+            return list?.First();
+        }
+
+        private async Task SelectBackgroundImageAsync()
+        {
+            BackgroundImage = await SelectImage();
+        }
+
+        private async Task SelectImage1Async()
+        {
+            Image1 = await SelectImage();
+        }
+
+        private async Task SelectImage2Async()
+        {
+            Image2 = await SelectImage();
+        }
+
         public string? Callsign { get; set; }
         public string? CqZone { get; set; }
         public string? ItuZone { get; set; }
@@ -36,6 +73,9 @@ namespace U2.QslManager
         public string? OperatorName { get; set; }
         public string? Text1 { get; set; }
         public string? Text2 { get; set; }
+        public string? BackgroundImage { get; set; }
+        public string? Image1 { get; set; }
+        public string? Image2 { get; set; }
 
         public QslCardFieldsModel QslCardFields { get; }
         public List<QslCardDesign>? Designs { get; set; }
@@ -43,6 +83,7 @@ namespace U2.QslManager
 
         public ReactiveCommand<Unit, Unit> ClearFieldsCommand { get; }
         public ReactiveCommand<Unit, Unit> PreviewCardCommand { get; }
+        public ReactiveCommand<Unit, Unit> SelectBackgroundImageCommand { get; }
 
         internal void Clear()
         {
@@ -55,6 +96,9 @@ namespace U2.QslManager
             Qth = string.Empty;
             Text1 = string.Empty;
             Text2 = string.Empty;
+            BackgroundImage = string.Empty;
+            Image1 = string.Empty;
+            Image2 = string.Empty;
         }
 
         private void ClearFields()
@@ -74,6 +118,7 @@ namespace U2.QslManager
                 Qth = this.Qth,
                 Text1 = this.Text1,
                 Text2 = this.Text2,
+                BackgroundImage = this.BackgroundImage,
             };
             var message = new RenderQslMessage
             {

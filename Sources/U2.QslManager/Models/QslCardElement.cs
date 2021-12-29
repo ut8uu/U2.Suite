@@ -13,6 +13,11 @@ namespace U2.QslManager
 
     public class QslCardElement
     {
+        public QslCardElement()
+        {
+            StartPositionMM = new Position();
+        }
+
         /// <summary>
         /// An order of the element during the processing.
         /// Can be either positive or negative.
@@ -35,7 +40,7 @@ namespace U2.QslManager
         /// Coordinates of the lower bottom corner of the element boundary.
         /// Values are in millimeters.
         /// </summary>
-        public Position? StartPositionMM { get; set; }
+        public Position StartPositionMM { get; set; }
         /// <summary>
         /// Coordinates of the upper-right corner of the element's boundaries.
         /// Values are in millimeters.
