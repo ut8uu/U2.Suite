@@ -5,13 +5,21 @@ namespace U2.QslManager
     public sealed class QslCardGridInfo
     {
         /// <summary>
+        /// A name of the font used in the grid header.
+        /// </summary>
+        public string? FontName { get; set; }
+        /// <summary>
+        /// A size of the font used in the grid header.
+        /// </summary>
+        public int? FontSize { get; set; }
+        /// <summary>
         /// A color of the background, either hex or color name.
         /// </summary>
         public string? BackgroundColor { get; set; }
         /// <summary>
         /// A color of the line, either hex or color name.
         /// </summary>
-        public string? LineColor { get; set; }
+        public string? ForegroundColor { get; set; }
         /// <summary>
         /// A number of data rows.
         /// </summary>

@@ -98,7 +98,7 @@ namespace U2.QslManager
                         Y = 70
                     },
                     BackgroundColor = "White",
-                    LineColor = "DarkNavy",
+                    ForegroundColor = "DarkNavy",
                     RowCount = 1,
                     HeaderHeightMM = 10,
                     RowHeightMM = 10,

@@ -79,6 +79,75 @@ namespace U2.QslManager
                 ctx.FillRectangle(Brush.Parse(_design.BackgroundColor), new Rect(0, 0, _cardWidth, _cardHeight));
             }
 
+            DrawTexts(ctx);
+            DrawDataGrid(ctx);
+
+            Dispatcher.UIThread.Post(InvalidateVisual, DispatcherPriority.Background);
+        }
+
+        private void DrawDataGrid(DrawingContext ctx)
+        {
+            if (_design.GridInfo == null)
+            {
+                return;
+            }
+
+            var dotsPerMM = Convert.ToInt32(_design.DensityDpi / 25.4);
+            var currentX = Convert.ToInt32(_design.GridInfo.StartPositionMM.X * dotsPerMM);
+            var startY = Convert.ToInt32(_design.GridInfo.StartPositionMM.Y * dotsPerMM);
+
+            var headerHeight = Convert.ToInt32(_design.GridInfo.HeaderHeightMM * dotsPerMM);
+            var dataRowHeight = Convert.ToInt32(_design.GridInfo.RowHeightMM * dotsPerMM);
+
+            foreach (var column in _design.GridInfo.Columns)
+            {
+                var currentY = startY;
+
+                var columnWidth = Convert.ToInt32(column.WidthMM * dotsPerMM);
+
+                // draw header
+                var rectangle = new Rect(new Point(currentX, currentY),
+                    new Size(columnWidth, headerHeight));
+                DrawDataCell(ctx, rectangle, column.Title);
+
+                currentY += headerHeight;
+
+                // draw cells
+
+                for (var rowIndex = 0; rowIndex < _design.GridInfo.RowCount; rowIndex++)
+                {
+                    rectangle = new Rect(new Point(currentX, currentY),
+                        new Size(columnWidth, dataRowHeight));
+                    DrawDataCell(ctx, rectangle, string.Empty);
+
+                    currentY += headerHeight;
+                }
+
+                currentX += columnWidth;
+            }
+        }
+
+        private void DrawDataCell(DrawingContext ctx, Rect rectangle, string text)
+        {
+            var cellBrush = Brush.Parse(_design.GridInfo.BackgroundColor);
+            var textBrush = Brush.Parse(_design.GridInfo.ForegroundColor);
+            var pen = new Pen(textBrush);
+            ctx.DrawRectangle(cellBrush, pen, rectangle);
+
+            var txt = new FormattedText
+            {
+                Text = text,
+                FontSize = _design.GridInfo.FontSize.Value / _scale,
+                Typeface = new Typeface(_design.GridInfo.FontName),
+            };
+            var dx = rectangle.X + rectangle.Width / 2 - txt.Bounds.Width / 2;
+            var dy = rectangle.Y + rectangle.Height / 2 - txt.Bounds.Height / 2;
+            var textPosition = new Point(dx, dy);
+            ctx.DrawText(textBrush, textPosition, txt);
+        }
+
+        private void DrawTexts(DrawingContext? ctx)
+        {
             if (_fields != null)
             {
                 DrawText(ctx, text: _fields.Callsign, DesignElements.Callsign);
@@ -90,14 +159,6 @@ namespace U2.QslManager
                 DrawText(ctx, text: _fields.Text1, DesignElements.Text1);
                 DrawText(ctx, text: _fields.Text2, DesignElements.Text2);
             }
-            else
-            {
-                DrawingHelper.DrawText(ctx, _design.DensityDpi, _scale, 
-                    "Press 'Preview QSL' to display the QSL.",
-                    "Arial", 32, 30, 100, Colors.Red);
-            }
-
-            Dispatcher.UIThread.Post(InvalidateVisual, DispatcherPriority.Background);
         }
 
         private void DrawText(DrawingContext ctx, string text, string elementName)
@@ -108,8 +169,8 @@ namespace U2.QslManager
             }
             var designElement = _design.Elements.GetByName(elementName);
             DrawingHelper.DrawText(ctx, _design.DensityDpi, _scale * 2,
-                $"{designElement.ElementTitle}{text}", designElement.Font.Name, designElement.Font.Size, 
-                designElement.StartPositionMM.X, designElement.StartPositionMM.Y, 
+                $"{designElement.ElementTitle}{text}", designElement.Font.Name, designElement.Font.Size,
+                designElement.StartPositionMM.X, designElement.StartPositionMM.Y,
                 Color.Parse(designElement.Font.Color));
         }
 
