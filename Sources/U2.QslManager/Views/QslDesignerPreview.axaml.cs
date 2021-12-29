@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics;
+using System.Linq;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
@@ -26,6 +27,7 @@ namespace U2.QslManager
         private int _cardHeight;
         private int _viewPortWidth;
         private int _viewPortHeight;
+        private double _scale;
 
         private const int ControlWidth = 400;
 
@@ -53,9 +55,9 @@ namespace U2.QslManager
             var dotsPerMM = _design.DensityDpi / 25.4;
             _cardWidth = Convert.ToInt32(_design.CardSizeMM.Width * dotsPerMM);
             _cardHeight = Convert.ToInt32(_design.CardSizeMM.Height * dotsPerMM);
-            var scale = 1.0 * ControlWidth / _cardWidth;
-            _viewPortWidth = Convert.ToInt32(_cardWidth * scale);
-            _viewPortHeight = Convert.ToInt32(_cardHeight * scale);
+            _scale = 1.0 * ControlWidth / _cardWidth;
+            _viewPortWidth = Convert.ToInt32(_cardWidth * _scale);
+            _viewPortHeight = Convert.ToInt32(_cardHeight * _scale);
 
             if (designHasChanged)
             {
@@ -76,18 +78,40 @@ namespace U2.QslManager
 
             if (_fields != null)
             {
-                DrawingHelper.DrawRectangle(ctx, _design.DensityDpi, 10, 10, 100, 100, Colors.Aqua);
-                DrawingHelper.DrawText(ctx, _design.DensityDpi, scale*2, 
-                    _fields.Callsign, textSize:72, 20, 10, Colors.Black);
+                DrawingHelper.DrawRectangle(ctx, _design.DensityDpi, 10, 10, 140, 90, Colors.DarkBlue);
+                
+                DrawText(ctx, _fields.Callsign, DesignElements.Callsign);
+                DrawText(ctx, _fields.OperatorName, DesignElements.OperatorName);
+                DrawText(ctx, _fields.CqZone, DesignElements.CqZone);
+                DrawText(ctx, _fields.ItuZone, DesignElements.ItuZone);
+                DrawText(ctx, _fields.Grid, DesignElements.Grid);
+                DrawText(ctx, _fields.Qth, DesignElements.Qth);
+                DrawText(ctx, _fields.Text1, DesignElements.Text1);
+                DrawText(ctx, _fields.Text2, DesignElements.Text2);
             }
             else
             {
-                DrawingHelper.DrawText(ctx, _design.DensityDpi, scale, "Press 'Preview QSL' to display the QSL.",
-                    20, 30, 100, Colors.Red);
+                DrawingHelper.DrawText(ctx, _design.DensityDpi, _scale, 
+                    "Press 'Preview QSL' to display the QSL.",
+                    "Arial", 32, 30, 100, Colors.Red);
             }
 
             Dispatcher.UIThread.Post(InvalidateVisual, DispatcherPriority.Background);
         }
+
+        private void DrawText(DrawingContext ctx, string text, string elementName)
+        {
+            if (string.IsNullOrEmpty(text))
+            {
+                return;
+            }
+            var designElement = _design.Elements.GetByName(elementName);
+            DrawingHelper.DrawText(ctx, _design.DensityDpi, _scale * 2,
+                $"{designElement.ElementTitle}{text}", designElement.Font.Name, designElement.Font.Size, 
+                designElement.StartPositionMM.X, designElement.StartPositionMM.Y, 
+                Color.Parse(designElement.Font.Color));
+        }
+
 
         private void InitializeComponent()
         {

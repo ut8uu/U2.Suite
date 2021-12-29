@@ -12,8 +12,8 @@
       "element_name": "Callsign",
       "element_title": "",
       "start_position_mm": {
-        "x": 10,
-        "y": 80
+        "x": 20,
+        "y": 10
       },
       "end_position_mm": {
         "x": 0,
@@ -21,8 +21,8 @@
       },
       "transformation_angle": 0,
       "font": {
-        "name": "Arial",
-        "size": 32,
+        "name": "Calibri",
+        "size": 72,
         "color": "White",
         "bold": true,
         "italic": false
@@ -34,8 +34,8 @@
       "element_name": "OperatorName",
       "element_title": "op.",
       "start_position_mm": {
-        "x": 20,
-        "y": 70
+        "x": 80,
+        "y": 40
       },
       "end_position_mm": {
         "x": 0,
@@ -54,10 +54,10 @@
       "order": 0,
       "element_type": 0,
       "element_name": "CqZone",
-      "element_title": "CQ zone:",
+      "element_title": "CQ:",
       "start_position_mm": {
         "x": 20,
-        "y": 65
+        "y": 12
       },
       "end_position_mm": {
         "x": 0,
@@ -76,10 +76,10 @@
       "order": 0,
       "element_type": 0,
       "element_name": "ItuZone",
-      "element_title": "ITU zone:",
+      "element_title": "ITU:",
       "start_position_mm": {
-        "x": 30,
-        "y": 65
+        "x": 40,
+        "y": 12
       },
       "end_position_mm": {
         "x": 0,
@@ -101,7 +101,7 @@
       "element_title": "Grid:",
       "start_position_mm": {
         "x": 60,
-        "y": 65
+        "y": 12
       },
       "end_position_mm": {
         "x": 0,
@@ -123,7 +123,7 @@
       "element_title": "QTH:",
       "start_position_mm": {
         "x": 90,
-        "y": 65
+        "y": 12
       },
       "end_position_mm": {
         "x": 0,
@@ -212,23 +212,23 @@
     }
   ],
   "grid_info": {
-    "background_color": "#FFFFFF",
-    "line_color": "#000000",
+    "background_color": "white",
+    "line_color": "DarkNavy",
     "row_count": 1,
     "header_height_mm": 10,
     "row_height_mm": 10,
     "start_position_mm": {
       "x": 10,
-      "y": 10
+      "y": 70
     },
     "columns": [
       {
         "title": "To radio",
-        "width_mm": 50
+        "width_mm": 30
       },
       {
         "title": "Date",
-        "width_mm": 30
+        "width_mm": 20
       },
       {
         "title": "Time",
@@ -240,11 +240,11 @@
       },
       {
         "title": "Report",
-        "width_mm": 25
+        "width_mm": 15
       },
       {
         "title": "Mode",
-        "width_mm": 25
+        "width_mm": 15
       }
     ]
   }

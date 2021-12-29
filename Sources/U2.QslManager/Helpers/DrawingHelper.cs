@@ -12,7 +12,8 @@ namespace U2.QslManager.Helpers
         public static void DrawText(DrawingContext ctx,
             int densityDpi, double scale,
             string text,
-            int textSize,
+            string fontName,
+            int fontSize,
             int x, int y,
             Color brushColor)
         {
@@ -21,8 +22,8 @@ namespace U2.QslManager.Helpers
             var txt = new FormattedText
             {
                 Text = text,
-                FontSize = textSize * scale,
-                Typeface = new Typeface("Arial"),
+                FontSize = fontSize * scale,
+                Typeface = new Typeface(fontName),
             };
             ctx.DrawText(brush, point, txt);
         }

@@ -73,17 +73,17 @@ namespace U2.QslManager
             {
                 DesignName = "Demo Design",
                 CardSizeMM = new Dimensions(150, 100),
-                DensityDpi = 300,
+                DensityDpi = 96,
                 Elements = new[]
                 {
-                    GetTextElement(string.Empty, DesignElements.Callsign, 10, 80, 32),
-                    GetTextElement("op.", DesignElements.OperatorName, 20, 70, 16),
-                    GetTextElement("CQ zone:", DesignElements.CqZone, 20, 65, 12),
-                    GetTextElement("ITU zone:", DesignElements.ItuZone, 30, 65, 12),
-                    GetTextElement("Grid:", DesignElements.Grid, 60, 65, 12),
-                    GetTextElement("QTH:", DesignElements.Qth, 90, 65, 12),
-                    GetTextElement(string.Empty, DesignElements.Text1, 20, 15, 12),
-                    GetTextElement(string.Empty, DesignElements.Text2, 20, 5, 12),
+                    GetTextElement(string.Empty, DesignElements.Callsign, 20, 10, 72),
+                    GetTextElement("op.", DesignElements.OperatorName, 80, 40, 16),
+                    GetTextElement("CQ zone:", DesignElements.CqZone, 20, 12, 12),
+                    GetTextElement("ITU zone:", DesignElements.ItuZone, 40, 12, 12),
+                    GetTextElement("Grid:", DesignElements.Grid, 60, 12, 12),
+                    GetTextElement("QTH:", DesignElements.Qth, 90, 12, 12),
+                    GetTextElement(string.Empty, DesignElements.Text1, 20, 80, 12),
+                    GetTextElement(string.Empty, DesignElements.Text2, 20, 90, 12),
                     GetImageElement(DesignElements.BackgroundImage, 0, 0, 150, 100, order: 0),
                     GetImageElement(DesignElements.Image1, 100, 20, 140, 80, order: 10),
                 },
@@ -91,11 +91,11 @@ namespace U2.QslManager
                 {
                     StartPositionMM = new Position
                     {
-                        X = 10,
-                        Y = 10
+                        X = 20,
+                        Y = 70
                     },
-                    BackgroundColor = "#FFFFFF",
-                    LineColor = "#000000",
+                    BackgroundColor = "White",
+                    LineColor = "DarkNavy",
                     RowCount = 1,
                     HeaderHeightMM = 10,
                     RowHeightMM = 10,
@@ -104,12 +104,12 @@ namespace U2.QslManager
                         new QslCardGridColumn
                         {
                             Title = "To radio",
-                            WidthMM = 50,
+                            WidthMM = 30,
                         },
                         new QslCardGridColumn
                         {
                             Title = "Date",
-                            WidthMM = 30,
+                            WidthMM = 20,
                         },
                         new QslCardGridColumn
                         {
@@ -124,12 +124,12 @@ namespace U2.QslManager
                         new QslCardGridColumn
                         {
                             Title = "Report",
-                            WidthMM = 25,
+                            WidthMM = 15,
                         },
                         new QslCardGridColumn
                         {
                             Title = "Mode",
-                            WidthMM = 25,
+                            WidthMM = 15,
                         },
                     }
                 }
