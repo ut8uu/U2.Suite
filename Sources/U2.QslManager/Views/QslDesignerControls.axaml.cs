@@ -25,7 +25,8 @@ namespace U2.QslManager
                 OperatorName = "Sergey Usmanov",
                 Qth = "Kyiv",
                 Text1 = string.Empty,
-                Text2 = string.Empty
+                Text2 = string.Empty,
+                BackgroundImage = @"Images/kyiv.jpg"
             };
             _viewModel = new QslCardFieldsViewModel(qslCardFields, Utilities.GetDesigns());
             DataContext = _viewModel;

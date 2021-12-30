@@ -138,7 +138,7 @@ namespace U2.QslManager
                 BackgroundImage = this.BackgroundImage,
             };
             var design = Designs?[SelectedDesignIndex];
-            var bitmap = QslCardGenerator.Generate(design.DensityDpi, fields, design);
+            var bitmap = QslCardGenerator.Generate(fields, design);
             bitmap.Save(fileName);
         }
     }

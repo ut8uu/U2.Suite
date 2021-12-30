@@ -5,23 +5,24 @@ using Avalonia.Media;
 using Avalonia;
 using Avalonia.Media.Imaging;
 using Avalonia.Controls;
+using System.Drawing.Imaging;
+using Avalonia.Controls.Shapes;
 
 namespace U2.QslManager.Helpers
 {
     public static class QslCardGenerator
     {
         public static RenderTargetBitmap Generate(
-            int density,
             QslCardFieldsModel fields,
             QslCardDesign design)
         {
-            var dotsPerMM = density / 25.4;
+            var dotsPerMM = design.DensityDpi / 25.4;
             var cardWidth = Convert.ToInt32(design.CardSizeMM.Width * dotsPerMM);
             var cardHeight = Convert.ToInt32(design.CardSizeMM.Height * dotsPerMM);
             var scale = 1.0 * 450 / cardWidth;
 
             var bitmap = new RenderTargetBitmap(new PixelSize(cardWidth, cardHeight),
-                new Vector(density, density));
+                new Vector(design.DensityDpi, design.DensityDpi));
 
             using var ctxi = bitmap.CreateDrawingContext(null);
             using var ctx = new DrawingContext(ctxi, false);
@@ -32,11 +33,76 @@ namespace U2.QslManager.Helpers
                 ctx.FillRectangle(Brush.Parse(design.BackgroundColor), new Rect(0, 0, cardWidth, cardHeight));
             }
 
+            DrawBackgroundImage(ctx, fields, design);
             DrawTexts(ctx, fields, design, scale);
             DrawDataGrid(ctx, design, scale);
             DrawToRadio(ctx, design, scale);
 
             return bitmap;
+        }
+
+        private static void DrawBackgroundImage(
+            DrawingContext ctx, 
+            QslCardFieldsModel fields, 
+            QslCardDesign design)
+        {
+            if (string.IsNullOrEmpty(fields.BackgroundImage))
+            {
+                return;
+            }
+
+            var image = System.Drawing.Image.FromFile(fields.BackgroundImage);
+            var bitmapTmp = new System.Drawing.Bitmap(image);
+            var bitmapdata = bitmapTmp.LockBits(
+                new System.Drawing.Rectangle(0, 0, bitmapTmp.Width, bitmapTmp.Height), ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
+            var avaloniaBitmap = new Bitmap(Avalonia.Platform.PixelFormat.Bgra8888, Avalonia.Platform.AlphaFormat.Premul,
+                bitmapdata.Scan0,
+                new Avalonia.PixelSize(bitmapdata.Width, bitmapdata.Height),
+                new Avalonia.Vector(design.DensityDpi, design.DensityDpi),
+                bitmapdata.Stride);
+            bitmapTmp.UnlockBits(bitmapdata);
+            bitmapTmp.Dispose();
+            
+            var dotsPerMM = Convert.ToInt32(design.DensityDpi / 25.4);
+
+            var srcW = avaloniaBitmap.Size.Width;
+            var srcH = avaloniaBitmap.Size.Height;
+            var scale0 = srcW / srcH;
+
+            var destStartX = 0d;
+            var destStartY = 0d;
+            var destEndX = design.CardSizeMM.Width * dotsPerMM;
+            var destEndY = design.CardSizeMM.Height * dotsPerMM;
+            var scale1 = destEndX / destEndY;
+
+            //var destX0 = 0d;
+            //var destX1 = destEndX;
+            //var destY0 = 0d;
+            //var destY1 = destEndY;
+            if (scale0 > scale1)
+            {
+                // source image is wider than destination
+                var ratioH = srcH / destEndY;
+                var resultingW = srcW / ratioH;
+                var deltaW = (resultingW - destEndX) / 2;
+                destStartX = -deltaW;
+                destEndX += deltaW;
+            }
+            else
+            {
+                // source image is higher than destination
+                var ratioW = srcW / destEndX;
+                var resultingH = srcH / ratioW;
+                var deltaH = (resultingH - destEndY) / 2;
+                destStartY = -deltaH;
+                destEndY += deltaH;
+            }
+
+            var sourceRectangle = new Rect(new Point(0, 0), avaloniaBitmap.Size);
+            var destinationRectangle = new Rect(
+                new Point(destStartX, destStartY),
+                new Point(destEndX, destEndY));
+            ctx.DrawImage(avaloniaBitmap, sourceRectangle, destinationRectangle);
         }
 
         private static void DrawToRadio(DrawingContext ctx,

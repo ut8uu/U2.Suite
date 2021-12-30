@@ -46,7 +46,7 @@ namespace U2.QslManager
                                     || _design.CardSizeMM.Width != inputMessage.Design.CardSizeMM.Width
                                     || _design.CardSizeMM.Height != inputMessage.Design.CardSizeMM.Height);
 
-            _bitmap = QslCardGenerator.Generate(96, inputMessage.Fields, inputMessage.Design);
+            _bitmap = QslCardGenerator.Generate(inputMessage.Fields, inputMessage.Design);
 
             _fields = inputMessage.Fields;
             _design = inputMessage.Design;

@@ -8,10 +8,15 @@ namespace U2.QslManager
 {
     public sealed class QslCardDesign
     {
+        public QslCardDesign()
+        {
+            CardSizeMM = new Dimensions();
+        }
+
         public string? AuthoredBy { get; set; }
         public string? DesignName { get; set; }
 
-        public Dimensions? CardSizeMM { get; set; }
+        public Dimensions CardSizeMM { get; set; }
         public int DensityDpi { get; set; }
         public string? BackgroundColor { get; set; }
         public string? BackgroundImage { get; set; }
@@ -30,10 +35,10 @@ namespace U2.QslManager
 
         }
 
-        public int Height { get; set; }
-        public int Width { get; set; }
+        public double Height { get; set; }
+        public double Width { get; set; }
 
-        public Dimensions(int width, int height)
+        public Dimensions(double width, double height)
         {
             Height = height;
             Width = width;
