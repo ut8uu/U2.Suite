@@ -14,7 +14,6 @@
                 RowDefinitions="Auto,Auto">
             <StackPanel Grid.Column="2" Grid.Row="0" Orientation="Horizontal">
               <Button Command="{Binding ClearFieldsCommand}">Clear</Button>
-              <Button Command="{Binding PreviewCardCommand}">Preview QSL</Button>
             </StackPanel>
             <TextBlock Grid.Column="0" Grid.Row="1" Text="Design template" Classes="font20"></TextBlock>
             <ComboBox Grid.Column="2" Grid.Row="1"
@@ -78,6 +77,10 @@
       </StackPanel>
     </Border>
     <StackPanel Margin="20">
+      <StackPanel Orientation="Horizontal">
+        <Button Command="{Binding PreviewCardCommand}">Preview QSL</Button>
+        <Button Command="{Binding ExportCardCommand}">Export</Button>
+      </StackPanel>
       <views:QslDesignerPreview Width="400" Height="450"></views:QslDesignerPreview>
     </StackPanel>
 

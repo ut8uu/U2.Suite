@@ -17,6 +17,7 @@ namespace U2.QslManager
         {
             ClearFieldsCommand = ReactiveCommand.Create(ClearFields);
             PreviewCardCommand = ReactiveCommand.Create(PreviewCard);
+            ExportCardCommand = ReactiveCommand.Create(ExportCard);
             
             SelectedDesignIndex = 0;
 
@@ -83,7 +84,7 @@ namespace U2.QslManager
 
         public ReactiveCommand<Unit, Unit> ClearFieldsCommand { get; }
         public ReactiveCommand<Unit, Unit> PreviewCardCommand { get; }
-        public ReactiveCommand<Unit, Unit> SelectBackgroundImageCommand { get; }
+        public ReactiveCommand<Unit, Unit> ExportCardCommand { get; }
 
         internal void Clear()
         {
@@ -127,5 +128,13 @@ namespace U2.QslManager
             };
             Messenger.Default.Send(message);
         }
+
+        private void ExportCard()
+        {
+            var openFileDialog = new OpenFileDialog();
+
+
+        }
+
     }
 }
