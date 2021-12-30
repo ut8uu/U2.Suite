@@ -56,10 +56,10 @@ namespace U2.QslManager.Helpers
             var txt = new FormattedText
             {
                 Text = toRadioBlock.ElementTitle,
-                FontSize = design.GridInfo.FontSize.Value / scale,
-                Typeface = new Typeface(design.GridInfo.FontName),
+                FontSize = design.ToRadioBlock.Font.Size / scale,
+                Typeface = new Typeface(design.ToRadioBlock.Font.Name),
             };
-            var dx = rectangle.X + (rectangle.Height - txt.Bounds.Height) / 2;
+            var dx = rectangle.X + (rectangle.Height - txt.Bounds.Height);
             var dy = rectangle.Y + rectangle.Height / 2 - txt.Bounds.Height / 2;
             var textPosition = new Point(dx, dy);
             var textBrush = Brush.Parse(toRadioBlock.Font.Color);
