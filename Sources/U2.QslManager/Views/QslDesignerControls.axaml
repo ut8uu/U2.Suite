@@ -13,7 +13,7 @@
           <Grid ColumnDefinitions="180,20,*"
                 RowDefinitions="Auto,Auto">
             <StackPanel Grid.Column="2" Grid.Row="0" Orientation="Horizontal">
-              <Button Command="{Binding ClearFieldsCommand}">Clear</Button>
+              <Button Command="{Binding ClearFields}">Clear</Button>
             </StackPanel>
             <TextBlock Grid.Column="0" Grid.Row="1" Text="Design template" Classes="font20"></TextBlock>
             <ComboBox Grid.Column="2" Grid.Row="1"
@@ -78,8 +78,8 @@
     </Border>
     <StackPanel Margin="20">
       <StackPanel Orientation="Horizontal">
-        <Button Command="{Binding PreviewCardCommand}">Preview QSL</Button>
-        <Button Command="{Binding ExportCardCommand}">Export</Button>
+        <Button Command="{Binding PreviewCard}">Preview QSL</Button>
+        <Button Command="{Binding ExportCardAsync}">Export</Button>
       </StackPanel>
       <views:QslDesignerPreview Width="400" Height="450"></views:QslDesignerPreview>
     </StackPanel>

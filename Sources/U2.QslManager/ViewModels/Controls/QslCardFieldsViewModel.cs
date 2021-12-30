@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Avalonia.Controls;
 using GalaSoft.MvvmLight.Messaging;
 using ReactiveUI;
+using U2.QslManager.Helpers;
 
 namespace U2.QslManager
 {
@@ -15,10 +16,6 @@ namespace U2.QslManager
         public QslCardFieldsViewModel(QslCardFieldsModel qslCardFields,
             List<QslCardDesign> designs)
         {
-            ClearFieldsCommand = ReactiveCommand.Create(ClearFields);
-            PreviewCardCommand = ReactiveCommand.Create(PreviewCard);
-            ExportCardCommand = ReactiveCommand.Create(ExportCard);
-            
             SelectedDesignIndex = 0;
 
             QslCardFields = qslCardFields;
@@ -79,14 +76,10 @@ namespace U2.QslManager
         public string? Image2 { get; set; }
 
         public QslCardFieldsModel QslCardFields { get; }
-        public List<QslCardDesign>? Designs { get; set; }
+        public List<QslCardDesign> Designs { get; set; }
         public int SelectedDesignIndex { get; set; }
 
-        public ReactiveCommand<Unit, Unit> ClearFieldsCommand { get; }
-        public ReactiveCommand<Unit, Unit> PreviewCardCommand { get; }
-        public ReactiveCommand<Unit, Unit> ExportCardCommand { get; }
-
-        internal void Clear()
+        private void ClearFields()
         {
             SelectedDesignIndex = 0;
             Callsign = string.Empty;
@@ -100,11 +93,6 @@ namespace U2.QslManager
             BackgroundImage = string.Empty;
             Image1 = string.Empty;
             Image2 = string.Empty;
-        }
-
-        private void ClearFields()
-        {
-            Clear();
         }
 
         private void PreviewCard()
@@ -129,12 +117,29 @@ namespace U2.QslManager
             Messenger.Default.Send(message);
         }
 
-        private void ExportCard()
+        private async Task ExportCardAsync()
         {
-            var openFileDialog = new OpenFileDialog();
-
-
+            var fileDialog = new SaveFileDialog();
+            var fileName = await fileDialog.ShowAsync(new Window());
+            if (string.IsNullOrEmpty(fileName))
+            {
+                return;
+            }
+            var fields = new QslCardFieldsModel
+            {
+                Callsign = this.Callsign,
+                CqZone = this.CqZone,
+                ItuZone = this.ItuZone,
+                Grid = this.Grid,
+                OperatorName = this.OperatorName,
+                Qth = this.Qth,
+                Text1 = this.Text1,
+                Text2 = this.Text2,
+                BackgroundImage = this.BackgroundImage,
+            };
+            var design = Designs?[SelectedDesignIndex];
+            var bitmap = QslCardGenerator.Generate(design.DensityDpi, fields, design);
+            bitmap.Save(fileName);
         }
-
     }
 }
