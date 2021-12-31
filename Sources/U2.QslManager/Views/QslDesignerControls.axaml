@@ -7,7 +7,7 @@
              xmlns:views="using:U2.QslManager"
              Width="850" Height="550">
   <StackPanel Orientation="Horizontal">
-    <Border Padding="10">
+    <Border Padding="10" Width="400">
       <StackPanel>
         <Border Padding="10">
           <Grid ColumnDefinitions="180,20,*"
@@ -76,7 +76,7 @@
         </Border>
       </StackPanel>
     </Border>
-    <StackPanel Margin="20">
+    <StackPanel Margin="20" Width="450">
       <StackPanel Orientation="Horizontal">
         <Button Command="{Binding PreviewCard}">Preview QSL</Button>
         <Button Command="{Binding ExportCardAsync}">Export</Button>

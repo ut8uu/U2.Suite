@@ -215,7 +215,7 @@ namespace U2.QslManager.Helpers
                 return;
             }
             var designElement = design.Elements.GetByName(elementName);
-            DrawingHelper.DrawText(ctx, design.DensityDpmm * 2,
+            DrawingHelper.DrawText(ctx, design.DensityDpmm,
                 $"{designElement.ElementTitle}{text}", designElement.Font.Name, designElement.Font.Size,
                 designElement.StartPositionMM.X, designElement.StartPositionMM.Y,
                 designElement.Font.Color);
