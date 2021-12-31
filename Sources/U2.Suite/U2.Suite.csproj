@@ -4,6 +4,12 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <RuntimeIdentifiers>win-x64;osx-x64;linux-x64</RuntimeIdentifiers>
     <Nullable>enable</Nullable>
+    <AssemblyVersion>1.0.0.11231</AssemblyVersion>
+    <FileVersion>1.0.0.11231</FileVersion>
+    <RepositoryUrl>https://github.com/ut8uu/U2.Suite</RepositoryUrl>
+    <RepositoryType>github</RepositoryType>
+    <PackageProjectUrl>https://github.com/ut8uu/U2.Suite</PackageProjectUrl>
+    <Company>HamStudio</Company>
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="Models\" />

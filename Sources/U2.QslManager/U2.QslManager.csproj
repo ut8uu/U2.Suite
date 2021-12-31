@@ -3,12 +3,26 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <Nullable>enable</Nullable>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <FileVersion>1.0.0.0</FileVersion>
+    <NeutralLanguage>en</NeutralLanguage>
+    <RepositoryUrl>https://github.com/ut8uu/U2.Suite</RepositoryUrl>
+    <RepositoryType>github</RepositoryType>
+    <PackageProjectUrl>https://github.com/ut8uu/U2.Suite</PackageProjectUrl>
+    <Copyright>(c) 2021 Sergey Usmanov, UT8UU</Copyright>
+    <Product>U2.Suite</Product>
+    <Company>HamStudio</Company>
+    <Authors>Sergey Usmanov, UT8UU</Authors>
   </PropertyGroup>
   <ItemGroup>
     <AvaloniaResource Include="Assets\**" />
     <None Remove=".gitignore" />
+    <None Remove="Images\refresh.png" />
   </ItemGroup>
   <ItemGroup>
+    <AvaloniaResource Include="Images\refresh.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AvaloniaResource>
     <AvaloniaResource Include="Models\DesignElements.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -37,8 +51,5 @@
     <None Update="Images\kyiv.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Images\" />
   </ItemGroup>
 </Project>
