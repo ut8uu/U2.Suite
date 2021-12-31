@@ -13,13 +13,12 @@ namespace U2.QslManager
     {
         public Window Owner { get; set; }
 
-        public QslCardFieldsViewModel(QslCardFieldsModel qslCardFields,
-            List<QslCardDesign> designs)
+        public QslCardFieldsViewModel(QslCardFieldsModel qslCardFields)
         {
             SelectedDesignIndex = 0;
 
             QslCardFields = qslCardFields;
-            Designs = designs;
+            Designs = Utilities.GetDesigns();
 
             Callsign = qslCardFields.Callsign;
             CqZone = qslCardFields.CqZone;
@@ -140,6 +139,19 @@ namespace U2.QslManager
             var design = Designs?[SelectedDesignIndex];
             var bitmap = QslCardGenerator.Generate(fields, design);
             bitmap.Save(fileName);
+        }
+
+        private void RefreshTemplates()
+        {
+            var currentIndex = SelectedDesignIndex;
+            Designs = Utilities.GetDesigns();
+
+            if (Designs.Count < currentIndex)
+            {
+                currentIndex = 0;
+            }
+
+            SelectedDesignIndex = currentIndex;
         }
     }
 }

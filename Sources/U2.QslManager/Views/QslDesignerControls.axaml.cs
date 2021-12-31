@@ -28,7 +28,7 @@ namespace U2.QslManager
                 Text2 = string.Empty,
                 BackgroundImage = @"Images/kyiv.jpg"
             };
-            _viewModel = new QslCardFieldsViewModel(qslCardFields, Utilities.GetDesigns());
+            _viewModel = new QslCardFieldsViewModel(qslCardFields);
             DataContext = _viewModel;
             this._qslCardFields = qslCardFields;
         }
