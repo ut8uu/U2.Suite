@@ -8,15 +8,10 @@ namespace U2.QslManager
 {
     public sealed class QslCardDesign
     {
-        public QslCardDesign()
-        {
-            CardSizeMM = new Dimensions();
-        }
-
         public string? AuthoredBy { get; set; }
         public string? DesignName { get; set; }
 
-        public Dimensions CardSizeMM { get; set; }
+        public Dimensions CardSizeMM { get; set; } = new Dimensions();
         public double DensityDpi { get; set; }
         /// <summary>
         /// Contains a density in dots per millimeter.
@@ -24,14 +19,14 @@ namespace U2.QslManager
         /// </summary>
         public double DensityDpmm => DensityDpi / 25.4;
 
-        public string? BackgroundColor { get; set; }
+        public string BackgroundColor { get; set; } = "White";
         public string? BackgroundImage { get; set; }
 
         public QslCardElement[]? Elements { get; set; }
 
-        public QslCardToRadio ToRadioBlock { get; set; }
+        public QslCardToRadio ToRadioBlock { get; set; } = new QslCardToRadio();
 
-        public QslCardGridInfo? GridInfo { get; set; }
+        public QslCardGridInfo GridInfo { get; set; } = new QslCardGridInfo();
     }
 
     public sealed class Dimensions
@@ -41,14 +36,14 @@ namespace U2.QslManager
 
         }
 
-        public double Height { get; set; }
-        public double Width { get; set; }
-
         public Dimensions(double width, double height)
         {
             Height = height;
             Width = width;
         }
+
+        public double Height { get; set; }
+        public double Width { get; set; }
 
         public Avalonia.Size ToSize()
         {

@@ -20,12 +20,10 @@ namespace U2.QslManager
     [PropertyChanged.DoNotNotify]
     public partial class QslDesignerPreview : UserControl
     {
-
-        private QslCardFieldsModel _fields = null;
         private QslCardDesign _design = null;
-        private RenderTargetBitmap _bitmap;
+        private RenderTargetBitmap _bitmap = null;
 
-        private const int ControlWidth = 400;
+        private const double ControlWidth = 400.0;
 
         public QslDesignerPreview()
         {
@@ -41,14 +39,8 @@ namespace U2.QslManager
             Debug.Assert(inputMessage.Fields != null);
             Debug.Assert(inputMessage.Design != null);
 
-            var designHasChanged = (_design == null
-                                    || _design.DensityDpi != inputMessage.Design.DensityDpi
-                                    || _design.CardSizeMM.Width != inputMessage.Design.CardSizeMM.Width
-                                    || _design.CardSizeMM.Height != inputMessage.Design.CardSizeMM.Height);
-
             _bitmap = QslCardGenerator.Generate(inputMessage.Fields, inputMessage.Design);
 
-            _fields = inputMessage.Fields;
             _design = inputMessage.Design;
 
             Dispatcher.UIThread.Post(InvalidateVisual, DispatcherPriority.Background);
@@ -81,9 +73,8 @@ namespace U2.QslManager
 
             if (_bitmap != null)
             {
-                var dotsPerMM = _design.DensityDpi / 25.4;
-                var cardWidth = Convert.ToInt32(_design.CardSizeMM.Width * dotsPerMM);
-                var cardHeight = Convert.ToInt32(_design.CardSizeMM.Height * dotsPerMM);
+                var cardWidth = Convert.ToInt32(_design.CardSizeMM.Width * _design.DensityDpmm);
+                var cardHeight = Convert.ToInt32(_design.CardSizeMM.Height * _design.DensityDpmm);
                 var scale = 1.0 * ControlWidth / cardWidth;
                 var viewPortWidth = Convert.ToInt32(cardWidth * scale);
                 var viewPortHeight = Convert.ToInt32(cardHeight * scale);

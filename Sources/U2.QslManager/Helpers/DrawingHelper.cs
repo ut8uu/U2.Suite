@@ -12,20 +12,32 @@ namespace U2.QslManager.Helpers
 {
     public static class DrawingHelper
     {
+        /// <summary>
+        /// Draws given text using the drawing context.
+        /// </summary>
+        /// <param name="ctx">A context to draw on</param>
+        /// <param name="densityDpmm">A density (points per millimeter)</param>
+        /// <param name="text">A text to be drawn</param>
+        /// <param name="fontName">A name of the used font</param>
+        /// <param name="fontSize">A size of the used font</param>
+        /// <param name="x">A left position of the text boundaries</param>
+        /// <param name="y">A top position of the text boundaries</param>
+        /// <param name="colorName">A color of the drawn text</param>
         public static void DrawText(DrawingContext ctx,
-            int densityDpi, double scale,
+            double densityDpmm,
             string text,
             string fontName,
-            int fontSize,
-            int x, int y,
-            Color brushColor)
+            double fontSize,
+            double x, double y,
+            string colorName)
         {
-            var brush = new SolidColorBrush(brushColor);
-            var point = new Point(x, y) * (densityDpi / 25.4);
+            var color = Color.Parse(colorName);
+            var brush = new SolidColorBrush(color);
+            var point = new Point(x, y) * densityDpmm;
             var txt = new FormattedText
             {
                 Text = text,
-                FontSize = fontSize * scale,
+                FontSize = fontSize,
                 Typeface = new Typeface(fontName),
             };
             ctx.DrawText(brush, point, txt);
@@ -35,22 +47,23 @@ namespace U2.QslManager.Helpers
         /// Draws a rectangle using a solid color.
         /// </summary>
         /// <param name="ctx">A drawing context</param>
-        /// <param name="densityDpi">A density (points per inch)</param>
+        /// <param name="densityDpmm">A density (points per millimeter)</param>
         /// <param name="leftMM">A left coordinate of the rectangle in millimeters</param>
         /// <param name="topMM">A top coordinate of the rectangle in millimeters</param>
         /// <param name="rightMM">A right coordinate of the rectangle in millimeters</param>
         /// <param name="bottomMM">A bottom coordinate of the rectangle in millimeters</param>
-        /// <param name="brushColor">Used color</param>
+        /// <param name="colorName">Used color</param>
         public static void DrawRectangle(DrawingContext ctx,
-            int densityDpi,
-            int leftMM, int topMM,
-            int rightMM, int bottomMM,
-            Color brushColor)
+            double densityDpmm,
+            double leftMM, double topMM,
+            double rightMM, double bottomMM,
+            string colorName)
         {
-            var dotsPerMM = densityDpi / 25.4;
-            var rectangle = new Rect(new Point(leftMM, topMM),
-                new Point(rightMM, bottomMM)) * dotsPerMM;
-            DrawRectangle(ctx, rectangle, brushColor);
+            var color = Color.Parse(colorName);
+            var topLeftPoint = new Point(leftMM, topMM);
+            var bottomRightPoint = new Point(rightMM, bottomMM);
+            var rectangle = new Rect(topLeftPoint, bottomRightPoint) * densityDpmm;
+            DrawRectangle(ctx, rectangle, colorName);
         }
 
         /// <summary>
@@ -58,10 +71,11 @@ namespace U2.QslManager.Helpers
         /// </summary>
         /// <param name="ctx">A drawing context</param>
         /// <param name="rectangle">A rectangle to draw</param>
-        /// <param name="brushColor">Used color</param>
+        /// <param name="colorName">Used color</param>
         public static void DrawRectangle(DrawingContext ctx, 
-            Rect rectangle, Color brushColor)
+            Rect rectangle, string colorName)
         {
+            var brushColor = Color.Parse(colorName);
             var brush = new SolidColorBrush(brushColor);
             ctx.DrawRectangle(brush, null, rectangle);
         }

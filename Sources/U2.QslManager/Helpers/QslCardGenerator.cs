@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing.Imaging;
 using System.Text;
 using Avalonia.Media;
 using Avalonia;
 using Avalonia.Media.Imaging;
 using Avalonia.Controls;
-using System.Drawing.Imaging;
 using Avalonia.Controls.Shapes;
 
 namespace U2.QslManager.Helpers
@@ -20,7 +20,6 @@ namespace U2.QslManager.Helpers
         {
             var cardWidth = Convert.ToInt32(design.CardSizeMM.Width * design.DensityDpmm);
             var cardHeight = Convert.ToInt32(design.CardSizeMM.Height * design.DensityDpmm);
-            var scale = 1.0;// ViewPortWidth / cardWidth;
 
             var bitmap = new RenderTargetBitmap(new PixelSize(cardWidth, cardHeight),
                 new Vector(design.DensityDpi, design.DensityDpi));
@@ -31,13 +30,14 @@ namespace U2.QslManager.Helpers
             ctxi.Clear(default);
             if (!string.IsNullOrEmpty(design.BackgroundColor))
             {
-                ctx.FillRectangle(Brush.Parse(design.BackgroundColor), new Rect(0, 0, cardWidth, cardHeight));
+                ctx.FillRectangle(Brush.Parse(design.BackgroundColor), 
+                    new Rect(0, 0, cardWidth, cardHeight));
             }
 
             DrawBackgroundImage(ctx, fields, design);
-            DrawTexts(ctx, fields, design, scale);
-            DrawDataGrid(ctx, design, scale);
-            DrawToRadio(ctx, design, scale);
+            DrawTexts(ctx, fields, design);
+            DrawDataGrid(ctx, design);
+            DrawToRadio(ctx, design);
 
             return bitmap;
         }
@@ -54,14 +54,14 @@ namespace U2.QslManager.Helpers
 
             var image = System.Drawing.Image.FromFile(fields.BackgroundImage);
             var bitmapTmp = new System.Drawing.Bitmap(image);
-            var bitmapdata = bitmapTmp.LockBits(
+            var bitmapData = bitmapTmp.LockBits(
                 new System.Drawing.Rectangle(0, 0, bitmapTmp.Width, bitmapTmp.Height), ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
             var avaloniaBitmap = new Bitmap(Avalonia.Platform.PixelFormat.Bgra8888, Avalonia.Platform.AlphaFormat.Premul,
-                bitmapdata.Scan0,
-                new Avalonia.PixelSize(bitmapdata.Width, bitmapdata.Height),
+                bitmapData.Scan0,
+                new Avalonia.PixelSize(bitmapData.Width, bitmapData.Height),
                 new Avalonia.Vector(design.DensityDpi, design.DensityDpi),
-                bitmapdata.Stride);
-            bitmapTmp.UnlockBits(bitmapdata);
+                bitmapData.Stride);
+            bitmapTmp.UnlockBits(bitmapData);
             bitmapTmp.Dispose();
             
             var srcW = avaloniaBitmap.Size.Width;
@@ -101,8 +101,7 @@ namespace U2.QslManager.Helpers
         }
 
         private static void DrawToRadio(DrawingContext ctx,
-            QslCardDesign design,
-            double scale)
+            QslCardDesign design)
         {
             var toRadioBlock = design.ToRadioBlock;
             var point = toRadioBlock.StartPositionMM.ToPoint() * design.DensityDpmm;
@@ -110,13 +109,12 @@ namespace U2.QslManager.Helpers
             var rectangle = new Rect(point, size);
             if (!string.IsNullOrEmpty(toRadioBlock.BackgroundColor))
             {
-                var bgColor = Color.Parse(toRadioBlock.BackgroundColor);
-                DrawingHelper.DrawRectangle(ctx, rectangle, bgColor);
+                DrawingHelper.DrawRectangle(ctx, rectangle, toRadioBlock.BackgroundColor);
             }
             var txt = new FormattedText
             {
                 Text = toRadioBlock.ElementTitle,
-                FontSize = design.ToRadioBlock.Font.Size / scale,
+                FontSize = design.ToRadioBlock.Font.Size,
                 Typeface = new Typeface(design.ToRadioBlock.Font.Name),
             };
             var dx = rectangle.X + (rectangle.Height - txt.Bounds.Height);
@@ -127,8 +125,7 @@ namespace U2.QslManager.Helpers
         }
 
         private static void DrawDataGrid(DrawingContext ctx,
-            QslCardDesign design,
-            double scale)
+            QslCardDesign design)
         {
             if (design.GridInfo == null)
             {
@@ -150,7 +147,7 @@ namespace U2.QslManager.Helpers
                 // draw header
                 var rectangle = new Rect(new Point(currentX, currentY),
                     new Size(columnWidth, headerHeight));
-                DrawDataCell(ctx, design, rectangle, column.Title, scale);
+                DrawDataCell(ctx, design, rectangle, column.Title);
 
                 currentY += headerHeight;
 
@@ -160,7 +157,7 @@ namespace U2.QslManager.Helpers
                 {
                     rectangle = new Rect(new Point(currentX, currentY),
                         new Size(columnWidth, dataRowHeight));
-                    DrawDataCell(ctx, design, rectangle, string.Empty, scale);
+                    DrawDataCell(ctx, design, rectangle, string.Empty);
 
                     currentY += headerHeight;
                 }
@@ -172,8 +169,7 @@ namespace U2.QslManager.Helpers
         private static void DrawDataCell(DrawingContext ctx,
             QslCardDesign design,
             Rect rectangle,
-            string text,
-            double scale)
+            string text)
         {
             var cellBrush = Brush.Parse(design.GridInfo.BackgroundColor);
             var textBrush = Brush.Parse(design.GridInfo.ForegroundColor);
@@ -183,7 +179,7 @@ namespace U2.QslManager.Helpers
             var txt = new FormattedText
             {
                 Text = text,
-                FontSize = design.GridInfo.FontSize.Value / scale,
+                FontSize = design.GridInfo.FontSize,
                 Typeface = new Typeface(design.GridInfo.FontName),
             };
             var dx = rectangle.X + rectangle.Width / 2 - txt.Bounds.Width / 2;
@@ -194,39 +190,35 @@ namespace U2.QslManager.Helpers
 
         private static void DrawTexts(DrawingContext? ctx,
             QslCardFieldsModel fields,
-            QslCardDesign design,
-            double scale)
+            QslCardDesign design)
         {
             if (fields != null)
             {
-                DrawText(ctx, design, text: fields.Callsign, elementName: DesignElements.Callsign, scale);
-                DrawText(ctx, design, text: fields.OperatorName, elementName: DesignElements.OperatorName, scale);
-                DrawText(ctx, design, text: fields.CqZone, elementName: DesignElements.CqZone, scale);
-                DrawText(ctx, design, text: fields.ItuZone, elementName: DesignElements.ItuZone, scale);
-                DrawText(ctx, design, text: fields.Grid, elementName: DesignElements.Grid, scale);
-                DrawText(ctx, design, text: fields.Qth, elementName: DesignElements.Qth, scale);
-                DrawText(ctx, design, text: fields.Text1, elementName: DesignElements.Text1, scale);
-                DrawText(ctx, design, text: fields.Text2, elementName: DesignElements.Text2, scale);
+                DrawText(ctx, design, text: fields.Callsign, elementName: DesignElements.Callsign);
+                DrawText(ctx, design, text: fields.OperatorName, elementName: DesignElements.OperatorName);
+                DrawText(ctx, design, text: fields.CqZone, elementName: DesignElements.CqZone);
+                DrawText(ctx, design, text: fields.ItuZone, elementName: DesignElements.ItuZone);
+                DrawText(ctx, design, text: fields.Grid, elementName: DesignElements.Grid);
+                DrawText(ctx, design, text: fields.Qth, elementName: DesignElements.Qth);
+                DrawText(ctx, design, text: fields.Text1, elementName: DesignElements.Text1);
+                DrawText(ctx, design, text: fields.Text2, elementName: DesignElements.Text2);
             }
         }
 
         private static void DrawText(DrawingContext ctx,
             QslCardDesign design,
             string text,
-            string elementName,
-            double scale)
+            string elementName)
         {
             if (string.IsNullOrEmpty(text))
             {
                 return;
             }
             var designElement = design.Elements.GetByName(elementName);
-            DrawingHelper.DrawText(ctx, design.DensityDpi, scale * 2,
+            DrawingHelper.DrawText(ctx, design.DensityDpmm * 2,
                 $"{designElement.ElementTitle}{text}", designElement.Font.Name, designElement.Font.Size,
                 designElement.StartPositionMM.X, designElement.StartPositionMM.Y,
-                Color.Parse(designElement.Font.Color));
+                designElement.Font.Color);
         }
-
-
     }
 }
