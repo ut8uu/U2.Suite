@@ -15,7 +15,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Applications", "Application
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "U2.Suite", "U2.Suite\U2.Suite.csproj", "{E340F713-7B69-4404-8155-5CB332A850E3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "U2.QslManager", "U2.QslManager\U2.QslManager.csproj", "{497F1843-D59F-4B6B-A496-338FFDFE59C8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "U2.QslManager", "U2.QslManager\U2.QslManager.csproj", "{497F1843-D59F-4B6B-A496-338FFDFE59C8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
