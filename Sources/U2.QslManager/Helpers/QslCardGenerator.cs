@@ -216,7 +216,9 @@ namespace U2.QslManager.Helpers
             }
             var designElement = design.Elements.GetByName(elementName);
             DrawingHelper.DrawText(ctx, design.DensityDpmm,
-                $"{designElement.ElementTitle}{text}", designElement.Font.Name, designElement.Font.Size,
+                $"{designElement.ElementTitle}{text}", 
+                designElement.Font.Name, 
+                designElement.Font.Size * 1.7,
                 designElement.StartPositionMM.X, designElement.StartPositionMM.Y,
                 designElement.Font.Color);
         }

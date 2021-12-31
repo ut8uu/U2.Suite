@@ -48,7 +48,7 @@
         "name": "Arial",
         "size": 16,
         "color": "White",
-        "bold": true,
+        "bold": false,
         "italic": false
       }
     },
@@ -68,9 +68,9 @@
       "transformation_angle": 0,
       "font": {
         "name": "Arial",
-        "size": 12,
+        "size": 10,
         "color": "White",
-        "bold": true,
+        "bold": false,
         "italic": false
       }
     },
@@ -90,9 +90,9 @@
       "transformation_angle": 0,
       "font": {
         "name": "Arial",
-        "size": 12,
+        "size": 10,
         "color": "White",
-        "bold": true,
+        "bold": false,
         "italic": false
       }
     },
@@ -112,9 +112,9 @@
       "transformation_angle": 0,
       "font": {
         "name": "Arial",
-        "size": 14,
+        "size": 10,
         "color": "White",
-        "bold": true,
+        "bold": false,
         "italic": false
       }
     },
@@ -134,9 +134,9 @@
       "transformation_angle": 0,
       "font": {
         "name": "Arial",
-        "size": 12,
+        "size": 10,
         "color": "White",
-        "bold": true,
+        "bold": false,
         "italic": false
       }
     },
@@ -214,7 +214,7 @@
     "columns": [
       {
         "title": "Date",
-        "width_mm": 30
+        "width_mm": 35
       },
       {
         "title": "Time",
@@ -222,7 +222,7 @@
       },
       {
         "title": "Freq",
-        "width_mm": 20
+        "width_mm": 25
       },
       {
         "title": "Mode",

@@ -2,10 +2,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d" d:DesignWidth="850" d:DesignHeight="550"
+             mc:Ignorable="d" d:DesignWidth="900" d:DesignHeight="550"
              x:Class="U2.QslManager.QslDesignerControls"
              xmlns:views="using:U2.QslManager"
-             Width="850" Height="550">
+             Width="900" Height="550">
   <StackPanel Orientation="Horizontal">
     <Border Padding="10" Width="400">
       <StackPanel>
