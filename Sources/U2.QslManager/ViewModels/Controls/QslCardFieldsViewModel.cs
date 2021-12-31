@@ -11,8 +11,6 @@ namespace U2.QslManager
 {
     public class QslCardFieldsViewModel : ViewModelBase
     {
-        public Window Owner { get; set; }
-
         public QslCardFieldsViewModel(QslCardFieldsModel qslCardFields)
         {
             SelectedDesignIndex = 0;
@@ -30,7 +28,23 @@ namespace U2.QslManager
             Text2 = qslCardFields.Text2;
         }
 
-        private async Task<string?> SelectImage()
+        public string Callsign { get; set; } = "";
+        public string CqZone { get; set; } = "";
+        public string ItuZone { get; set; } = "";
+        public string Grid { get; set; } = "";
+        public string Qth { get; set; } = "";
+        public string OperatorName { get; set; } = "";
+        public string Text1 { get; set; } = "";
+        public string Text2 { get; set; } = "";
+        public string BackgroundImage { get; set; } = "";
+        public string Image1 { get; set; } = "";
+        public string Image2 { get; set; } = "";
+
+        public QslCardFieldsModel QslCardFields { get; }
+        public List<QslCardDesign> Designs { get; set; }
+        public int SelectedDesignIndex { get; set; }
+
+        private async Task<string> SelectImage()
         {
             var openFileDialog = new OpenFileDialog
             {
@@ -44,7 +58,7 @@ namespace U2.QslManager
                 }
             };
             var list = await openFileDialog.ShowAsync(new Window());
-            return list?.First();
+            return list.First();
         }
 
         private async Task SelectBackgroundImageAsync()
@@ -61,22 +75,6 @@ namespace U2.QslManager
         {
             Image2 = await SelectImage();
         }
-
-        public string? Callsign { get; set; }
-        public string? CqZone { get; set; }
-        public string? ItuZone { get; set; }
-        public string? Grid { get; set; }
-        public string? Qth { get; set; }
-        public string? OperatorName { get; set; }
-        public string? Text1 { get; set; }
-        public string? Text2 { get; set; }
-        public string? BackgroundImage { get; set; }
-        public string? Image1 { get; set; }
-        public string? Image2 { get; set; }
-
-        public QslCardFieldsModel QslCardFields { get; }
-        public List<QslCardDesign> Designs { get; set; }
-        public int SelectedDesignIndex { get; set; }
 
         private void ClearFields()
         {
@@ -136,7 +134,12 @@ namespace U2.QslManager
                 Text2 = this.Text2,
                 BackgroundImage = this.BackgroundImage,
             };
-            var design = Designs?[SelectedDesignIndex];
+            var designIndex = SelectedDesignIndex;
+            if (designIndex>Designs.Count)
+            {
+                designIndex = 0;
+            }
+            var design = Designs[designIndex];
             var bitmap = QslCardGenerator.Generate(fields, design);
             bitmap.Save(fileName);
         }

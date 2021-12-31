@@ -42,11 +42,11 @@ namespace U2.QslManager
         /// Values are in millimeters.
         /// Used for images. 
         /// </summary>
-        public Position? EndPositionMM { get; set; }
+        public Position EndPositionMM { get; set; } = new Position();
         /// <summary>
         /// A size of the bounding box.
         /// </summary>
-        public Dimensions? Size { get; set; }
+        public Dimensions Size { get; set; } = new Dimensions();
         /// <summary>
         /// A non-negative value indicating the angle of the text transformation.
         /// The value is related to the left-to-right way of the text representation.

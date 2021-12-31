@@ -188,7 +188,7 @@ namespace U2.QslManager.Helpers
             ctx.DrawText(textBrush, textPosition, txt);
         }
 
-        private static void DrawTexts(DrawingContext? ctx,
+        private static void DrawTexts(DrawingContext ctx,
             QslCardFieldsModel fields,
             QslCardDesign design)
         {

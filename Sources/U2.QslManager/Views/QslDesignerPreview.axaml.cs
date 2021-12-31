@@ -20,8 +20,8 @@ namespace U2.QslManager
     [PropertyChanged.DoNotNotify]
     public partial class QslDesignerPreview : UserControl
     {
-        private QslCardDesign _design = null;
-        private RenderTargetBitmap _bitmap = null;
+        private QslCardDesign _design;
+        private RenderTargetBitmap _bitmap;
 
         private const double ControlWidth = 400.0;
 
@@ -31,6 +31,9 @@ namespace U2.QslManager
 
             Messenger.Default.Register<RenderQslMessage>(this,
                 ReceiveInputMessage);
+
+            _design = new QslCardDesign();
+            _bitmap = new RenderTargetBitmap(new PixelSize(1, 1));
         }
 
         private void ReceiveInputMessage(RenderQslMessage inputMessage)
@@ -61,7 +64,6 @@ namespace U2.QslManager
             if (_bitmap != null)
             {
                 _bitmap.Dispose();
-                _bitmap = null;
             }
 
             base.OnDetachedFromLogicalTree(e);
