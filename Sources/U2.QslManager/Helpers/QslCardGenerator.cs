@@ -12,14 +12,15 @@ namespace U2.QslManager.Helpers
 {
     public static class QslCardGenerator
     {
+        public const double ViewPortWidth = 450;
+
         public static RenderTargetBitmap Generate(
             QslCardFieldsModel fields,
             QslCardDesign design)
         {
-            var dotsPerMM = design.DensityDpi / 25.4;
-            var cardWidth = Convert.ToInt32(design.CardSizeMM.Width * dotsPerMM);
-            var cardHeight = Convert.ToInt32(design.CardSizeMM.Height * dotsPerMM);
-            var scale = 1.0 * 450 / cardWidth;
+            var cardWidth = Convert.ToInt32(design.CardSizeMM.Width * design.DensityDpmm);
+            var cardHeight = Convert.ToInt32(design.CardSizeMM.Height * design.DensityDpmm);
+            var scale = 1.0;// ViewPortWidth / cardWidth;
 
             var bitmap = new RenderTargetBitmap(new PixelSize(cardWidth, cardHeight),
                 new Vector(design.DensityDpi, design.DensityDpi));
@@ -63,22 +64,16 @@ namespace U2.QslManager.Helpers
             bitmapTmp.UnlockBits(bitmapdata);
             bitmapTmp.Dispose();
             
-            var dotsPerMM = Convert.ToInt32(design.DensityDpi / 25.4);
-
             var srcW = avaloniaBitmap.Size.Width;
             var srcH = avaloniaBitmap.Size.Height;
             var scale0 = srcW / srcH;
 
             var destStartX = 0d;
             var destStartY = 0d;
-            var destEndX = design.CardSizeMM.Width * dotsPerMM;
-            var destEndY = design.CardSizeMM.Height * dotsPerMM;
+            var destEndX = design.CardSizeMM.Width * design.DensityDpmm;
+            var destEndY = design.CardSizeMM.Height * design.DensityDpmm;
             var scale1 = destEndX / destEndY;
 
-            //var destX0 = 0d;
-            //var destX1 = destEndX;
-            //var destY0 = 0d;
-            //var destY1 = destEndY;
             if (scale0 > scale1)
             {
                 // source image is wider than destination
@@ -110,9 +105,8 @@ namespace U2.QslManager.Helpers
             double scale)
         {
             var toRadioBlock = design.ToRadioBlock;
-            var dotsPerMM = Convert.ToInt32(design.DensityDpi / 25.4);
-            var point = toRadioBlock.StartPositionMM.ToPoint() * dotsPerMM;
-            var size = toRadioBlock.Size.ToSize() * dotsPerMM;
+            var point = toRadioBlock.StartPositionMM.ToPoint() * design.DensityDpmm;
+            var size = toRadioBlock.Size.ToSize() * design.DensityDpmm;
             var rectangle = new Rect(point, size);
             if (!string.IsNullOrEmpty(toRadioBlock.BackgroundColor))
             {
@@ -141,18 +135,17 @@ namespace U2.QslManager.Helpers
                 return;
             }
 
-            var dotsPerMM = Convert.ToInt32(design.DensityDpi / 25.4);
-            var currentX = Convert.ToInt32(design.GridInfo.StartPositionMM.X * dotsPerMM);
-            var startY = Convert.ToInt32(design.GridInfo.StartPositionMM.Y * dotsPerMM);
+            var currentX = Convert.ToInt32(design.GridInfo.StartPositionMM.X * design.DensityDpmm);
+            var startY = Convert.ToInt32(design.GridInfo.StartPositionMM.Y * design.DensityDpmm);
 
-            var headerHeight = Convert.ToInt32(design.GridInfo.HeaderHeightMM * dotsPerMM);
-            var dataRowHeight = Convert.ToInt32(design.GridInfo.RowHeightMM * dotsPerMM);
+            var headerHeight = Convert.ToInt32(design.GridInfo.HeaderHeightMM * design.DensityDpmm);
+            var dataRowHeight = Convert.ToInt32(design.GridInfo.RowHeightMM * design.DensityDpmm);
 
             foreach (var column in design.GridInfo.Columns)
             {
                 var currentY = startY;
 
-                var columnWidth = Convert.ToInt32(column.WidthMM * dotsPerMM);
+                var columnWidth = Convert.ToInt32(column.WidthMM * design.DensityDpmm);
 
                 // draw header
                 var rectangle = new Rect(new Point(currentX, currentY),

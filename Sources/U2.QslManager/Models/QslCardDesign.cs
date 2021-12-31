@@ -17,7 +17,13 @@ namespace U2.QslManager
         public string? DesignName { get; set; }
 
         public Dimensions CardSizeMM { get; set; }
-        public int DensityDpi { get; set; }
+        public double DensityDpi { get; set; }
+        /// <summary>
+        /// Contains a density in dots per millimeter.
+        /// Read-only property. Is calculated from DensityDpi.
+        /// </summary>
+        public double DensityDpmm => DensityDpi / 25.4;
+
         public string? BackgroundColor { get; set; }
         public string? BackgroundImage { get; set; }
 
