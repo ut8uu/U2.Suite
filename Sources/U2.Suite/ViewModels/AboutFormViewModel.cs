@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Text;
@@ -16,6 +17,7 @@ namespace U2.Suite
             this._owner = aboutFormView;
 
             var currentDirectory = Path.GetDirectoryName(this.GetType().Assembly.Location);
+            Debug.Assert(!string.IsNullOrEmpty(currentDirectory));
             var u2SuitePath = Path.Combine(currentDirectory, ApplicationNames.GetSuiteAppName()).Replace("exe", "dll");
             U2SuiteVersion = Assembly.LoadFile(u2SuitePath).GetName().Version.ToString();
 

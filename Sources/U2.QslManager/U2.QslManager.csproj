@@ -3,8 +3,8 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <Nullable>enable</Nullable>
-    <AssemblyVersion>1.0.0.20101</AssemblyVersion>
-    <FileVersion>1.0.0.20101</FileVersion>
+    <AssemblyVersion>1.1.20101.0</AssemblyVersion>
+    <FileVersion>1.1.20101.0</FileVersion>
     <NeutralLanguage>en</NeutralLanguage>
     <RepositoryUrl>https://github.com/ut8uu/U2.Suite</RepositoryUrl>
     <RepositoryType>github</RepositoryType>
