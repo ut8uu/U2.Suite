@@ -12,7 +12,7 @@ namespace U2.Suite
 #if DEBUG
             this.AttachDevTools();
 #endif
-            DataContext = new AboutFormViewModel();
+            DataContext = new AboutFormViewModel(this);
         }
 
         private void InitializeComponent()

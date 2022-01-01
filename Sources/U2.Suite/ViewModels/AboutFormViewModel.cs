@@ -6,10 +6,17 @@ namespace U2.Suite
 {
     public sealed class AboutFormViewModel
     {
+        private AboutFormView _owner;
+
+        public AboutFormViewModel(AboutFormView aboutFormView)
+        {
+            this._owner = aboutFormView;
+        }
+
         public void ShowLicense()
         {
             var window = new LicenseFormView();
-            window.Show();
+            window.ShowDialog(_owner);
         }
     }
 }

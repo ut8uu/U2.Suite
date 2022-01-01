@@ -13,7 +13,7 @@ namespace U2.Suite
             this.AttachDevTools();
 #endif
 
-            DataContext = new MainWindowViewModel();
+            DataContext = new MainWindowViewModel(this);
         }
 
         private void InitializeComponent()
