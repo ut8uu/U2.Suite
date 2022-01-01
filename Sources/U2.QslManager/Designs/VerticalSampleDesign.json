@@ -24,7 +24,7 @@
       "transformation_angle": 0,
       "font": {
         "name": "Calibri",
-        "size": 72,
+        "size": 64,
         "color": "White",
         "bold": true,
         "italic": false
@@ -36,8 +36,8 @@
       "element_name": "OperatorName",
       "element_title": "op.",
       "start_position_mm": {
-        "x": 80,
-        "y": 90
+        "x": 20,
+        "y": 100
       },
       "end_position_mm": {
         "x": 0,
@@ -58,7 +58,7 @@
       "element_name": "CqZone",
       "element_title": "CQ:",
       "start_position_mm": {
-        "x": 26,
+        "x": 6,
         "y": 5
       },
       "end_position_mm": {
@@ -68,7 +68,7 @@
       "transformation_angle": 0,
       "font": {
         "name": "Arial",
-        "size": 12,
+        "size": 10,
         "color": "White",
         "bold": true,
         "italic": false
@@ -80,7 +80,7 @@
       "element_name": "ItuZone",
       "element_title": "ITU:",
       "start_position_mm": {
-        "x": 46,
+        "x": 24,
         "y": 5
       },
       "end_position_mm": {
@@ -90,7 +90,7 @@
       "transformation_angle": 0,
       "font": {
         "name": "Arial",
-        "size": 12,
+        "size": 10,
         "color": "White",
         "bold": true,
         "italic": false
@@ -102,7 +102,7 @@
       "element_name": "Grid",
       "element_title": "Grid:",
       "start_position_mm": {
-        "x": 65,
+        "x": 42,
         "y": 5
       },
       "end_position_mm": {
@@ -112,7 +112,7 @@
       "transformation_angle": 0,
       "font": {
         "name": "Arial",
-        "size": 12,
+        "size": 10,
         "color": "White",
         "bold": true,
         "italic": false
@@ -124,7 +124,7 @@
       "element_name": "Qth",
       "element_title": "QTH:",
       "start_position_mm": {
-        "x": 100,
+        "x": 72,
         "y": 5
       },
       "end_position_mm": {
@@ -134,7 +134,7 @@
       "transformation_angle": 0,
       "font": {
         "name": "Arial",
-        "size": 12,
+        "size": 10,
         "color": "White",
         "bold": true,
         "italic": false
@@ -203,34 +203,34 @@
     "background_color": "white",
     "foreground_color": "DarkGreen",
     "font_name": "Arial",
-    "font_size": 15,
-    "row_count": 2,
+    "font_size": 12,
+    "row_count": 4,
     "header_height_mm": 10,
-    "row_height_mm": 10,
+    "row_height_mm": 8,
     "start_position_mm": {
-      "x": 10,
+      "x": 5,
       "y": 52
     },
     "columns": [
       {
         "title": "Date",
-        "width_mm": 30
+        "width_mm": 25
       },
       {
         "title": "Time",
-        "width_mm": 30
+        "width_mm": 20
       },
       {
         "title": "Freq",
-        "width_mm": 20
+        "width_mm": 15
       },
       {
         "title": "Mode",
-        "width_mm": 20
+        "width_mm": 15
       },
       {
         "title": "Report",
-        "width_mm": 20
+        "width_mm": 15
       }
     ]
   },
@@ -241,7 +241,7 @@
     "element_name": "ToRadio",
     "element_title": "To radio",
     "start_position_mm": {
-      "x": 10,
+      "x": 5,
       "y": 41
     },
     "size": {
