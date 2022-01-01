@@ -2,16 +2,17 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 
-namespace U2.Core
+namespace U2.Suite
 {
-    public partial class LicenseForm : Window
+    public partial class AboutFormView : Window
     {
-        public LicenseForm()
+        public AboutFormView()
         {
             InitializeComponent();
 #if DEBUG
             this.AttachDevTools();
 #endif
+            DataContext = new AboutFormViewModel();
         }
 
         private void InitializeComponent()

@@ -19,8 +19,6 @@ namespace U2.Suite
         public MainWindowViewModel()
         {
             LaunchQslManagerCommand = ReactiveCommand.Create(LaunchQslManager);
-
-            
         }
 
         private void LaunchQslManager()
@@ -33,6 +31,18 @@ namespace U2.Suite
             };
 
             Launcher.LaunchApplication(launchInfo);
+        }
+
+        public void ShowAboutWindow()
+        {
+            var window = new AboutFormView();
+            window.Show();
+        }
+
+        public void ShowLicenseWindow()
+        {
+            var window = new LicenseFormView();
+            window.Show();
         }
     }
 }

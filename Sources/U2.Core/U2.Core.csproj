@@ -17,9 +17,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Avalonia\Forms\AboutForm.axaml.cs">
-      <DependentUpon>%(Filename)</DependentUpon>
-    </Compile>
+    <Folder Include="Avalonia\" />
+    <Folder Include="ViewModels\" />
+    <Folder Include="Views\" />
   </ItemGroup>
 
 </Project>

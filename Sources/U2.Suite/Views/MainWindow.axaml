@@ -1,6 +1,6 @@
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:vm="using:U2.Suite.ViewModels"
+        xmlns:vm="using:U2.Suite"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
@@ -8,7 +8,7 @@
         Icon="/Assets/avalonia-logo.ico"
         Title="U2.Suite"
         Height="200"
-        Width="200"
+        Width="400"
         Foreground="{DynamicResource ThemeForegroundBrush}"
         >
   <Design.DataContext>
@@ -17,8 +17,10 @@
 
   <Window.Styles>
     <Styles>
-      <Style Selector="Button">
+      <Style Selector="Button.h150">
         <Setter Property="Height" Value="150"></Setter>
+      </Style>
+      <Style Selector="Button.sq150">
         <Setter Property="Width" Value="150"></Setter>
         <Setter Property="VerticalAlignment" Value="Center"></Setter>
         <Setter Property="HorizontalAlignment" Value="Center"></Setter>
@@ -27,10 +29,15 @@
   </Window.Styles>
 
   <StackPanel VerticalAlignment="Center"
-              HorizontalAlignment="Center">
-    <Button Command="{Binding LaunchQslManagerCommand}">
-        <Image Source="../Images/qslmanager.png"></Image>
+              HorizontalAlignment="Center" Orientation="Horizontal">
+    <Button Command="{Binding LaunchQslManagerCommand}" Classes="h150">
+      <Image Source="../Images/qslmanager.png"></Image>
     </Button>
+
+    <StackPanel>
+      <Button Command="{Binding ShowAboutWindow}" Content="About U2.Suite"></Button>
+      <Button Command="{Binding ShowLicenseWindow}" Content="License Information"></Button>
+    </StackPanel>
   </StackPanel>
 
 </Window>

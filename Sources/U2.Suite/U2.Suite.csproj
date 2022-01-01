@@ -32,4 +32,12 @@
     <ProjectReference Include="..\U2.Core\U2.Core.csproj" />
     <ProjectReference Include="..\U2.Resources\U2.Resources.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Views\AboutFormView.axaml.cs">
+      <DependentUpon>AboutFormView.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\LicenseFormView.axaml.cs">
+      <DependentUpon>LicenseFormView.axaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
 </Project>

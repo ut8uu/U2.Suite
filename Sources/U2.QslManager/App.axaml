@@ -2,17 +2,17 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="using:U2.QslManager"
              x:Class="U2.QslManager.App">
-    <Application.DataTemplates>
-        <local:ViewLocator/>
-    </Application.DataTemplates>
+  <Application.DataTemplates>
+    <local:ViewLocator/>
+  </Application.DataTemplates>
 
-    <Application.Styles>
-        <FluentTheme Mode="Dark"/>
-        <StyleInclude Source="avares://Avalonia.Themes.Default/DefaultTheme.xaml"/>
-        <StyleInclude Source="avares://Avalonia.Themes.Default/Accents/BaseDark.xaml"/>
-      <StyleInclude Source="avares://U2.Resources/Styles/Controls/PanelStyles.axaml"></StyleInclude>
-      <StyleInclude Source="avares://U2.Resources/Styles/Controls/TextStyles.axaml"></StyleInclude>
-      <StyleInclude Source="avares://U2.Resources/Styles/Controls/ButtonStyles.axaml"></StyleInclude>
+  <Application.Styles>
+    <FluentTheme Mode="Dark"/>
+    <StyleInclude Source="avares://Avalonia.Themes.Default/DefaultTheme.xaml"/>
+    <StyleInclude Source="avares://Avalonia.Themes.Default/Accents/BaseDark.xaml"/>
+    <StyleInclude Source="avares://U2.Resources/Styles/Controls/PanelStyles.axaml"></StyleInclude>
+    <StyleInclude Source="avares://U2.Resources/Styles/Controls/TextStyles.axaml"></StyleInclude>
+    <StyleInclude Source="avares://U2.Resources/Styles/Controls/ButtonStyles.axaml"></StyleInclude>
 
-    </Application.Styles>
+  </Application.Styles>
 </Application>
