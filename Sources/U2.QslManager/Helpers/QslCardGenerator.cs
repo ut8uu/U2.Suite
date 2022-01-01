@@ -168,7 +168,7 @@ namespace U2.QslManager.Helpers
                         new Size(columnWidth, dataRowHeight));
                     DrawDataCell(ctx, design, rectangle, string.Empty);
 
-                    currentY += headerHeight;
+                    currentY += dataRowHeight;
                 }
 
                 currentX += columnWidth;
