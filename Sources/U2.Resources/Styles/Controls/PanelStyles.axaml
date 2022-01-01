@@ -8,10 +8,8 @@
     </Design.PreviewWith>
 
     <!-- Add Styles Here -->
-  <Style Selector="Panel">
-    <Setter Property="Margin" Value="10"></Setter>
-  </Style>
   <Style Selector="Panel.HeaderPanel">
     <Setter Property="Height" Value="64"></Setter>
+    <Setter Property="Margin" Value="10"></Setter>
   </Style>
 </Styles>

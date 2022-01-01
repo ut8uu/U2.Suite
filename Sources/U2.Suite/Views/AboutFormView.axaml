@@ -5,33 +5,31 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="U2.Suite.AboutFormView"
         Title="About U2.Suite">
-  <StackPanel>
-    <Panel Classes="HeaderPanel">
-      <TextBlock Classes="font60 red bold">About U2.Suite</TextBlock>
-    </Panel>
-    <Panel>
-      <StackPanel>
-        <TextBlock Classes="font20 margin5">© 2021 Sergey Usmanov, UT8UU</TextBlock>
-        <StackPanel Orientation="Horizontal">
-          <TextBlock Classes="font20 margin5">License: GPLv3.</TextBlock>
-          <Button Command="{Binding ShowLicense}" Margin="0">Show license</Button>
+  <Border Margin="20">
+    <StackPanel>
+      <Panel Classes="HeaderPanel">
+        <TextBlock Classes="font60 red bold">About U2.Suite</TextBlock>
+      </Panel>
+      <Panel>
+        <StackPanel>
+          <TextBlock Classes="font20 margin5">© 2021 Sergey Usmanov, UT8UU</TextBlock>
+          <StackPanel Orientation="Horizontal">
+            <TextBlock Classes="font20 margin5">License: GPLv3.</TextBlock>
+            <Button Command="{Binding ShowLicense}" Margin="0">Show license</Button>
+          </StackPanel>
         </StackPanel>
-      </StackPanel>
-    </Panel>
-    <Panel></Panel>
-    <Panel>
-      
-    </Panel>
-    <Panel>
-      <TextBlock Classes="font30" Grid.Column="0" Grid.Row="0">Versions of libraries</TextBlock>
-      <Grid ColumnDefinitions="200,*" RowDefinitions="50,30,30">
-        
-        <TextBlock Classes="font20" Grid.Column="0" Grid.Row="1">U2.Suite</TextBlock>
-        <TextBlock Classes="font20" Grid.Column="1" Grid.Row="1" Text="{Binding U2SuiteVersion}"></TextBlock>
+      </Panel>
+      <Panel Margin="0 40">
+        <TextBlock Classes="font30" Grid.Column="0" Grid.Row="0">Versions of libraries</TextBlock>
+        <Grid ColumnDefinitions="200,*" RowDefinitions="50,30,30">
 
-        <TextBlock Classes="font20" Grid.Column="0" Grid.Row="2">U2.QslManager</TextBlock>
-        <TextBlock Classes="font20" Grid.Column="1" Grid.Row="2" Text="{Binding U2QslManagerVersion}"></TextBlock>
-      </Grid>
-    </Panel>
-  </StackPanel>
+          <TextBlock Classes="font20 yellow" Grid.Column="0" Grid.Row="1">U2.Suite</TextBlock>
+          <TextBlock Classes="font20" Grid.Column="1" Grid.Row="1" Text="{Binding U2SuiteVersion}"></TextBlock>
+
+          <TextBlock Classes="font20 yellow" Grid.Column="0" Grid.Row="2">U2.QslManager</TextBlock>
+          <TextBlock Classes="font20" Grid.Column="1" Grid.Row="2" Text="{Binding U2QslManagerVersion}"></TextBlock>
+        </Grid>
+      </Panel>
+    </StackPanel>
+  </Border>
 </Window>
