@@ -18,5 +18,20 @@
         </StackPanel>
       </StackPanel>
     </Panel>
+    <Panel></Panel>
+    <Panel>
+      
+    </Panel>
+    <Panel>
+      <TextBlock Classes="font30" Grid.Column="0" Grid.Row="0">Versions of libraries</TextBlock>
+      <Grid ColumnDefinitions="200,*" RowDefinitions="50,30,30">
+        
+        <TextBlock Classes="font20" Grid.Column="0" Grid.Row="1">U2.Suite</TextBlock>
+        <TextBlock Classes="font20" Grid.Column="1" Grid.Row="1" Text="{Binding U2SuiteVersion}"></TextBlock>
+
+        <TextBlock Classes="font20" Grid.Column="0" Grid.Row="2">U2.QslManager</TextBlock>
+        <TextBlock Classes="font20" Grid.Column="1" Grid.Row="2" Text="{Binding U2QslManagerVersion}"></TextBlock>
+      </Grid>
+    </Panel>
   </StackPanel>
 </Window>

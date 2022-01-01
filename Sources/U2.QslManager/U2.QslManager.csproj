@@ -3,13 +3,13 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <Nullable>enable</Nullable>
-    <AssemblyVersion>1.0.0.0</AssemblyVersion>
-    <FileVersion>1.0.0.0</FileVersion>
+    <AssemblyVersion>1.0.0.20101</AssemblyVersion>
+    <FileVersion>1.0.0.20101</FileVersion>
     <NeutralLanguage>en</NeutralLanguage>
     <RepositoryUrl>https://github.com/ut8uu/U2.Suite</RepositoryUrl>
     <RepositoryType>github</RepositoryType>
     <PackageProjectUrl>https://github.com/ut8uu/U2.Suite</PackageProjectUrl>
-    <Copyright>© 2021 Sergey Usmanov, UT8UU</Copyright>
+    <Copyright>© 2022 Sergey Usmanov, UT8UU</Copyright>
     <Product>U2.Suite</Product>
     <Company>HamStudio</Company>
     <Authors>Sergey Usmanov, UT8UU</Authors>
