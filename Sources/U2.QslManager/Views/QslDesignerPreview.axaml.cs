@@ -75,11 +75,11 @@ namespace U2.QslManager
 
             if (_bitmap != null)
             {
-                var cardWidth = Convert.ToInt32(_design.CardSizeMM.Width * _design.DensityDpmm);
-                var cardHeight = Convert.ToInt32(_design.CardSizeMM.Height * _design.DensityDpmm);
+                var cardWidth = _design.CardSizeMM.Width * _design.DensityDpmm;
+                var cardHeight = _design.CardSizeMM.Height * _design.DensityDpmm;
                 var scale = 1.0 * ControlWidth / cardWidth;
-                var viewPortWidth = Convert.ToInt32(cardWidth * scale);
-                var viewPortHeight = Convert.ToInt32(cardHeight * scale);
+                var viewPortWidth = cardWidth * scale;
+                var viewPortHeight = cardHeight * scale;
 
                 context.DrawImage(_bitmap,
                     new Rect(0, 0, cardWidth, cardHeight),

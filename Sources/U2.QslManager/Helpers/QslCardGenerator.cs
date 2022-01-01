@@ -7,6 +7,7 @@ using Avalonia;
 using Avalonia.Media.Imaging;
 using Avalonia.Controls;
 using Avalonia.Controls.Shapes;
+using System.IO;
 
 namespace U2.QslManager.Helpers
 {
@@ -49,6 +50,14 @@ namespace U2.QslManager.Helpers
         {
             if (string.IsNullOrEmpty(fields.BackgroundImage))
             {
+                return;
+            }
+
+            if (!File.Exists(fields.BackgroundImage))
+            {
+                var messageBox = MessageBox.Avalonia.MessageBoxManager
+                    .GetMessageBoxStandardWindow("Error", $"File {fields.BackgroundImage} not found. Ignored.");
+                messageBox.Show();
                 return;
             }
 
