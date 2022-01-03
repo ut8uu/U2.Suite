@@ -8,6 +8,7 @@ using Avalonia.Media.Imaging;
 using Avalonia.Controls;
 using Avalonia.Controls.Shapes;
 using System.IO;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace U2.QslManager.Helpers
 {
@@ -229,7 +230,8 @@ namespace U2.QslManager.Helpers
                 designElement.Font.Name, 
                 designElement.Font.Size * 1.7,
                 designElement.StartPositionMM.X, designElement.StartPositionMM.Y,
-                designElement.Font.Color);
+                designElement.Font.Color,
+                designElement.TransformationAngle);
         }
     }
 }

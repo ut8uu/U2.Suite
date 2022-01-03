@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Text;
+using System.Xml;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Media;
@@ -23,13 +24,15 @@ namespace U2.QslManager.Helpers
         /// <param name="x">A left position of the text boundaries</param>
         /// <param name="y">A top position of the text boundaries</param>
         /// <param name="colorName">A color of the drawn text</param>
+        /// <param name="transformAngle">An angle of the text transformation.</param>
         public static void DrawText(DrawingContext ctx,
             double densityDpmm,
             string text,
             string fontName,
             double fontSize,
             double x, double y,
-            string colorName)
+            string colorName,
+            double transformAngle)
         {
             var color = Color.Parse(colorName);
             var brush = new SolidColorBrush(color);
@@ -40,7 +43,25 @@ namespace U2.QslManager.Helpers
                 FontSize = fontSize,
                 Typeface = new Typeface(fontName),
             };
-            ctx.DrawText(brush, point, txt);
+            if (transformAngle > 0)
+            {
+                RotateTransform rt = new RotateTransform(transformAngle, point.X, point.Y);
+                //var centerX = 378.0;// + txt.Bounds.Width / 2;
+                //var centerY = 189.0;// txt.Bounds.Height / 2;
+                //centerX = double.Parse(text);
+                //rt.CenterX = centerX;
+                //rt.CenterY = centerY;
+                var currentTransform = ctx.CurrentTransform;
+                ctx.PushSetTransform(rt.Value);
+                ctx.DrawText(brush, point, txt);
+                //var r = new Rect(point, new Avalonia.Size(txt.Bounds.Width, txt.Bounds.Height));
+                //DrawRectangle(ctx, r, "White");
+                ctx.PushSetTransform(currentTransform);
+            }
+            else
+            {
+                ctx.DrawText(brush, point, txt);
+            }
         }
 
         /// <summary>
@@ -72,7 +93,7 @@ namespace U2.QslManager.Helpers
         /// <param name="ctx">A drawing context</param>
         /// <param name="rectangle">A rectangle to draw</param>
         /// <param name="colorName">Used color</param>
-        public static void DrawRectangle(DrawingContext ctx, 
+        public static void DrawRectangle(DrawingContext ctx,
             Rect rectangle, string colorName)
         {
             var brushColor = Color.Parse(colorName);
