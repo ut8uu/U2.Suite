@@ -173,7 +173,7 @@ namespace U2.QslManager
             var currentTemplate = Designs[SelectedDesignIndex];
             var fileName = currentTemplate.DesignLocation;
 
-            Launcher.Launch(ApplicationNames.GetEditorAppName(), $"--fileName {fileName}");
+            Launcher.Launch(ApplicationNames.GetEditorAppName(), $"--inputFile {fileName}");
         }
     }
 }

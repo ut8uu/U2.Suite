@@ -6,6 +6,8 @@
     <RuntimeIdentifiers>win-x64;osx-x64;linux-x64</RuntimeIdentifiers>
     <EnableDefaultCompileItems>False</EnableDefaultCompileItems>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <AssemblyVersion>1.0.0.20105</AssemblyVersion>
+    <FileVersion>1.0.0.20105</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>

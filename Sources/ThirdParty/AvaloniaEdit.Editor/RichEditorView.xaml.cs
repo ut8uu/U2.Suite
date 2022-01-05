@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Runtime.CompilerServices;
 using Avalonia.Controls;
@@ -35,10 +36,14 @@ namespace AvaloniaEdit.Editor
         private TextBlock _statusTextBlock;
         private ElementGenerator _generator = new ElementGenerator();
         private int _currentTheme = (int)ThemeName.DarkPlus;
+        private Button _saveButton;
 
         public RichEditorView()
         {
             InitializeComponent();
+
+            _saveButton = this.FindControl<Button>("SaveButton");
+            _saveButton.Click += _saveButton_Click;
 
             _textEditor = this.FindControl<TextEditor>("Editor");
             _textEditor.Background = Brushes.Transparent;
@@ -68,17 +73,14 @@ namespace AvaloniaEdit.Editor
                 (ThemeName)_currentTheme,
                 null);
 
-            Language csharpLanguage = _textMateInstallation.RegistryOptions.GetLanguageByExtension(".cs");
+            var jsonLanguage = _textMateInstallation.RegistryOptions.GetLanguageByExtension(".json");
 
             _syntaxModeCombo = this.FindControl<ComboBox>("syntaxModeCombo");
             _syntaxModeCombo.Items = _textMateInstallation.RegistryOptions.GetAvailableLanguages();
-            _syntaxModeCombo.SelectedItem = csharpLanguage;
+            _syntaxModeCombo.SelectedItem = jsonLanguage;
             _syntaxModeCombo.SelectionChanged += _syntaxModeCombo_SelectionChanged;
 
-            string scopeName = _textMateInstallation.RegistryOptions.GetScopeByLanguageId(csharpLanguage.Id);
-
-            //_textEditor.Document = new TextDocument(ResourceLoader.LoadSampleFile(scopeName));
-            _textMateInstallation.SetGrammarByLanguageId(csharpLanguage.Id);
+            _textMateInstallation.SetGrammarByLanguageId(jsonLanguage.Id);
 
             _statusTextBlock = this.Find<TextBlock>("StatusText");
 
@@ -88,6 +90,23 @@ namespace AvaloniaEdit.Editor
                 if (i.Delta.Y > 0) _textEditor.FontSize++;
                 else _textEditor.FontSize = _textEditor.FontSize > 1 ? _textEditor.FontSize - 1 : 1;
             }, RoutingStrategies.Bubble, true);
+
+            if (!string.IsNullOrEmpty(Program.InputFile))
+            {
+                var content = File.ReadAllText(Program.InputFile);
+                _textEditor.Document = new TextDocument(content);
+                var extension = System.IO.Path.GetExtension(Program.InputFile);
+                var language = _textMateInstallation.RegistryOptions.GetLanguageByExtension(extension);
+                _textMateInstallation.SetGrammarByLanguageId(language.Id);
+            }
+        }
+
+        private void _saveButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (!string.IsNullOrEmpty(Program.InputFile))
+            {
+                File.WriteAllText(Program.InputFile, _textEditor.Document.Text);
+            }
         }
 
         private void Caret_PositionChanged(object sender, EventArgs e)
@@ -104,11 +123,7 @@ namespace AvaloniaEdit.Editor
 
         private void _syntaxModeCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Language language = (Language)_syntaxModeCombo.SelectedItem;
-
-            string scope = _textMateInstallation.RegistryOptions.GetScopeByLanguageId(language.Id);
-
-            _textEditor.Document = new TextDocument(ResourceLoader.LoadSampleFile(scope));
+            var language = (Language)_syntaxModeCombo.SelectedItem;
             _textMateInstallation.SetGrammarByLanguageId(language.Id);
         }
 

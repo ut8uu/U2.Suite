@@ -14,7 +14,8 @@ namespace U2.Core
             var startInfo = new ProcessStartInfo(path)
             {
                 UseShellExecute = true,
-                WorkingDirectory = Path.GetDirectoryName(typeof(Launcher).Assembly.Location)
+                WorkingDirectory = Path.GetDirectoryName(typeof(Launcher).Assembly.Location),
+                Arguments = commandLineArgs
             };
             Process.Start(startInfo);
         }

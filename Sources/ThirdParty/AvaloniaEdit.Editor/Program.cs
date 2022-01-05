@@ -2,6 +2,7 @@
 using CommandLine.Text;
 using CommandLine;
 using Newtonsoft.Json;
+using System.Diagnostics;
 
 namespace AvaloniaEdit.Editor
 {
@@ -22,6 +23,8 @@ namespace AvaloniaEdit.Editor
         // The entry point. Things aren't ready yet
         public static int Main(string[] args)
         {
+            Debugger.Launch();
+
             Parser.Default.ParseArguments<EditorOptions>(args)
             .WithParsed<EditorOptions>(eo =>
             {

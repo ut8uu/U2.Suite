@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "AvaloniaEdit.Editor": {
+      "commandName": "Project",
+      "commandLineArgs": "--inputFile c:\\tmp\\20220105-json\\1.json"
+    }
+  }
+}
