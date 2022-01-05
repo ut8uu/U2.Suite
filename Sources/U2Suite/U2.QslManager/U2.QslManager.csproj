@@ -1,0 +1,66 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <Nullable>enable</Nullable>
+    <AssemblyVersion>1.2.20102.0</AssemblyVersion>
+    <FileVersion>1.2.20102.0</FileVersion>
+    <NeutralLanguage>en</NeutralLanguage>
+    <RepositoryUrl>https://github.com/ut8uu/U2.Suite</RepositoryUrl>
+    <RepositoryType>github</RepositoryType>
+    <PackageProjectUrl>https://github.com/ut8uu/U2.Suite</PackageProjectUrl>
+    <Copyright>© 2022 Sergey Usmanov, UT8UU</Copyright>
+    <Product>U2.Suite</Product>
+    <Company>HamStudio</Company>
+    <Authors>Sergey Usmanov, UT8UU</Authors>
+  </PropertyGroup>
+  <ItemGroup>
+    <AvaloniaResource Include="Assets\**" />
+    <None Remove=".gitignore" />
+    <None Remove="Images\edit.png" />
+    <None Remove="Images\refresh.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AvaloniaResource Include="Images\edit.png" />
+    <AvaloniaResource Include="Images\refresh.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AvaloniaResource>
+    <AvaloniaResource Include="Models\DesignElements.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="FodyWeavers.xsd" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Avalonia" Version="0.10.11" />
+    <PackageReference Include="Avalonia.AvaloniaEdit" Version="0.10.9" />
+    <PackageReference Include="Avalonia.Desktop" Version="0.10.11" />
+    <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
+    <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="0.10.11" />
+    <PackageReference Include="Avalonia.ReactiveUI" Version="0.10.11" />
+    <PackageReference Include="JorgeSerrano.Json.JsonSnakeCaseNamingPolicy" Version="0.9.0" />
+    <PackageReference Include="MessageBox.Avalonia" Version="1.7.1" />
+    <PackageReference Include="MvvmLightLibs" Version="5.4.1.1" />
+    <PackageReference Include="PropertyChanged.Fody" Version="3.4.0" />
+    <PackageReference Include="SixLabors.ImageSharp" Version="1.0.4" />
+    <PackageReference Include="System.ObjectModel" Version="4.3.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\ThirdParty\AvaloniaEdit.TextMate\AvaloniaEdit.TextMate.csproj" />
+    <ProjectReference Include="..\U2.Core\U2.Core.csproj" />
+    <ProjectReference Include="..\U2.Resources\U2.Resources.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="Designs\HorizontalSampleDesign2.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Designs\VerticalSampleDesign.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Designs\HorizontalSampleDesign.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Images\kyiv.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+</Project>

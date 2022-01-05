@@ -7,11 +7,11 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <BaseIntermediateOutputPath>..\..\Intermediate\$(MSBuildProjectName)</BaseIntermediateOutputPath>
+    <BaseIntermediateOutputPath>..\..\..\Intermediate\$(MSBuildProjectName)</BaseIntermediateOutputPath>
     <IntermediateOutputPath>$(BaseIntermediateOutputPath)\$(Configuration)\</IntermediateOutputPath>
 
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-    <OutputPath>..\..\Binaries\$(Platform)\$(Configuration)\</OutputPath>
+    <OutputPath>..\..\..\Binaries\$(Platform)\$(Configuration)\</OutputPath>
   </PropertyGroup>
 
   <PropertyGroup Label="Versioning">
