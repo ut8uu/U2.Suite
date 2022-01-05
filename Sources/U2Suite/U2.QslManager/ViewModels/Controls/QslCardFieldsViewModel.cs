@@ -7,7 +7,9 @@ using System.Threading.Tasks;
 using Avalonia.Controls;
 using GalaSoft.MvvmLight.Messaging;
 using ReactiveUI;
+using U2.Core;
 using U2.QslManager.Helpers;
+using U2.Resources;
 
 namespace U2.QslManager
 {
@@ -166,20 +168,12 @@ namespace U2.QslManager
             SelectedDesignIndex = currentIndex;
         }
 
-        private void EditTemplate()
+        private void EditTemplate() 
         {
-            /*
             var currentTemplate = Designs[SelectedDesignIndex];
-            var currentDirectory = Path.GetDirectoryName(this.GetType().Assembly.Location);
-            Debug.Assert(!string.IsNullOrEmpty(currentDirectory));
-            var pathToDesign = Path.Combine(currentDirectory, "Designs", $"{currentTemplate}.json");
-            var editorWindow = new RichEditorView
-            {
-                //FileName = currentTemplate.DesignLocation
-            };
-            //editorWindow.SetOwner(_owner);
-            editorWindow.ShowDialog(_owner); 
-            //*/
+            var fileName = currentTemplate.DesignLocation;
+
+            Launcher.Launch(ApplicationNames.GetEditorAppName(), $"--fileName {fileName}");
         }
     }
 }

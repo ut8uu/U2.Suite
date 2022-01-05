@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Reactive;
 using System.Text;
-using U2.Contracts;
 using U2.Core;
 using U2.Resources;
 
@@ -26,14 +25,7 @@ namespace U2.Suite
 
         private void LaunchQslManager()
         {
-            LaunchInfo launchInfo = new LaunchInfo
-            {
-                OsxApplicationPath = ApplicationNames.QslManagerOsx,
-                WindowsApplicationPath = ApplicationNames.QslManagerWin,
-                LinuxApplicationPath = ApplicationNames.QslManagerLInux
-            };
-
-            Launcher.LaunchApplication(launchInfo);
+            Launcher.Launch(ApplicationNames.GetQslManagerAppName(), string.Empty);
         }
 
         public void ShowAboutWindow()
