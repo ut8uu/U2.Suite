@@ -1,9 +1,13 @@
-﻿using System;
+﻿using AvaloniaEdit.Editor;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Text;
+using U2.Contracts;
+using U2.Core;
+using U2.QslManager;
 using U2.Resources;
 
 namespace U2.Suite
@@ -16,17 +20,20 @@ namespace U2.Suite
         {
             this._owner = aboutFormView;
 
-            var currentDirectory = Path.GetDirectoryName(this.GetType().Assembly.Location);
-            Debug.Assert(!string.IsNullOrEmpty(currentDirectory));
-            var u2SuitePath = Path.Combine(currentDirectory, ApplicationNames.GetSuiteAppName()).Replace("exe", "dll");
-            U2SuiteVersion = Assembly.LoadFile(u2SuitePath).GetName().Version.ToString();
-
-            var u2QslManagerPath = Path.Combine(currentDirectory, ApplicationNames.GetSuiteAppName()).Replace("exe", "dll");
-            U2QslManagerVersion = Assembly.LoadFile(u2QslManagerPath).GetName().Version.ToString();
+            U2SuiteVersion = new U2SuiteAppVersion().GetAssemblyVersion();
+            U2QslManagerVersion = new QslManagerAppVersion().GetAssemblyVersion();
+            U2CoreVersion = new U2CoreAppVersion().GetAssemblyVersion();
+            U2ContractsVersion = new U2ContractsAppVersion().GetAssemblyVersion();
+            U2ResourcesVersion = new U2ResourcesAppVersion().GetAssemblyVersion();
+            AvaloniaEditorVersion = new AvaloniaEditorAppVersion().GetAssemblyVersion();
         }
 
         public string U2SuiteVersion { get; set; }
         public string U2QslManagerVersion { get; set; }
+        public string U2CoreVersion { get; set; }
+        public string U2ContractsVersion { get; set; }
+        public string U2ResourcesVersion { get; set; }
+        public string AvaloniaEditorVersion { get; set; }
 
         public void ShowLicense()
         {

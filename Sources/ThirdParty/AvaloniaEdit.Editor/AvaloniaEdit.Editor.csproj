@@ -6,8 +6,8 @@
     <RuntimeIdentifiers>win-x64;osx-x64;linux-x64</RuntimeIdentifiers>
     <EnableDefaultCompileItems>False</EnableDefaultCompileItems>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <AssemblyVersion>1.0.0.20105</AssemblyVersion>
-    <FileVersion>1.0.0.20105</FileVersion>
+    <AssemblyVersion>1.0.1.20105</AssemblyVersion>
+    <FileVersion>1.0.1.20105</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -37,6 +37,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\U2Suite\U2.Core\U2.Core.csproj" />
     <ProjectReference Include="..\AvaloniaEdit.TextMate\AvaloniaEdit.TextMate.csproj" />
   </ItemGroup>
 

@@ -4,8 +4,8 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <RuntimeIdentifiers>win-x64;osx-x64;linux-x64</RuntimeIdentifiers>
     <Nullable>enable</Nullable>
-    <AssemblyVersion>1.2.20102.0</AssemblyVersion>
-    <FileVersion>1.2.20102.0</FileVersion>
+    <AssemblyVersion>1.2.1.20105</AssemblyVersion>
+    <FileVersion>1.2.1.20105</FileVersion>
     <RepositoryUrl>https://github.com/ut8uu/U2.Suite</RepositoryUrl>
     <RepositoryType>github</RepositoryType>
     <PackageProjectUrl>https://github.com/ut8uu/U2.Suite</PackageProjectUrl>
@@ -29,8 +29,10 @@
     <PackageReference Include="Avalonia.ReactiveUI" Version="0.10.11" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\ThirdParty\AvaloniaEdit.Editor\AvaloniaEdit.Editor.csproj" />
     <ProjectReference Include="..\U2.Contracts\U2.Contracts.csproj" />
     <ProjectReference Include="..\U2.Core\U2.Core.csproj" />
+    <ProjectReference Include="..\U2.QslManager\U2.QslManager.csproj" />
     <ProjectReference Include="..\U2.Resources\U2.Resources.csproj" />
   </ItemGroup>
   <ItemGroup>
