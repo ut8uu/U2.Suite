@@ -1,5 +1,4 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -8,6 +7,14 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <AssemblyVersion>1.0.1.20105</AssemblyVersion>
     <FileVersion>1.0.1.20105</FileVersion>
+    <NeutralLanguage>en</NeutralLanguage>
+    <RepositoryUrl>https://github.com/ut8uu/U2.Suite</RepositoryUrl>
+    <RepositoryType>github</RepositoryType>
+    <PackageProjectUrl>https://github.com/ut8uu/U2.Suite</PackageProjectUrl>
+    <Copyright>© 2022 Sergey Usmanov, UT8UU</Copyright>
+    <Product>U2.Suite</Product>
+    <Company>HamStudio</Company>
+    <Authors>Sergey Usmanov, UT8UU</Authors>
   </PropertyGroup>
 
   <ItemGroup>
