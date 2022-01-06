@@ -8,6 +8,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <AvaloniaXaml Remove="Avalonia\**" />
+    <AvaloniaXaml Remove="ViewModels\**" />
+    <AvaloniaXaml Remove="Views\**" />
+    <Compile Remove="Avalonia\**" />
+    <Compile Remove="ViewModels\**" />
+    <Compile Remove="Views\**" />
+    <EmbeddedResource Remove="Avalonia\**" />
+    <EmbeddedResource Remove="ViewModels\**" />
+    <EmbeddedResource Remove="Views\**" />
+    <None Remove="Avalonia\**" />
+    <None Remove="ViewModels\**" />
+    <None Remove="Views\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Avalonia" Version="0.10.11" />
     <PackageReference Include="Avalonia.Desktop" Version="0.10.11" />
     <PackageReference Include="Avalonia.Diagnostics" Version="0.10.11" />
@@ -16,12 +31,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\U2.Contracts\U2.Contracts.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Avalonia\" />
-    <Folder Include="ViewModels\" />
-    <Folder Include="Views\" />
   </ItemGroup>
 
 </Project>

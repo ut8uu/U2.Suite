@@ -20,26 +20,17 @@
         </StackPanel>
       </Panel>
       <Panel Margin="0 40">
-        <TextBlock Classes="font30" Grid.Column="0" Grid.Row="0">Versions of libraries</TextBlock>
+        <TextBlock Classes="font30" Grid.Column="0" Grid.Row="0">Components</TextBlock>
         <Grid ColumnDefinitions="200,*" RowDefinitions="50,30,30,30,30,30,30,30">
 
           <TextBlock Classes="font20 yellow" Grid.Column="0" Grid.Row="1">U2.Suite</TextBlock>
-          <TextBlock Classes="font20" Grid.Column="1" Grid.Row="1" Text="{Binding U2SuiteVersion}"></TextBlock>
+          <TextBlock Classes="font20" Grid.Column="1" Grid.Row="1" Text="The application launcher."></TextBlock>
 
           <TextBlock Classes="font20 yellow" Grid.Column="0" Grid.Row="2">U2.QslManager</TextBlock>
-          <TextBlock Classes="font20" Grid.Column="1" Grid.Row="2" Text="{Binding U2QslManagerVersion}"></TextBlock>
+          <TextBlock Classes="font20" Grid.Column="1" Grid.Row="2" Text="A tool for QSL card authoring."></TextBlock>
 
-          <TextBlock Classes="font20 yellow" Grid.Column="0" Grid.Row="3">U2.Core</TextBlock>
-          <TextBlock Classes="font20" Grid.Column="1" Grid.Row="3" Text="{Binding U2CoreVersion}"></TextBlock>
-
-          <TextBlock Classes="font20 yellow" Grid.Column="0" Grid.Row="4">U2.Contracts</TextBlock>
-          <TextBlock Classes="font20" Grid.Column="1" Grid.Row="4" Text="{Binding U2ContractsVersion}"></TextBlock>
-
-          <TextBlock Classes="font20 yellow" Grid.Column="0" Grid.Row="5">U2.Resources</TextBlock>
-          <TextBlock Classes="font20" Grid.Column="1" Grid.Row="5" Text="{Binding U2ResourcesVersion}"></TextBlock>
-
-          <TextBlock Classes="font20 yellow" Grid.Column="0" Grid.Row="6">Avalonia Editor</TextBlock>
-          <TextBlock Classes="font20" Grid.Column="1" Grid.Row="6" Text="{Binding AvaloniaEditorVersion}"></TextBlock>
+          <TextBlock Classes="font20 yellow" Grid.Column="0" Grid.Row="3">Avalonia Editor</TextBlock>
+          <TextBlock Classes="font20" Grid.Column="1" Grid.Row="3" Text="A third-party application for template editing."></TextBlock>
         </Grid>
       </Panel>
     </StackPanel>
