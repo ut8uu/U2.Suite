@@ -189,5 +189,44 @@ namespace U2.QslManager
 
             return designs;
         }
+
+        public static bool TryParseQslCardDataFromString(string json, out QslCardFieldsModel fields)
+        {
+            fields = null;
+            try
+            {
+                fields = JsonSerializer.Deserialize<QslCardFieldsModel>(json, GetJsonSerializerOptions());
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public static bool TryParseQslCardDataFromFile(string pathToFile, out QslCardFieldsModel fields)
+        {
+            fields = null;
+            try
+            {
+                var content = File.ReadAllText(pathToFile);
+                return TryParseQslCardDataFromString(content, out fields);
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public static string SerializeQslCardDataToString(QslCardFieldsModel fields)
+        {
+            return JsonSerializer.Serialize(fields, GetJsonSerializerOptions());
+        }
+
+        public static void SerializeQslCardDataToFile(string pathToFile, QslCardFieldsModel fields)
+        {
+            var content = JsonSerializer.Serialize(fields, GetJsonSerializerOptions());
+            File.WriteAllText(pathToFile, content);
+        }
     }
 }

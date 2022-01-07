@@ -23,8 +23,6 @@ namespace AvaloniaEdit.Editor
         // The entry point. Things aren't ready yet
         public static int Main(string[] args)
         {
-            Debugger.Launch();
-
             Parser.Default.ParseArguments<EditorOptions>(args)
             .WithParsed<EditorOptions>(eo =>
             {
