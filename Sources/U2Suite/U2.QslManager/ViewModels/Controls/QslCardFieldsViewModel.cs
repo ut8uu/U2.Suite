@@ -15,8 +15,6 @@ namespace U2.QslManager
 {
     public class QslCardFieldsViewModel : ViewModelBase
     {
-        private Window _owner;
-
         public QslCardFieldsViewModel(QslCardFieldsModel qslCardFields)
         {
             SelectedDesignIndex = 0;
@@ -49,11 +47,6 @@ namespace U2.QslManager
         public QslCardFieldsModel QslCardFields { get; }
         public List<QslCardDesign> Designs { get; set; }
         public int SelectedDesignIndex { get; set; }
-
-        public void SetOwner(Window owner)
-        {
-            _owner = owner;
-        }
 
         private async Task<string> SelectImage()
         {
