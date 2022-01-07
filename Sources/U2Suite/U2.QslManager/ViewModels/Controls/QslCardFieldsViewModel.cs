@@ -6,6 +6,7 @@ using System.Reactive;
 using System.Threading.Tasks;
 using Avalonia.Controls;
 using GalaSoft.MvvmLight.Messaging;
+using Newtonsoft.Json.Linq;
 using ReactiveUI;
 using U2.Core;
 using U2.QslManager.Helpers;
@@ -15,7 +16,7 @@ namespace U2.QslManager
 {
     public class QslCardFieldsViewModel : ViewModelBase
     {
-        private Window _owner;
+        private const string QslCardDataFileName = "QslCard.json";
 
         public QslCardFieldsViewModel(QslCardFieldsModel qslCardFields)
         {
@@ -46,14 +47,42 @@ namespace U2.QslManager
         public string Image1 { get; set; } = "";
         public string Image2 { get; set; } = "";
 
-        public QslCardFieldsModel QslCardFields { get; }
+        public QslCardFieldsModel QslCardFields
+        {
+            get
+            {
+                return new QslCardFieldsModel
+                {
+                    Callsign = this.Callsign,
+                    CqZone = this.CqZone,
+                    ItuZone = this.ItuZone,
+                    Grid = this.Grid,
+                    Qth = this.Qth,
+                    OperatorName = this.OperatorName,
+                    Text1 = this.Text1,
+                    Text2 = this.Text2,
+                    BackgroundImage = this.BackgroundImage,
+                    Image1 = this.Image1,
+                    Image2 = this.Image2,
+                };
+            }
+            set
+            {
+                Callsign = value.Callsign;
+                CqZone = value.CqZone;
+                ItuZone = value.ItuZone;
+                Grid = value.Grid;
+                Qth = value.Qth;
+                OperatorName = value.OperatorName;
+                Text1 = value.Text1;
+                Text2 = value.Text2;
+                BackgroundImage = value.BackgroundImage;
+                Image1 = value.Image1;
+                Image2 = value.Image2;
+            }
+        }
         public List<QslCardDesign> Designs { get; set; }
         public int SelectedDesignIndex { get; set; }
-
-        public void SetOwner(Window owner)
-        {
-            _owner = owner;
-        }
 
         private async Task<string> SelectImage()
         {
@@ -146,7 +175,7 @@ namespace U2.QslManager
                 BackgroundImage = this.BackgroundImage,
             };
             var designIndex = SelectedDesignIndex;
-            if (designIndex>Designs.Count)
+            if (designIndex > Designs.Count)
             {
                 designIndex = 0;
             }
@@ -168,12 +197,40 @@ namespace U2.QslManager
             SelectedDesignIndex = currentIndex;
         }
 
-        private void EditTemplate() 
+        private void EditTemplate()
         {
             var currentTemplate = Designs[SelectedDesignIndex];
             var fileName = currentTemplate.DesignLocation;
 
             Launcher.Launch(ApplicationNames.GetEditorAppName(), $"--inputFile {fileName}");
+        }
+
+        private void LoadData()
+        {
+            var path = FileSystemHelper.GetFullPath(QslCardDataFileName);
+            if (!File.Exists(path))
+            {
+                var messageBox = MessageBox.Avalonia.MessageBoxManager
+                    .GetMessageBoxStandardWindow("Error", $"File with QSL data does not exist.");
+                messageBox.Show();
+                return;
+            }
+
+            if (!Utilities.TryParseQslCardDataFromFile(path, out var data))
+            {
+                var messageBox = MessageBox.Avalonia.MessageBoxManager
+                    .GetMessageBoxStandardWindow("Error", $"Error reading from data files.");
+                messageBox.Show();
+                return;
+            }
+
+            QslCardFields = data;
+        }
+
+        private void SaveData()
+        {
+            var path = FileSystemHelper.GetFullPath(QslCardDataFileName);
+            Utilities.SerializeQslCardDataToFile(path, QslCardFields);
         }
     }
 }

@@ -10,8 +10,15 @@ namespace U2.Core
     {
         public static string GetFullPath(string fileName)
         {
+            return GetFullPath(new string[] { fileName });
+        }
+
+        public static string GetFullPath(string[] chunks)
+        { 
             var currentDirectory = Path.GetDirectoryName(typeof(FileSystemHelper).Assembly.Location);
-            var fullPath = Path.Combine(currentDirectory, fileName);
+            var pathElements = new List<string>(chunks);
+            pathElements.Insert(0, currentDirectory);
+            var fullPath = Path.Combine(pathElements.ToArray());
             return fullPath;
         }
 
