@@ -22,27 +22,23 @@ Below are desctiptions of steps required to launch the application under Windows
 ## Windows
 
 1. Download the archive U2.Suite-vX.XX.XXXX-win-x64.zip and unzip it. 
-2. Navigate to the just appeared folder.
+2. Navigate to the just unzipped folder.
 3. Double click the U2.Suite.exe
 4. Select the desired application.
 
 ## MacOS
 
 1. Download the archive U2.Suite-vX.XX.XXXX-osx-x64.zip and unzip it.
-2. Open the Terminal and navigate to the just appeared folder.
-3. Execute ./U2.Suite command
-4. Select the desired application.
+2. Open the Terminal and navigate to the just appeared folder. Ensure that there is run.sh file.
+3. To make the run.sh file being executable, run the following command: chmod +x ./run.sh
+4. To launch the application, run the following command: ./run.sh
+5. A launcher of the U2.Suite should appear. Select the desired application.
 
 ## Linux
 
 1. Download the archive U2.Suite-vX.XX.XXXX-linux-x64.zip and unzip it. 
-2. Open the Terminal and navigate to the just appeared folder.
-3. Execute the following commands
-```
-chmod +x ./U2.Suite
-chmod +x ./U2.QslManager
-```
-4. Launch the U2.Suite
-5. Select the desired application.
-
+2. Open the Terminal and navigate to the just appeared folder. Ensure that there is run.sh file.
+3. To make the run.sh file being executable, run the following command: chmod +x ./run.sh
+4. To launch the application, run the following command: ./run.sh
+5. A launcher of the U2.Suite should appear. Select the desired application.
 
