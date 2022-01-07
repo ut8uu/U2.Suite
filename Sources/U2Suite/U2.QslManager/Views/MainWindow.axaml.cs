@@ -8,7 +8,7 @@ namespace U2.QslManager
     [PropertyChanged.DoNotNotify]
     public partial class MainWindow : Window
     {
-        QslDesignerControls? _designerControls;
+        readonly QslDesignerControls? _designerControls;
 
         public MainWindow()
         {
@@ -19,7 +19,6 @@ namespace U2.QslManager
 
             _designerControls = this.FindControl<QslDesignerControls>("DesignerControls");
             Debug.Assert(_designerControls != null);
-            _designerControls.SetOwner(this);
         }
 
         private void InitializeComponent()

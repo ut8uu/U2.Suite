@@ -12,7 +12,7 @@ namespace U2.Suite
 {
     public sealed class AboutFormViewModel
     {
-        private AboutFormView _owner;
+        private readonly AboutFormView _owner;
 
         public AboutFormViewModel(AboutFormView aboutFormView)
         {
