@@ -226,6 +226,8 @@ namespace U2.QslManager
         public static void SerializeQslCardDataToFile(string pathToFile, QslCardFieldsModel fields)
         {
             var content = JsonSerializer.Serialize(fields, GetJsonSerializerOptions());
+            var directory = Path.GetDirectoryName(pathToFile);
+            Directory.CreateDirectory(directory);
             File.WriteAllText(pathToFile, content);
         }
     }

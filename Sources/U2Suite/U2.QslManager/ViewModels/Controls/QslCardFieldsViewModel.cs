@@ -23,16 +23,10 @@ namespace U2.QslManager
             SelectedDesignIndex = 0;
 
             QslCardFields = qslCardFields;
-            Designs = Utilities.GetDesigns();
+            // load data from previous save, if any
+            LoadData(swallowErrors: true);
 
-            Callsign = qslCardFields.Callsign;
-            CqZone = qslCardFields.CqZone;
-            ItuZone = qslCardFields.ItuZone;
-            Grid = qslCardFields.Grid;
-            Qth = qslCardFields.Qth;
-            OperatorName = qslCardFields.OperatorName;
-            Text1 = qslCardFields.Text1;
-            Text2 = qslCardFields.Text2;
+            Designs = Utilities.GetDesigns();
         }
 
         public string Callsign { get; set; } = "";
@@ -207,9 +201,18 @@ namespace U2.QslManager
 
         private void LoadData()
         {
+            LoadData(false);
+        }
+
+        private void LoadData(bool swallowErrors)
+        {
             var path = FileSystemHelper.GetFullPath(QslCardDataFileName);
             if (!File.Exists(path))
             {
+                if (swallowErrors)
+                {
+                    return;
+                }
                 var messageBox = MessageBox.Avalonia.MessageBoxManager
                     .GetMessageBoxStandardWindow("Error", $"File with QSL data does not exist.");
                 messageBox.Show();
@@ -218,8 +221,12 @@ namespace U2.QslManager
 
             if (!Utilities.TryParseQslCardDataFromFile(path, out var data))
             {
+                if (swallowErrors)
+                {
+                    return;
+                }
                 var messageBox = MessageBox.Avalonia.MessageBoxManager
-                    .GetMessageBoxStandardWindow("Error", $"Error reading from data files.");
+                    .GetMessageBoxStandardWindow("Error", $"Error reading from data file.");
                 messageBox.Show();
                 return;
             }
