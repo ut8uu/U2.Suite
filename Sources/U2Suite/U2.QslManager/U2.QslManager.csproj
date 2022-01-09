@@ -17,6 +17,10 @@
   </PropertyGroup>
   <ItemGroup>
     <AvaloniaResource Include="Assets\**" />
+    <AvaloniaXaml Remove="Resources\**" />
+    <Compile Remove="Resources\**" />
+    <EmbeddedResource Remove="Resources\**" />
+    <None Remove="Resources\**" />
     <None Remove=".gitignore" />
     <None Remove="Images\copy.png" />
     <None Remove="Images\edit.png" />
@@ -64,8 +68,5 @@
     <None Update="Images\kyiv.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Resources\" />
   </ItemGroup>
 </Project>

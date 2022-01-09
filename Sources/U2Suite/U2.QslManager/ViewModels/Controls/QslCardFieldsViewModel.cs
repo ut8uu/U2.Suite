@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reactive;
@@ -7,8 +6,6 @@ using System.Threading.Tasks;
 using Avalonia.Controls;
 using DeepCopy;
 using GalaSoft.MvvmLight.Messaging;
-using Newtonsoft.Json.Linq;
-using ReactiveUI;
 using U2.CommonControls;
 using U2.Core;
 using U2.QslManager.Helpers;

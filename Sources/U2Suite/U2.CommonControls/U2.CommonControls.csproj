@@ -9,10 +9,6 @@
     <FileVersion>1.0.0.20109</FileVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Folder Include="Assets\" />
-    <Folder Include="Models\" />
-    <AvaloniaResource Include="Assets\**" />
-    <Folder Include="ViewModels\" />
     <None Remove=".gitignore" />
   </ItemGroup>
   <ItemGroup>
