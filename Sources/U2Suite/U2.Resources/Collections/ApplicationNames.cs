@@ -9,9 +9,14 @@ namespace U2.Resources
         public const string SuiteWin = "U2.Suite.exe";
         public const string SuiteOsx = "U2.Suite";
         public const string SuiteLInux = "U2.Suite";
+
         public const string QslManagerWin = "U2.QslManager.exe";
         public const string QslManagerOsx = "U2.QslManager";
         public const string QslManagerLinux = "U2.QslManager";
+
+        public const string LibraryWin = "U2.Library.exe";
+        public const string LibraryOsx = "U2.Library";
+        public const string LibraryLinux = "U2.Library";
 
         public const string RichEditorWin = "AvaloniaEdit.Editor.exe";
         public const string RichEditorOsx = "AvaloniaEdit.Editor";
@@ -58,6 +63,11 @@ namespace U2.Resources
         public static string GetEditorAppName()
         {
             return ChooseByOS(RichEditorWin, RichEditorOsx, RichEditorLinux);
+        }
+
+        public static string GetLibraryAppName()
+        {
+            return ChooseByOS(LibraryWin, LibraryOsx, LibraryLinux);
         }
     }
 }
