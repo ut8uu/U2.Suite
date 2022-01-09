@@ -13,5 +13,6 @@
       <StyleInclude Source="avares://U2.Resources/Styles/Controls/PanelStyles.axaml"></StyleInclude>
       <StyleInclude Source="avares://U2.Resources/Styles/Controls/TextStyles.axaml"></StyleInclude>
       <StyleInclude Source="avares://U2.Resources/Styles/Controls/ButtonStyles.axaml"></StyleInclude>
+      <StyleInclude Source="avares://Avalonia.Controls.DataGrid/Themes/Default.xaml"/>    
     </Application.Styles>
 </Application>

@@ -7,10 +7,8 @@
 
   <Border Padding="10">
     <DockPanel>
-      <StackPanel
-        DockPanel.Dock="Left"
-        Width="200">
-        <TextBlock>Vendor</TextBlock>
+      <StackPanel DockPanel.Dock="Left" Width="200">
+        <TextBlock>Manufacturer</TextBlock>
         <ComboBox Items="{Binding Path=Vendors, Mode=TwoWay}"
                       SelectedIndex="{Binding SelectedVendorIndex, Mode=TwoWay}">
           <ComboBox.ItemTemplate>
@@ -19,9 +17,23 @@
             </DataTemplate>
           </ComboBox.ItemTemplate>
         </ComboBox>
+
+        <Button Command="{Binding FilterList}">Display rigs</Button>
       </StackPanel>
       <StackPanel>
-
+        <StackPanel Height="200">
+          <DataGrid Name="MyDataGrid" Items="{Binding SelectedRigs, Mode=OneWay}" 
+                    AutoGenerateColumns="False">
+            <DataGrid.Columns>
+              <DataGridTextColumn Header="Manufacturer" 
+                                  Binding="{Binding Vendor.Name}"
+                                  Width="100"/>
+              <DataGridTextColumn Header="Rig Name" 
+                                  Binding="{Binding Name}"
+                                  Width="200"/>
+            </DataGrid.Columns>
+          </DataGrid>
+        </StackPanel>
       </StackPanel>
     </DockPanel>
   </Border>
