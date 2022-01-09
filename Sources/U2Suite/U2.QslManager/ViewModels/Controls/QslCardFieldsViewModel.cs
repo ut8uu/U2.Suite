@@ -1,13 +1,12 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reactive;
 using System.Threading.Tasks;
 using Avalonia.Controls;
+using DeepCopy;
 using GalaSoft.MvvmLight.Messaging;
-using Newtonsoft.Json.Linq;
-using ReactiveUI;
+using U2.CommonControls;
 using U2.Core;
 using U2.QslManager.Helpers;
 using U2.Resources;
@@ -17,6 +16,8 @@ namespace U2.QslManager
     public class QslCardFieldsViewModel : ViewModelBase
     {
         private const string QslCardDataFileName = "QslCard.json";
+
+        private Window _owner;
 
         public QslCardFieldsViewModel(QslCardFieldsModel qslCardFields)
         {
@@ -77,6 +78,11 @@ namespace U2.QslManager
         }
         public List<QslCardDesign> Designs { get; set; }
         public int SelectedDesignIndex { get; set; }
+
+        public void SetOwner(Window owner)
+        {
+            _owner = owner;
+        }
 
         private async Task<string> SelectImage()
         {
@@ -197,6 +203,32 @@ namespace U2.QslManager
             var fileName = currentTemplate.DesignLocation;
 
             Launcher.Launch(ApplicationNames.GetEditorAppName(), $"--inputFile {fileName}");
+        }
+
+        private async Task CloneTemplate()
+        {
+            var form = new PromptDialog("Enter name of the new template.");
+            await form.ShowDialog(_owner);
+            if (form.DialogResult == DialogResult.Cancel)
+            {
+                return;
+            }
+
+            if (string.IsNullOrEmpty(form.PromptResponse))
+            {
+                return;
+            }
+
+            var template = ObjectCloner.Clone(Designs[SelectedDesignIndex]);
+            template.DesignName = form.PromptResponse;
+            var randomName = Path.GetFileNameWithoutExtension(Path.GetRandomFileName()) + ".json";
+            template.DesignLocation = FileSystemHelper.GetFullPath(new[] { "Designs", randomName });
+            Utilities.SerializeQslCardDesignToFile(template.DesignLocation, template);
+
+            RefreshTemplates();
+
+            var allPaths = Designs.Select(d => d.DesignLocation).ToList();
+            SelectedDesignIndex = allPaths.IndexOf(template.DesignLocation);
         }
 
         private void LoadData()

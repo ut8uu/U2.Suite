@@ -10,6 +10,7 @@ namespace U2.QslManager
     public partial class QslDesignerControls : UserControl
     {
         private readonly QslCardFieldsViewModel _viewModel;
+        private Window _owner;
 
         public QslDesignerControls()
         {
@@ -34,6 +35,12 @@ namespace U2.QslManager
         private void InitializeComponent()
         {
             AvaloniaXamlLoader.Load(this);
+        }
+
+        public void SetOwner(Window owner)
+        {
+            _owner = owner;
+            _viewModel.SetOwner(owner);
         }
     }
 }

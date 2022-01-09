@@ -14,23 +14,6 @@
     <OutputPath>..\..\..\Binaries\$(Platform)\$(Configuration)\</OutputPath>
   </PropertyGroup>
 
-  <PropertyGroup Label="Versioning">
-    <!-- override Version, VersionPrefix and VersionSuffix which are derived from 1.0.0 in Microsoft.NET.DefaultAssemblyInfo.targets -->
-    <Version>$([System.IO.File]::ReadAllText("$(MSBuildThisFileDirectory)ProductVersion.txt"))</Version>
-    <!-- <version>[-<pre-release>][+<build>] -->
-    <VersionPrefix>$(Version)</VersionPrefix>
-    <VersionPrefix Condition="$(VersionPrefix.Contains('-'))">$(VersionPrefix.Substring(0, $(VersionPrefix.IndexOf('-'))))</VersionPrefix>
-    <VersionPrefix Condition="$(VersionPrefix.Contains('+'))">$(VersionPrefix.Substring(0, $(VersionPrefix.IndexOf('+'))))</VersionPrefix>
-    <VersionBuildMetadata></VersionBuildMetadata>
-    <VersionBuildMetadata Condition="$(Version.Contains('+'))">$(Version.Substring($([MSBuild]::Add($(Version.IndexOf('+')), 1))))</VersionBuildMetadata>
-    <VersionSuffix></VersionSuffix>
-    <VersionSuffix Condition="$(Version.Contains('-'))">$(Version.Substring($([MSBuild]::Add($(Version.IndexOf('-')), 1))))</VersionSuffix>
-    <VersionSuffix Condition="$(VersionSuffix.Contains('+'))">$(VersionSuffix.Substring(0, $(VersionSuffix.IndexOf('+'))))</VersionSuffix>
-    <VersionSuffixWithHyphen></VersionSuffixWithHyphen>
-    <VersionSuffixWithHyphen Condition="'$(VersionSuffix)'!=''">-$(VersionSuffix)</VersionSuffixWithHyphen>
-    <FileVersion>$(VersionPrefix)</FileVersion>
-  </PropertyGroup>
-
   <ItemGroup Label="Suppressed Warnings">
     <!-- Missing XML comment for publicly visible type or member 'Type_or_Member' -->
     <SuppressedWarnings Include="1591"/>

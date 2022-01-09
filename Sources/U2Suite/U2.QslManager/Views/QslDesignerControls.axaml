@@ -34,6 +34,9 @@
             <Button Command="{Binding EditTemplate}" Margin="0 0 0 0">
               <Image Source="../Images/edit.png" Width="16" Height="16"></Image>
             </Button>
+            <Button Command="{Binding CloneTemplate}" Margin="0 0 0 0">
+              <Image Source="../Images/copy.png" Width="16" Height="16"></Image>
+            </Button>
           </StackPanel>
         </StackPanel>
       </StackPanel>
