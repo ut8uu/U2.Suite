@@ -13,6 +13,11 @@ namespace U2.Library.ViewModels
         public RigsViewModel()
         {
             _dbContext = new LibraryDbContext();
+            try
+            {
+                _dbContext.Database.Migrate();
+            }
+            catch { }
 
             Rigs = _dbContext.Rigs;
             Vendors = _dbContext.Vendors;

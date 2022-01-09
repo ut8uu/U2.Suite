@@ -9,8 +9,8 @@ using U2.Library.Database.Models;
 namespace U2.Library.Migrations
 {
     [DbContext(typeof(LibraryDbContext))]
-    [Migration("20220109183543_Migration002")]
-    partial class Migration002
+    [Migration("20220109184358_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
