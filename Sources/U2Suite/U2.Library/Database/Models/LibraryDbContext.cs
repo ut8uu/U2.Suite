@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using U2.Core;
 using U2.Resources.Collections;
@@ -31,12 +33,13 @@ namespace U2.Library.Database.Models
             optionsBuilder.UseSqlite(GetConnectionString());
         }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        protected override async void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<VendorDbo>().HasData(EnumerateVendors());
-            modelBuilder.Entity<RigDbo>().HasData(EnumerateRigs());
+            var vendors = EnumerateVendors();
+            modelBuilder.Entity<VendorDbo>().HasData(vendors);
+            modelBuilder.Entity<RigDbo>().HasData(EnumerateRigs(vendors));
         }
 
         private IEnumerable<VendorDbo> EnumerateVendors()
@@ -46,16 +49,30 @@ namespace U2.Library.Database.Models
                 new VendorDbo(VendorIds.AlincoId, VendorNames.Alinco),
                 new VendorDbo(VendorIds.IcomId, VendorNames.Icom),
                 new VendorDbo(VendorIds.KenwoodId, VendorNames.Kenwood),
+                new VendorDbo(VendorIds.MotorolaId, VendorNames.Motorola),
+                new VendorDbo(VendorIds.TenTecId, VendorNames.TenTec),
+                new VendorDbo(VendorIds.WouxunId, VendorNames.Wouxun),
                 new VendorDbo(VendorIds.YaesuId, VendorNames.Yaesu),
             };
         }
 
-        private IEnumerable<RigDbo> EnumerateRigs()
+        private IEnumerable<RigDbo> EnumerateRigs(IEnumerable<VendorDbo> vendors)
         {
-            return new List<RigDbo>
+            var list = new List<RigDbo>();
+            list.Add(new RigDbo
             {
+                Id = list.Count+1,
+                Name = "KG UV-6D",
+                VendorId = VendorIds.WouxunId,
+                WeightGrams = 253,
+                Width = 65,
+                Height = 119,
+                Depth = 40,
+                PowerWatts = 5,
+                DataDirectory = "Wouxun/KGUV6D",
+            });
 
-            };
+            return list;
         }
     }
 }

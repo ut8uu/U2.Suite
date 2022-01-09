@@ -6,11 +6,20 @@
   </PropertyGroup>
   <ItemGroup>
     <AvaloniaResource Include="Assets\**" />
-    <AvaloniaResource Remove="Assets\avalonia-logo.ico" />
+    <Compile Remove="Migrations\20220109180139_Migration001.cs" />
+    <Compile Remove="Migrations\20220109180139_Migration001.Designer.cs" />
+    <Compile Remove="Migrations\20220109182516_Migration002.cs" />
+    <Compile Remove="Migrations\20220109182516_Migration002.Designer.cs" />
+    <Compile Remove="Migrations\20220109183047_Migration002.cs" />
+    <Compile Remove="Migrations\20220109183047_Migration002.Designer.cs" />
+    <Compile Remove="Migrations\20220109183543_Migration002.cs" />
+    <Compile Remove="Migrations\20220109183543_Migration002.Designer.cs" />
     <None Remove=".gitignore" />
+    <None Remove="Assets\avalonia-logo.ico" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Avalonia" Version="0.10.11" />
+    <PackageReference Include="Avalonia.Controls.DataGrid" Version="0.10.11" />
     <PackageReference Include="Avalonia.Desktop" Version="0.10.11" />
     <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
     <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="0.10.11" />
@@ -37,7 +46,7 @@
     <Resource Include="Assets\avalonia-logo.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Database\Rigs\" />
+    <Folder Include="Database\Rigs\Wouxun\KGUV6D\" />
     <Folder Include="Models\" />
   </ItemGroup>
 </Project>
