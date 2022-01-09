@@ -9,7 +9,7 @@ using U2.Library.Database.Models;
 namespace U2.Library.Migrations
 {
     [DbContext(typeof(LibraryDbContext))]
-    [Migration("20220109184358_InitialMigration")]
+    [Migration("20220109185941_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,16 +24,16 @@ namespace U2.Library.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("Depth")
+                    b.Property<int?>("Depth")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("Height")
+                    b.Property<int?>("Height")
                         .HasColumnType("INTEGER");
 
                     b.Property<int?>("ManufactureEnd")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("ManufactureStart")
+                    b.Property<int?>("ManufactureStart")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Name")
@@ -41,13 +41,16 @@ namespace U2.Library.Migrations
                         .HasColumnType("TEXT")
                         .HasMaxLength(50);
 
-                    b.Property<int?>("VendorId")
+                    b.Property<int?>("PowerWatts")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("WeightGrams")
+                    b.Property<int>("VendorId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("Width")
+                    b.Property<int?>("WeightGrams")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("Width")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
@@ -55,6 +58,19 @@ namespace U2.Library.Migrations
                     b.HasIndex("VendorId");
 
                     b.ToTable("Rigs");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Depth = 40,
+                            Height = 119,
+                            Name = "KG UV-6D",
+                            PowerWatts = 5,
+                            VendorId = 6,
+                            WeightGrams = 253,
+                            Width = 65
+                        });
                 });
 
             modelBuilder.Entity("U2.Library.Database.Models.VendorDbo", b =>
@@ -114,7 +130,9 @@ namespace U2.Library.Migrations
                 {
                     b.HasOne("U2.Library.Database.Models.VendorDbo", "Vendor")
                         .WithMany("Rigs")
-                        .HasForeignKey("VendorId");
+                        .HasForeignKey("VendorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

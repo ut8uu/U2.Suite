@@ -26,13 +26,14 @@ namespace U2.Library.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Name = table.Column<string>(maxLength: 50, nullable: false),
-                    VendorId = table.Column<int>(nullable: true),
-                    ManufactureStart = table.Column<int>(nullable: false),
+                    VendorId = table.Column<int>(nullable: false),
+                    ManufactureStart = table.Column<int>(nullable: true),
                     ManufactureEnd = table.Column<int>(nullable: true),
-                    Width = table.Column<int>(nullable: false),
-                    Height = table.Column<int>(nullable: false),
-                    Depth = table.Column<int>(nullable: false),
-                    WeightGrams = table.Column<int>(nullable: false)
+                    Width = table.Column<int>(nullable: true),
+                    Height = table.Column<int>(nullable: true),
+                    Depth = table.Column<int>(nullable: true),
+                    WeightGrams = table.Column<int>(nullable: true),
+                    PowerWatts = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -42,7 +43,7 @@ namespace U2.Library.Migrations
                         column: x => x.VendorId,
                         principalTable: "Vendors",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
@@ -79,6 +80,11 @@ namespace U2.Library.Migrations
                 table: "Vendors",
                 columns: new[] { "Id", "Name" },
                 values: new object[] { 7, "Yaesu" });
+
+            migrationBuilder.InsertData(
+                table: "Rigs",
+                columns: new[] { "Id", "Depth", "Height", "ManufactureEnd", "ManufactureStart", "Name", "PowerWatts", "VendorId", "WeightGrams", "Width" },
+                values: new object[] { 1, 40, 119, null, null, "KG UV-6D", 5, 6, 253, 65 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Rigs_VendorId",

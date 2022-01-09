@@ -46,7 +46,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Database\Rigs\" />
-    <Folder Include="Migrations\" />
     <Folder Include="Models\" />
   </ItemGroup>
 </Project>
