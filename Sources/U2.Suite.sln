@@ -27,7 +27,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AvaloniaEdit.TextMate", "Th
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AvaloniaEdit.Editor", "ThirdParty\AvaloniaEdit.Editor\AvaloniaEdit.Editor.csproj", "{07AF5CB5-94A4-4EA5-A995-F451634BCE43}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "U2.CommonControls", "U2Suite\U2.CommonControls\U2.CommonControls.csproj", "{5D03D1E9-01C0-41EF-9DDD-C311EB582874}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "U2.CommonControls", "U2Suite\U2.CommonControls\U2.CommonControls.csproj", "{5D03D1E9-01C0-41EF-9DDD-C311EB582874}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "U2.Library", "U2Suite\U2.Library\U2.Library.csproj", "{A3558641-98A3-40A1-8339-B20D13120FAC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -71,6 +73,10 @@ Global
 		{5D03D1E9-01C0-41EF-9DDD-C311EB582874}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5D03D1E9-01C0-41EF-9DDD-C311EB582874}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5D03D1E9-01C0-41EF-9DDD-C311EB582874}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A3558641-98A3-40A1-8339-B20D13120FAC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A3558641-98A3-40A1-8339-B20D13120FAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A3558641-98A3-40A1-8339-B20D13120FAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A3558641-98A3-40A1-8339-B20D13120FAC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -85,6 +91,7 @@ Global
 		{CA36964B-431C-46CF-8197-B62F87324604} = {0C64A771-06A2-4D4A-90FC-1A1F79E3B59C}
 		{07AF5CB5-94A4-4EA5-A995-F451634BCE43} = {0C64A771-06A2-4D4A-90FC-1A1F79E3B59C}
 		{5D03D1E9-01C0-41EF-9DDD-C311EB582874} = {E0104E5F-6C0E-4CA5-BA0E-37B2B3CC13D6}
+		{A3558641-98A3-40A1-8339-B20D13120FAC} = {2D0CB1BE-6DF0-46C8-96AD-4F67892F1BE7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E8720C83-17E2-4C14-AFA9-CAAD4F71F4D6}
