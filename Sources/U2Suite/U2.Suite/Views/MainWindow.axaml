@@ -7,8 +7,8 @@
         x:Class="U2.Suite.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
         Title="U2.Suite"
-        Height="200"
-        Width="400"
+        Height="200" Width="500"
+        d:DesignWidth="500" d:DesignHeight="200"
         Foreground="{DynamicResource ThemeForegroundBrush}"
         >
   <Design.DataContext>
@@ -32,6 +32,10 @@
               HorizontalAlignment="Center" Orientation="Horizontal">
     <Button Command="{Binding LaunchQslManagerCommand}" Classes="h150">
       <Image Source="../Images/qslmanager.png"></Image>
+    </Button>
+
+    <Button Command="{Binding LaunchLibrary}" Classes="h150">
+      <Image Source="../Images/library.png"></Image>
     </Button>
 
     <StackPanel>
