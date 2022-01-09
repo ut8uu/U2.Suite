@@ -8,6 +8,17 @@ namespace U2.QslManager
 {
     public sealed class QslCardDesign
     {
+        public QslCardDesign() { }
+
+        public QslCardDesign(QslCardDesign design)
+        {
+            AuthoredBy = design.AuthoredBy;
+            DesignName = design.DesignName;
+            DesignLocation = design.DesignLocation;
+            CardSizeMM = new Dimensions(design.CardSizeMM.Width, design.CardSizeMM.Height);
+
+        }
+
         public string? AuthoredBy { get; set; }
         public string? DesignName { get; set; }
         public string DesignLocation { get; set; } = string.Empty;

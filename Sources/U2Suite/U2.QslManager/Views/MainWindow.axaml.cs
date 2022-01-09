@@ -18,6 +18,7 @@ namespace U2.QslManager
 #endif
 
             _designerControls = this.FindControl<QslDesignerControls>("DesignerControls");
+            _designerControls.SetOwner(this);
             Debug.Assert(_designerControls != null);
         }
 

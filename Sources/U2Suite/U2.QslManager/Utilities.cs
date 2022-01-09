@@ -230,5 +230,13 @@ namespace U2.QslManager
             Directory.CreateDirectory(directory);
             File.WriteAllText(pathToFile, content);
         }
+
+        public static void SerializeQslCardDesignToFile(string pathToFile, QslCardDesign design)
+        {
+            var content = JsonSerializer.Serialize(design, GetJsonSerializerOptions());
+            var directory = Path.GetDirectoryName(pathToFile);
+            Directory.CreateDirectory(directory);
+            File.WriteAllText(pathToFile, content);
+        }
     }
 }

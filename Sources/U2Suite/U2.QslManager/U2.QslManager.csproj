@@ -4,8 +4,8 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <RuntimeIdentifiers>win-x64;osx-x64;linux-x64</RuntimeIdentifiers>
     <Nullable>enable</Nullable>
-    <AssemblyVersion>1.3.1.20105</AssemblyVersion>
-    <FileVersion>1.3.0.20105</FileVersion>
+    <AssemblyVersion>1.4.1.20109</AssemblyVersion>
+    <FileVersion>1.4.1.20109</FileVersion>
     <NeutralLanguage>en</NeutralLanguage>
     <RepositoryUrl>https://github.com/ut8uu/U2.Suite</RepositoryUrl>
     <RepositoryType>github</RepositoryType>
@@ -18,18 +18,17 @@
   <ItemGroup>
     <AvaloniaResource Include="Assets\**" />
     <None Remove=".gitignore" />
+    <None Remove="Images\copy.png" />
     <None Remove="Images\edit.png" />
     <None Remove="Images\refresh.png" />
   </ItemGroup>
   <ItemGroup>
+    <AvaloniaResource Include="Images\copy.png" />
     <AvaloniaResource Include="Images\edit.png" />
     <AvaloniaResource Include="Images\refresh.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </AvaloniaResource>
     <AvaloniaResource Include="Models\DesignElements.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="FodyWeavers.xsd" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Avalonia" Version="0.10.11" />
@@ -38,6 +37,7 @@
     <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
     <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="0.10.11" />
     <PackageReference Include="Avalonia.ReactiveUI" Version="0.10.11" />
+    <PackageReference Include="DeepCopy.Expression" Version="1.3.0" />
     <PackageReference Include="JorgeSerrano.Json.JsonSnakeCaseNamingPolicy" Version="0.9.0" />
     <PackageReference Include="MessageBox.Avalonia" Version="1.7.1" />
     <PackageReference Include="MvvmLightLibsStd10" Version="5.4.1.1" />
@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\ThirdParty\AvaloniaEdit.TextMate\AvaloniaEdit.TextMate.csproj" />
+    <ProjectReference Include="..\U2.CommonControls\U2.CommonControls.csproj" />
     <ProjectReference Include="..\U2.Core\U2.Core.csproj" />
     <ProjectReference Include="..\U2.Resources\U2.Resources.csproj" />
   </ItemGroup>
