@@ -8,6 +8,8 @@
     <AvaloniaResource Include="Assets\**" />
     <Compile Remove="Migrations\20220109182516_Migration002.cs" />
     <Compile Remove="Migrations\20220109182516_Migration002.Designer.cs" />
+    <Compile Remove="Migrations\20220109183047_Migration002.cs" />
+    <Compile Remove="Migrations\20220109183047_Migration002.Designer.cs" />
     <None Remove=".gitignore" />
     <None Remove="Assets\avalonia-logo.ico" />
   </ItemGroup>

@@ -20,6 +20,7 @@ namespace U2.Library.Database.Models
         public int Width { get; set; }
         public int Height { get; set; }
         public int Depth { get; set; }
+        public int WeightGrams { get; set; }
 
         [InverseProperty("Rigs")]
         public virtual VendorDbo Vendor { get; set; }

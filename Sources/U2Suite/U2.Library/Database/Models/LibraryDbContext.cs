@@ -46,6 +46,9 @@ namespace U2.Library.Database.Models
                 new VendorDbo(VendorIds.AlincoId, VendorNames.Alinco),
                 new VendorDbo(VendorIds.IcomId, VendorNames.Icom),
                 new VendorDbo(VendorIds.KenwoodId, VendorNames.Kenwood),
+                new VendorDbo(VendorIds.MotorolaId, VendorNames.Motorola),
+                new VendorDbo(VendorIds.TenTecId, VendorNames.TenTec),
+                new VendorDbo(VendorIds.WouxunId, VendorNames.Wouxun),
                 new VendorDbo(VendorIds.YaesuId, VendorNames.Yaesu),
             };
         }
