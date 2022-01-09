@@ -5,10 +5,24 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="U2.Library.Views.Rigs">
 
+  <Border Padding="10">
     <DockPanel>
-      <Panel DockPanel.Dock="Left">
-        
-      </Panel>
-    </DockPanel>
+      <StackPanel
+        DockPanel.Dock="Left"
+        Width="200">
+        <TextBlock>Vendor</TextBlock>
+        <ComboBox Items="{Binding Path=Vendors, Mode=TwoWay}"
+                      SelectedIndex="{Binding SelectedVendorIndex, Mode=TwoWay}">
+          <ComboBox.ItemTemplate>
+            <DataTemplate>
+              <TextBlock Text="{Binding Name}" Margin="5 0"></TextBlock>
+            </DataTemplate>
+          </ComboBox.ItemTemplate>
+        </ComboBox>
+      </StackPanel>
+      <StackPanel>
 
+      </StackPanel>
+    </DockPanel>
+  </Border>
 </UserControl>
