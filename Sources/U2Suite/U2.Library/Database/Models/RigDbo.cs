@@ -22,6 +22,8 @@ namespace U2.Library.Database.Models
         public int? Depth { get; set; }
         public int? WeightGrams { get; set; }
         public int? PowerWatts { get; set; }
+        [StringLength(150)]
+        public string DataDirectory { get; set; }
 
         [InverseProperty("Rigs")]
         public virtual VendorDbo Vendor { get; set; }

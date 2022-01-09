@@ -45,7 +45,7 @@
     <Resource Include="Assets\avalonia-logo.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Database\Rigs\" />
+    <Folder Include="Database\Rigs\Wouxun\KGUV6D\" />
     <Folder Include="Models\" />
   </ItemGroup>
 </Project>

@@ -9,7 +9,7 @@ using U2.Library.Database.Models;
 namespace U2.Library.Migrations
 {
     [DbContext(typeof(LibraryDbContext))]
-    [Migration("20220109185941_InitialMigration")]
+    [Migration("InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -23,6 +23,11 @@ namespace U2.Library.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
+
+                    b.Property<string>("DataDirectory")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(150);
 
                     b.Property<int?>("Depth")
                         .HasColumnType("INTEGER");
@@ -63,6 +68,7 @@ namespace U2.Library.Migrations
                         new
                         {
                             Id = 1,
+                            DataDirectory = "Wouxun/KGUV6D",
                             Depth = 40,
                             Height = 119,
                             Name = "KG UV-6D",

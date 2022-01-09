@@ -33,7 +33,8 @@ namespace U2.Library.Migrations
                     Height = table.Column<int>(nullable: true),
                     Depth = table.Column<int>(nullable: true),
                     WeightGrams = table.Column<int>(nullable: true),
-                    PowerWatts = table.Column<int>(nullable: true)
+                    PowerWatts = table.Column<int>(nullable: true),
+                    DataDirectory = table.Column<string>(maxLength: 150, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -83,8 +84,8 @@ namespace U2.Library.Migrations
 
             migrationBuilder.InsertData(
                 table: "Rigs",
-                columns: new[] { "Id", "Depth", "Height", "ManufactureEnd", "ManufactureStart", "Name", "PowerWatts", "VendorId", "WeightGrams", "Width" },
-                values: new object[] { 1, 40, 119, null, null, "KG UV-6D", 5, 6, 253, 65 });
+                columns: new[] { "Id", "DataDirectory", "Depth", "Height", "ManufactureEnd", "ManufactureStart", "Name", "PowerWatts", "VendorId", "WeightGrams", "Width" },
+                values: new object[] { 1, "Wouxun/KGUV6D", 40, 119, null, null, "KG UV-6D", 5, 6, 253, 65 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Rigs_VendorId",

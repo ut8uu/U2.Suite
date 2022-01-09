@@ -69,6 +69,7 @@ namespace U2.Library.Database.Models
                 Height = 119,
                 Depth = 40,
                 PowerWatts = 5,
+                DataDirectory = "Wouxun/KGUV6D",
             });
 
             return list;
