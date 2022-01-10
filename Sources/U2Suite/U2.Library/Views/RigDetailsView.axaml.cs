@@ -25,6 +25,7 @@ namespace U2.Library.Views
             set
             {
                 selectedRig = value;
+                _viewModel.Rig = value;
             }
         }
 

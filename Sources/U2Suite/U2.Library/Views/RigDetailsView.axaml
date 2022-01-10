@@ -5,10 +5,9 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="U2.Library.Views.RigDetailsView">
   <Border Padding="10">
-    <StackPanel>
-
-      <TextBlock Text="Name: "></TextBlock>
-      <TextBlock Text="{Binding RigName, Mode=OneWay}"></TextBlock>
-    </StackPanel>
+      <Grid ColumnDefinitions="150,150">
+          <TextBlock Text="Name: "></TextBlock>
+          <TextBlock Text="{Binding Rig.Name, Mode=OneWay}"></TextBlock>
+      </Grid>
   </Border>
 </UserControl>

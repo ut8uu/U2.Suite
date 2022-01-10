@@ -9,19 +9,27 @@ namespace U2.Library.ViewModels
 {
     public sealed class RigDetailsViewModel : ViewModelBase
     {
+        private RigDbo _rig;
+
         public RigDetailsViewModel()
         {
             Messenger.Default.Register<DisplayRigMessage>(this,
                 AcceptDisplayRigMessage);
         }
 
-        public RigDbo Rig { get; set; }
-        public string RigName { get; set; }
+        public RigDbo Rig
+        {
+            get => _rig;
+            set
+            {
+                _rig = value; 
+                OnPropertyChanged(nameof(Rig));
+            }
+        }
 
         private void AcceptDisplayRigMessage(DisplayRigMessage message)
         {
             Rig = message.Rig;
-            RigName = Rig?.Name;
         }
     }
 }

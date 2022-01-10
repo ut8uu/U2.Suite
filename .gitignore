@@ -3,3 +3,4 @@
 **/Intermediate/
 /Releases/*.zip
 *.zip
+**/FodyWeavers.xsd
