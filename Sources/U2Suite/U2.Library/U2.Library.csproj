@@ -47,6 +47,8 @@
     <Resource Include="Assets\avalonia-logo.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Database\Rigs\Wouxun\KGUV6D\" />
+    <None Update="Database\Rigs\Wouxun\KGUV6D\Images\001.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 </Project>
