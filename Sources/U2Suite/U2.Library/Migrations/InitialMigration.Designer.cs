@@ -68,6 +68,18 @@ namespace U2.Library.Migrations
                         new
                         {
                             Id = 1,
+                            DataDirectory = "Alinco/DJX01",
+                            Depth = 19,
+                            Height = 100,
+                            ManufactureStart = 2004,
+                            Name = "DJ-X1",
+                            VendorId = 1,
+                            WeightGrams = 150,
+                            Width = 58
+                        },
+                        new
+                        {
+                            Id = 2,
                             DataDirectory = "Wouxun/KGUV6D",
                             Depth = 40,
                             Height = 119,

@@ -85,7 +85,12 @@ namespace U2.Library.Migrations
             migrationBuilder.InsertData(
                 table: "Rigs",
                 columns: new[] { "Id", "DataDirectory", "Depth", "Height", "ManufactureEnd", "ManufactureStart", "Name", "PowerWatts", "VendorId", "WeightGrams", "Width" },
-                values: new object[] { 1, "Wouxun/KGUV6D", 40, 119, null, null, "KG UV-6D", 5, 6, 253, 65 });
+                values: new object[] { 1, "Alinco/DJX01", 19, 100, null, 2004, "DJ-X1", null, 1, 150, 58 });
+
+            migrationBuilder.InsertData(
+                table: "Rigs",
+                columns: new[] { "Id", "DataDirectory", "Depth", "Height", "ManufactureEnd", "ManufactureStart", "Name", "PowerWatts", "VendorId", "WeightGrams", "Width" },
+                values: new object[] { 2, "Wouxun/KGUV6D", 40, 119, null, null, "KG UV-6D", 5, 6, 253, 65 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Rigs_VendorId",

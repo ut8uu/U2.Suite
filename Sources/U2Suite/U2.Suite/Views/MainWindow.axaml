@@ -39,8 +39,9 @@
     </Button>
 
     <StackPanel>
-      <Button Command="{Binding ShowAboutWindow}" Content="About U2.Suite"></Button>
-      <Button Command="{Binding ShowLicenseWindow}" Content="License Information"></Button>
+      <Button Width="150" Command="{Binding ShowAboutWindow}" Content="About U2.Suite"></Button>
+      <Button Width="150" Command="{Binding ShowLicenseWindow}" Content="License"></Button>
+      <Button Width="150" Command="{Binding ShowContributorsWindow}" Content="Contributors"></Button>
     </StackPanel>
   </StackPanel>
 

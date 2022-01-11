@@ -2,6 +2,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:views="using:U2.Library.Views"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="U2.Library.Views.Rigs">
 
@@ -23,7 +24,9 @@
       <StackPanel>
         <StackPanel Height="200">
           <DataGrid Name="MyDataGrid" Items="{Binding SelectedRigs, Mode=OneWay}" 
-                    AutoGenerateColumns="False">
+                    AutoGenerateColumns="False"
+                    SelectionMode="Single"
+                    SelectedItem="{Binding SelectedRig, Mode=TwoWay}">
             <DataGrid.Columns>
               <DataGridTextColumn Header="Manufacturer" 
                                   Binding="{Binding Vendor.Name}"
@@ -33,6 +36,10 @@
                                   Width="200"/>
             </DataGrid.Columns>
           </DataGrid>
+
+          <StackPanel Orientation="Horizontal">
+            <views:RigDetailsView Name="RigDetails"></views:RigDetailsView>
+          </StackPanel>
         </StackPanel>
       </StackPanel>
     </DockPanel>

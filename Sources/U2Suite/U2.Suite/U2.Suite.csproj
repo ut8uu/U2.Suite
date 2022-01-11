@@ -42,6 +42,9 @@
     <Compile Update="Views\AboutFormView.axaml.cs">
       <DependentUpon>AboutFormView.axaml</DependentUpon>
     </Compile>
+    <Compile Update="Views\ContributorsWindow.axaml.cs">
+      <DependentUpon>ContributorsWindow.axaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\LicenseFormView.axaml.cs">
       <DependentUpon>LicenseFormView.axaml</DependentUpon>
     </Compile>

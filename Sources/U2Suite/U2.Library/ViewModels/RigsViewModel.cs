@@ -1,10 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using Avalonia.Controls;
+using GalaSoft.MvvmLight.Messaging;
+using Microsoft.EntityFrameworkCore;
 using U2.Library.Database.Models;
+using U2.Library.Models;
 
 namespace U2.Library.ViewModels
 {
@@ -13,6 +16,7 @@ namespace U2.Library.ViewModels
         private LibraryDbContext _dbContext;
         private int selectedVendorIndex;
         private ObservableCollection<RigDbo> selectedRigs;
+        private RigDbo selectedRig;
 
         public RigsViewModel()
         {
@@ -25,6 +29,7 @@ namespace U2.Library.ViewModels
 
             Rigs = _dbContext.Rigs;
             Vendors = _dbContext.Vendors;
+            SelectedVendorIndex = 0;
         }
 
         public IEnumerable<RigDbo> Rigs { get; set; }
@@ -42,10 +47,24 @@ namespace U2.Library.ViewModels
         public ObservableCollection<RigDbo> SelectedRigs
         {
             get => selectedRigs;
-            set 
-            { 
+            set
+            {
                 selectedRigs = value;
                 OnPropertyChanged();
+            }
+        }
+
+        public RigDbo SelectedRig 
+        { 
+            get => selectedRig;
+            set
+            {
+                selectedRig = value;
+                var message = new DisplayRigMessage
+                {
+                    Rig = value
+                };
+                Messenger.Default.Send(message);
             }
         }
 
