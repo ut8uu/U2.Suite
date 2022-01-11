@@ -44,6 +44,12 @@ namespace U2.Suite
             window.ShowDialog(_window);
         }
 
+        public void ShowContributorsWindow()
+        {
+            var window = new ContributorsWindow();
+            window.ShowDialog(_window);
+        }
+
         public void LaunchLibrary()
         {
             Launcher.Launch(ApplicationNames.GetLibraryAppName(), string.Empty);
