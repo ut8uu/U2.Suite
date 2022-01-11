@@ -29,6 +29,7 @@ namespace U2.Library.ViewModels
 
             Rigs = _dbContext.Rigs;
             Vendors = _dbContext.Vendors;
+            SelectedVendorIndex = 0;
         }
 
         public IEnumerable<RigDbo> Rigs { get; set; }
