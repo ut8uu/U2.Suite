@@ -21,8 +21,6 @@
         </DataGrid.Columns>
       </DataGrid>
       <Image VerticalAlignment="Top" Width="300" Height="300" Source="{Binding RigImagePath, Mode=OneWay}"></Image>
-      
-      <Image VerticalAlignment="Top" Width="300" Height="300" Source="c:\Projects\Git\U2.Suite\Binaries\AnyCPU\Debug\Database\Rigs\Wouxun\KGUV6D\Images\001.jpg"></Image>
     </StackPanel>
   </Border>
 </UserControl>
