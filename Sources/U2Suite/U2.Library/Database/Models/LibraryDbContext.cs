@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using U2.Core;
+using U2.Library.Database.Rigs.Alinco;
+using U2.Library.Database.Rigs.Wouxun;
 using U2.Resources.Collections;
 
 namespace U2.Library.Database.Models
@@ -33,7 +35,7 @@ namespace U2.Library.Database.Models
             optionsBuilder.UseSqlite(GetConnectionString());
         }
 
-        protected override async void OnModelCreating(ModelBuilder modelBuilder)
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
@@ -59,18 +61,14 @@ namespace U2.Library.Database.Models
         private IEnumerable<RigDbo> EnumerateRigs(IEnumerable<VendorDbo> vendors)
         {
             var list = new List<RigDbo>();
-            list.Add(new RigDbo
+            
+            list.AddRange(AlincoRadios.GetRadios());
+            list.AddRange(WouxunRadios.GetRadios());
+
+            for (var i = 0; i < list.Count; i++)
             {
-                Id = list.Count+1,
-                Name = "KG UV-6D",
-                VendorId = VendorIds.WouxunId,
-                WeightGrams = 253,
-                Width = 65,
-                Height = 119,
-                Depth = 40,
-                PowerWatts = 5,
-                DataDirectory = "Wouxun/KGUV6D",
-            });
+                list[i].Id = i + 1;
+            }
 
             return list;
         }
