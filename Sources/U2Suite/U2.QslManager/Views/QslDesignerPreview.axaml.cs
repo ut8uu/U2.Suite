@@ -5,20 +5,16 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using Avalonia.Media.Imaging;
-using Avalonia.Media.Immutable;
 using Avalonia.Media;
 using Avalonia.Threading;
-using System.Runtime.InteropServices;
-using Avalonia.Platform;
 using GalaSoft.MvvmLight.Messaging;
 using Avalonia.LogicalTree;
 using U2.QslManager.Helpers;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace U2.QslManager
 {
     [PropertyChanged.DoNotNotify]
-    public partial class QslDesignerPreview : UserControl
+    public class QslDesignerPreview : UserControl
     {
         private QslCardDesign _design;
         private RenderTargetBitmap _bitmap;

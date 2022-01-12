@@ -1,9 +1,9 @@
-﻿using GalaSoft.MvvmLight.Messaging;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using GalaSoft.MvvmLight.Messaging;
 using U2.Core;
 using U2.Library.Database.Models;
 using U2.Library.Models;

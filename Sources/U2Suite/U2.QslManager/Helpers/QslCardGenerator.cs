@@ -5,10 +5,7 @@ using System.Text;
 using Avalonia.Media;
 using Avalonia;
 using Avalonia.Media.Imaging;
-using Avalonia.Controls;
-using Avalonia.Controls.Shapes;
 using System.IO;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace U2.QslManager.Helpers
 {

@@ -1,12 +1,11 @@
-﻿using Avalonia.Controls;
-using JorgeSerrano.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Text;
 using System.Text.Json;
+using JorgeSerrano.Json;
 
 namespace U2.QslManager
 {

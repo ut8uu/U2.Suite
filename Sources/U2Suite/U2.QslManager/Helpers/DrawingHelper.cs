@@ -4,7 +4,6 @@ using System.Drawing;
 using System.Text;
 using System.Xml;
 using Avalonia;
-using Avalonia.Controls;
 using Avalonia.Media;
 using Color = Avalonia.Media.Color;
 using Point = Avalonia.Point;
