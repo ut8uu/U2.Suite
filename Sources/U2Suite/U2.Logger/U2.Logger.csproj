@@ -16,4 +16,12 @@
     <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="0.10.11" />
     <PackageReference Include="Avalonia.ReactiveUI" Version="0.10.11" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\U2.Resources\U2.Resources.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Views\LoggerMainWindow.axaml.cs">
+      <DependentUpon>LoggerMainWindow.axaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
 </Project>

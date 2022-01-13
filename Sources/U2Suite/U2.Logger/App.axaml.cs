@@ -2,7 +2,6 @@ using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using U2.Logger.ViewModels;
-using U2.Logger.Views;
 
 namespace U2.Logger
 {
@@ -17,10 +16,10 @@ namespace U2.Logger
         {
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
-                desktop.MainWindow = new MainWindow
-                {
-                    DataContext = new MainWindowViewModel(),
-                };
+                var window = new LoggerMainWindow();
+                var viewModel = new MainWindowViewModel(window);
+                window.DataContext = viewModel;
+                desktop.MainWindow = window;
             }
 
             base.OnFrameworkInitializationCompleted();

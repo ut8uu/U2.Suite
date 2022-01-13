@@ -2,11 +2,11 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 
-namespace U2.Logger.Views
+namespace U2.Logger
 {
-    public partial class MainWindow : Window
+    public partial class LoggerMainWindow : Window
     {
-        public MainWindow()
+        public LoggerMainWindow()
         {
             InitializeComponent();
 #if DEBUG
