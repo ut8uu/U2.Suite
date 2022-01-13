@@ -20,8 +20,8 @@ namespace U2.QslManager
                 ElementTitle = title,
                 ElementName = name,
                 TransformationAngle = 0,
-                StartPositionMM = new Position(startX, startY),
-                EndPositionMM = new Position(0, 0),
+                StartPositionMm = new Position(startX, startY),
+                EndPositionMm = new Position(0, 0),
                 Font = new QslCardElementFont
                 {
                     Bold = true,
@@ -44,8 +44,8 @@ namespace U2.QslManager
                 ElementType = QslCardElementType.Text,
                 ElementName = name,
                 TransformationAngle = 0,
-                StartPositionMM = new Position(startX, startY),
-                EndPositionMM = new Position(endX, endY),
+                StartPositionMm = new Position(startX, startY),
+                EndPositionMm = new Position(endX, endY),
                 Order = order,
             };
         }
@@ -91,7 +91,7 @@ namespace U2.QslManager
                 },
                 GridInfo = new QslCardGridInfo
                 {
-                    StartPositionMM = new Position
+                    StartPositionMm = new Position
                     {
                         X = 20,
                         Y = 70
@@ -99,39 +99,39 @@ namespace U2.QslManager
                     BackgroundColor = "White",
                     ForegroundColor = "DarkNavy",
                     RowCount = 1,
-                    HeaderHeightMM = 10,
-                    RowHeightMM = 10,
+                    HeaderHeightMm = 10,
+                    RowHeightMm = 10,
                     Columns = new List<QslCardGridColumn>
                     {
                         new QslCardGridColumn
                         {
                             Title = "To radio",
-                            WidthMM = 30,
+                            WidthMm = 30,
                         },
                         new QslCardGridColumn
                         {
                             Title = "Date",
-                            WidthMM = 20,
+                            WidthMm = 20,
                         },
                         new QslCardGridColumn
                         {
                             Title = "Time",
-                            WidthMM = 20,
+                            WidthMm = 20,
                         },
                         new QslCardGridColumn
                         {
                             Title = "Freq",
-                            WidthMM = 20,
+                            WidthMm = 20,
                         },
                         new QslCardGridColumn
                         {
                             Title = "Report",
-                            WidthMM = 15,
+                            WidthMm = 15,
                         },
                         new QslCardGridColumn
                         {
                             Title = "Mode",
-                            WidthMM = 15,
+                            WidthMm = 15,
                         },
                     }
                 }

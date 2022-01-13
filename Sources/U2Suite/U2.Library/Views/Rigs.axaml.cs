@@ -7,13 +7,11 @@ namespace U2.Library.Views
 {
     public partial class Rigs : UserControl
     {
-        private RigsViewModel _viewModel;
-
         public Rigs()
         {
             InitializeComponent();
-            _viewModel = new RigsViewModel();
-            this.DataContext = _viewModel;
+            var viewModel = new RigsViewModel();
+            this.DataContext = viewModel;
         }
 
         private void InitializeComponent()

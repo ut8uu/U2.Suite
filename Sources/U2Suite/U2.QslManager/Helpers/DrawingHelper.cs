@@ -45,16 +45,9 @@ namespace U2.QslManager.Helpers
             if (transformAngle > 0)
             {
                 RotateTransform rt = new RotateTransform(transformAngle, point.X, point.Y);
-                //var centerX = 378.0;// + txt.Bounds.Width / 2;
-                //var centerY = 189.0;// txt.Bounds.Height / 2;
-                //centerX = double.Parse(text);
-                //rt.CenterX = centerX;
-                //rt.CenterY = centerY;
                 var currentTransform = ctx.CurrentTransform;
                 ctx.PushSetTransform(rt.Value);
                 ctx.DrawText(brush, point, txt);
-                //var r = new Rect(point, new Avalonia.Size(txt.Bounds.Width, txt.Bounds.Height));
-                //DrawRectangle(ctx, r, "White");
                 ctx.PushSetTransform(currentTransform);
             }
             else

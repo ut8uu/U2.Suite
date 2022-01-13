@@ -36,13 +36,13 @@ namespace U2.QslManager
         /// Coordinates of the lower bottom corner of the element boundary.
         /// Values are in millimeters.
         /// </summary>
-        public Position StartPositionMM { get; set; } = new Position(0, 0);
+        public Position StartPositionMm { get; set; } = new Position(0, 0);
         /// <summary>
         /// Coordinates of the upper-right corner of the element's boundaries.
         /// Values are in millimeters.
         /// Used for images. 
         /// </summary>
-        public Position EndPositionMM { get; set; } = new Position();
+        public Position EndPositionMm { get; set; } = new Position();
         /// <summary>
         /// A size of the bounding box.
         /// </summary>

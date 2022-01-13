@@ -2,9 +2,5 @@
 {
     public sealed class LicenseFormViewModel
     {
-        public void CloseWindow()
-        {
-
-        }
     }
 }

@@ -17,7 +17,7 @@ namespace U2.QslManager
     {
         private const string QslCardDataFileName = "QslCard.json";
 
-        private Window _owner;
+        private Window _owner = default!;
 
         public QslCardFieldsViewModel(QslCardFieldsModel qslCardFields)
         {
@@ -98,7 +98,7 @@ namespace U2.QslManager
                 }
             };
             var list = await openFileDialog.ShowAsync(new Window());
-            return list.First();
+            return list?.First() ?? string.Empty;
         }
 
         private async Task SelectBackgroundImageAsync()
@@ -149,7 +149,7 @@ namespace U2.QslManager
             var message = new RenderQslMessage
             {
                 Fields = fields,
-                Design = Designs?[SelectedDesignIndex],
+                Design = Designs?[SelectedDesignIndex] ?? default!,
             };
             Messenger.Default.Send(message);
         }

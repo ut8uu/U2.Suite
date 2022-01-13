@@ -12,15 +12,12 @@ namespace U2.Suite
         public string Greeting => "Welcome to Avalonia!";
         public string QslManagerTitle => "QSL Manager";
 
-        public ReactiveCommand<Unit, Unit> LaunchQslManagerCommand { get; }
-
         public MainWindowViewModel()
         {
         }
 
         public MainWindowViewModel(MainWindow window)
         {
-            LaunchQslManagerCommand = ReactiveCommand.Create(LaunchQslManager);
             this._window = window;
         }
 

@@ -8,8 +8,8 @@ namespace U2.Library.Views
 {
     public partial class RigDetailsView : UserControl
     {
-        private RigDbo selectedRig;
-        private RigDetailsViewModel _viewModel;
+        private RigDbo _selectedRig = default!;
+        private readonly RigDetailsViewModel _viewModel;
 
         public RigDetailsView()
         {
@@ -21,10 +21,10 @@ namespace U2.Library.Views
 
         public RigDbo SelectedRig
         {
-            get => selectedRig;
+            get => _selectedRig;
             set
             {
-                selectedRig = value;
+                _selectedRig = value;
                 _viewModel.Rig = value;
             }
         }

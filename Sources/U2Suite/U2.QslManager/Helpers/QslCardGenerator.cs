@@ -11,8 +11,6 @@ namespace U2.QslManager.Helpers
 {
     public static class QslCardGenerator
     {
-        public const double ViewPortWidth = 450;
-
         public static RenderTargetBitmap Generate(
             QslCardFieldsModel fields,
             QslCardDesign design)
@@ -65,8 +63,8 @@ namespace U2.QslManager.Helpers
                 new System.Drawing.Rectangle(0, 0, bitmapTmp.Width, bitmapTmp.Height), ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
             var avaloniaBitmap = new Bitmap(Avalonia.Platform.PixelFormat.Bgra8888, Avalonia.Platform.AlphaFormat.Premul,
                 bitmapData.Scan0,
-                new Avalonia.PixelSize(bitmapData.Width, bitmapData.Height),
-                new Avalonia.Vector(design.DensityDpi, design.DensityDpi),
+                new PixelSize(bitmapData.Width, bitmapData.Height),
+                new Vector(design.DensityDpi, design.DensityDpi),
                 bitmapData.Stride);
             bitmapTmp.UnlockBits(bitmapData);
             bitmapTmp.Dispose();
@@ -111,7 +109,7 @@ namespace U2.QslManager.Helpers
             QslCardDesign design)
         {
             var toRadioBlock = design.ToRadioBlock;
-            var point = toRadioBlock.StartPositionMM.ToPoint() * design.DensityDpmm;
+            var point = toRadioBlock.StartPositionMm.ToPoint() * design.DensityDpmm;
             var size = toRadioBlock.Size.ToSize() * design.DensityDpmm;
             var rectangle = new Rect(point, size);
             if (!string.IsNullOrEmpty(toRadioBlock.BackgroundColor))
@@ -139,17 +137,17 @@ namespace U2.QslManager.Helpers
                 return;
             }
 
-            var currentX = Convert.ToInt32(design.GridInfo.StartPositionMM.X * design.DensityDpmm);
-            var startY = Convert.ToInt32(design.GridInfo.StartPositionMM.Y * design.DensityDpmm);
+            var currentX = Convert.ToInt32(design.GridInfo.StartPositionMm.X * design.DensityDpmm);
+            var startY = Convert.ToInt32(design.GridInfo.StartPositionMm.Y * design.DensityDpmm);
 
-            var headerHeight = Convert.ToInt32(design.GridInfo.HeaderHeightMM * design.DensityDpmm);
-            var dataRowHeight = Convert.ToInt32(design.GridInfo.RowHeightMM * design.DensityDpmm);
+            var headerHeight = Convert.ToInt32(design.GridInfo.HeaderHeightMm * design.DensityDpmm);
+            var dataRowHeight = Convert.ToInt32(design.GridInfo.RowHeightMm * design.DensityDpmm);
 
             foreach (var column in design.GridInfo.Columns)
             {
                 var currentY = startY;
 
-                var columnWidth = Convert.ToInt32(column.WidthMM * design.DensityDpmm);
+                var columnWidth = Convert.ToInt32(column.WidthMm * design.DensityDpmm);
 
                 // draw header
                 var rectangle = new Rect(new Point(currentX, currentY),
@@ -159,7 +157,6 @@ namespace U2.QslManager.Helpers
                 currentY += headerHeight;
 
                 // draw cells
-
                 for (var rowIndex = 0; rowIndex < design.GridInfo.RowCount; rowIndex++)
                 {
                     rectangle = new Rect(new Point(currentX, currentY),
@@ -226,7 +223,7 @@ namespace U2.QslManager.Helpers
                 $"{designElement.ElementTitle}{text}", 
                 designElement.Font.Name, 
                 designElement.Font.Size * 1.7,
-                designElement.StartPositionMM.X, designElement.StartPositionMM.Y,
+                designElement.StartPositionMm.X, designElement.StartPositionMm.Y,
                 designElement.Font.Color,
                 designElement.TransformationAngle);
         }

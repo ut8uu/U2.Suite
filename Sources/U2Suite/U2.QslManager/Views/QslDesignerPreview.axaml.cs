@@ -39,7 +39,6 @@ namespace U2.QslManager
             Debug.Assert(inputMessage.Design != null);
 
             _bitmap = QslCardGenerator.Generate(inputMessage.Fields, inputMessage.Design);
-
             _design = inputMessage.Design;
 
             Dispatcher.UIThread.Post(InvalidateVisual, DispatcherPriority.Background);
@@ -57,10 +56,7 @@ namespace U2.QslManager
 
         protected override void OnDetachedFromLogicalTree(LogicalTreeAttachmentEventArgs e)
         {
-            if (_bitmap != null)
-            {
-                _bitmap.Dispose();
-            }
+            _bitmap?.Dispose();
 
             base.OnDetachedFromLogicalTree(e);
         }

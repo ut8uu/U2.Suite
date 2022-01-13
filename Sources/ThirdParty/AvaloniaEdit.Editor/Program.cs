@@ -1,8 +1,5 @@
 ﻿using Avalonia;
-using CommandLine.Text;
 using CommandLine;
-using Newtonsoft.Json;
-using System.Diagnostics;
 
 namespace AvaloniaEdit.Editor
 {
