@@ -5,20 +5,16 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using Avalonia.Media.Imaging;
-using Avalonia.Media.Immutable;
 using Avalonia.Media;
 using Avalonia.Threading;
-using System.Runtime.InteropServices;
-using Avalonia.Platform;
 using GalaSoft.MvvmLight.Messaging;
 using Avalonia.LogicalTree;
 using U2.QslManager.Helpers;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace U2.QslManager
 {
     [PropertyChanged.DoNotNotify]
-    public partial class QslDesignerPreview : UserControl
+    public class QslDesignerPreview : UserControl
     {
         private QslCardDesign _design;
         private RenderTargetBitmap _bitmap;
@@ -43,7 +39,6 @@ namespace U2.QslManager
             Debug.Assert(inputMessage.Design != null);
 
             _bitmap = QslCardGenerator.Generate(inputMessage.Fields, inputMessage.Design);
-
             _design = inputMessage.Design;
 
             Dispatcher.UIThread.Post(InvalidateVisual, DispatcherPriority.Background);
@@ -61,10 +56,7 @@ namespace U2.QslManager
 
         protected override void OnDetachedFromLogicalTree(LogicalTreeAttachmentEventArgs e)
         {
-            if (_bitmap != null)
-            {
-                _bitmap.Dispose();
-            }
+            _bitmap?.Dispose();
 
             base.OnDetachedFromLogicalTree(e);
         }

@@ -2,7 +2,6 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using ReactiveUI;
-using System.Reactive;
 
 namespace U2.QslManager
 {
@@ -10,7 +9,6 @@ namespace U2.QslManager
     public partial class QslDesignerControls : UserControl
     {
         private readonly QslCardFieldsViewModel _viewModel;
-        private Window _owner;
 
         public QslDesignerControls()
         {
@@ -39,7 +37,6 @@ namespace U2.QslManager
 
         public void SetOwner(Window owner)
         {
-            _owner = owner;
             _viewModel.SetOwner(owner);
         }
     }

@@ -30,7 +30,7 @@
 
   <StackPanel VerticalAlignment="Center"
               HorizontalAlignment="Center" Orientation="Horizontal">
-    <Button Command="{Binding LaunchQslManagerCommand}" Classes="h150">
+    <Button Command="{Binding LaunchQslManager}" Classes="h150">
       <Image Source="../Images/qslmanager.png"></Image>
     </Button>
 

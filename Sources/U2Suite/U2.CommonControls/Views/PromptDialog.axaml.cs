@@ -1,7 +1,7 @@
+using System.Diagnostics;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
-using System.Diagnostics;
 
 namespace U2.CommonControls
 {
@@ -14,12 +14,12 @@ namespace U2.CommonControls
         No
     }
 
-    public partial class PromptDialog : Window
+    public class PromptDialog : Window
     {
-        private TextBlock _title;
-        private TextBox _response;
-        private Button _ok;
-        private Button _cancel;
+        private TextBlock _title = default!;
+        private TextBox _response = default!;
+        private Button _ok = default!;
+        private Button _cancel = default!;
 
         public PromptDialog() 
         {
@@ -44,17 +44,17 @@ namespace U2.CommonControls
 
         private void AssignControls()
         {
-            _title = (TextBlock)this.Find<TextBlock>("PromptText");
+            _title = this.Find<TextBlock>("PromptText");
             Debug.Assert(_title != null);
 
-            _response = (TextBox)this.Find<TextBox>("PromptResponse");
+            _response = this.Find<TextBox>("PromptResponse");
             Debug.Assert(_response != null);
 
-            _ok = (Button)this.FindControl<Button>("OkButton");
+            _ok = this.FindControl<Button>("OkButton");
             Debug.Assert(_ok != null);
             _ok.Click += Ok_Click;
 
-            _cancel = (Button)this.FindControl<Button>("CancelButton");
+            _cancel = this.FindControl<Button>("CancelButton");
             Debug.Assert(_cancel != null);
             _cancel.Click += Cancel_Click;
         }

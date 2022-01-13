@@ -1,14 +1,14 @@
+using System.Diagnostics;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
-using System.Diagnostics;
 
 namespace U2.QslManager
 {
     [PropertyChanged.DoNotNotify]
     public partial class MainWindow : Window
     {
-        readonly QslDesignerControls? _designerControls;
+        readonly QslDesignerControls _designerControls = default!;
 
         public MainWindow()
         {

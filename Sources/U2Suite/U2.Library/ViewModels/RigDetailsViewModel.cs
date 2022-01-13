@@ -1,9 +1,9 @@
-﻿using GalaSoft.MvvmLight.Messaging;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using GalaSoft.MvvmLight.Messaging;
 using U2.Core;
 using U2.Library.Database.Models;
 using U2.Library.Models;
@@ -12,9 +12,9 @@ namespace U2.Library.ViewModels
 {
     public sealed class RigDetailsViewModel : ViewModelBase
     {
-        private RigDbo _rig;
-        private List<KeyValuePair<string, string>> rigCharacteristics;
-        private string rigImagePath;
+        private RigDbo _rig = default!;
+        private List<KeyValuePair<string, string>> _rigCharacteristics = default!;
+        private string _rigImagePath = default!;
 
         public RigDetailsViewModel()
         {
@@ -24,10 +24,10 @@ namespace U2.Library.ViewModels
 
         public string RigImagePath
         {
-            get => rigImagePath;
+            get => _rigImagePath;
             set
             {
-                rigImagePath = value;
+                _rigImagePath = value;
                 OnPropertyChanged();
             }
         }
@@ -96,10 +96,10 @@ namespace U2.Library.ViewModels
 
         public List<KeyValuePair<string, string>> RigCharacteristics
         {
-            get => rigCharacteristics;
+            get => _rigCharacteristics;
             set
             {
-                rigCharacteristics = value;
+                _rigCharacteristics = value;
                 OnPropertyChanged();
             }
         }

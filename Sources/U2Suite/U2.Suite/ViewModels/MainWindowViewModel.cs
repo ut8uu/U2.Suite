@@ -1,8 +1,5 @@
-using ReactiveUI;
-using System;
-using System.Collections.Generic;
 using System.Reactive;
-using System.Text;
+using ReactiveUI;
 using U2.Core;
 using U2.Resources;
 
@@ -15,15 +12,12 @@ namespace U2.Suite
         public string Greeting => "Welcome to Avalonia!";
         public string QslManagerTitle => "QSL Manager";
 
-        public ReactiveCommand<Unit, Unit> LaunchQslManagerCommand { get; }
-
         public MainWindowViewModel()
         {
         }
 
         public MainWindowViewModel(MainWindow window)
         {
-            LaunchQslManagerCommand = ReactiveCommand.Create(LaunchQslManager);
             this._window = window;
         }
 

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using U2.Core;
 using U2.Library.Database.Rigs.Alinco;
@@ -19,6 +14,8 @@ namespace U2.Library.Database.Models
 
         public LibraryDbContext()
         {
+            Vendors = default!;
+            Rigs = default!;
             _databasePath = FileSystemHelper.GetFullPath(DataBaseName);
         }
 
@@ -44,7 +41,7 @@ namespace U2.Library.Database.Models
             modelBuilder.Entity<RigDbo>().HasData(EnumerateRigs(vendors));
         }
 
-        private IEnumerable<VendorDbo> EnumerateVendors()
+        private static IEnumerable<VendorDbo> EnumerateVendors()
         {
             return new List<VendorDbo>
             {
@@ -58,7 +55,7 @@ namespace U2.Library.Database.Models
             };
         }
 
-        private IEnumerable<RigDbo> EnumerateRigs(IEnumerable<VendorDbo> vendors)
+        private static IEnumerable<RigDbo> EnumerateRigs(IEnumerable<VendorDbo> vendors)
         {
             var list = new List<RigDbo>();
             

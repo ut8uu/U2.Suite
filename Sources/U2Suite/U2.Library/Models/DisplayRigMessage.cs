@@ -7,6 +7,6 @@ namespace U2.Library.Models
 {
     public sealed class DisplayRigMessage
     {
-        public RigDbo Rig { get; set; }
+        public RigDbo Rig { get; set; } = default!;
     }
 }

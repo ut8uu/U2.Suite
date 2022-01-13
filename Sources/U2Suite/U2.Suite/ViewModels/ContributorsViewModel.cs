@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Text;
+﻿using System.Collections.ObjectModel;
 
 namespace U2.Suite
 {
     public sealed class ContributorsViewModel : ViewModelBase
     {
-        private readonly ObservableCollection<ContributorInfo> contributorsCollection 
+        public ObservableCollection<ContributorInfo> ContributorsCollection { get; } 
             = new ObservableCollection<ContributorInfo>();
-
-        public ObservableCollection<ContributorInfo> ContributorsCollection => contributorsCollection;
     }
 }

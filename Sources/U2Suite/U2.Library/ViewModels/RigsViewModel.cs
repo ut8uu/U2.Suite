@@ -14,9 +14,9 @@ namespace U2.Library.ViewModels
     public sealed class RigsViewModel : ViewModelBase
     {
         private LibraryDbContext _dbContext;
-        private int selectedVendorIndex;
-        private ObservableCollection<RigDbo> selectedRigs;
-        private RigDbo selectedRig;
+        private int _selectedVendorIndex;
+        private ObservableCollection<RigDbo> _selectedRigs = default!;
+        private RigDbo _selectedRig = default!;
 
         public RigsViewModel()
         {
@@ -35,10 +35,10 @@ namespace U2.Library.ViewModels
         public IEnumerable<RigDbo> Rigs { get; set; }
         public int SelectedVendorIndex
         {
-            get => selectedVendorIndex;
+            get => _selectedVendorIndex;
             set
             {
-                selectedVendorIndex = value;
+                _selectedVendorIndex = value;
                 FilterList();
             }
         }
@@ -46,20 +46,20 @@ namespace U2.Library.ViewModels
 
         public ObservableCollection<RigDbo> SelectedRigs
         {
-            get => selectedRigs;
+            get => _selectedRigs;
             set
             {
-                selectedRigs = value;
+                _selectedRigs = value;
                 OnPropertyChanged();
             }
         }
 
         public RigDbo SelectedRig 
         { 
-            get => selectedRig;
+            get => _selectedRig;
             set
             {
-                selectedRig = value;
+                _selectedRig = value;
                 var message = new DisplayRigMessage
                 {
                     Rig = value
@@ -70,7 +70,7 @@ namespace U2.Library.ViewModels
 
         public void FilterList()
         {
-            var vendor = Vendors.ElementAt(selectedVendorIndex);
+            var vendor = Vendors.ElementAt(_selectedVendorIndex);
             var rigs = Rigs.Where(r => r.VendorId == vendor.Id);
             SelectedRigs = new ObservableCollection<RigDbo>(rigs);
         }

@@ -10,11 +10,12 @@ namespace U2.Library.Database.Models
     {
         [Key]
         public int Id { get; set; }
-        [StringLength(50)]
-        public string Name { get; set; }
 
-        [InverseProperty("Vendor")]
-        public virtual ICollection<RigDbo> Rigs { get; set; }
+        [StringLength(50)] 
+        public string Name { get; set; } = default!;
+
+        [InverseProperty("Vendor")] 
+        public virtual ICollection<RigDbo> Rigs { get; set; } = default!;
 
         public VendorDbo() { }
         public VendorDbo(int id, string name)

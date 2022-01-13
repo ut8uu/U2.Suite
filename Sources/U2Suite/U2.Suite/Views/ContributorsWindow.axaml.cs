@@ -1,25 +1,21 @@
+using System.Collections.ObjectModel;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 
 namespace U2.Suite
 {
     public partial class ContributorsWindow : Window
     {
-        ContributorsViewModel _viewModel;
-
         public ContributorsWindow()
         {
             InitializeComponent();
 #if DEBUG
             this.AttachDevTools();
 #endif
-            _viewModel = new ContributorsViewModel();
-            FillContributors(_viewModel.ContributorsCollection);
-            DataContext = _viewModel;
+            var viewModel = new ContributorsViewModel();
+            FillContributors(viewModel.ContributorsCollection);
+            DataContext = viewModel;
         }
 
         private void FillContributors(ObservableCollection<ContributorInfo> contributors)

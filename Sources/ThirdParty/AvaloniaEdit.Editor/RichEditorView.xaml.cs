@@ -31,12 +31,12 @@ namespace AvaloniaEdit.Editor
         private readonly TextMate.TextMate.Installation _textMateInstallation;
         private CompletionWindow _completionWindow;
         private OverloadInsightWindow _insightWindow;
-        private Button _changeThemeBtn;
-        private ComboBox _syntaxModeCombo;
-        private TextBlock _statusTextBlock;
-        private ElementGenerator _generator = new ElementGenerator();
+        private readonly Button _changeThemeBtn;
+        private readonly ComboBox _syntaxModeCombo;
+        private readonly TextBlock _statusTextBlock;
+        private readonly ElementGenerator _generator = new ElementGenerator();
         private int _currentTheme = (int)ThemeName.DarkPlus;
-        private Button _saveButton;
+        private readonly Button _saveButton;
 
         public RichEditorView()
         {
@@ -62,7 +62,6 @@ namespace AvaloniaEdit.Editor
             _textEditor.TextArea.TextEntering += textEditor_TextArea_TextEntering;
             _textEditor.TextArea.IndentationStrategy = new Indentation.CSharp.CSharpIndentationStrategy();
             _textEditor.TextArea.Caret.PositionChanged += Caret_PositionChanged;
-            //_textEditor.TextArea.RightClickMovesCaret = true;
 
             _changeThemeBtn = this.FindControl<Button>("changeThemeBtn");
             _changeThemeBtn.Click += _changeThemeBtn_Click;
@@ -111,7 +110,8 @@ namespace AvaloniaEdit.Editor
 
         private void Caret_PositionChanged(object sender, EventArgs e)
         {
-            _statusTextBlock.Text = String.Format("Line {0} Column {1}", _textEditor.TextArea.Caret.Line, _textEditor.TextArea.Caret.Column);
+            var caret = _textEditor.TextArea.Caret;
+            _statusTextBlock.Text = $"Line {caret.Line} Column {caret.Column}";
         }
 
         protected override void OnClosed(EventArgs e)
@@ -124,6 +124,10 @@ namespace AvaloniaEdit.Editor
         private void _syntaxModeCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var language = (Language)_syntaxModeCombo.SelectedItem;
+            if (language == null)
+            {
+                return;
+            }
             _textMateInstallation.SetGrammarByLanguageId(language.Id);
         }
 
@@ -139,22 +143,9 @@ namespace AvaloniaEdit.Editor
             AvaloniaXamlLoader.Load(this);
         }
         
-        void _addControlBtn_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
-        {
-            _generator.controls.Add(new Pair(_textEditor.CaretOffset, new Button() { Content = "Click me" }));
-            _textEditor.TextArea.TextView.Redraw();
-        }
-
-        void _clearControlBtn_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
-        {
-            //TODO: delete elements using back key
-            _generator.controls.Clear();
-            _textEditor.TextArea.TextView.Redraw();
-        }
-
         void textEditor_TextArea_TextEntering(object sender, TextInputEventArgs e)
         {
-            if (e.Text.Length > 0 && _completionWindow != null)
+            if (e?.Text?.Length > 0 && _completionWindow != null)
             {
                 if (!char.IsLetterOrDigit(e.Text[0]))
                 {
@@ -277,7 +268,7 @@ namespace AvaloniaEdit.Editor
 
         class ElementGenerator : VisualLineElementGenerator, IComparer<Pair>
         {
-            public List<Pair> controls = new List<Pair>();
+            private readonly List<Pair> _controls = new List<Pair>();
 
             /// <summary>
             /// Gets the first interested offset using binary search
@@ -286,22 +277,33 @@ namespace AvaloniaEdit.Editor
             /// <param name="startOffset">Start offset.</param>
             public override int GetFirstInterestedOffset(int startOffset)
             {
-                int pos = controls.BinarySearch(new Pair(startOffset, null), this);
+                var pos = _controls.BinarySearch(new Pair(startOffset, null), this);
                 if (pos < 0)
+                {
                     pos = ~pos;
-                if (pos < controls.Count)
-                    return controls[pos].Key;
+                }
+
+                if (pos < _controls.Count)
+                {
+                    return _controls[pos].Key;
+                }
                 else
+                {
                     return -1;
+                }
             }
 
             public override VisualLineElement ConstructElement(int offset)
             {
-                int pos = controls.BinarySearch(new Pair(offset, null), this);
+                var pos = _controls.BinarySearch(new Pair(offset, null), this);
                 if (pos >= 0)
-                    return new InlineObjectElement(0, controls[pos].Value);
+                {
+                    return new InlineObjectElement(0, _controls[pos].Value);
+                }
                 else
+                {
                     return null;
+                }
             }
 
             int IComparer<Pair>.Compare(Pair x, Pair y)

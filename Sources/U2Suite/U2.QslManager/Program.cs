@@ -1,7 +1,6 @@
-using Avalonia;
-using Avalonia.Controls.ApplicationLifetimes;
-using Avalonia.ReactiveUI;
 using System;
+using Avalonia;
+using Avalonia.ReactiveUI;
 
 namespace U2.QslManager
 {

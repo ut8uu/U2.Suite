@@ -32,17 +32,17 @@ namespace U2.QslManager
         /// <summary>
         /// A height of the header row in millimeters.
         /// </summary>
-        public double HeaderHeightMM { get; set; } = 10;
+        public double HeaderHeightMm { get; set; } = 10;
 
         /// <summary>
         /// A height of the data row in millimeters.
         /// </summary>
-        public double RowHeightMM { get; set; } = 10;
+        public double RowHeightMm { get; set; } = 10;
 
         /// <summary>
         /// Bottom left coordinate of the grid in millimeters.
         /// </summary>
-        public Position StartPositionMM { get; set; } = new Position(0, 0);
+        public Position StartPositionMm { get; set; } = new Position(0, 0);
 
         /// <summary>
         /// A collection of columns.
@@ -53,6 +53,6 @@ namespace U2.QslManager
     public sealed class QslCardGridColumn
     {
         public string Title { get; set; } = string.Empty;
-        public double WidthMM { get; set; } = 20;
+        public double WidthMm { get; set; } = 20;
     }
 }
