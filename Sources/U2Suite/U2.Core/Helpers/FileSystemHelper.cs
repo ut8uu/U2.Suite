@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using U2.Core.Exceptions;
 
 namespace U2.Core
@@ -14,7 +12,7 @@ namespace U2.Core
         }
 
         public static string GetFullPath(params string[] chunks)
-        { 
+        {
             var currentDirectory = Path.GetDirectoryName(typeof(FileSystemHelper).Assembly.Location);
             var pathElements = new List<string>(chunks);
             pathElements.Insert(0, currentDirectory);

@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.IO;
 using System.Runtime.CompilerServices;
 using Avalonia.Controls;
@@ -10,16 +9,11 @@ using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using Avalonia.Media;
 using Avalonia.Media.Imaging;
-using Avalonia.Threading;
 using AvaloniaEdit.CodeCompletion;
 using AvaloniaEdit.Document;
 using AvaloniaEdit.Editing;
-using AvaloniaEdit.Editor.Resources;
 using AvaloniaEdit.Rendering;
 using AvaloniaEdit.TextMate;
-using TextMateSharp.Model;
-using TextMateSharp.Registry;
-using TextMateSharp.Themes;
 
 namespace AvaloniaEdit.Editor
 {
@@ -48,14 +42,14 @@ namespace AvaloniaEdit.Editor
             _textEditor = this.FindControl<TextEditor>("Editor");
             _textEditor.Background = Brushes.Transparent;
             _textEditor.ShowLineNumbers = true;
-            _textEditor.ContextMenu = new ContextMenu 
-            { 
-                Items = new List<MenuItem> 
-                { 
+            _textEditor.ContextMenu = new ContextMenu
+            {
+                Items = new List<MenuItem>
+                {
                     new MenuItem { Header = "Copy", InputGesture = new KeyGesture(Key.C, KeyModifiers.Control) },
                     new MenuItem { Header = "Paste", InputGesture = new KeyGesture(Key.V, KeyModifiers.Control) },
                     new MenuItem { Header = "Cut", InputGesture = new KeyGesture(Key.X, KeyModifiers.Control) }
-                } 
+                }
             };
             _textEditor.TextArea.Background = this.Background;
             _textEditor.TextArea.TextEntered += textEditor_TextArea_TextEntered;
@@ -142,7 +136,7 @@ namespace AvaloniaEdit.Editor
         {
             AvaloniaXamlLoader.Load(this);
         }
-        
+
         void textEditor_TextArea_TextEntering(object sender, TextInputEventArgs e)
         {
             if (e?.Text?.Length > 0 && _completionWindow != null)

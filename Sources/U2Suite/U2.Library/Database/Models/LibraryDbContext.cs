@@ -58,7 +58,7 @@ namespace U2.Library.Database.Models
         private static IEnumerable<RigDbo> EnumerateRigs(IEnumerable<VendorDbo> vendors)
         {
             var list = new List<RigDbo>();
-            
+
             list.AddRange(AlincoRadios.GetRadios());
             list.AddRange(WouxunRadios.GetRadios());
 

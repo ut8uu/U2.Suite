@@ -1,7 +1,5 @@
-using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
-using ReactiveUI;
 
 namespace U2.QslManager
 {

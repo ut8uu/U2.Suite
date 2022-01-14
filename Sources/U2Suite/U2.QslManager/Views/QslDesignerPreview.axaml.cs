@@ -1,14 +1,12 @@
-using System;
 using System.Diagnostics;
-using System.Linq;
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.LogicalTree;
 using Avalonia.Markup.Xaml;
-using Avalonia.Media.Imaging;
 using Avalonia.Media;
+using Avalonia.Media.Imaging;
 using Avalonia.Threading;
 using GalaSoft.MvvmLight.Messaging;
-using Avalonia.LogicalTree;
 using U2.QslManager.Helpers;
 
 namespace U2.QslManager

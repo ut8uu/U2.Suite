@@ -1,11 +1,7 @@
-using System;
-using System.Collections.Generic;
 
 using Avalonia.Media;
 
 using AvaloniaEdit.Document;
-
-using TextMateSharp.Model;
 
 namespace AvaloniaEdit.TextMate
 {

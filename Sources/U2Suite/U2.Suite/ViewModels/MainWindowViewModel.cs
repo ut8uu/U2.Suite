@@ -1,5 +1,3 @@
-using System.Reactive;
-using ReactiveUI;
 using U2.Core;
 using U2.Resources;
 

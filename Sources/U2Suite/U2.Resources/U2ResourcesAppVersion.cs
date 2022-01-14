@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace U2.Resources
+﻿namespace U2.Resources
 {
     public sealed class U2ResourcesAppVersion
     {

@@ -1,9 +1,6 @@
 using System;
-
 using Avalonia.Threading;
-
 using AvaloniaEdit.Document;
-
 using TextMateSharp.Model;
 
 namespace AvaloniaEdit.TextMate

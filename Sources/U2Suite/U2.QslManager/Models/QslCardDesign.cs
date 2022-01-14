@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Text;
-using U2.QslManager.Models;
+﻿using U2.QslManager.Models;
 
 namespace U2.QslManager
 {
