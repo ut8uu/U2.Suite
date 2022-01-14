@@ -1,32 +1,41 @@
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:vm="using:U2.Logger.ViewModels"
+        xmlns:vm="using:U2.Logger"
+        xmlns:views="clr-namespace:U2.Logger"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-        Width="800" Height="450"
+        xmlns:logger="clr-namespace:U2.Logger"
+        mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="320"
+        Width="600" Height="450"
         x:Class="U2.Logger.LoggerMainWindow"
         Icon="/Assets/avalonia-logo.ico"
         Title="U2.Logger">
 
-    <Design.DataContext>
-        <vm:MainWindowViewModel/>
-    </Design.DataContext>
+  <Design.DataContext>
+    <logger:LoggerMainWindowViewModel/>
+  </Design.DataContext>
 
-  <Border Padding="10">
-      <DockPanel>
+  <Border Padding="2">
+    <DockPanel>
 
-          <StackPanel DockPanel.Dock="Bottom">
-              <TextBlock Text="{Binding StatusText}"></TextBlock>
-          </StackPanel>
+      <Border Classes="Card" DockPanel.Dock="Bottom">
+        <StackPanel>
+          <TextBlock Text="{Binding StatusText}"></TextBlock>
+        </StackPanel>
+      </Border>
 
-          <Menu DockPanel.Dock="Top">
-              <MenuItem Header="File">
-                  <MenuItem Header="Open" Command="{Binding Open}" />
-                  <MenuItem Header="Save As" Command="{Binding Save}" />
-              </MenuItem>
-          </Menu>
+      <Menu DockPanel.Dock="Top">
+        <MenuItem Header="File">
+          <MenuItem Header="Open" Command="{Binding Open}" />
+          <MenuItem Header="Save As" Command="{Binding Save}" />
+        </MenuItem>
+      </Menu>
 
-      </DockPanel>
+      <StackPanel DockPanel.Dock="Top">
+        <views:TextInputPanel Name="TextInputs"></views:TextInputPanel>
+        <views:FuncButtonsPanel Name="FuncButtons" Width="600"></views:FuncButtonsPanel>
+      </StackPanel>
+
+    </DockPanel>
   </Border>
 </Window>

@@ -1,17 +1,21 @@
 using Avalonia.Controls;
 
-namespace U2.Logger.ViewModels
+namespace U2.Logger
 {
-    public class MainWindowViewModel : ViewModelBase
+    public class LoggerMainWindowViewModel : ViewModelBase
     {
-        private readonly Window _owner;
-
-        public MainWindowViewModel(Window owner)
+        public LoggerMainWindowViewModel()
         {
-            _owner = owner;
+
         }
 
-        public Window Owner => _owner;
+        public LoggerMainWindowViewModel(Window owner)
+        {
+            Owner = owner;
+        }
+
+        public Window Owner { get; } = default!;
         public string StatusText { get; set; } = default!;
+
     }
 }
