@@ -48,19 +48,9 @@ namespace U2.Library.ViewModels
                 var list = new List<KeyValuePair<string, string>>();
                 list.Add(new KeyValuePair<string, string>("Manufacturer", _rig.Vendor.Name));
                 list.Add(new KeyValuePair<string, string>("Name", _rig.Name));
-                if (_rig.PowerWatts.HasValue)
+                if (!string.IsNullOrEmpty(_rig.PowerWatts))
                 {
-                    list.Add(new KeyValuePair<string, string>("Power, watts", _rig.PowerWatts.Value.ToString()));
-                }
-
-                if (_rig.ManufactureStart.HasValue)
-                {
-                    list.Add(new KeyValuePair<string, string>("Production start", _rig.ManufactureStart.Value.ToString()));
-
-                    if (_rig.ManufactureEnd.HasValue)
-                    {
-                        list.Add(new KeyValuePair<string, string>("Production end", _rig.ManufactureEnd.Value.ToString()));
-                    }
+                    list.Add(new KeyValuePair<string, string>("Power, watts", _rig.PowerWatts));
                 }
 
                 if (_rig.Width.HasValue && _rig.Height.HasValue && _rig.Depth.HasValue)
@@ -69,9 +59,9 @@ namespace U2.Library.ViewModels
                     list.Add(new KeyValuePair<string, string>("Dimensions (W x H x D), mm", dimensions));
                 }
 
-                if (_rig.WeightGrams.HasValue)
+                if (!string.IsNullOrEmpty(_rig.WeightGrams))
                 {
-                    list.Add(new KeyValuePair<string, string>("Weight, g", _rig.WeightGrams.Value.ToString()));
+                    list.Add(new KeyValuePair<string, string>("Weight, g", _rig.WeightGrams));
                 }
 
                 RigImagePath = string.Empty;
