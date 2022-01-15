@@ -1,0 +1,24 @@
+[
+  {
+    "manufacturer": "Eico",
+    "name": "720",
+    "modes": "CW",
+    "type": "Amateur HF transmitter",
+    "power": "60 W",
+    "dimensions": "? mm",
+    "frequency": "10-80 m",
+    "image": "Eico/720.jpg",
+    "weight": "? gr"
+  },
+  {
+    "manufacturer": "Eico",
+    "name": "723",
+    "modes": "CW",
+    "type": "Amateur HF transmitter",
+    "power": "~40 W (60 W input)",
+    "dimensions": "216*152*229 mm (8.5*6*9in)",
+    "frequency": "10-80 m",
+    "image": "Eico/723.jpg",
+    "weight": "? gr"
+  }
+]

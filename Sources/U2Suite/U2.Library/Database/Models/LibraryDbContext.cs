@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Text.Json;
 using Microsoft.EntityFrameworkCore;
 using U2.Core;
-using U2.Library.Database.Rigs.Alinco;
-using U2.Library.Database.Rigs.Wouxun;
-using U2.Resources.Collections;
 
 namespace U2.Library.Database.Models
 {
@@ -41,30 +41,67 @@ namespace U2.Library.Database.Models
             modelBuilder.Entity<RigDbo>().HasData(EnumerateRigs(vendors));
         }
 
-        private static IEnumerable<VendorDbo> EnumerateVendors()
+        private static string RigsDirectory
         {
-            return new List<VendorDbo>
+            get
             {
-                new VendorDbo(VendorIds.AlincoId, VendorNames.Alinco),
-                new VendorDbo(VendorIds.IcomId, VendorNames.Icom),
-                new VendorDbo(VendorIds.KenwoodId, VendorNames.Kenwood),
-                new VendorDbo(VendorIds.MotorolaId, VendorNames.Motorola),
-                new VendorDbo(VendorIds.TenTecId, VendorNames.TenTec),
-                new VendorDbo(VendorIds.WouxunId, VendorNames.Wouxun),
-                new VendorDbo(VendorIds.YaesuId, VendorNames.Yaesu),
-            };
+                var currentDirectory = Path.GetDirectoryName(typeof(LibraryDbContext).Assembly.Location);
+                Debug.Assert(!string.IsNullOrEmpty(currentDirectory));
+                return Path.Combine(currentDirectory, "Database", "Rigs");
+            }
         }
 
-        private static IEnumerable<RigDbo> EnumerateRigs(IEnumerable<VendorDbo> vendors)
+        private static List<VendorDbo> EnumerateVendors()
+        {
+            var result = new List<VendorDbo>();
+            var index = 1;
+            foreach (var directory in Directory.EnumerateDirectories(RigsDirectory))
+            {
+                result.Add(new VendorDbo(index++, Path.GetFileName(directory)));
+            }
+
+            return result;
+        }
+
+        private static List<RigDbo> EnumerateRigs(IEnumerable<VendorDbo> vendors)
         {
             var list = new List<RigDbo>();
-            
-            list.AddRange(AlincoRadios.GetRadios());
-            list.AddRange(WouxunRadios.GetRadios());
 
-            for (var i = 0; i < list.Count; i++)
+            var rigsDirectory = RigsDirectory;
+
+            var index = 1;
+
+            var options = new JsonSerializerOptions
             {
-                list[i].Id = i + 1;
+                PropertyNameCaseInsensitive = true,
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                WriteIndented = true,
+            };
+
+            foreach (var vendor in vendors)
+            {
+                var vendorPath = Path.Combine(rigsDirectory, vendor.Name);
+                foreach (var jsonFile in Directory.EnumerateFiles(vendorPath, "*.json"))
+                {
+                    var json = File.ReadAllText(jsonFile);
+                    var rigInfos = JsonSerializer.Deserialize<List<RigInfo>>(json, options);
+                    foreach (var rigInfo in rigInfos)
+                    {
+                        Debug.Assert(!string.IsNullOrEmpty(rigInfo.Name));
+                        var rig = new RigDbo
+                        {
+                            Id = index++,
+                            Image = rigInfo.Image,
+                            Name = rigInfo.Name,
+                            VendorId = vendor.Id,
+                            PowerWatts = rigInfo.Power ?? string.Empty,
+                            WeightGrams = rigInfo.Weight ?? string.Empty,
+                            Dimensions = rigInfo.Dimensions ?? string.Empty,
+                            Vendor = vendor
+                        };
+                        list.Add(rig);
+                    }
+                }
             }
 
             return list;

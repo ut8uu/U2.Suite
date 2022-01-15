@@ -6,16 +6,13 @@
   </PropertyGroup>
   <ItemGroup>
     <AvaloniaResource Include="Assets\**" />
-    <Compile Remove="Migrations\20220109180139_Migration001.cs" />
-    <Compile Remove="Migrations\20220109180139_Migration001.Designer.cs" />
-    <Compile Remove="Migrations\20220109182516_Migration002.cs" />
-    <Compile Remove="Migrations\20220109182516_Migration002.Designer.cs" />
-    <Compile Remove="Migrations\20220109183047_Migration002.cs" />
-    <Compile Remove="Migrations\20220109183047_Migration002.Designer.cs" />
-    <Compile Remove="Migrations\20220109183543_Migration002.cs" />
-    <Compile Remove="Migrations\20220109183543_Migration002.Designer.cs" />
     <None Remove=".gitignore" />
     <None Remove="Assets\avalonia-logo.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <AvaloniaResource Include="Database\Rigs\**">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AvaloniaResource>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Avalonia" Version="0.10.11" />
@@ -47,6 +44,8 @@
     <Resource Include="Assets\avalonia-logo.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Database\Rigs\" />
+    <None Update="Database\Rigs\**">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 </Project>

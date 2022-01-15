@@ -14,7 +14,7 @@ namespace U2.Library.ViewModels
     {
         private RigDbo _rig = default!;
         private List<KeyValuePair<string, string>> _rigCharacteristics = default!;
-        private string _rigImagePath = default!;
+        private string _rigImagePath = "pack://application:,,,/Database/Rigs/ADI/ar146.jpg";//default!;
 
         public RigDetailsViewModel()
         {
@@ -53,10 +53,9 @@ namespace U2.Library.ViewModels
                     list.Add(new KeyValuePair<string, string>("Power, watts", _rig.PowerWatts));
                 }
 
-                if (_rig.Width.HasValue && _rig.Height.HasValue && _rig.Depth.HasValue)
+                if (!string.IsNullOrEmpty(_rig.Dimensions))
                 {
-                    var dimensions = $"{_rig.Width.Value} x {_rig.Height.Value} x {_rig.Depth.Value}";
-                    list.Add(new KeyValuePair<string, string>("Dimensions (W x H x D), mm", dimensions));
+                    list.Add(new KeyValuePair<string, string>("Dimensions (W x H x D), mm", _rig.Dimensions));
                 }
 
                 if (!string.IsNullOrEmpty(_rig.WeightGrams))
@@ -65,17 +64,13 @@ namespace U2.Library.ViewModels
                 }
 
                 RigImagePath = string.Empty;
-                if (!string.IsNullOrEmpty(_rig.DataDirectory))
+                if (!string.IsNullOrEmpty(_rig.Image))
                 {
-                    var dataDirectory = _rig.DataDirectory.Replace('/', Path.DirectorySeparatorChar);
-                    var imagesDirectory = FileSystemHelper.GetFullPath("Database", "Rigs", dataDirectory, "Images");
-                    if (Directory.Exists(imagesDirectory))
+                    var image = _rig.Image.Replace('/', Path.DirectorySeparatorChar);
+                    var imagePath = FileSystemHelper.GetFullPath("Database", "Rigs", image);
+                    if (File.Exists(imagePath))
                     {
-                        var firstImage = Directory.EnumerateFiles(imagesDirectory).FirstOrDefault();
-                        if (!string.IsNullOrEmpty(firstImage))
-                        {
-                            RigImagePath = firstImage;
-                        }
+                        RigImagePath = imagePath;
                     }
                 }
 

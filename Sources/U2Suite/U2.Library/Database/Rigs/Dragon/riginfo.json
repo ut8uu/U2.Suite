@@ -1,0 +1,57 @@
+[
+  {
+    "manufacturer": "Dragon",
+    "name": "SS-797",
+    "modes": "AM/FM/SSB",
+    "type": "Amateur HF transceiver",
+    "power": "FM/SSB: 50 WAM: 20 W",
+    "dimensions": "300*85*240 mm (11.81*3.35*9.45in)",
+    "frequency": "7-7.1 MHz",
+    "image": "Dragon/dragon_ss797.jpg",
+    "weight": "? Kg"
+  },
+  {
+    "manufacturer": "Dragon",
+    "name": "SY-130E",
+    "modes": "FM",
+    "type": "Amateur VHF transceiver",
+    "power": "Hi: 50 W, Lo: 10 W",
+    "dimensions": "140*40*154 mm (5.51*1.58*6.06in)",
+    "frequency": "TX: 144-146 MHz, RX: 136-174 MHz",
+    "image": "Dragon/dragon_sy130.jpg",
+    "weight": "? Kg"
+  },
+  {
+    "manufacturer": "Dragon",
+    "name": "SY-495V",
+    "modes": "FM",
+    "type": "Amateur VHF transceiver",
+    "power": "Hi: ? W, Lo: ? W",
+    "dimensions": "282*74*209 mm (11.1*2.91*8.23in)",
+    "frequency": "TX: 144-146 MHz, RX: 136-174 MHz",
+    "image": "Dragon/dragon_sy495v.jpg",
+    "weight": "? Kg"
+  },
+  {
+    "manufacturer": "Dragon",
+    "name": "SY-501",
+    "modes": "FM",
+    "type": "Amateur VHF transceiver",
+    "power": "Hi: 5 W, Lo: 350 mW",
+    "dimensions": "? mm",
+    "frequency": "TX: 144-146 MHz, RX: 136-174 MHz",
+    "image": "Dragon/dragon_sy501.jpg",
+    "weight": "? Kg"
+  },
+  {
+    "manufacturer": "Dragon",
+    "name": "SY-550",
+    "modes": "FM",
+    "type": "Amateur VHF transceiver",
+    "power": "Hi: 25 W, Lo: ? W",
+    "dimensions": "140*40*125 mm (5.51*1.58*4.92in)",
+    "frequency": "TX: 144-146 MHz, RX: 141-150 MHz",
+    "image": "Dragon/dragon_sy550.jpg",
+    "weight": "? Kg"
+  }
+]

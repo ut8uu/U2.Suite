@@ -1,0 +1,134 @@
+[
+  {
+    "manufacturer": "BC",
+    "name": "PCS Electronics AM Max II DSP",
+    "modes": "AM",
+    "type": "Medium wave transmitter",
+    "power": "4-15 W carrier (16-60 W peak)",
+    "dimensions": null,
+    "frequency": "0.540-1.710 MHz (Other bands on request)(1 KHz steps)",
+    "image": "BC/pcselectronics_ammaxiidsp.jpg",
+    "weight": "? gr"
+  },
+  {
+    "manufacturer": "BC",
+    "name": "Ramsey AM-1",
+    "modes": "AM",
+    "type": "Medium wave transmitter",
+    "power": "100 mW",
+    "dimensions": "? mm",
+    "frequency": "0.54-1.71 MHz",
+    "image": "BC/ramsey_am1.jpg",
+    "weight": "? gr"
+  },
+  {
+    "manufacturer": "BC",
+    "name": "Ramsey AM-25",
+    "modes": "AM",
+    "type": "Medium wave transmitter",
+    "power": "Hi: 1-4 W (depending on voltage)Lo: 50-150 mW (depending on voltage)",
+    "dimensions": "126*38*133 mm",
+    "frequency": "0.54-1.71 MHz(10 KHz steps)",
+    "image": "BC/ramsey_am25.jpg",
+    "weight": "240 gr (with case)"
+  },
+  {
+    "manufacturer": "BC",
+    "name": "Ramsey FM-100B",
+    "modes": "WFM Stereo",
+    "type": "FM transmitter",
+    "power": "? mW",
+    "dimensions": "? mm",
+    "frequency": "88-108 MHz",
+    "image": "BC/ramsey_fm100b.jpg",
+    "weight": "? gr"
+  },
+  {
+    "manufacturer": "BC",
+    "name": "Ramsey FM-100B Export",
+    "modes": "WFM Stereo",
+    "type": "FM transmitter",
+    "power": "1 W",
+    "dimensions": "? mm",
+    "frequency": "88-108 MHz",
+    "image": "BC/ramsey_fm100b.jpg",
+    "weight": "? gr"
+  },
+  {
+    "manufacturer": "BC",
+    "name": "Ramsey FM-10A",
+    "modes": "WFM Stereo",
+    "type": "FM transmitter",
+    "power": "10 mW",
+    "dimensions": "? mm",
+    "frequency": "88-108 MHz",
+    "image": "BC/ramsey_fm10a.jpg",
+    "weight": "? gr"
+  },
+  {
+    "manufacturer": "BC",
+    "name": "Ramsey FM-25B",
+    "modes": "WFM Stereo",
+    "type": "FM transmitter",
+    "power": "? mW",
+    "dimensions": "? mm",
+    "frequency": "88-108 MHz",
+    "image": "BC/ramsey_fm25b.jpg",
+    "weight": "? gr"
+  },
+  {
+    "manufacturer": "BC",
+    "name": "Ramsey PX-1",
+    "modes": "WFM Stereo",
+    "type": "FM transmitter",
+    "power": "Max 35 W",
+    "dimensions": "? mm (?in)",
+    "frequency": "88-108 MHz",
+    "image": "BC/ramsey_px1.jpg",
+    "weight": "? Kg (? lbs)"
+  },
+  {
+    "manufacturer": "BC",
+    "name": "SSTRAN AMT-3000",
+    "modes": "AM",
+    "type": "AM transmitter",
+    "power": "Max 100 mW (input)",
+    "dimensions": "155*38.1*107 mm (6.1*1.5*4.2in)",
+    "frequency": "0.53-1.7 MHz (10 KHz steps)",
+    "image": "BC/sstran_amt3000.jpg",
+    "weight": "? Kg (? lbs)"
+  },
+  {
+    "manufacturer": "BC",
+    "name": "SSTRAN AMT-3000-9K",
+    "modes": "AM",
+    "type": "AM transmitter",
+    "power": "Max 100 mW (input)",
+    "dimensions": "155*38.1*107 mm (6.1*1.5*4.2in)",
+    "frequency": "0.522-1.71 MHz (9 KHz steps)",
+    "image": "BC/sstran_amt3000.jpg",
+    "weight": "? Kg (? lbs)"
+  },
+  {
+    "manufacturer": "BC",
+    "name": "SSTRAN AMT-5000",
+    "modes": "AM",
+    "type": "AM transmitter",
+    "power": "Max 100 mW (input)",
+    "dimensions": "206*38.1*107 mm (8.1*1.5*4.2in)",
+    "frequency": "0.53-1.7 MHz (10 KHz steps)",
+    "image": "BC/sstran_amt5000.jpg",
+    "weight": "? Kg (? lbs)"
+  },
+  {
+    "manufacturer": "BC",
+    "name": "SSTRAN AMT-5000-9K",
+    "modes": "AM",
+    "type": "AM transmitter",
+    "power": "Max 100 mW (input)",
+    "dimensions": "206*38.1*107 mm (8.1*1.5*4.2in)",
+    "frequency": "0.522-1.71 MHz (9 KHz steps)",
+    "image": "BC/sstran_amt5000.jpg",
+    "weight": "? Kg (? lbs)"
+  }
+]

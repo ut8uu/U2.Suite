@@ -13,15 +13,14 @@ namespace U2.Library.Database.Models
 
         public int VendorId { get; set; }
 
-        public int? Width { get; set; }
-        public int? Height { get; set; }
-        public int? Depth { get; set; }
+        [StringLength(80)]
+        public string Dimensions { get; set; } = default!;
         [StringLength(50)]
         public string WeightGrams { get; set; } = default!;
-        [StringLength(50)]
+        [StringLength(80)]
         public string PowerWatts { get; set; } = default!;
         [StringLength(150)]
-        public string DataDirectory { get; set; } = default!;
+        public string Image { get; set; } = default!;
 
         [InverseProperty("Rigs")]
         public virtual VendorDbo Vendor { get; set; } = default!;

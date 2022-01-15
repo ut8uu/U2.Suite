@@ -1,0 +1,46 @@
+[
+  {
+    "manufacturer": "NCG",
+    "name": "10/160M",
+    "modes": "SSB/CW",
+    "type": "Amateur HF transceiver",
+    "power": "100 W",
+    "dimensions": "305*152*406 mm (12*6*16in)",
+    "frequency": "10-160 m",
+    "image": "NCG/ncg_10160m.jpg",
+    "weight": "10.21 Kg (22.5 lbs)"
+  },
+  {
+    "manufacturer": "NCG",
+    "name": "15M",
+    "modes": "SSB/CW",
+    "type": "Amateur HF transceiver",
+    "power": "Hi: 10 W, Lo: 2 W",
+    "dimensions": "? mm",
+    "frequency": "21.0-21.45 MHz",
+    "image": "NCG/ncg15m.jpg",
+    "weight": "? Kg"
+  },
+  {
+    "manufacturer": "NCG",
+    "name": "15SB",
+    "modes": "?",
+    "type": "Amateur HF transceiver",
+    "power": "Hi: 10 W, Lo: 1 W",
+    "dimensions": "? mm",
+    "frequency": "15 m",
+    "image": "NCG/ncg_15sb.jpg",
+    "weight": "? Kg"
+  },
+  {
+    "manufacturer": "NCG",
+    "name": "7/21/50",
+    "modes": "SSB/CW",
+    "type": "Amateur HF/VHF transceiver",
+    "power": "Max 10 W",
+    "dimensions": "246*99*269 mm (9.68*3.9*10.59in)",
+    "frequency": "40/15/6 m",
+    "image": "NCG/72150.jpg",
+    "weight": "5 Kg (11.02 lbs)"
+  }
+]

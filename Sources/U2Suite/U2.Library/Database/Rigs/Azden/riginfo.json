@@ -1,0 +1,178 @@
+[
+  {
+    "manufacturer": "Azden",
+    "name": "AZ-11",
+    "modes": "FM",
+    "type": "Amateur HF transceiver",
+    "power": "Hi: 5 W, Lo: 0.5 W",
+    "dimensions": "60*174*33 mm (2.36*6.85*1.3in)",
+    "frequency": "28-29.7 MHz",
+    "image": "Azden/az11.jpg",
+    "weight": "550 gr (19.4 oz)"
+  },
+  {
+    "manufacturer": "Azden",
+    "name": "AZ-61",
+    "modes": "FM",
+    "type": "Amateur VHF transceiver",
+    "power": "Hi: 5 W, Lo: 0.5 W",
+    "dimensions": "60*174*33 mm (2.36*6.85*1.3in)",
+    "frequency": "50-54 MHz",
+    "image": "Azden/az61.jpg",
+    "weight": "550 gr (19.4 oz)"
+  },
+  {
+    "manufacturer": "Azden",
+    "name": "PCS-2000",
+    "modes": "FM",
+    "type": "Amateur VHF transceiver",
+    "power": "Hi: ? W, Lo: ? W",
+    "dimensions": "? mm",
+    "frequency": "144-146 MHz (Europe)144-148 MHz (USA)",
+    "image": "Azden/pcs2000.jpg",
+    "weight": "? Kg"
+  },
+  {
+    "manufacturer": "Azden",
+    "name": "PCS-2200",
+    "modes": "FM",
+    "type": "Amateur VHF transceiver",
+    "power": "Hi: ? W, Lo: ? W",
+    "dimensions": "? mm",
+    "frequency": "2 m",
+    "image": "Azden/pcs2200.jpg",
+    "weight": "? Kg"
+  },
+  {
+    "manufacturer": "Azden",
+    "name": "PCS-2800Z",
+    "modes": "FM",
+    "type": "Amateur HF transceiver",
+    "power": "Hi: 10 W, Lo: ? W",
+    "dimensions": "? mm",
+    "frequency": "10 m",
+    "image": "Azden/pcs2800z.jpg",
+    "weight": "? Kg"
+  },
+  {
+    "manufacturer": "Azden",
+    "name": "PCS-300",
+    "modes": "FM",
+    "type": "Amateur VHF transceiver",
+    "power": "Hi: 3 W, Lo: 1 W",
+    "dimensions": "65*184*44 mm (2.56*7.24*1.73in)",
+    "frequency": "144-148 MHz (Europe), (12.5 KHz steps)142-150 MHz (USA)",
+    "image": "Azden/azden_pcs300.jpg",
+    "weight": "640 gr (22.58 oz)"
+  },
+  {
+    "manufacturer": "Azden",
+    "name": "PCS-3000",
+    "modes": "FM",
+    "type": "Amateur VHF transceiver",
+    "power": "Hi: 25 W, Lo: 5 W",
+    "dimensions": "158*66*246 mm (6.22*2.6*9.68in)",
+    "frequency": "144-146 MHz, 12.5/25 KHz steps (Europe)144-148 MHz, 5/10 KHz steps (USA)",
+    "image": "Azden/azden_pcs3000.jpg",
+    "weight": "2.5 Kg (5.51 lbs)"
+  },
+  {
+    "manufacturer": "Azden",
+    "name": "PCS-4000",
+    "modes": "FM (Max 16 KHz BW)",
+    "type": "Amateur VHF transceiver",
+    "power": "Hi: 25 W, Lo: 5 W",
+    "dimensions": "140*50*172 mm (5.51*1.97*6.77in)",
+    "frequency": "144-146 MHz (Europe)142-150 MHz (USA)",
+    "image": "Azden/azden_pcs4000.jpg",
+    "weight": "1.3 Kg (2.87 lbs)"
+  },
+  {
+    "manufacturer": "Azden",
+    "name": "PCS-4300",
+    "modes": "FM",
+    "type": "Amateur UHF transceiver",
+    "power": "Hi: 25 W, Lo: 5 W",
+    "dimensions": "? mm",
+    "frequency": "70 cm",
+    "image": "Azden/pcs4300.jpg",
+    "weight": "? Kg"
+  },
+  {
+    "manufacturer": "Azden",
+    "name": "PCS-5000",
+    "modes": "FM",
+    "type": "Amateur VHF transceiver",
+    "power": "Hi: 25 W, Lo: 5 W",
+    "dimensions": "140*50*182 mm (5.51*1.97*7.16in)",
+    "frequency": "144-146 MHz (Europe)(12.5 / 25 / 37.5 / 50 / 62.5 / 75 / 87.5 / 100 / 112.5 / 125 KHz steps)144-148 MHz (USA)(5 / 10 / 15 / 20 / 25 / 30 / 35 / 40 / 45 / 50 KHz steps)(140-160 MHz after modification)",
+    "image": "Azden/pcs5000.jpg",
+    "weight": "1.4 Kg (3.09 lbs)"
+  },
+  {
+    "manufacturer": "Azden",
+    "name": "PCS-6000",
+    "modes": "TX: FMRX: AM/FM",
+    "type": "Amateur VHF transceiver",
+    "power": "Hi: 25 W, Lo: 5 W",
+    "dimensions": "140*51*184 mm (5.5*2*7.25in)",
+    "frequency": "TX: 144-146 MHz (Europe)TX: 140-150 MHz (USA)RX: 118-174 MHz12.5 / 25 KHz steps (Europe)",
+    "image": "Azden/pcs6000.jpg",
+    "weight": "1.4 Kg (3.09 lbs)"
+  },
+  {
+    "manufacturer": "Azden",
+    "name": "PCS-6000H",
+    "modes": "TX: FMRX: AM/FM",
+    "type": "Amateur VHF transceiver",
+    "power": "Hi: 50 W, Lo: 10 W",
+    "dimensions": "140*51*184 mm (5.5*2*7.25in)",
+    "frequency": "TX: 144-148 MHz, RX: 118-174 MHz",
+    "image": "Azden/pcs6000.jpg",
+    "weight": "1.4 Kg (3.09 lbs)"
+  },
+  {
+    "manufacturer": "Azden",
+    "name": "PCS-7000H",
+    "modes": "TX: FMRX: AM/FM",
+    "type": "Amateur VHF transceiver",
+    "power": "Hi: 50 W, Lo: 10 W",
+    "dimensions": "140*51*140 mm (5.5*2*5.5in)",
+    "frequency": "TX: 140-150 MHz, RX: 118-174 MHz",
+    "image": "Azden/pcs7000h.jpg",
+    "weight": "1.36 Kg (3 lbs)"
+  },
+  {
+    "manufacturer": "Azden",
+    "name": "PCS-7500",
+    "modes": "FM",
+    "type": "Amateur VHF transceiver",
+    "power": "Hi: 10 W, Lo: ? W",
+    "dimensions": "? mm",
+    "frequency": "6 m",
+    "image": "Azden/pcs7500.jpg",
+    "weight": "? Kg"
+  },
+  {
+    "manufacturer": "Azden",
+    "name": "PCS-7500H",
+    "modes": "FM",
+    "type": "Amateur VHF transceiver",
+    "power": "Hi: 50 W, Lo: 5 W",
+    "dimensions": "140*51*140 mm (5.51*2.01*5.51in)",
+    "frequency": "6 m",
+    "image": "Azden/pcs7500h.jpg",
+    "weight": "1.3 Kg (2.87 lbs)"
+  },
+  {
+    "manufacturer": "Azden",
+    "name": "PCS-7801HN",
+    "modes": "FM",
+    "type": "Amateur HF transceiver",
+    "power": "Hi: 50 W, Lo: 5 W",
+    "dimensions": "140*50*205 mm (5.51*1.97*8.07in)",
+    "frequency": "28-29.7 MHz",
+    "image": "Azden/pcs7801hn.jpg",
+    "weight": "1.4 Kg (3.09 lbs)"
+  }
+]

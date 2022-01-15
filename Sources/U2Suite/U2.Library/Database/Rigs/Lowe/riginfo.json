@@ -1,0 +1,68 @@
+[
+  {
+    "manufacturer": "Lowe",
+    "name": "HF-125",
+    "modes": "AM/SSB/CW (FM \u002B AM-Sync option)",
+    "type": "HF receiver",
+    "power": null,
+    "dimensions": "255*100*200 mm (10.04*3.94*7.87in)",
+    "frequency": "0.03-30 MHz",
+    "image": "Lowe/lowe_hf125.jpg",
+    "weight": "1.8 Kg (3.97 lbs), without options"
+  },
+  {
+    "manufacturer": "Lowe",
+    "name": "HF-150",
+    "modes": "AM/Sync-AM/SSB",
+    "type": "HF receiver",
+    "power": null,
+    "dimensions": "185*80*175 mm (7.28*3.15*6.89in)",
+    "frequency": "0.03-30 MHz",
+    "image": "Lowe/lowe_hf150.jpg",
+    "weight": "1.3 Kg (2.87 lbs), without batteries"
+  },
+  {
+    "manufacturer": "Lowe",
+    "name": "HF-225",
+    "modes": "AM/SSB/CW (FM and AM-synchro option)",
+    "type": "HF receiver",
+    "power": null,
+    "dimensions": "? mm",
+    "frequency": "0.03-30 MHz",
+    "image": "Lowe/lowe_hf225.jpg",
+    "weight": "? Kg"
+  },
+  {
+    "manufacturer": "Lowe",
+    "name": "HF-235",
+    "modes": "AM/SSB/CW",
+    "type": "HF receiver",
+    "power": null,
+    "dimensions": "? mm",
+    "frequency": "0.03-30 MHz",
+    "image": "Lowe/lowe_hf235.jpg",
+    "weight": "? Kg"
+  },
+  {
+    "manufacturer": "Lowe",
+    "name": "HF-250",
+    "modes": "All-mode (AM-Sync option)",
+    "type": "HF receiver",
+    "power": null,
+    "dimensions": "? mm",
+    "frequency": "0.03-30 MHz",
+    "image": "Lowe/lowe_hf250.jpg",
+    "weight": "?"
+  },
+  {
+    "manufacturer": "Lowe",
+    "name": "HF-350 (Europa version)",
+    "modes": "AM/SSB/CW",
+    "type": "HF receiver",
+    "power": null,
+    "dimensions": "210*35*195 mm (8.27*1.38*7.68in)",
+    "frequency": "0.1-30 MHz",
+    "image": "Lowe/lowe_hf350.jpg",
+    "weight": "1 Kg (2.2 lbs)"
+  }
+]

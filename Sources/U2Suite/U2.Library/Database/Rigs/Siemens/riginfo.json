@@ -1,0 +1,68 @@
+[
+  {
+    "manufacturer": "Siemens",
+    "name": "745 E303",
+    "modes": "AM/CW",
+    "type": "HF receiver",
+    "power": null,
+    "dimensions": "552*356*340 mm (21.73*14.02*13.39in)",
+    "frequency": "1.5-30 MHz",
+    "image": "Siemens/745_e303.jpg",
+    "weight": "44 Kg (97 lbs)"
+  },
+  {
+    "manufacturer": "Siemens",
+    "name": "745 E309b",
+    "modes": "AM/CW",
+    "type": "HF receiver",
+    "power": null,
+    "dimensions": "550*355*407 mm (21.65*13.98*16.02in)",
+    "frequency": "255-525 KHz / 1.5-30.3 MHz",
+    "image": "Siemens/745_e309b.jpg",
+    "weight": "38 Kg (83.78 lbs)"
+  },
+  {
+    "manufacturer": "Siemens",
+    "name": "745 E310",
+    "modes": "AM/SSB/CW",
+    "type": "HF receiver",
+    "power": null,
+    "dimensions": "550*350*380 mm (21.65*13.78*14.96in)",
+    "frequency": "14-21 KHz / 0.085-30.3 MHz",
+    "image": "Siemens/745_e310.jpg",
+    "weight": "35 Kg (77.16 lbs)"
+  },
+  {
+    "manufacturer": "Siemens",
+    "name": "745 E311a",
+    "modes": "AM/SSB/CW",
+    "type": "HF receiver",
+    "power": null,
+    "dimensions": "475*295*390 mm (18.7*11.61*15.35in)",
+    "frequency": "1.5-30.1 MHz",
+    "image": "Siemens/745_e311a.jpg",
+    "weight": "26 Kg (57.32 lbs)"
+  },
+  {
+    "manufacturer": "Siemens",
+    "name": "CHR531",
+    "modes": "AM/SSB/CW",
+    "type": "HF receiver",
+    "power": null,
+    "dimensions": "448*153*470 mm (17.64*6.02*18.5in)",
+    "frequency": "0.01-30 MHz",
+    "image": "Siemens/chr531.jpg",
+    "weight": "23 Kg (50.71 lbs)"
+  },
+  {
+    "manufacturer": "Siemens",
+    "name": "E410",
+    "modes": "AM/SSB/CW",
+    "type": "HF receiver",
+    "power": null,
+    "dimensions": "445*177*440 mm (17.52*6.97*17.32in)",
+    "frequency": "0.07-30 MHz in 9 bands",
+    "image": "Siemens/e410.jpg",
+    "weight": "18 Kg (39.68 lbs)"
+  }
+]

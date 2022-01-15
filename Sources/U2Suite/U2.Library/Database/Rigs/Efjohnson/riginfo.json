@@ -1,0 +1,156 @@
+[
+  {
+    "manufacturer": "Efjohnson",
+    "name": "E.F.Johnson 500 \u0022Five hundred\u0022",
+    "modes": "AM/SSB/CW",
+    "type": "Amateur HF transmitter",
+    "power": "AM: 250 WSSB: 250 WCW: 300 W",
+    "dimensions": "? mm",
+    "frequency": "10-80 m",
+    "image": "Efjohnson/500.jpg",
+    "weight": "? Kg"
+  },
+  {
+    "manufacturer": "Efjohnson",
+    "name": "E.F.Johnson 6N2",
+    "modes": "AM/CW",
+    "type": "Amateur VHF transmitter",
+    "power": "AM: 50 WCW: 80 W",
+    "dimensions": "? mm",
+    "frequency": "6 m/2 m",
+    "image": "Efjohnson/6n2.jpg",
+    "weight": "? Kg"
+  },
+  {
+    "manufacturer": "Efjohnson",
+    "name": "E.F.Johnson Adventurer",
+    "modes": "CW",
+    "type": "Amateur HF transmitter",
+    "power": "30 W",
+    "dimensions": "? mm",
+    "frequency": "10-80 m",
+    "image": "Efjohnson/adventurer.jpg",
+    "weight": "? Kg"
+  },
+  {
+    "manufacturer": "Efjohnson",
+    "name": "E.F.Johnson Challenger",
+    "modes": "AM/CW",
+    "type": "Amateur HF/VHF transmitter",
+    "power": "AM: 40 WCW: 70 W",
+    "dimensions": "? mm",
+    "frequency": "10-80 m/6 m",
+    "image": "Efjohnson/challenger.jpg",
+    "weight": "? Kg"
+  },
+  {
+    "manufacturer": "Efjohnson",
+    "name": "E.F.Johnson Invader",
+    "modes": "AM/CW",
+    "type": "Amateur HF transmitter",
+    "power": "AM: 50 WCW: 100 W",
+    "dimensions": "? mm",
+    "frequency": "10-80 m",
+    "image": "Efjohnson/invader.jpg",
+    "weight": "? Kg"
+  },
+  {
+    "manufacturer": "Efjohnson",
+    "name": "E.F.Johnson Invader 2000",
+    "modes": "AM/SSB/CW",
+    "type": "Amateur HF transmitter",
+    "power": "AM: 500 WSSB: 1 KWCW: 600 W",
+    "dimensions": "? mm",
+    "frequency": "10-80 m",
+    "image": "Efjohnson/invader2000.jpg",
+    "weight": "? Kg"
+  },
+  {
+    "manufacturer": "Efjohnson",
+    "name": "E.F.Johnson Messenger",
+    "modes": "AM",
+    "type": "Amateur HF transceiver",
+    "power": "5 W",
+    "dimensions": "? mm",
+    "frequency": "10 m",
+    "image": "Efjohnson/messenger.jpg",
+    "weight": "? Kg"
+  },
+  {
+    "manufacturer": "Efjohnson",
+    "name": "E.F.Johnson Navigator",
+    "modes": "CW",
+    "type": "Amateur HF transmitter",
+    "power": "25 W",
+    "dimensions": "? mm",
+    "frequency": "10-160 m",
+    "image": "Efjohnson/navigator.jpg",
+    "weight": "? Kg"
+  },
+  {
+    "manufacturer": "Efjohnson",
+    "name": "E.F.Johnson Ranger",
+    "modes": "AM/CW",
+    "type": "Amateur HF transmitter",
+    "power": "40 W",
+    "dimensions": "? mm",
+    "frequency": "10-160 m",
+    "image": "Efjohnson/ranger.jpg",
+    "weight": "? Kg"
+  },
+  {
+    "manufacturer": "Efjohnson",
+    "name": "E.F.Johnson Viking Valiant",
+    "modes": "AM/SSB/CW",
+    "type": "Amateur HF transmitter",
+    "power": "AM: 200 WSSB: 150 WCW: 150 W",
+    "dimensions": "? mm",
+    "frequency": "10-160 m",
+    "image": "Efjohnson/viking_valiant.jpg",
+    "weight": "? Kg"
+  },
+  {
+    "manufacturer": "Efjohnson",
+    "name": "E.F.Johnson Viking I",
+    "modes": "AM/CW",
+    "type": "Amateur HF transmitter",
+    "power": "100 W",
+    "dimensions": "? mm",
+    "frequency": "10-160 m",
+    "image": "Efjohnson/viking1.jpg",
+    "weight": "? Kg"
+  },
+  {
+    "manufacturer": "Efjohnson",
+    "name": "E.F.Johnson Viking 500",
+    "modes": "AM/SSB/CW",
+    "type": "Amateur HF transmitter",
+    "power": "AM: 250 WSSB: 300 WCW: 300 W",
+    "dimensions": "? mm",
+    "frequency": "10-80 m",
+    "image": "Efjohnson/viking500.jpg",
+    "weight": "? Kg"
+  },
+  {
+    "manufacturer": "Efjohnson",
+    "name": "E.F.Johnson Viking II",
+    "modes": "AM/CW",
+    "type": "Amateur HF transmitter",
+    "power": "AM: 100 WCW: 130 W",
+    "dimensions": "? mm",
+    "frequency": "10-160 m",
+    "image": "Efjohnson/vikingii.jpg",
+    "weight": "? Kg"
+  },
+  {
+    "manufacturer": "Efjohnson",
+    "name": "E.F.Johnson Viking Mobile",
+    "modes": "AM",
+    "type": "Amateur HF transmitter",
+    "power": "30-60 W",
+    "dimensions": "? mm",
+    "frequency": "10/20/80 m",
+    "image": "Efjohnson/vikingmobile.jpg",
+    "weight": "? Kg"
+  }
+]

@@ -1,0 +1,90 @@
+[
+  {
+    "manufacturer": "ADI",
+    "name": "AR-146",
+    "modes": "FM",
+    "type": "Amateur VHF transceiver",
+    "power": "Hi: 50 W, Lo: ? W",
+    "dimensions": "? mm (?in)",
+    "frequency": "TX: 144-148 MHz, RX: 144-148 MHz",
+    "image": "ADI/ar146.jpg",
+    "weight": "? Kg (? lbs)"
+  },
+  {
+    "manufacturer": "ADI",
+    "name": "AR-147",
+    "modes": "TX: FMRX: AM/FM",
+    "type": "Amateur VHF transceiver",
+    "power": "Hi: 60 WMid: 25 W, Lo: 7 W",
+    "dimensions": "140*40*166 mm (5.51*1.58*6.54in)",
+    "frequency": "TX: 144-148 MHz, RX: 118-180 MHz",
+    "image": "ADI/ar147.jpg",
+    "weight": "1.2 Kg (2.65 lbs)"
+  },
+  {
+    "manufacturer": "ADI",
+    "name": "AR-147E",
+    "modes": "TX: FMRX: AM/FM",
+    "type": "Amateur VHF transceiver",
+    "power": "Hi: 60 WMid: 25 W, Lo: 7 W",
+    "dimensions": "140*40*166 mm (5.51*1.58*6.54in)",
+    "frequency": "TX: 144-146 MHz, RX: 118-180 MHz",
+    "image": "ADI/ar147e.jpg",
+    "weight": "1.2 Kg (2.65 lbs)"
+  },
+  {
+    "manufacturer": "ADI",
+    "name": "AR-447",
+    "modes": "FM",
+    "type": "Amateur UHF transceiver",
+    "power": "Hi: 35 WMid: 15 W, Lo: 7 W",
+    "dimensions": "140*40*166 mm (5.51*1.58*6.54in)",
+    "frequency": "TX: 430-450 MHz, RX: 420-480 MHz",
+    "image": "ADI/ar447.jpg",
+    "weight": "1.2 Kg (2.65 lbs)"
+  },
+  {
+    "manufacturer": "ADI",
+    "name": "AT-201HP",
+    "modes": "FM",
+    "type": "Amateur VHF transceiver",
+    "power": "Hi: 5 W, Lo: ? W",
+    "dimensions": "? mm",
+    "frequency": "TX: 144-148 MHz, RX: 130-178 MHz",
+    "image": "ADI/at201hp.jpg",
+    "weight": "? gr"
+  },
+  {
+    "manufacturer": "ADI",
+    "name": "AT-401HP",
+    "modes": "FM",
+    "type": "Amateur UHF transceiver",
+    "power": "Hi: 5 W, Lo: ? W",
+    "dimensions": "? mm",
+    "frequency": "TX: 430-450 MHz, RX: 430-480 MHz",
+    "image": "ADI/at401hp.jpg",
+    "weight": "? gr"
+  },
+  {
+    "manufacturer": "ADI",
+    "name": "AT-600HP",
+    "modes": "TX: FMRX: AM/FM",
+    "type": "Amateur VHF/UHF transceiver",
+    "power": "Hi: 5 W, Lo: ? W",
+    "dimensions": "? mm",
+    "frequency": "TX: 144-148 / 430-450 MHz, RX: 108-174 / 400-470 / 900-985 MHz",
+    "image": "ADI/at600hp.jpg",
+    "weight": "? gr"
+  },
+  {
+    "manufacturer": "ADI",
+    "name": "TM-281A",
+    "modes": "FM",
+    "type": "Amateur VHF transceiver",
+    "power": "Hi: 60 WMid: 25 W, Lo: 7 W",
+    "dimensions": "140*40*166 mm (5.51*1.58*6.54in)",
+    "frequency": "144-148 MHz (Thailand)",
+    "image": "ADI/tm281a.jpg",
+    "weight": "1.2 Kg (2.65 lbs)"
+  }
+]

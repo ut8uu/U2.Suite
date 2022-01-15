@@ -1,0 +1,79 @@
+[
+  {
+    "manufacturer": "WJ",
+    "name": "Watkins-Johnson 521A-1",
+    "modes": "AM/FM/FMN/CW",
+    "type": "HF/VHF receiver",
+    "power": null,
+    "dimensions": "? mm",
+    "frequency": "20-80 MHz",
+    "image": "WJ/wj_521a1.jpg",
+    "weight": "? Kg"
+  },
+  {
+    "manufacturer": "WJ",
+    "name": "Watkins-Johnson WJ-8888",
+    "modes": "AM/FM/SSB/CW",
+    "type": "HF receiver",
+    "power": null,
+    "dimensions": "? mm",
+    "frequency": "0.5-30 MHz",
+    "image": "WJ/8888.jpg",
+    "weight": "? Kg"
+  },
+  {
+    "manufacturer": "WJ",
+    "name": "Watkins-Johnson WJ-8888A",
+    "modes": "AM/FM/SSB/CW",
+    "type": "HF receiver",
+    "power": null,
+    "dimensions": "483*133*495 mm (19.02*5.24*19.49in)",
+    "frequency": "0.5-30.5 MHz",
+    "image": "WJ/wj8888a.jpg",
+    "weight": "18.1 Kg (39.9 lbs)"
+  },
+  {
+    "manufacturer": "WJ",
+    "name": "Watkins-Johnson WJ-8888B",
+    "modes": "AM/FM/SSB/CW",
+    "type": "HF receiver",
+    "power": null,
+    "dimensions": "483*133*495 mm (19.02*5.24*19.49in)",
+    "frequency": "0.5-30 MHz",
+    "image": "WJ/8888b.jpg",
+    "weight": "18.1 Kg (39.9 lbs)"
+  },
+  {
+    "manufacturer": "WJ",
+    "name": "Watkins-Johnson 906A-6",
+    "modes": "AM/FM/FMN/CW",
+    "type": "HF/VHF receiver",
+    "power": null,
+    "dimensions": "? mm",
+    "frequency": "30-90/60-300 MHz",
+    "image": "WJ/wj_906a6.jpg",
+    "weight": "? Kg"
+  },
+  {
+    "manufacturer": "WJ",
+    "name": "Watkins-Johnson HF-1000A",
+    "modes": "AM/Synchro-AM/SSB/CW",
+    "type": "HF receiver",
+    "power": null,
+    "dimensions": "483*133*508 mm (19*5.25*20in)",
+    "frequency": "0.05-30 MHz",
+    "image": "WJ/wj_hf1000a.jpg",
+    "weight": "6.8 Kg (15 lbs)"
+  },
+  {
+    "manufacturer": "WJ",
+    "name": "Watkins-Johnson WJ-8615",
+    "modes": "AM/FM/SSB/CW/Pulse",
+    "type": "HF/VHF/UHF receiver",
+    "power": null,
+    "dimensions": "209*89*500 mm (8.25*3.5*20in)",
+    "frequency": "20-500 MHz (2-1100 MHz option)",
+    "image": "WJ/wj8615.jpg",
+    "weight": "11.3 Kg (25 lbs)"
+  }
+]

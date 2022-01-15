@@ -1,0 +1,35 @@
+[
+  {
+    "manufacturer": "Philips",
+    "name": "AE3905",
+    "modes": "AM/WFM mono",
+    "type": "HF/VHF receiver",
+    "power": null,
+    "dimensions": "? mm",
+    "frequency": "0.17-30 / 88.108 MHz",
+    "image": "Philips/philips_ae3905.jpg",
+    "weight": "? gr"
+  },
+  {
+    "manufacturer": "Philips",
+    "name": "D-2935",
+    "modes": "AM/SSB/CW/WFM mono",
+    "type": "HF/VHF receiver",
+    "power": null,
+    "dimensions": "? mm",
+    "frequency": "0.15-30 / 88.108 MHz",
+    "image": "Philips/philips_d2935.jpg",
+    "weight": "? Kg"
+  },
+  {
+    "manufacturer": "Philips",
+    "name": "D-2999PLL",
+    "modes": "AM/SSB/CW/WFM mono",
+    "type": "HF/VHF receiver",
+    "power": null,
+    "dimensions": "? mm",
+    "frequency": "0.15-26.1 / 88.108 MHz",
+    "image": "Philips/philips_d2999pll.jpg",
+    "weight": "? Kg"
+  }
+]

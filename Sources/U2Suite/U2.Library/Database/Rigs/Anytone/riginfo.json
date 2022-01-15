@@ -1,0 +1,112 @@
+[
+  {
+    "manufacturer": "Anytone",
+    "name": "AT-5189",
+    "modes": "FM",
+    "type": "Amateur VHF transceiver",
+    "power": "Hi: 25 W, Lo: ? W",
+    "dimensions": "? mm (?in)",
+    "frequency": "4 m (66-88 MHz)",
+    "image": "Anytone/at5189.jpg",
+    "weight": "? Kg (? lbs)"
+  },
+  {
+    "manufacturer": "Anytone",
+    "name": "AT-5888UV",
+    "modes": "TX: FM / NFMRX: AM / FM / NFM",
+    "type": "Amateur VHF/UHF triband transceiver",
+    "power": "HighMid 1Mid 2Low\r\n2 m:50 W25 W10 W5 W\r\n70 cm:40 W25 W10 W5 W",
+    "dimensions": "140*40*195 mm (5.51*1.58*7.68in)",
+    "frequency": "TX: 136-174 / 400-490 MHz, RX: 108-180 / 220-260 / 350-400 / 400-523 MHz",
+    "image": "Anytone/at5888uv.jpg",
+    "weight": "1.12 Kg (2.47 lb)"
+  },
+  {
+    "manufacturer": "Anytone",
+    "name": "AT-5888UV III",
+    "modes": "TX: FM / NFMRX: AM / FM / NFM",
+    "type": "Amateur VHF/UHF triband transceiver",
+    "power": "HighMidLow\r\n2 m:55 W10 W5 W\r\n1.25 m:55 W10 W5 W\r\n70 cm:40 W10 W5 W",
+    "dimensions": "? mm (?in)",
+    "frequency": "TX: 136-174 / 200-260 / 400-490 MHz, RX: 108-174 / 200-260 / 400-490 MHz",
+    "image": "Anytone/at5888uviii.jpg",
+    "weight": "? Kg (? lb)"
+  },
+  {
+    "manufacturer": "Anytone",
+    "name": "AT-588 VHF",
+    "modes": "FM/NFM",
+    "type": "Amateur UHF transceiver",
+    "power": "Hi: 60 WMid: 25 W, Lo: 10 W",
+    "dimensions": "145*47*190 mm (5.71*1.85*7.48in)",
+    "frequency": "TX: 144-146 MHz (136-174 MHz)RX: 136-174 MHz",
+    "image": "Anytone/at588vhf.jpg",
+    "weight": "1.2 Kg (2.65 lbs)"
+  },
+  {
+    "manufacturer": "Anytone",
+    "name": "AT-778UV",
+    "modes": "FM/NFM",
+    "type": "Amateur VHF/UHF transceiver",
+    "power": "2 mHi: 25 W, Mid: 15 W, Lo: 5 W\r\n\r\n\r\n70 cmHi: 25 W, Mid: 15 W, Lo: 5 W",
+    "dimensions": "124*39*163 mm (4.88*1.54*6.42in)",
+    "frequency": "TX: 144-146 / 430-440 MHz, RX: 136-174 / 400-470 MHz",
+    "image": "Anytone/at778uv.jpg",
+    "weight": "640 g (1.41 lbs)"
+  },
+  {
+    "manufacturer": "Anytone",
+    "name": "AT-D578UV",
+    "modes": "TX: FM / NFM / DMR (Tier I \u0026 II)RX: FM / NFM / DMR (Tier I \u0026 II) and WFM",
+    "type": "Amateur VHF/UHF transceiver",
+    "power": "TurboHighMidLow\r\n2 m:55 W25 W10 W5 W\r\n70 cm:40 W25 W10 W5 W",
+    "dimensions": "188*40*141 mm (7.4*1.58*5.55in)",
+    "frequency": "TX: 144-146 / 430-440 MHz (Europe)RX: 87.5-108 / 136-174 / 400-480 MHz",
+    "image": "Anytone/atd578uv.jpg",
+    "weight": "1.04 Kg (2.29 lb)"
+  },
+  {
+    "manufacturer": "Anytone",
+    "name": "AT-D578UV Plus v2",
+    "modes": "TX: FM / NFM / DMR (Tier I \u0026 II)RX: AM / FM / NFM / DMR (Tier I \u0026 II) and WFM",
+    "type": "Amateur VHF/UHF transceiver",
+    "power": "TurboHighMidLow\r\n2 m:55 W25 W10 W5 W\r\n70 cm:40 W25 W10 W5 W",
+    "dimensions": "188*40*141 mm (7.4*1.58*5.55in)",
+    "frequency": "TX: 144-146 / 430-440 MHz (Europe)RX: 87.5-108 / 118-174 / 400-480 MHz",
+    "image": "Anytone/atd578uvplusv2.jpg",
+    "weight": "1.04 Kg (2.29 lb)"
+  },
+  {
+    "manufacturer": "Anytone",
+    "name": "AT-D868UV",
+    "modes": "FM / NFM / DMR (Tier I \u0026 II)",
+    "type": "Amateur VHF/UHF transceiver",
+    "power": "HighMidLow 1Low 2\r\n2 m:7 W5 W2.5 W1 W\r\n70 cm:6 W5 W2.5 W1 W",
+    "dimensions": "61*129*39 mm (2.4*5.08*1.54in)",
+    "frequency": "136-174 / 400-480 MHz",
+    "image": "Anytone/atd868uv.jpg",
+    "weight": "282 g (9.95 oz), with 2100 mAh battery pack and antenna"
+  },
+  {
+    "manufacturer": "Anytone",
+    "name": "AT-D878UV",
+    "modes": "FM / NFM / DMR (Tier I \u0026 II)",
+    "type": "Amateur VHF/UHF transceiver",
+    "power": "HighMidLow 1Low 2\r\n2 m:7 W5 W2.5 W1 W\r\n70 cm:6 W5 W2.5 W1 W",
+    "dimensions": "61*129*39 mm (2.4*5.08*1.54in)",
+    "frequency": "136-174 / 400-480 MHz",
+    "image": "Anytone/atd878uv.jpg",
+    "weight": "282 g (9.95 oz), with 2100 mAh battery pack and antenna"
+  },
+  {
+    "manufacturer": "Anytone",
+    "name": "AT-D878UVII Plus",
+    "modes": "FM / NFM / DMR (Tier I \u0026 II)",
+    "type": "Amateur VHF/UHF transceiver",
+    "power": "HighMidLow 1Low 2\r\n2 m:7 W5 W2.5 W200 mW\r\n70 cm:6 W5 W2.5 W200 mW",
+    "dimensions": "61*129*39 mm (2.4*5.08*1.54in)",
+    "frequency": "136-174 / 400-480 MHz",
+    "image": "Anytone/atd878uviiplus.jpg",
+    "weight": "282 g (9.95 oz), with 2100 mAh battery pack and antenna"
+  }
+]

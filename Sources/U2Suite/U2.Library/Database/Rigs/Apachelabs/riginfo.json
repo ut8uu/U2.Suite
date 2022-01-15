@@ -1,0 +1,46 @@
+[
+  {
+    "manufacturer": "Apachelabs",
+    "name": "Apache Labs Anan-10",
+    "modes": "Allmode, depending on software",
+    "type": "Amateur HF/VHF SDR transceiver",
+    "power": "15 W",
+    "dimensions": "? mm (?in)",
+    "frequency": "TX: 10-160 m \u002B WARC / 6 mRX: 0.01-55 MHz",
+    "image": "Apachelabs/anan10.jpg",
+    "weight": "? Kg (? lbs)"
+  },
+  {
+    "manufacturer": "Apachelabs",
+    "name": "Apache Labs Anan-100",
+    "modes": "Allmode, depending on software",
+    "type": "Amateur HF/VHF SDR transceiver",
+    "power": "Max 100 W",
+    "dimensions": "265*80*220 mm (10.4*3.15*8.66in)",
+    "frequency": "TX: 10-160 m \u002B WARC / 6 mRX: 0.01-55 MHz",
+    "image": "Apachelabs/anan100.jpg",
+    "weight": "? Kg (? lbs)"
+  },
+  {
+    "manufacturer": "Apachelabs",
+    "name": "Apache Labs Anan-100D",
+    "modes": "Allmode, depending on software",
+    "type": "Amateur HF/VHF SDR transceiver",
+    "power": "1-100 W",
+    "dimensions": "265*80*220 mm (10.4*3.15*8.66in)",
+    "frequency": "TX: 10-160 m \u002B WARC / 6 mRX: 0.01-55 MHz",
+    "image": "Apachelabs/anan100d.jpg",
+    "weight": "4.5 Kg (9.92 lbs)"
+  },
+  {
+    "manufacturer": "Apachelabs",
+    "name": "Apache Labs Anan-200D",
+    "modes": "Allmode, depending on software",
+    "type": "Amateur HF/VHF SDR transceiver",
+    "power": "1-100 W",
+    "dimensions": "265*80*220 mm (10.4*3.15*8.66in)",
+    "frequency": "TX: 10-160 m \u002B WARC / 6 mRX: 0.01-55 MHz",
+    "image": "Apachelabs/anan200d.jpg",
+    "weight": "4.5 Kg (9.92 lbs)"
+  }
+]

@@ -1,0 +1,90 @@
+[
+  {
+    "manufacturer": "Flexradio",
+    "name": "Systems Flex-6300",
+    "modes": "AM/Sync-AM/FM/SSB/CW/RTTY",
+    "type": "Amateur HF/VHF SDR transceiver",
+    "power": "1-100 W (AM 1-25 W)",
+    "dimensions": "330*71*300 mm (13*2.8*11.75in)",
+    "frequency": "TX: 10-160 m \u002B WARC / 6 mRX: 0.03-54 MHz",
+    "image": "Flexradio/flex6300.jpg",
+    "weight": "4.5 Kg (10 lbs)"
+  },
+  {
+    "manufacturer": "Flexradio",
+    "name": "Systems Flex-6400",
+    "modes": "AM/Sync-AM/FM/SSB/CW/RTTY (DV option)",
+    "type": "Amateur HF/VHF SDR transceiver",
+    "power": "1-100 W (AM: 1-25 W)",
+    "dimensions": "350*171*337 mm (14*6.74*13.25in)",
+    "frequency": "TX: 10-160 m \u002B WARC / 6 mRX: 0.03-54 MHz",
+    "image": "Flexradio/flex6400.jpg",
+    "weight": "? Kg (? lbs)"
+  },
+  {
+    "manufacturer": "Flexradio",
+    "name": "Systems Flex-6400M",
+    "modes": "AM/Sync-AM/FM/SSB/CW/RTTY (DV option)",
+    "type": "Amateur HF/VHF SDR transceiver",
+    "power": "1-100 W (AM: 1-25 W)",
+    "dimensions": "350*171*337 mm (14*6.74*13.25in)",
+    "frequency": "TX: 10-160 m \u002B WARC / 6 mRX: 0.03-54 MHz",
+    "image": "Flexradio/flex6400m.jpg",
+    "weight": "? Kg (? lbs)"
+  },
+  {
+    "manufacturer": "Flexradio",
+    "name": "Systems Flex-6500",
+    "modes": "AM/Sync-AM/FM/SSB/CW/RTTY",
+    "type": "Amateur HF/VHF SDR transceiver",
+    "power": "1-100 W (AM 1-25 W)",
+    "dimensions": "330*102*305 mm (13*4*12in)",
+    "frequency": "TX: 10-160 m \u002B WARC / 6 mRX: 0.03-72 MHz",
+    "image": "Flexradio/flex6500.jpg",
+    "weight": "5.9 Kg (13 lbs)"
+  },
+  {
+    "manufacturer": "Flexradio",
+    "name": "Systems Flex-6600",
+    "modes": "AM/Sync-AM/FM/SSB/CW/RTTY (DV option)",
+    "type": "Amateur HF/VHF SDR transceiver",
+    "power": "1-100 W (AM: 1-25 W)",
+    "dimensions": "350*171*337 mm (14*6.74*13.25in)",
+    "frequency": "TX: 10-160 m \u002B WARC / 6 mRX: 0.03-54 MHz",
+    "image": "Flexradio/flex6600.jpg",
+    "weight": "? Kg (? lbs)"
+  },
+  {
+    "manufacturer": "Flexradio",
+    "name": "Systems Flex-6600M",
+    "modes": "AM/Sync-AM/FM/SSB/CW/RTTY (DV option)",
+    "type": "Amateur HF/VHF SDR transceiver",
+    "power": "1-100 W (AM: 1-25 W)",
+    "dimensions": "350*171*337 mm (14*6.74*13.25in)",
+    "frequency": "TX: 10-160 m \u002B WARC / 6 mRX: 0.03-54 MHz",
+    "image": "Flexradio/flex6600m.jpg",
+    "weight": "? Kg (? lbs)"
+  },
+  {
+    "manufacturer": "Flexradio",
+    "name": "Systems Flex-6700",
+    "modes": "AM/Sync-AM/FM/SSB/CW/RTTY",
+    "type": "Amateur HF/VHF SDR transceiver",
+    "power": "Max 100 W (AM max ? W)",
+    "dimensions": "330*102*305 mm (13*4*12in)",
+    "frequency": "TX: 10-160 m \u002B WARC / 6 mRX: 0.03-72 / 135-165 MHz",
+    "image": "Flexradio/flex6700.jpg",
+    "weight": "5.9 Kg (13 lbs)"
+  },
+  {
+    "manufacturer": "Flexradio",
+    "name": "Systems Flex-6700R",
+    "modes": "AM/Sync-AM/FM/NFM/DFM/SSB/CW/RTTY",
+    "type": "VHF/UHF receiver/scanner",
+    "power": null,
+    "dimensions": "330*102*305 mm (13*4*12in)",
+    "frequency": "0.03-72 / 135-165 MHz",
+    "image": "Flexradio/flex6700r.jpg",
+    "weight": "4.5 Kg (10 lbs)"
+  }
+]
