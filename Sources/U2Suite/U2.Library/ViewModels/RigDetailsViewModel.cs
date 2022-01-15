@@ -48,19 +48,24 @@ namespace U2.Library.ViewModels
                 var list = new List<KeyValuePair<string, string>>();
                 list.Add(new KeyValuePair<string, string>("Manufacturer", _rig.Vendor.Name));
                 list.Add(new KeyValuePair<string, string>("Name", _rig.Name));
+                if (!string.IsNullOrEmpty(_rig.RigType))
+                {
+                    list.Add(new KeyValuePair<string, string>("Type", _rig.RigType));
+                }
+
                 if (!string.IsNullOrEmpty(_rig.PowerWatts))
                 {
-                    list.Add(new KeyValuePair<string, string>("Power, watts", _rig.PowerWatts));
+                    list.Add(new KeyValuePair<string, string>("Power", _rig.PowerWatts));
                 }
 
                 if (!string.IsNullOrEmpty(_rig.Dimensions))
                 {
-                    list.Add(new KeyValuePair<string, string>("Dimensions (W x H x D), mm", _rig.Dimensions));
+                    list.Add(new KeyValuePair<string, string>("Dimensions (W x H x D)", _rig.Dimensions));
                 }
 
                 if (!string.IsNullOrEmpty(_rig.WeightGrams))
                 {
-                    list.Add(new KeyValuePair<string, string>("Weight, g", _rig.WeightGrams));
+                    list.Add(new KeyValuePair<string, string>("Weight", _rig.WeightGrams));
                 }
 
                 RigImagePath = string.Empty;

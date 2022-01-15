@@ -95,6 +95,7 @@ namespace U2.Library.Database.Models
                             PowerWatts = rigInfo.Power ?? string.Empty,
                             WeightGrams = rigInfo.Weight ?? string.Empty,
                             Dimensions = rigInfo.Dimensions ?? string.Empty,
+                            RigType = rigInfo.Type,
                         };
                         list.Add(rig);
                     }

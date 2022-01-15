@@ -15,6 +15,8 @@ namespace U2.Library.Database.Models
 
         [StringLength(80)]
         public string Dimensions { get; set; } = default!;
+        [StringLength(100)]
+        public string RigType { get; set; } = default!;
         [StringLength(50)]
         public string WeightGrams { get; set; } = default!;
         [StringLength(80)]
