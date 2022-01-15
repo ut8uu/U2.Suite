@@ -4,6 +4,7 @@ using Avalonia.Markup.Xaml;
 
 namespace U2.Logger
 {
+    [PropertyChanged.DoNotNotify]
     public class App : Application
     {
         public override void Initialize()

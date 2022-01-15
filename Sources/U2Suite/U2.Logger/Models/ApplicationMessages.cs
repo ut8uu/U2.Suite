@@ -16,6 +16,6 @@ namespace U2.Logger
     {
         public object? Sender { get; set; }
         public ApplicationTextBox TextBox { get; set; }
-        public string NewContent { get; set; } = default!;
+        public string NewValue { get; set; } = default!;
     }
 }

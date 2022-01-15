@@ -3,6 +3,7 @@
     public enum ApplicationTextBox
     {
         Callsign,
+        Operator,
         RstSent,
         RstReceived,
         Comments,

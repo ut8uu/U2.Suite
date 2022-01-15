@@ -5,6 +5,7 @@ using U2.Logger.ViewModels;
 
 namespace U2.Logger
 {
+    [PropertyChanged.DoNotNotify]
     public partial class FuncButtonsPanel : UserControl
     {
         private Window _owner;

@@ -4,6 +4,7 @@ using Avalonia.Markup.Xaml;
 
 namespace U2.Logger
 {
+    [PropertyChanged.DoNotNotify]
     public partial class TextInputPanel : UserControl
     {
         private Window _owner = default!;
