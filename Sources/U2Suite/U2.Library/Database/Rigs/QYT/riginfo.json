@@ -1,0 +1,90 @@
+[
+  {
+    "manufacturer": "QYT",
+    "name": "KT-780 Plus (VHF)",
+    "modes": "TX: FM / NFMRX: FM / NFM / WFM",
+    "type": "Amateur VHF transceiver",
+    "power": "HighMidLow\r\n2 m:100 W50 W20 W",
+    "dimensions": "140*43*172 mm (5.51*1.69*6.77in)",
+    "frequency": "TX: 144-148 MHz, RX: 88-108 / 136-174 MHz",
+    "image": "QYT/kt780plus.jpg",
+    "weight": "1.2 Kg (2.65 lb)"
+  },
+  {
+    "manufacturer": "QYT",
+    "name": "KT-780 Plus (UHF)",
+    "modes": "TX: FM / NFMRX: FM / NFM / WFM",
+    "type": "Amateur UHF transceiver",
+    "power": "HighMidLow\r\n70 cm:80 W40 W20 W",
+    "dimensions": "140*43*172 mm (5.51*1.69*6.77in)",
+    "frequency": "TX: 430-450 MHz, RX: 88-108 / 400-480 MHz",
+    "image": "QYT/kt780plus_uhf.jpg",
+    "weight": "1.2 Kg (2.65 lb)"
+  },
+  {
+    "manufacturer": "QYT",
+    "name": "KT-7900D",
+    "modes": "FM/NFM",
+    "type": "Amateur VHF/UHF transceiver",
+    "power": "2 mMax 25 W\r\n\r\n\r\n1.25 mMax 25 W\r\n\r\n\r\n350 MHzMax 20 W\r\n\r\n\r\n70 cmMax 20 W",
+    "dimensions": "103*47*126 mm (4.06*1.85*4.96in)",
+    "frequency": "136-174 / 200-260 / 350-390 / 400-470 MHz",
+    "image": "QYT/kt7900d.jpg",
+    "weight": "448 gr (15.8 oz)"
+  },
+  {
+    "manufacturer": "QYT",
+    "name": "KT-8900",
+    "modes": "TX: FM / NFMRX: FM / NFM / WFM",
+    "type": "Amateur VHF/UHF transceiver",
+    "power": "2 mHi: 25 W, Lo: ? W\r\n\r\n\r\n70 cmHi: 20 W, Lo: ? W",
+    "dimensions": "98*35*118 mm (3.86*1.38*4.65in)",
+    "frequency": "TX: 136-174 / 400-520 MHz, RX: 88-108 / 136-174 / 400-480 MHz",
+    "image": "QYT/kt8900.jpg",
+    "weight": "408 g (14.4 oz)"
+  },
+  {
+    "manufacturer": "QYT",
+    "name": "KT-8900D",
+    "modes": "TX: FM/NFMRX: FM/NFM/WFM",
+    "type": "Amateur VHF/UHF transceiver",
+    "power": "2 mHi: 25 W, Lo: 15 W\r\n\r\n\r\n70 cmHi: 20 W, Lo: 12 W",
+    "dimensions": "98*43*126 mm (3.86*1.69*4.96in)",
+    "frequency": "TX: 136-174 / 400-480 MHz, RX: 88-108 / 136-174 / 400-480 MHz",
+    "image": "QYT/kt8900d.jpg",
+    "weight": "448 g (0.99 lbs)"
+  },
+  {
+    "manufacturer": "QYT",
+    "name": "KT-8900R",
+    "modes": "TX: FM/NFMRX: FM/NFM/WFM",
+    "type": "Amateur VHF/UHF transceiver",
+    "power": "2 mHi: 25 W, Lo: ? W\r\n\r\n\r\n1.25 mHi: ? W, Lo: ? W\r\n\r\n\r\n70 cmHi: 20 W, Lo: ? W",
+    "dimensions": "98*35*118 mm (3.86*1.38*4.65in)",
+    "frequency": "TX: 136-174 / 220-260 / 400-480 MHz, RX: 88-108 / 136-174 / 220-260 / 400-480 MHz",
+    "image": "QYT/kt8900r.jpg",
+    "weight": "408 g (14.4 oz)"
+  },
+  {
+    "manufacturer": "QYT",
+    "name": "KT-8R",
+    "modes": "FM / NFM",
+    "type": "Amateur VHF/UHF transceiver",
+    "power": "HighLow\r\n2 m:4 W1 W\r\n1.25 m:4 W1 W\r\n350 MHz:4 W1 W\r\n70 cm:4 W1 W",
+    "dimensions": "62*128*35 mm (2.44*5.04*1.38in)",
+    "frequency": "TX: 136-174 / 220-270 / 350-390 / 400-480 MHz, RX: 136-174 / 220-270 / 350-390 / 400-480 MHz",
+    "image": "QYT/kt8r.jpg",
+    "weight": "230 g (8.11 oz)"
+  },
+  {
+    "manufacturer": "QYT",
+    "name": "KT-WP12",
+    "modes": "FM / NFM",
+    "type": "Amateur VHF/UHF transceiver",
+    "power": "HighLow\r\n2 m:25 W? W\r\n70 cm:20 W? W",
+    "dimensions": "Transceiver: 98*35*118 mm (3.86*1.38*4.65in)Control mike: ? mm (?in)",
+    "frequency": "TX: 144-148 / 430-440 MHz, RX: 144-148 / 430-440 MHz",
+    "image": "QYT/ktwp12.jpg",
+    "weight": "Transceiver: 890 g (1.96 lb)Control mike: ? g (? oz)"
+  }
+]

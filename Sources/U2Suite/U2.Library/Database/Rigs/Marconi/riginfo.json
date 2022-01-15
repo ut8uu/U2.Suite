@@ -1,0 +1,46 @@
+[
+  {
+    "manufacturer": "Marconi",
+    "name": "Atalanta",
+    "modes": "AM/CW",
+    "type": "HF receiver",
+    "power": null,
+    "dimensions": "? mm (?in)",
+    "frequency": "0.015-28 MHz",
+    "image": "Marconi/marconi_atalanta.jpg",
+    "weight": "35 Kg (77.16 lbs)"
+  },
+  {
+    "manufacturer": "Marconi",
+    "name": "CR100/2",
+    "modes": "AM/CW",
+    "type": "HF receiver",
+    "power": null,
+    "dimensions": "406*311*419 mm (16*12.25*16.5in)",
+    "frequency": "0.06-0.42 / 0.5-30 MHz in six bands",
+    "image": "Marconi/marconi_cr1002.jpg",
+    "weight": "37.19 Kg (82 lbs)"
+  },
+  {
+    "manufacturer": "Marconi",
+    "name": "CR100/8",
+    "modes": "AM/CW",
+    "type": "HF receiver",
+    "power": null,
+    "dimensions": "406*311*419 mm (16*12.25*16.5in)",
+    "frequency": "0.06-0.42 / 0.5-30 MHz in six bands",
+    "image": "Marconi/marconi_cr1008.jpg",
+    "weight": "37.19 Kg (82 lbs)"
+  },
+  {
+    "manufacturer": "Marconi",
+    "name": "Mercury",
+    "modes": "?",
+    "type": "HF receiver",
+    "power": null,
+    "dimensions": "? mm",
+    "frequency": "LW to 4 MHz",
+    "image": "Marconi/marconi_mercury.jpg",
+    "weight": "35 Kg"
+  }
+]

@@ -1,0 +1,35 @@
+[
+  {
+    "manufacturer": "RCA",
+    "name": "AR-88D",
+    "modes": "AM/CW",
+    "type": "HF receiver",
+    "power": null,
+    "dimensions": "489*279*489 mm (19.25*11*19.25in), with cabinet",
+    "frequency": "0.535-32 MHz in six bands\r\n0.535-1.6 MHz\r\n1.57-4.55 MHz\r\n4.45-12.15 MHz\r\n11.9-16.6 MHz\r\n16.1-22.7 MHz\r\n22-32 MHz",
+    "image": "RCA/ar88d.jpg",
+    "weight": "44.4 Kg (97.9 lbs), with cabinet"
+  },
+  {
+    "manufacturer": "RCA",
+    "name": "AR-88LF",
+    "modes": "AM/CW",
+    "type": "HF receiver",
+    "power": null,
+    "dimensions": "489*279*489 mm (19.25*11*19.25)",
+    "frequency": "73-550 KHz / 1.5-30.5 MHz in six bands",
+    "image": "RCA/ar88lf.jpg",
+    "weight": "? Kg"
+  },
+  {
+    "manufacturer": "RCA",
+    "name": "CR-88A",
+    "modes": "AM/CW",
+    "type": "HF receiver",
+    "power": null,
+    "dimensions": "489*279*489 mm (19.25*11*19.25)",
+    "frequency": "0.535-32 MHz in six bands",
+    "image": "RCA/cr88a.jpg",
+    "weight": "? Kg"
+  }
+]

@@ -1,0 +1,68 @@
+[
+  {
+    "manufacturer": "Eton",
+    "name": "Et\uFFFDn E1",
+    "modes": "AM/AM-sync/SSB/CW/WFM Stereo",
+    "type": "HF/VHF receiver",
+    "power": null,
+    "dimensions": "333*180*58 mm (13.11*7.09*2.28in)",
+    "frequency": "0.1-30 / 87-108 MHz",
+    "image": "Eton/e1.jpg",
+    "weight": "1.9 Kg (4.19 lbs)"
+  },
+  {
+    "manufacturer": "Eton",
+    "name": "Et\uFFFDn E1 XM",
+    "modes": "AM/AM-sync/SSB/CW/WFM Stereo",
+    "type": "HF/VHF receiver",
+    "power": null,
+    "dimensions": "333*180*58 mm (13.11*7.09*2.28in)",
+    "frequency": "0.1-30 / 76-90 / 87-108 MHz (XM Satellite radio option)",
+    "image": "Eton/e1xm.jpg",
+    "weight": "? Kg"
+  },
+  {
+    "manufacturer": "Eton",
+    "name": "Et\uFFFDn E5",
+    "modes": "AM/SSB/CW/WFM Stereo",
+    "type": "HF/VHF receiver",
+    "power": null,
+    "dimensions": "167*105*27 mm (6.58*4.13*1.06in)",
+    "frequency": null,
+    "image": "Eton/e5.jpg",
+    "weight": "346 gr (12.2 oz)"
+  },
+  {
+    "manufacturer": "Eton",
+    "name": "Et\uFFFDn G3 Globe Traveler",
+    "modes": "AM/AM-Sync/SSB/CW/WFM Stereo",
+    "type": "HF/VHF receiver",
+    "power": null,
+    "dimensions": "168*105*28 mm (6.61*4.13*1.1in)",
+    "frequency": null,
+    "image": "Eton/g3globetraveler.jpg",
+    "weight": "345 gr (12.17 oz)"
+  },
+  {
+    "manufacturer": "Eton",
+    "name": "Et\uFFFDn G6 Aviator Buzz Aldrin Edition",
+    "modes": "AM/SSB/CW/WFM Stereo",
+    "type": "HF/VHF receiver",
+    "power": null,
+    "dimensions": "125*76*29 mm (4.92*2.99*1.14in)",
+    "frequency": null,
+    "image": "Eton/g6aviator_buzzaldrin.jpg",
+    "weight": "207 gr (7.3 oz)"
+  },
+  {
+    "manufacturer": "Eton",
+    "name": "Et\uFFFDn G8 Traveler II",
+    "modes": "AM/WFM Stereo",
+    "type": "HF/VHF receiver",
+    "power": null,
+    "dimensions": "136*87*26 mm (5.35*3.42*1.02in)",
+    "frequency": null,
+    "image": "Eton/g8travelerii.jpg",
+    "weight": "201 gr (7.09 lbs)"
+  }
+]

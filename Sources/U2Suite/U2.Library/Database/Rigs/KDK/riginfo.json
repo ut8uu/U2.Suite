@@ -1,0 +1,134 @@
+[
+  {
+    "manufacturer": "KDK",
+    "name": "FM-144 10LA (Kyokuto Denshi K.K.)",
+    "modes": "FM",
+    "type": "Amateur VHF transceiver",
+    "power": "Hi: 10 WMid: 1 W, Lo: 0.1 W",
+    "dimensions": "? mm",
+    "frequency": "144-146 MHz",
+    "image": "KDK/fm14410la.jpg",
+    "weight": "2 Kg (4.41 lbs)"
+  },
+  {
+    "manufacturer": "KDK",
+    "name": "FM-144 10SX RII (Kyokuto Denshi K.K.)",
+    "modes": "FM",
+    "type": "Amateur VHF transceiver",
+    "power": "Hi: 10 W, Lo: 1 W",
+    "dimensions": "165*54*195 mm (6.5*2.13*7.5in)",
+    "frequency": "TX: 144-146 MHz (Europe and Asia)TX: 144-148 MHz (USA)RX: 144-149 MHz",
+    "image": "KDK/fm14410sxrii.jpg",
+    "weight": "2.1 Kg (4.63 lb)"
+  },
+  {
+    "manufacturer": "KDK",
+    "name": "FM-2015R (Kyokuto Denshi K.K.)",
+    "modes": "FM",
+    "type": "Amateur VHF transceiver",
+    "power": "Hi: 15 W, Lo: 1 W",
+    "dimensions": "180*60*195 mm (7.09*2.36*7.68in)",
+    "frequency": "144-146 MHz",
+    "image": "KDK/fm2015r.jpg",
+    "weight": "? Kg"
+  },
+  {
+    "manufacturer": "KDK",
+    "name": "FM-2016E (Kyokuto Denshi K.K.)",
+    "modes": "FM",
+    "type": "Amateur VHF transceiver",
+    "power": "Hi: 15 W, Lo: 2 W",
+    "dimensions": "180*60*215 mm (7.09*2.36*8.46in)",
+    "frequency": "144-146 MHz",
+    "image": "KDK/fm2016e.jpg",
+    "weight": "? Kg"
+  },
+  {
+    "manufacturer": "KDK",
+    "name": "FM-2025 (Kyokuto Denshi K.K.)",
+    "modes": "FM",
+    "type": "Amateur VHF transceiver",
+    "power": "Hi: 25 W, Lo: 3 W",
+    "dimensions": "180*60*195 mm (7.09*2.36*7.68in)",
+    "frequency": "144-148 MHz",
+    "image": "KDK/fm2025.jpg",
+    "weight": "2.2 Kg (4.85 lbs)"
+  },
+  {
+    "manufacturer": "KDK",
+    "name": "(Kyokuto Denshi K.K.) FM-2025E",
+    "modes": "FM",
+    "type": "Amateur VHF transceiver",
+    "power": "HighLow\r\n2 m:25 W3 W",
+    "dimensions": "180*60*195 mm (7.09*2.36*7.68in)",
+    "frequency": "TX: 144.0000-148.9875 MHz, RX: 144.0000-148.9875 MHz",
+    "image": "KDK/fm2025e.jpg",
+    "weight": "2.2 Kg (4.85 lb)"
+  },
+  {
+    "manufacturer": "KDK",
+    "name": "FM-2030 (Kyokuto Denshi K.K.)",
+    "modes": "FM",
+    "type": "Amateur VHF transceiver",
+    "power": "Hi: 25 W, Lo: 5 W",
+    "dimensions": "162*55*182 mm (6.38*2.16*7.16in)",
+    "frequency": "TX: 143.005-148.995 MHz, RX: 143-149 MHz",
+    "image": "KDK/fm2030.jpg",
+    "weight": "1.7 Kg 3.75 lbs)"
+  },
+  {
+    "manufacturer": "KDK",
+    "name": "FM-2033 (Kyokuto Denshi K.K.)",
+    "modes": "FM",
+    "type": "Amateur VHF transceiver",
+    "power": "Hi: 25 W, Lo: 5 W",
+    "dimensions": "162*55*182 mm (6.38*2.16*7.16in)",
+    "frequency": "142-159 MHz",
+    "image": "KDK/fm2033.jpg",
+    "weight": "1.7 Kg (3.75 lbs)"
+  },
+  {
+    "manufacturer": "KDK",
+    "name": "FM-240 (Kyokuto Denshi K.K.)",
+    "modes": "FM",
+    "type": "Amateur VHF transceiver",
+    "power": "Hi: 25 W, Lo: 5 W",
+    "dimensions": "? mm",
+    "frequency": "144-146 MHz (Europe)140-150 MHz (USA)",
+    "image": "KDK/fm240.jpg",
+    "weight": "? Kg"
+  },
+  {
+    "manufacturer": "KDK",
+    "name": "FM-4033 (Kyokuto Denshi K.K.)",
+    "modes": "FM",
+    "type": "Amateur VHF transceiver",
+    "power": "Hi: 25 W, Lo: 5 W",
+    "dimensions": "162*55*182 mm (6.38*2.16*7.16in)",
+    "frequency": "220-225 MHz",
+    "image": "KDK/fm4033.jpg",
+    "weight": "1.7 Kg (3.75 lbs)"
+  },
+  {
+    "manufacturer": "KDK",
+    "name": "FM-50 10L (Kyokuto Denshi K.K.)",
+    "modes": "FM",
+    "type": "Amateur VHF transceiver",
+    "power": "Hi: ? WMid: ? W, Lo: ? mW",
+    "dimensions": "? mm",
+    "frequency": "6 m",
+    "image": "KDK/fm5010l.jpg",
+    "weight": "? Kg"
+  },
+  {
+    "manufacturer": "KDK",
+    "name": "FM-740 (Kyokuto Denshi K.K.)",
+    "modes": "FM",
+    "type": "Amateur UHF transceiver",
+    "power": "Hi: 10 W, Lo: 1 W",
+    "dimensions": "? mm",
+    "frequency": "430-440 MHz",
+    "image": "KDK/fm740.jpg",
+    "weight": "? Kg"
+  }
+]

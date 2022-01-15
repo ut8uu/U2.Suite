@@ -1,0 +1,90 @@
+[
+  {
+    "manufacturer": "DLS",
+    "name": "-160",
+    "modes": "FM",
+    "type": "VHF receiver/scanner with UHF option",
+    "power": null,
+    "dimensions": "120*40*180 mm (4.72*1.58*7.09in)",
+    "frequency": "77.5125-79.9875 MHz\r\n(410-412.5 MHz UHF converter option)",
+    "image": "DLS/dls_160.jpg",
+    "weight": "650 g (1.43 lb)"
+  },
+  {
+    "manufacturer": "DLS",
+    "name": "200C",
+    "modes": "FM",
+    "type": "VHF/UHF receiver/scanner",
+    "power": null,
+    "dimensions": "120*40*180 mm (4.72*1.58*7.09in)",
+    "frequency": "77.5125-79.9875 / 410-412.5 MHz",
+    "image": "DLS/dls_200c.jpg",
+    "weight": "500 g (1.1 lb)"
+  },
+  {
+    "manufacturer": "DLS",
+    "name": "-40",
+    "modes": "FM",
+    "type": "HF/VHF/UHF receiver/scanner",
+    "power": null,
+    "dimensions": "74*175*37 mm (2.91*6.89*1.46in)",
+    "frequency": "26-32 / 68-88 / 138-176 / 380-512 MHz",
+    "image": "DLS/dls_40.jpg",
+    "weight": "? g (? oz)"
+  },
+  {
+    "manufacturer": "DLS",
+    "name": "-400",
+    "modes": "AM/FM",
+    "type": "VHF/UHF receiver/scanner",
+    "power": null,
+    "dimensions": "152*55*180 mm (5.98*2.16*7.09in)",
+    "frequency": "60-90 / 118-136 / 138-174 / 406-512 / 800-999 MHz",
+    "image": "DLS/dls_400.jpg",
+    "weight": "700 g (1.54 lb)"
+  },
+  {
+    "manufacturer": "DLS",
+    "name": "-70",
+    "modes": "AM / FM",
+    "type": "VHF/UHF receiver/scanner",
+    "power": null,
+    "dimensions": "270*95*230 mm (10.63*3.74*9.06in)",
+    "frequency": "60-89 / 108-138 / 140-179 / 380-519 MHz",
+    "image": "DLS/dls_70.jpg",
+    "weight": "3.1 Kg (6.84 lb)"
+  },
+  {
+    "manufacturer": "DLS",
+    "name": "-80",
+    "modes": "FM",
+    "type": "VHF receiver/scanner",
+    "power": null,
+    "dimensions": "120*40*180 mm (4.72*1.58*7.09in)",
+    "frequency": "78.0125-79.9875 MHz",
+    "image": "DLS/dls_80new.jpg",
+    "weight": "620 g (1.37 lb)"
+  },
+  {
+    "manufacturer": "DLS",
+    "name": "Direct",
+    "modes": "FM",
+    "type": "VHF/UHF receiver/scanner",
+    "power": null,
+    "dimensions": "Receiver: ? mm (?in)Remote head: ? mm (?in)",
+    "frequency": "77.5125-79.9875 / 410-412.5 MHz",
+    "image": "DLS/dls_direct.jpg",
+    "weight": "Receiver: ? Kg (? lb)Remote head: ? g (? oz)"
+  },
+  {
+    "manufacturer": "DLS",
+    "name": "Direct II",
+    "modes": "FM",
+    "type": "VHF/UHF receiver/scanner",
+    "power": null,
+    "dimensions": "Receiver: 135*32*125 mm (5.32*1.26*4.92in)Remote head: 95*43*24 mm (3.74*1.69*0.94in)",
+    "frequency": "77.5125-79.9875 / 410-412.5 MHz",
+    "image": "DLS/dls_directii.jpg",
+    "weight": "Receiver: ? Kg (? lb)Remote head: ? g (? oz)"
+  }
+]

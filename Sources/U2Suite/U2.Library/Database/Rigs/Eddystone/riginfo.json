@@ -1,0 +1,222 @@
+[
+  {
+    "manufacturer": "Eddystone",
+    "name": "1830/1",
+    "modes": "AM/SSB/CW",
+    "type": "HF receiver",
+    "power": null,
+    "dimensions": "? mm",
+    "frequency": "0.12-31 MHz",
+    "image": "Eddystone/1830-1.jpg",
+    "weight": "? Kg"
+  },
+  {
+    "manufacturer": "Eddystone",
+    "name": "670A",
+    "modes": "AM",
+    "type": "HF receiver",
+    "power": null,
+    "dimensions": "? mm",
+    "frequency": "0.15-0.38 / 0.54-30 MHz in four bands",
+    "image": "Eddystone/670a.jpg",
+    "weight": "? Kg"
+  },
+  {
+    "manufacturer": "Eddystone",
+    "name": "680X",
+    "modes": "AM/CW",
+    "type": "HF receiver",
+    "power": null,
+    "dimensions": "426*222*381 mm (16.77*8.74*15in)",
+    "frequency": "0.48-30 MHz in five bands\r\n0.48-1.12 MHz\r\n1.11-2.5 MHz\r\n2.5-5.7 MHz\r\n5.3-12.5 MHz\r\n12.3-30 MHz",
+    "image": "Eddystone/680x.jpg",
+    "weight": "21.3 Kg (46.96 lbs)"
+  },
+  {
+    "manufacturer": "Eddystone",
+    "name": "730/4",
+    "modes": "AM/CW",
+    "type": "HF receiver",
+    "power": null,
+    "dimensions": "? mm",
+    "frequency": "0.48-30 MHz",
+    "image": "Eddystone/730-4.jpg",
+    "weight": "? Kg"
+  },
+  {
+    "manufacturer": "Eddystone",
+    "name": "830/2",
+    "modes": "AM/SSB/CW",
+    "type": "HF receiver",
+    "power": null,
+    "dimensions": "425*222*381 mm (16.75*8.75*15in)",
+    "frequency": "0.3-30 MHz in 9 bands",
+    "image": "Eddystone/830-2.jpg",
+    "weight": "22.2 Kg (49 lbs)"
+  },
+  {
+    "manufacturer": "Eddystone",
+    "name": "830/5",
+    "modes": "AM/SSB/CW",
+    "type": "HF receiver",
+    "power": null,
+    "dimensions": "425*222*381 mm (16.75*8.75*15in)",
+    "frequency": "0.3-30 MHz in 9 bands",
+    "image": "Eddystone/830-5.jpg",
+    "weight": "22.2 Kg (49 lbs)"
+  },
+  {
+    "manufacturer": "Eddystone",
+    "name": "830/7",
+    "modes": "AM/SSB/CW",
+    "type": "HF receiver",
+    "power": null,
+    "dimensions": "425*222*381 mm (16.75*8.75*15in)",
+    "frequency": "0.3-30 MHz in 9 bands",
+    "image": "Eddystone/830-7.jpg",
+    "weight": "22.2 Kg (49 lbs)"
+  },
+  {
+    "manufacturer": "Eddystone",
+    "name": "840",
+    "modes": "AM/CW",
+    "type": "HF receiver",
+    "power": null,
+    "dimensions": "? mm (?in)",
+    "frequency": "0.48-30.6 MHz in four bands:\r\n1: 10.5-30.6 MHz\r\n2: 3.7-10.6 MHz\r\n3: 1.37-3.8 MHz\r\n4: 0.48-1.4 MHz",
+    "image": "Eddystone/840.jpg",
+    "weight": "? Kg (? lbs)"
+  },
+  {
+    "manufacturer": "Eddystone",
+    "name": "840A",
+    "modes": "AM/CW",
+    "type": "HF receiver",
+    "power": null,
+    "dimensions": "? mm (?in)",
+    "frequency": "0.48-30 MHz in four bands:\r\n1: 10.5-30 MHz\r\n2: 3.7-10.6 MHz\r\n3: 1.37-3.8 MHz\r\n4: 0.48-1.4 MHz",
+    "image": "Eddystone/840a.jpg",
+    "weight": "? Kg (? lbs)"
+  },
+  {
+    "manufacturer": "Eddystone",
+    "name": "840C",
+    "modes": "AM/CW",
+    "type": "HF receiver",
+    "power": null,
+    "dimensions": "? mm (?in)",
+    "frequency": "0.48-30 MHz in five bands:\r\n1: 12.4-30 MHz\r\n2: 5.2-12.9 MHz\r\n3: 2.5-6.1 MHz\r\n4: 1.12-2.58 MHz\r\n5: 0.48-1.15 MHz",
+    "image": "Eddystone/840c.jpg",
+    "weight": "? Kg (? lbs)"
+  },
+  {
+    "manufacturer": "Eddystone",
+    "name": "850/2",
+    "modes": "?",
+    "type": "HF receiver",
+    "power": null,
+    "dimensions": "? mm",
+    "frequency": "0.01-0.6 MHz",
+    "image": "Eddystone/850-2.jpg",
+    "weight": "? Kg"
+  },
+  {
+    "manufacturer": "Eddystone",
+    "name": "880/2",
+    "modes": "AM/SSB/CW",
+    "type": "HF receiver",
+    "power": null,
+    "dimensions": "483*222*400 mm (19.02*8.74*15.75in)",
+    "frequency": "0.5-30 MHz",
+    "image": "Eddystone/880-2.jpg",
+    "weight": "40 Kg (88.18 lbs)"
+  },
+  {
+    "manufacturer": "Eddystone",
+    "name": "909A",
+    "modes": "AM/CW",
+    "type": "HF receiver",
+    "power": null,
+    "dimensions": "430*220*250 mm (15.93*8.66*9.84in)",
+    "frequency": "1.6-2.7 / 2.7-4.7 MHz",
+    "image": "Eddystone/909a.jpg",
+    "weight": "14 Kg (30.86 lbs)"
+  },
+  {
+    "manufacturer": "Eddystone",
+    "name": "940",
+    "modes": "AM/SSB/CW",
+    "type": "HF receiver",
+    "power": null,
+    "dimensions": "? mm",
+    "frequency": "0.5-30 MHz",
+    "image": "Eddystone/940.jpg",
+    "weight": "? Kg"
+  },
+  {
+    "manufacturer": "Eddystone",
+    "name": "990R",
+    "modes": "AM/NFM/WFM/CW",
+    "type": "HF/VHF receiver",
+    "power": null,
+    "dimensions": "426*154*298 mm (16.77*6.06*11.73in), bench version483*154*342 mm (19.02*6.06*13.46in), rack version",
+    "frequency": "27-240 MHz in 4 bands(27-46 / 46-76 / 75-130 / 130-240 MHz)",
+    "image": "Eddystone/990r.jpg",
+    "weight": "8.8 Kg (19.4 lbs), bench version9 Kg (19.84 lbs), rack version"
+  },
+  {
+    "manufacturer": "Eddystone",
+    "name": "990S",
+    "modes": "?",
+    "type": "UHF receiver",
+    "power": null,
+    "dimensions": "? mm",
+    "frequency": "UHF",
+    "image": "Eddystone/990s.jpg",
+    "weight": "? Kg"
+  },
+  {
+    "manufacturer": "Eddystone",
+    "name": "EC10",
+    "modes": "AM/SSB/CW",
+    "type": "HF receiver",
+    "power": null,
+    "dimensions": "? mm",
+    "frequency": "0.55-30 MHz in five bands",
+    "image": "Eddystone/ec10.jpg",
+    "weight": "? Kg"
+  },
+  {
+    "manufacturer": "Eddystone",
+    "name": "EC10A/2",
+    "modes": "AM/SSB/CW",
+    "type": "HF receiver",
+    "power": null,
+    "dimensions": "318*159*180 mm (12.52*6.26*7.09in)",
+    "frequency": "0.3-0.55 / 1.5-30 MHz in five bands",
+    "image": "Eddystone/ec10a2.jpg",
+    "weight": "6.7 Kg (14.77 lbs)"
+  },
+  {
+    "manufacturer": "Eddystone",
+    "name": "EC10 MkII",
+    "modes": "AM/SSB/CW",
+    "type": "HF receiver",
+    "power": null,
+    "dimensions": "? mm",
+    "frequency": "0.55-30 MHz in five bands",
+    "image": "Eddystone/ec10mkii.jpg",
+    "weight": "? Kg"
+  },
+  {
+    "manufacturer": "Eddystone",
+    "name": "EC958",
+    "modes": "AM/SSB/CW",
+    "type": "HF receiver",
+    "power": null,
+    "dimensions": "? mm",
+    "frequency": "0.01-30 MHz",
+    "image": "Eddystone/ec958.jpg",
+    "weight": "? Kg"
+  }
+]

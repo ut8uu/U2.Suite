@@ -1,0 +1,145 @@
+[
+  {
+    "manufacturer": "Atlas",
+    "name": "180",
+    "modes": "SSB/CW",
+    "type": "Amateur HF transceiver",
+    "power": "SSB: \u003E90 W PEP (180 W PEP input)\r\nCW: \u003E90 W (180 W input)",
+    "dimensions": "241*89*241 mm (9.49*3.5*9.49in)",
+    "frequency": "20-160 m in five bands\r\n1.8-2.0 MHz\r\n3.5-3.85 MHz\r\n3.7-4.05 MHz\r\n7.0-7.35 MHz\r\n14.0-14.35 MHz",
+    "image": "Atlas/180.jpg",
+    "weight": "3.4 Kg (7.5 lb)"
+  },
+  {
+    "manufacturer": "Atlas",
+    "name": "180M",
+    "modes": "SSB/CW",
+    "type": "Amateur HF transceiver",
+    "power": "SSB: \u003E90 W PEP (180 W PEP input)\r\nCW: \u003E90 W (180 W input)",
+    "dimensions": "241*89*241 mm (9.49*3.5*9.49in)",
+    "frequency": "20-160 m in five bands",
+    "image": "Atlas/180m.jpg",
+    "weight": "3.4 Kg (7.5 lb)"
+  },
+  {
+    "manufacturer": "Atlas",
+    "name": "210",
+    "modes": "SSB/CW",
+    "type": "Amateur HF transceiver",
+    "power": "10 m\r\nSSB: \u003E50 W PEP (120 W PEP input)\r\nCW: \u003E50 W\r\n15-80 m\r\nSSB: \u003E80 W PEP (200 W PEP input)\r\nCW: \u003E80 W",
+    "dimensions": "240*90*250 mm (9.45*3.54*9.84in)",
+    "frequency": "10-80 m in five bands:\r\n3.7-4.050 MHz (80 m)\r\n7.0-7.35 MHz (40 m)\r\n14.0-14.35 MHz (20 m)\r\n21.1-21.45 MHz (15 m)\r\n28.4-29.1 MHz (10 m)",
+    "image": "Atlas/210.jpg",
+    "weight": "3.1 Kg (6.83 lb)"
+  },
+  {
+    "manufacturer": "Atlas",
+    "name": "210X",
+    "modes": "SSB/CW",
+    "type": "Amateur HF transceiver",
+    "power": "10 m\r\nSSB: \u003E50 W PEP (120 W PEP input)\r\nCW: \u003E50 W\r\n15-80 m\r\nSSB: \u003E80 W PEP (200 W PEP input)\r\nCW: \u003E80 W",
+    "dimensions": "240*90*250 mm (9.45*3.54*9.84in)",
+    "frequency": "10-80 m in five bands:\r\n3.5-4.0 MHz (80 m)\r\n7.0-7.5 MHz (40 m)\r\n14.0-14.5 MHz (20 m)\r\n21.0-21.5 MHz (15 m)\r\n28.4-29.4 MHz (10 m)\r\n\r\nExtended frequency coverage with optional 10X crystal oscillator",
+    "image": "Atlas/210x.jpg",
+    "weight": "3.1 Kg (6.83 lb)"
+  },
+  {
+    "manufacturer": "Atlas",
+    "name": "210X Limited Edition",
+    "modes": "AM/SSB",
+    "type": "Amateur HF transceiver",
+    "power": "SSB: \u003E110 W PEP (250 W PEP input)\r\nCW: \u003E110 W",
+    "dimensions": "240*90*250 mm (9.45*3.54*9.84in)",
+    "frequency": "10-80 m",
+    "image": "Atlas/210xle.jpg",
+    "weight": "? Kg (? lb)"
+  },
+  {
+    "manufacturer": "Atlas",
+    "name": "215X",
+    "modes": "SSB/CW",
+    "type": "Amateur HF transceiver",
+    "power": "SSB: \u003E80 W PEP (200 W PEP input)\r\nCW: \u003E80 W",
+    "dimensions": "240*90*250 mm (9.45*3.54*9.84in)",
+    "frequency": "15-160 m in five bands:\r\n1.8-2.1 MHz (160 m)\r\n3.5-4.0 MHz (80 m)\r\n7.0-7.5 MHz (40 m)\r\n14.0-14.5 MHz (20 m)\r\n21.0-21.5 MHz (15 m)\r\n\r\nExtended frequency coverage with optional 10X crystal oscillator",
+    "image": "Atlas/215x.jpg",
+    "weight": "3.1 Kg (6.83 lb)"
+  },
+  {
+    "manufacturer": "Atlas",
+    "name": "300",
+    "modes": "SSB/CW",
+    "type": "Amateur HF transceiver",
+    "power": "? W",
+    "dimensions": "? mm (?in)",
+    "frequency": "10-160 m \u002B WARC",
+    "image": "Atlas/300.jpg",
+    "weight": "? Kg (? lb)"
+  },
+  {
+    "manufacturer": "Atlas",
+    "name": "310",
+    "modes": "SSB/CW",
+    "type": "Amateur HF transceiver",
+    "power": "? W",
+    "dimensions": "? mm (?in)",
+    "frequency": "10-160 m \u002B WARC",
+    "image": "Atlas/310.jpg",
+    "weight": "? Kg (? lb)"
+  },
+  {
+    "manufacturer": "Atlas",
+    "name": "350-XL",
+    "modes": "SSB/CW",
+    "type": "Amateur HF transceiver",
+    "power": "1.8-23 MHz: \u003E160 W (350 W PEP input)\r\n28-30 MHz: \u003E100 W (250 W PEP input)",
+    "dimensions": "320*140*410 mm (12.5*5.25*16in)",
+    "frequency": "10-160 m in nine bands:\r\n1.5-2.0 MHz\r\n3.5-4.0 MHz\r\n7.0-7.5 MHz\r\n14.0-14.5 MHz\r\n21.0-21.5 MHz\r\n28.0-28.5 MHz\r\n28.5-29.0 MHz\r\n29.0-29.5 MHz\r\n29.5-30.0 MHz\r\nPlus 10 optional 500 KHz band segments between 2-23 MHz",
+    "image": "Atlas/350xl.jpg",
+    "weight": "8.2 Kg (18 lb)"
+  },
+  {
+    "manufacturer": "Atlas",
+    "name": "400X \u0022The little giant\u0022",
+    "modes": "SSB/CW",
+    "type": "Amateur HF transceiver",
+    "power": "SSB: \u003E75 W PEP (150 W PEP input)\r\nCW: \u003E60 W (120 W input)",
+    "dimensions": "229*86*229 mm (9*3.4*9in)",
+    "frequency": "10-160 m \u002B WARC",
+    "image": "Atlas/400x.jpg",
+    "weight": "3.18 Kg (7 lb)"
+  },
+  {
+    "manufacturer": "Atlas",
+    "name": "RX-110",
+    "modes": "SSB/CW",
+    "type": "Amateur HF receiver",
+    "power": null,
+    "dimensions": "216*95*248 mm (8.5*3.75*9.75in)",
+    "frequency": "10-80 m in 5 bands:\r\n3.5-4.0 MHz (80 m)\r\n7.0-7.5 MHz (40 m)\r\n14.0-14.5 MHz (20 m)\r\n21.0-21.5 MHz (15 m)\r\n28.0-29.0 MHz (10 m)",
+    "image": "Atlas/rx110.jpg",
+    "weight": "3.18 Kg (7 lbs)"
+  },
+  {
+    "manufacturer": "Atlas",
+    "name": "TX-110-H",
+    "modes": "SSB/CW",
+    "type": "Amateur HF transmitter",
+    "power": "10 m: \u003E50 W (100 W input)\r\n15 m: \u003E75 W (150 W input)\r\n20-80 m: \u003E90 W (200 W input)",
+    "dimensions": "? mm (?in)",
+    "frequency": "10-80 m in 5 bands:\r\n3.5-4.0 MHz (80 m)\r\n7.0-7.5 MHz (40 m)\r\n14.0-14.5 MHz (20 m)\r\n21.0-21.5 MHz (15 m)\r\n28.0-29.0 MHz (10 m)",
+    "image": "Atlas/tx110.jpg",
+    "weight": "? Kg (? lb)"
+  },
+  {
+    "manufacturer": "Atlas",
+    "name": "TX-110-L",
+    "modes": "SSB/CW",
+    "type": "Amateur HF transmitter",
+    "power": "10-15 m: \u003E5 W (10 W input)\r\n20-80 m: \u003E8 W (15 W input)",
+    "dimensions": "? mm (?in)",
+    "frequency": "10-80 m in 5 bands:\r\n3.5-4.0 MHz (80 m)\r\n7.0-7.5 MHz (40 m)\r\n14.0-14.5 MHz (20 m)\r\n21.0-21.5 MHz (15 m)\r\n28.0-29.0 MHz (10 m)",
+    "image": "Atlas/tx110.jpg",
+    "weight": "? Kg (? lb)"
+  }
+]

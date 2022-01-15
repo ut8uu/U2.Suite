@@ -1,0 +1,211 @@
+[
+  {
+    "manufacturer": "Dabdrm",
+    "name": "Coding Technologies Digital World Traveller",
+    "modes": "DRM/AM/WFM",
+    "type": "DRM/AM/WFM receiver box",
+    "power": null,
+    "dimensions": "110*60*30 mm",
+    "frequency": "0.15-30 / 87.5-108 MHz",
+    "image": "Dabdrm/codingtechnologies_digitalworldtraveller.jpg",
+    "weight": "110 gr"
+  },
+  {
+    "manufacturer": "Dabdrm",
+    "name": "Grundig Digiboy",
+    "modes": "?",
+    "type": "Portable DAB receiver",
+    "power": null,
+    "dimensions": "220*147*28 mm",
+    "frequency": "?",
+    "image": "Dabdrm/grundig_digiboy.jpg",
+    "weight": "550 gr"
+  },
+  {
+    "manufacturer": "Dabdrm",
+    "name": "Mayah DRM-2010",
+    "modes": "DRM/AM/WFM (Stereo with headphones)",
+    "type": "Portable DRM/AM/WFM receiver",
+    "power": null,
+    "dimensions": "210*70*130 mm",
+    "frequency": "0.15-30 / 87.5-108 MHz",
+    "image": "Dabdrm/mayah_drm2010.jpg",
+    "weight": "650 gr"
+  },
+  {
+    "manufacturer": "Dabdrm",
+    "name": "Ministry of Sound DR-011",
+    "modes": "DAB",
+    "type": "Portable DAB receiver",
+    "power": null,
+    "dimensions": "? mm",
+    "frequency": "3 bands",
+    "image": "Dabdrm/ministryofsound_dr011.jpg",
+    "weight": "? gr"
+  },
+  {
+    "manufacturer": "Dabdrm",
+    "name": "Personal Telecom DR-101",
+    "modes": "Auto DAB mode I,II,III \u0026 IV / WFM",
+    "type": "Portable DAB and FM receiver",
+    "power": null,
+    "dimensions": "69*88*22 mm",
+    "frequency": "Band III / 174-240 MHzL-band / 1452-1492 MHzFM Band / 76-108 MHz",
+    "image": "Dabdrm/perstel_dr101.jpg",
+    "weight": "40 gr (without batteries)"
+  },
+  {
+    "manufacturer": "Dabdrm",
+    "name": "Personal Telecom DR-201",
+    "modes": "WFM and Auto DAB mode I,II,III \u0026 IV",
+    "type": "Portable DAB and FM receiver with digitalaudio playback and voice recorder",
+    "power": null,
+    "dimensions": "88*69*24 mm",
+    "frequency": "Band III / 174-240 MHzL-band / 1452-1492 MHzFM Band / 76-108 MHz",
+    "image": "Dabdrm/perstel_dr201.jpg",
+    "weight": "40 gr (without batteries)"
+  },
+  {
+    "manufacturer": "Dabdrm",
+    "name": "Pure Evoke-1 Elgar",
+    "modes": "Auto DAB mode I,II,III \u0026 IV",
+    "type": "Portable DAB receiver",
+    "power": null,
+    "dimensions": "210*175*110 mm",
+    "frequency": "Band III / 174-240 MHz",
+    "image": "Dabdrm/puredigital_evoke1elgar.jpg",
+    "weight": "? gr"
+  },
+  {
+    "manufacturer": "Dabdrm",
+    "name": "Pure Pocket DAB",
+    "modes": "Auto DAB mode I,II,III \u0026 IV",
+    "type": "Portable DAB receiver",
+    "power": null,
+    "dimensions": "65*120*20 mm",
+    "frequency": "Band ? / ?-? MHz",
+    "image": "Dabdrm/puredigital_pocketdab.jpg",
+    "weight": "180 gr"
+  },
+  {
+    "manufacturer": "Dabdrm",
+    "name": "Roke Manor Research Pocket DAB",
+    "modes": "?",
+    "type": "Portable DAB receiver",
+    "power": null,
+    "dimensions": "38*49*? mm",
+    "frequency": "?",
+    "image": "Dabdrm/rokemanorresearch_pocketdab.jpg",
+    "weight": "? gr"
+  },
+  {
+    "manufacturer": "Dabdrm",
+    "name": "Roberts RD-1 (Gemini 1)",
+    "modes": "DAB/AM/WFM",
+    "type": "Portable DAB, AM \u0026 FM receiver",
+    "power": null,
+    "dimensions": "190*260*130 mm",
+    "frequency": "Band ? / ?-? MHzLW / ?-? MHzMW / ?-? MHzFM band / 88-108 MHz",
+    "image": "Dabdrm/roberts_rd1.jpg",
+    "weight": "1.74 Kg"
+  },
+  {
+    "manufacturer": "Dabdrm",
+    "name": "Roberts RD-2 (Gemini 2)",
+    "modes": "DAB",
+    "type": "Portable DAB receiver",
+    "power": null,
+    "dimensions": "200*200*125 mm",
+    "frequency": "Band ? / ?-? MHz",
+    "image": "Dabdrm/roberts_rd2.jpg",
+    "weight": "1.68 Kg"
+  },
+  {
+    "manufacturer": "Dabdrm",
+    "name": "Roberts RD-3 (Gemini 3)",
+    "modes": "DAB/WFM",
+    "type": "Portable DAB \u0026 FM receiver",
+    "power": null,
+    "dimensions": "? mm",
+    "frequency": "? band / ?-? MHz\r\nFM band / 88-108 MHz",
+    "image": "Dabdrm/roberts_rd3.jpg",
+    "weight": "1.32 Kg"
+  },
+  {
+    "manufacturer": "Dabdrm",
+    "name": "Roberts RD-4 (Gemini 4 Sports)",
+    "modes": "DAB",
+    "type": "Portable DAB receiver",
+    "power": null,
+    "dimensions": "65*110*20 mm",
+    "frequency": "Band ? / ?-? Mhz",
+    "image": "Dabdrm/roberts_rd4.jpg",
+    "weight": "160 gr"
+  },
+  {
+    "manufacturer": "Dabdrm",
+    "name": "Sangean Classic 2000",
+    "modes": "?",
+    "type": "Portable DAB receiver",
+    "power": null,
+    "dimensions": "? mm",
+    "frequency": "Band III / 174-240 MHzL-band / 1452-1492 MHz (optional)",
+    "image": "Dabdrm/sangean_classic2000.jpg",
+    "weight": "? Kg"
+  },
+  {
+    "manufacturer": "Dabdrm",
+    "name": "Sangean DDR3",
+    "modes": "DAB/WFM",
+    "type": "DAB and FM receiver",
+    "power": null,
+    "dimensions": "? mm",
+    "frequency": "Band ? / ?-? MHzFM band / 88-108 MHz",
+    "image": "Dabdrm/sangean_ddr3.jpg",
+    "weight": "? Kg"
+  },
+  {
+    "manufacturer": "Dabdrm",
+    "name": "Sangean DPR1",
+    "modes": "DAB/AM/WFM",
+    "type": "Portable DAB, AM \u0026 FM receiver",
+    "power": null,
+    "dimensions": "? mm",
+    "frequency": "Band ? / ?-? MHzLW / ?-? MHzMW / ?-? MHzFM band / 88-108 MHz",
+    "image": "Dabdrm/sangean_dpr1.jpg",
+    "weight": "? Kg"
+  },
+  {
+    "manufacturer": "Dabdrm",
+    "name": "Sangean DPR2",
+    "modes": "?",
+    "type": "Portable DAB receiver",
+    "power": null,
+    "dimensions": "? mm",
+    "frequency": "?",
+    "image": "Dabdrm/sangean_dpr2.jpg",
+    "weight": "? Kg"
+  },
+  {
+    "manufacturer": "Dabdrm",
+    "name": "Sangean DRM-40",
+    "modes": "DAB/DRM/AM/WFM (Stereo with headphones)",
+    "type": "Portable DAB/DRM multimode receiver",
+    "power": null,
+    "dimensions": "180*260*90 mm",
+    "frequency": "LW / MW / SW / 87.5-108 MHz / Band III",
+    "image": "Dabdrm/sangean_drm40.jpg",
+    "weight": "1.7 Kg"
+  },
+  {
+    "manufacturer": "Dabdrm",
+    "name": "Zoopad Anima",
+    "modes": "?",
+    "type": "Portable DAB receiver with MP3 playback",
+    "power": null,
+    "dimensions": "? mm",
+    "frequency": "?",
+    "image": "Dabdrm/zoopad_anima.jpg",
+    "weight": "? Kg"
+  }
+]

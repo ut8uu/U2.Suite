@@ -1,0 +1,79 @@
+[
+  {
+    "manufacturer": "Bando",
+    "name": "Technic-12K",
+    "modes": "SSB",
+    "type": "Amateur HF transceiver",
+    "power": "10 W (PEP)",
+    "dimensions": "210*100*240 mm (8.27*3.94*9.45in)",
+    "frequency": "40 m",
+    "image": "Bando/technic12k.jpg",
+    "weight": "12.3 Kg (27.12 lbs)"
+  },
+  {
+    "manufacturer": "Bando",
+    "name": "Technic-12V",
+    "modes": "SSB",
+    "type": "Amateur HF transceiver",
+    "power": "10 W (PEP)",
+    "dimensions": "210*100*240 mm (8.27*3.94*9.45in)",
+    "frequency": "40 m",
+    "image": "Bando/technic12v.jpg",
+    "weight": "12.3 Kg (27.12 lbs)"
+  },
+  {
+    "manufacturer": "Bando",
+    "name": "Technic-1A",
+    "modes": "SSB/CW",
+    "type": "Amateur HF transceiver",
+    "power": "50 W",
+    "dimensions": "? mm",
+    "frequency": "40 m",
+    "image": "Bando/technic1a.jpg",
+    "weight": "? Kg"
+  },
+  {
+    "manufacturer": "Bando",
+    "name": "Technic-3",
+    "modes": "SSB/CW",
+    "type": "Amateur HF transceiver",
+    "power": "100 W",
+    "dimensions": "330*145*340 mm (12.99*5.71*13.39in)",
+    "frequency": "15/30/40 m",
+    "image": "Bando/technic3.jpg",
+    "weight": "15 Kg (33.07 lbs)"
+  },
+  {
+    "manufacturer": "Bando",
+    "name": "Technic-4S",
+    "modes": "SSB/CW",
+    "type": "Amateur HF transceiver",
+    "power": "50 W",
+    "dimensions": "330*150*330 mm (12.99*5.91*12.99in)",
+    "frequency": "15/20/40/80 m",
+    "image": "Bando/technic4s.jpg",
+    "weight": "14 Kg (30.86 lbs)"
+  },
+  {
+    "manufacturer": "Bando",
+    "name": "Technic-5D",
+    "modes": "SSB/CW",
+    "type": "Amateur HF transceiver",
+    "power": "50 W",
+    "dimensions": "335*138*350 mm (13.19*5.43*13.78in)",
+    "frequency": "10-80 m",
+    "image": "Bando/technic5d.jpg",
+    "weight": "13.5 Kg (29.76 lbs)"
+  },
+  {
+    "manufacturer": "Bando",
+    "name": "Technic-5S",
+    "modes": "SSB/CW",
+    "type": "Amateur HF transceiver",
+    "power": "50 W",
+    "dimensions": "335*138*350 mm (13.19*5.43*13.78in)",
+    "frequency": "10-80 m",
+    "image": "Bando/technic5s.jpg",
+    "weight": "13.5 Kg (29.76 lbs)"
+  }
+]

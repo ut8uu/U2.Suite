@@ -1,0 +1,90 @@
+[
+  {
+    "manufacturer": "Tecsun",
+    "name": "PL-365",
+    "modes": "AM / SSB / WFM",
+    "type": "HF/VHF receiver",
+    "power": null,
+    "dimensions": "53*159*26 mm (2.09*6.26*1.02in)",
+    "frequency": "0.15-1.71 / 2.3-21.950 / 76-108 MHz",
+    "image": "Tecsun/pl365.jpg",
+    "weight": "128 g (4.52 oz)"
+  },
+  {
+    "manufacturer": "Tecsun",
+    "name": "PL-600",
+    "modes": "AM/SSB/CW/WFM (Stereo)",
+    "type": "HF/VHF receiver",
+    "power": null,
+    "dimensions": "188*116*31 mm (7.4*4.6*1.25in)",
+    "frequency": "0.1-0.519 / 0.522-1.620 / 1.711-30 / 87-108 MHz (76-108 MHz for Japan)",
+    "image": "Tecsun/pl600.jpg",
+    "weight": "? Kg (? lbs)"
+  },
+  {
+    "manufacturer": "Tecsun",
+    "name": "PL-660",
+    "modes": "AM/SSB/CW/WFM (Stereo)",
+    "type": "HF/VHF receiver",
+    "power": null,
+    "dimensions": "187*114*33 mm (7.4*4.5*1.3in)",
+    "frequency": "0.1-30 / 87-108 (76-108 MHz for Japan) / 118-137 MHz",
+    "image": "Tecsun/pl660.jpg",
+    "weight": "470 gr (1.04 lbs), without batteries"
+  },
+  {
+    "manufacturer": "Tecsun",
+    "name": "PL-680",
+    "modes": "AM / SSB / WFM (Stereo)",
+    "type": "HF/VHF receiver",
+    "power": null,
+    "dimensions": "188*116*31 mm (7.4*4.57*1.22in)",
+    "frequency": "0.1-30 / 76-108 / 118-137 MHz",
+    "image": "Tecsun/pl680.jpg",
+    "weight": "475 g (1.05 lb)"
+  },
+  {
+    "manufacturer": "Tecsun",
+    "name": "PL-880",
+    "modes": "AM / SSB / WFM",
+    "type": "HF/VHF receiver",
+    "power": null,
+    "dimensions": "192*113*33 mm (7.56*4.45*1.3in)",
+    "frequency": "0.1-30 / 64-108 MHz",
+    "image": "Tecsun/pl880.jpg",
+    "weight": "520 g (1.15 lb)"
+  },
+  {
+    "manufacturer": "Tecsun",
+    "name": "S-2000",
+    "modes": "AM / SSB / WFM (Stereo with headphones)",
+    "type": "VHF/UHF receiver",
+    "power": null,
+    "dimensions": "372*183*153 mm (14.65*7.2*6.02in)",
+    "frequency": "0.1-30 / 87-108 / 118-137 MHz (General)\r\n0.1-30 / 76-108 / 118-137 MHz (Japan)",
+    "image": "Tecsun/s2000.jpg",
+    "weight": "2.7 Kg (5.95 lb), without batteries"
+  },
+  {
+    "manufacturer": "Tecsun",
+    "name": "S-8800",
+    "modes": "AM/SSB/CW/WFM",
+    "type": "HF/VHF receiver",
+    "power": null,
+    "dimensions": "272*173*88 mm (10.71*6.81*3.46in)",
+    "frequency": "0.1-30 MHz\r\n64-108 MHz (Russia and other OIRT markets)\r\n76-108 MHz (Japan)\r\n87-108 MHz (Europe and China)\r\n88-108 MHz (USA)\r\nThe VHF range is selectable.",
+    "image": "Tecsun/s8800.jpg",
+    "weight": "1.5 Kg (3.31 lbs), with batteries"
+  },
+  {
+    "manufacturer": "Tecsun",
+    "name": "S-8800e \u0022Wellenjagd edition\u0022",
+    "modes": "AM/SSB/CW/WFM",
+    "type": "HF/VHF receiver",
+    "power": null,
+    "dimensions": "272*173*88 mm (10.71*6.81*3.46in)",
+    "frequency": "0.02-30 MHz\r\n64-108 MHz (Russia and other OIRT markets)\r\n76-108 MHz (Japan)\r\n87-108 MHz (Europe and China)\r\n88-108 MHz (USA)\r\nThe VHF range is selectable.",
+    "image": "Tecsun/s8800e.jpg",
+    "weight": "1.5 Kg (3.31 lbs), with batteries"
+  }
+]

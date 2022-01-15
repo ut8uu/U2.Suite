@@ -1,0 +1,178 @@
+[
+  {
+    "manufacturer": "Yupiteru",
+    "name": "MVT-3000",
+    "modes": "FM",
+    "type": "VHF/UHF receiver/scanner",
+    "power": null,
+    "dimensions": "67*175*40 mm (2.64*6.89*1.58in)",
+    "frequency": "142.5-162.5 / 347-400 / 850-935 MHz",
+    "image": "Yupiteru/mvt3000.jpg",
+    "weight": "? g (? lb)"
+  },
+  {
+    "manufacturer": "Yupiteru",
+    "name": "MVT-3300",
+    "modes": "AM / FM",
+    "type": "VHF/UHF receiver/scanner",
+    "power": null,
+    "dimensions": "59*152*32 mm (2.32*5.98*1.26in)",
+    "frequency": "66-88 / 108-170 / 300-470 / 806-1000 MHz",
+    "image": "Yupiteru/mvt3300.jpg",
+    "weight": "310 gr (10.93 oz)"
+  },
+  {
+    "manufacturer": "Yupiteru",
+    "name": "MVT-4000",
+    "modes": "FM",
+    "type": "VHF/UHF receiver/scanner",
+    "power": null,
+    "dimensions": "? mm (?in)",
+    "frequency": "142.5-162.5 / 347-400 / 850-935 MHz",
+    "image": "Yupiteru/mvt4000.jpg",
+    "weight": "? g (? lb)"
+  },
+  {
+    "manufacturer": "Yupiteru",
+    "name": "MVT-5000",
+    "modes": "AM / FM / WFM",
+    "type": "HF/VHF/UHF receiver/scanner",
+    "power": null,
+    "dimensions": "? mm",
+    "frequency": "25-550 / 800-1300 MHz",
+    "image": "Yupiteru/mvt5000.jpg",
+    "weight": "? gr"
+  },
+  {
+    "manufacturer": "Yupiteru",
+    "name": "MVT-6000",
+    "modes": "AM / FM / WFM",
+    "type": "HF/VHF/UHF receiver/scanner",
+    "power": null,
+    "dimensions": "160*45*155 mm (6.3*1.77*6.1in)",
+    "frequency": "25-550 / 800-1300 MHz(5 / 10 / 12.5 / 25 / 30 KHz steps)",
+    "image": "Yupiteru/mvt6000.jpg",
+    "weight": "650 g (1.43 lb)"
+  },
+  {
+    "manufacturer": "Yupiteru",
+    "name": "MVT-7000",
+    "modes": "AM / FM / WFM",
+    "type": "HF/VHF/UHF receiver/scanner",
+    "power": null,
+    "dimensions": "70*180*40 mm (2.76*7.09*1.58in)",
+    "frequency": "8-1300 MHz\r\nDisplay range is 0.1-1300 MHz, but specifications\r\nare not guaranteed below 8 MHz",
+    "image": "Yupiteru/mvt7000.jpg",
+    "weight": "? g (? oz)"
+  },
+  {
+    "manufacturer": "Yupiteru",
+    "name": "MVT-7000EX (Extended coverage)",
+    "modes": "AM / FM / WFM",
+    "type": "HF/VHF/UHF receiver/scanner",
+    "power": null,
+    "dimensions": "70*180*40 mm (2.76*7.09*1.58in)",
+    "frequency": "0.1-1300 MHz",
+    "image": "Yupiteru/mvt7000ex.jpg",
+    "weight": "? g (? oz)"
+  },
+  {
+    "manufacturer": "Yupiteru",
+    "name": "MVT-7100",
+    "modes": "AM / FM / WFM / SSB / CW",
+    "type": "HF/VHF/UHF receiver/scanner",
+    "power": null,
+    "dimensions": "64*155*38 mm (2.52*6.1*1.5in)",
+    "frequency": "0.53-1650 MHz (Can tune down to 0.1 MHz)",
+    "image": "Yupiteru/mvt7100.jpg",
+    "weight": "320 g (11.29 oz)"
+  },
+  {
+    "manufacturer": "Yupiteru",
+    "name": "MVT-7200",
+    "modes": "AM / FM / WFM / SSB / CW",
+    "type": "HF/VHF/UHF receiver/scanner",
+    "power": null,
+    "dimensions": "64*155*38 mm (2.52*6.1*1.5in)",
+    "frequency": "0.53-1650 MHz",
+    "image": "Yupiteru/mvt7200.jpg",
+    "weight": "320 g (11.29 oz)"
+  },
+  {
+    "manufacturer": "Yupiteru",
+    "name": "MVT-7300EU",
+    "modes": "AM / FM / WFM / SSB / CW",
+    "type": "HF/VHF/UHF receiver/scanner",
+    "power": null,
+    "dimensions": "60*120*32 mm (2.36*4.72*1.26in)",
+    "frequency": "0.531-1320 MHzVFO will actually tune down to 0.1 MHz, butthat\u0027s out of specifications.",
+    "image": "Yupiteru/mvt7300eu.jpg",
+    "weight": "310 g (10.93 oz), with batteries and antenna"
+  },
+  {
+    "manufacturer": "Yupiteru",
+    "name": "MVT-8000",
+    "modes": "AM / FM / WFM",
+    "type": "VHF/UHF receiver/scanner",
+    "power": null,
+    "dimensions": "160*45*155 mm (6.3*1.77*6.1in)",
+    "frequency": "8-1300 MHz(Actually receives from 0.1 MHz but sensitivity is not guaranteed)",
+    "image": "Yupiteru/mvt8000.jpg",
+    "weight": "650 g (1.43 lb)"
+  },
+  {
+    "manufacturer": "Yupiteru",
+    "name": "MVT-9000",
+    "modes": "AM / FM / WFM / SSB / CW",
+    "type": "HF/VHF/UHF receiver/scanner",
+    "power": null,
+    "dimensions": "66*155*40 mm (2.6*6.1*1.58in)",
+    "frequency": "0.53-2039 MHz",
+    "image": "Yupiteru/mvt9000.jpg",
+    "weight": "410 g (14.46 oz)"
+  },
+  {
+    "manufacturer": "Yupiteru",
+    "name": "MVT-9000MKII",
+    "modes": "AM / FM / WFM / SSB / CW",
+    "type": "HF/VHF/UHF receiver/scanner",
+    "power": null,
+    "dimensions": "66*155*40 mm (2.6*6.1*1.58in)",
+    "frequency": "0.53-2039 MHz",
+    "image": "Yupiteru/mvt9000mkii.jpg",
+    "weight": "410 g (14.46 oz)"
+  },
+  {
+    "manufacturer": "Yupiteru",
+    "name": "VT-125",
+    "modes": "AM",
+    "type": "VHF receiver/scanner",
+    "power": null,
+    "dimensions": "72*127*36 mm (2.84*5*1.42in)",
+    "frequency": "108-142 MHz",
+    "image": "Yupiteru/vt125.jpg",
+    "weight": "207 g (7.3 oz)"
+  },
+  {
+    "manufacturer": "Yupiteru",
+    "name": "VT-150",
+    "modes": "FM",
+    "type": "VHF receiver/scanner",
+    "power": null,
+    "dimensions": "57*127*35 mm (2.24*5*1.38in)",
+    "frequency": "142-170 MHz",
+    "image": "Yupiteru/vt150.jpg",
+    "weight": "? g (? lb)"
+  },
+  {
+    "manufacturer": "Yupiteru",
+    "name": "VT-225",
+    "modes": "AM / FM",
+    "type": "VHF/UHF receiver/scanner",
+    "power": null,
+    "dimensions": "59*147*38 mm (2.32*5.79*1.5in)",
+    "frequency": "108-391 MHz",
+    "image": "Yupiteru/vt225.jpg",
+    "weight": "280 g (9.88 oz)"
+  }
+]

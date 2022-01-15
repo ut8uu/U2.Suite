@@ -1,0 +1,211 @@
+[
+  {
+    "manufacturer": "JRC",
+    "name": "JST-100D",
+    "modes": "AM/FM/SSB/CW/RTTY",
+    "type": "Amateur HF transceiver",
+    "power": "Max 100 W",
+    "dimensions": "? mm",
+    "frequency": "10-160 m",
+    "image": "JRC/jrc_jst100.jpg",
+    "weight": "? Kg"
+  },
+  {
+    "manufacturer": "JRC",
+    "name": "JST-100S",
+    "modes": "AM/FM/SSB/CW/RTTY",
+    "type": "Amateur HF transceiver",
+    "power": "Max 10 W",
+    "dimensions": "? mm",
+    "frequency": "10-160 m",
+    "image": "JRC/jrc_jst100.jpg",
+    "weight": "? Kg"
+  },
+  {
+    "manufacturer": "JRC",
+    "name": "JST-110D",
+    "modes": "AM/FM/SSB/CW/RTTY",
+    "type": "Amateur HF transceiver",
+    "power": "100 W",
+    "dimensions": "? mm",
+    "frequency": "TX: 10-160 m \u002B WARCRX: 0.1-30 MHz",
+    "image": "JRC/jrc_jst110.jpg",
+    "weight": "? Kg"
+  },
+  {
+    "manufacturer": "JRC",
+    "name": "JST-125",
+    "modes": "RX/TX: SSB/CW/RTTY/FAXRX only: AM",
+    "type": "Amateur HF transceiver",
+    "power": "5-100 W",
+    "dimensions": "? mm",
+    "frequency": "TX: 10-160 m \u002B WARCRX: 0.1-30 MHz",
+    "image": "JRC/jrc_jst125.jpg",
+    "weight": "? Kg"
+  },
+  {
+    "manufacturer": "JRC",
+    "name": "JST-135",
+    "modes": "?",
+    "type": "Amateur HF transceiver",
+    "power": "150 W",
+    "dimensions": "? mm",
+    "frequency": "TX: 10-160 m \u002B WARCRX: 0.5-30 MHz",
+    "image": "JRC/jrc_jst135.jpg",
+    "weight": "? Kg"
+  },
+  {
+    "manufacturer": "JRC",
+    "name": "JST-145",
+    "modes": "All-mode",
+    "type": "Amateur HF transceiver",
+    "power": "7-150 W (AM: 3-50 W)",
+    "dimensions": "350*130*305 mm (13.78*5.12*305in)",
+    "frequency": "TX: 10-160 m \u002B WARCRX: 0.1-30 MHz",
+    "image": "JRC/jrc_jstx45.jpg",
+    "weight": "12 Kg (26.46 lbs)"
+  },
+  {
+    "manufacturer": "JRC",
+    "name": "JST-245",
+    "modes": "AM/FM/SSB/CW/AFSK",
+    "type": "Amateur HF/VHF transceiver",
+    "power": "7-150 W (AM: 3-50 W)",
+    "dimensions": "350*130*305 mm (13.78*5.12*305in)",
+    "frequency": "TX: 10-160 m \u002B WARC/ 6 mRX: 0.1-54 MHz",
+    "image": "JRC/jrc_jstx45.jpg",
+    "weight": "12 Kg (26.46 lbs)"
+  },
+  {
+    "manufacturer": "JRC",
+    "name": "NRD-301A",
+    "modes": "AM/SSB/CW",
+    "type": "HF receiver",
+    "power": null,
+    "dimensions": "480*150*290 mm (18.9*5.91*11.42in)",
+    "frequency": "0.09-30 MHz",
+    "image": "JRC/jrc_nrd301a.jpg",
+    "weight": "7.5 Kg (16.53 lbs)"
+  },
+  {
+    "manufacturer": "JRC",
+    "name": "NRD-345",
+    "modes": "SSB/CW/AM/Synchro-AM",
+    "type": "HF receiver",
+    "power": null,
+    "dimensions": "250*100*240 mm (9.84*3.94*9.45in)",
+    "frequency": "0.1-30 MHz",
+    "image": "JRC/jrc_nrd345.jpg",
+    "weight": "3.5 Kg (7.72 lbs)"
+  },
+  {
+    "manufacturer": "JRC",
+    "name": "NRD-505",
+    "modes": "AM/SSB/CW/RTTY",
+    "type": "HF receiver",
+    "power": null,
+    "dimensions": "340*140*300 mm (13.39*5.51*11.81in)",
+    "frequency": "0.1-30 MHz",
+    "image": "JRC/jrc_nrd505.jpg",
+    "weight": "10 Kg (22.05 lbs)"
+  },
+  {
+    "manufacturer": "JRC",
+    "name": "NRD-515",
+    "modes": "SSB/CW/AM",
+    "type": "HF/VHF receiver",
+    "power": null,
+    "dimensions": "340*140*300 mm (13.4*5.5*11.8in)",
+    "frequency": "0.1-34 MHz",
+    "image": "JRC/jrc_nrd515.jpg",
+    "weight": "7.71 Kg (17 lbs)"
+  },
+  {
+    "manufacturer": "JRC",
+    "name": "NRD-525",
+    "modes": "All-mode",
+    "type": "HF/VHF receiver",
+    "power": null,
+    "dimensions": "343*132*287 mm (13.5*5.2*11.3in)",
+    "frequency": "0.09-34 MHz (114-174 / 423-456 MHz option)",
+    "image": "JRC/jrc_nrd525.jpg",
+    "weight": "8.62 Kg (19 lbs)"
+  },
+  {
+    "manufacturer": "JRC",
+    "name": "NRD-535",
+    "modes": "All-mode",
+    "type": "HF receiver",
+    "power": null,
+    "dimensions": "330*130*280 mm (13*5.12*11.02in)",
+    "frequency": "0.05-30 MHz",
+    "image": "JRC/jrc_nrd535.jpg",
+    "weight": "8.5 Kg (18.74 lbs)"
+  },
+  {
+    "manufacturer": "JRC",
+    "name": "NRD-545",
+    "modes": "All-mode",
+    "type": "HF (VHF) receiver",
+    "power": null,
+    "dimensions": "330*130*285 mm (13*5.12*11.22in)",
+    "frequency": "0.1-30 MHz (0.1-2000 MHz with CHE-199 option)",
+    "image": "JRC/jrc_nrd545.jpg",
+    "weight": "7.5 Kg (16.53 lbs)"
+  },
+  {
+    "manufacturer": "JRC",
+    "name": "NRD-71",
+    "modes": "SSB/CW/DSB",
+    "type": "HF receiver",
+    "power": null,
+    "dimensions": "? mm",
+    "frequency": "0.1-30 MHz",
+    "image": "JRC/jrc_nrd71.jpg",
+    "weight": "? Kg"
+  },
+  {
+    "manufacturer": "JRC",
+    "name": "NRD-72",
+    "modes": "SSB/CW/DSB",
+    "type": "HF receiver",
+    "power": null,
+    "dimensions": "480*149*290 mm (18.9*5.87*11.42in)",
+    "frequency": "0.1-30 MHz",
+    "image": "JRC/jrc_nrd72.jpg",
+    "weight": "11 Kg (24.25 lbs)"
+  },
+  {
+    "manufacturer": "JRC",
+    "name": "NRD-91",
+    "modes": "AM/SSB/CW",
+    "type": "HF receiver",
+    "power": null,
+    "dimensions": "489*190*305 mm (19.25*7.48*12.01in)",
+    "frequency": "0.09-30 MHz",
+    "image": "JRC/jrc_nrd91.jpg",
+    "weight": "15 Kg (33.07 lbs)"
+  },
+  {
+    "manufacturer": "JRC",
+    "name": "NRD-92M",
+    "modes": "AM/SSB/CW",
+    "type": "HF receiver",
+    "power": null,
+    "dimensions": "489*190*305 mm (19.25*7.48*12.01in)",
+    "frequency": "0.09-30 MHz",
+    "image": "JRC/jrc_nrd92m.jpg",
+    "weight": "15 Kg (33.07 lbs)"
+  },
+  {
+    "manufacturer": "JRC",
+    "name": "NRD-630",
+    "modes": "AM/SSB/CW/FSK",
+    "type": "HF receiver",
+    "power": null,
+    "dimensions": "480*149*294 mm (18.9*5.87*11.57in)",
+    "frequency": "0.09-30 MHz",
+    "image": "JRC/nrd630.jpg",
+    "weight": "6 Kg (13.23 lbs)"
+  }
+]

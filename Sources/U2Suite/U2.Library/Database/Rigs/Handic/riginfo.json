@@ -1,0 +1,211 @@
+[
+  {
+    "manufacturer": "Handic",
+    "name": "0012",
+    "modes": "FM",
+    "type": "VHF/UHF receiver/scanner",
+    "power": null,
+    "dimensions": "260*80*270 mm (10.2*3.2*10.6in)",
+    "frequency": "68-88 / 144-174 / 410-512 MHz",
+    "image": "Handic/0012.jpg",
+    "weight": "2.4 Kg (5.3 lbs)"
+  },
+  {
+    "manufacturer": "Handic",
+    "name": "0016",
+    "modes": "FM",
+    "type": "VHF/UHF receiver/scanner",
+    "power": null,
+    "dimensions": "260*80*270 mm (10.24*3.15*10.63in)",
+    "frequency": "68-88 / 144-174 / 430-512 MHz",
+    "image": "Handic/handic_0016.jpg",
+    "weight": "3.7 Kg (8.16 lbs)"
+  },
+  {
+    "manufacturer": "Handic",
+    "name": "0020",
+    "modes": "AM/FM",
+    "type": "VHF/UHF receiver/scanner",
+    "power": null,
+    "dimensions": "? mm",
+    "frequency": "68-88 / 108-136 / 138-174 / 380-470 MHz",
+    "image": "Handic/handic_0020.jpg",
+    "weight": "? Kg"
+  },
+  {
+    "manufacturer": "Handic",
+    "name": "004",
+    "modes": "FM",
+    "type": "VHF receiver/scanner",
+    "power": null,
+    "dimensions": "72*166*36 mm (2.84*6.54*1.42in)",
+    "frequency": "75-85 / 148-174 MHz",
+    "image": "Handic/handic_004.jpg",
+    "weight": "275 g (9.7 oz), without batteries and antenna"
+  },
+  {
+    "manufacturer": "Handic",
+    "name": "0050",
+    "modes": "AM/FM",
+    "type": "VHF/UHF receiver/scanner",
+    "power": null,
+    "dimensions": "? mm (?in)",
+    "frequency": "68-88 / 108-136 / 138-174 / 380-470 MHz",
+    "image": "Handic/handic_0050.jpg",
+    "weight": "? Kg (? lbs)"
+  },
+  {
+    "manufacturer": "Handic",
+    "name": "006 (Newer)",
+    "modes": "FM",
+    "type": "VHF receiver/scanner",
+    "power": null,
+    "dimensions": "115*45*165 mm (4.52*1.77*6.5in)",
+    "frequency": "75-85 / 148-174 MHz",
+    "image": "Handic/handic_006.jpg",
+    "weight": "540 g (19.05 oz)"
+  },
+  {
+    "manufacturer": "Handic",
+    "name": "0060",
+    "modes": "AM/FM",
+    "type": "VHF/UHF receiver/scanner",
+    "power": null,
+    "dimensions": "260*80*200 mm (10.24*3.15*7.87in)",
+    "frequency": "68-88 / 108-174 / 380-512 MHz",
+    "image": "Handic/handic_0060.jpg",
+    "weight": "? Kg"
+  },
+  {
+    "manufacturer": "Handic",
+    "name": "006 UHF",
+    "modes": "FM",
+    "type": "UHF receiver/scanner",
+    "power": null,
+    "dimensions": "115*40*200 mm (4.53*1.58*7.87in)",
+    "frequency": "450-512 MHz",
+    "image": "Handic/handic_006uhf.jpg",
+    "weight": "? gr"
+  },
+  {
+    "manufacturer": "Handic",
+    "name": "006 (Older)",
+    "modes": "FM",
+    "type": "VHF receiver/scanner",
+    "power": null,
+    "dimensions": "115*45*165 mm (4.52*1.77*6.5in)",
+    "frequency": "76-82 / 162-170 MHz",
+    "image": "Handic/handic_006_old.jpg",
+    "weight": "540 g (19.05 oz)"
+  },
+  {
+    "manufacturer": "Handic",
+    "name": "007",
+    "modes": "FM/WFM",
+    "type": "VHF receiver/scanner",
+    "power": null,
+    "dimensions": "210*65*200 mm (8.27*2.56*7.87in)",
+    "frequency": "75-85 / 88-108 / 148-174 MHz",
+    "image": "Handic/007.jpg",
+    "weight": "1.98 Kg (4.36 lbs)"
+  },
+  {
+    "manufacturer": "Handic",
+    "name": "008",
+    "modes": "FM",
+    "type": "VHF/UHF receiver/scanner",
+    "power": null,
+    "dimensions": "132*38*183 mm (5.2*1.5*7.2in)",
+    "frequency": "68-88 / 148-174 / 380-430 MHz",
+    "image": "Handic/handic_008.jpg",
+    "weight": "675 gr (1.5 lbs)"
+  },
+  {
+    "manufacturer": "Handic",
+    "name": "0080",
+    "modes": "AM/FM/WFM",
+    "type": "HF/VHF/UHF receiver/scanner",
+    "power": null,
+    "dimensions": "220*76*205 mm (8.7*3*8.3in)",
+    "frequency": "25-520 / 760-1300 MHz",
+    "image": "Handic/handic_0080.jpg",
+    "weight": "2.2 Kg (4.85 lb)"
+  },
+  {
+    "manufacturer": "Handic",
+    "name": "0082",
+    "modes": "FM",
+    "type": "VHF/UHF receiver/scanner",
+    "power": null,
+    "dimensions": "132*38*183 mm (5.2*1.5*7.2in)",
+    "frequency": "68-88 / 144-174 MHz",
+    "image": "Handic/handic_0082.jpg",
+    "weight": "? g (? oz)"
+  },
+  {
+    "manufacturer": "Handic",
+    "name": "009",
+    "modes": "FM",
+    "type": "VHF/UHF receiver/scanner",
+    "power": null,
+    "dimensions": "240*100*160 mm (9.45*3.94*6.3in)",
+    "frequency": "68-88 / 148-174 / 380-430 MHz",
+    "image": "Handic/handic_009.jpg",
+    "weight": "2.05 Kg (4.52 lbs)"
+  },
+  {
+    "manufacturer": "Handic",
+    "name": "1600",
+    "modes": "AM/FM",
+    "type": "VHF/UHF receiver/scanner",
+    "power": null,
+    "dimensions": "130*50*180 mm (5.12*1.97*7.09in)",
+    "frequency": "68-88 / 108-136 / 138-174 / 380-512 MHz",
+    "image": "Handic/handic_1600.jpg",
+    "weight": "? Kg"
+  },
+  {
+    "manufacturer": "Handic",
+    "name": "1600 MKII",
+    "modes": "AM/FM",
+    "type": "VHF/UHF receiver/scanner",
+    "power": null,
+    "dimensions": "130*60*180 mm (5.12*2.36*7.09in)",
+    "frequency": "68-88 / 108-136 / 138-174 / 380-512 MHz",
+    "image": "Handic/handic_1600mkii.jpg",
+    "weight": "? Kg"
+  },
+  {
+    "manufacturer": "Handic",
+    "name": "1600 MKIII",
+    "modes": "AM/FM",
+    "type": "VHF/UHF receiver/scanner",
+    "power": null,
+    "dimensions": "130*60*180 mm (5.12*2.36*7.09in)",
+    "frequency": "66-88 / 108-174 / 380-512 / 806-960 MHz",
+    "image": "Handic/handic_1600mkiii.jpg",
+    "weight": "? Kg (? lb)"
+  },
+  {
+    "manufacturer": "Handic",
+    "name": "2310S",
+    "modes": "AM/FM",
+    "type": "VHF/UHF receiver/scanner",
+    "power": null,
+    "dimensions": "167*43*190 mm (6.58*1.69*7.48in)",
+    "frequency": "66-88 / 148-174 / 380-430 MHz",
+    "image": "Handic/handic_2310s.jpg",
+    "weight": "? gr"
+  },
+  {
+    "manufacturer": "Handic",
+    "name": "ML",
+    "modes": "AM/WFM",
+    "type": "HF/VHF receiver",
+    "power": null,
+    "dimensions": "190*220*90 mm (7.48*8.66*3.54in)",
+    "frequency": "0.53-1.605 / 3.2-12 / 88-108 MHz",
+    "image": "Handic/handic_ml.jpg",
+    "weight": "? Kg (? lbs)"
+  }
+]

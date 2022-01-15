@@ -1,0 +1,101 @@
+[
+  {
+    "manufacturer": "Geloso",
+    "name": "G-207",
+    "modes": "AM/FM/CW",
+    "type": "HF receiver",
+    "power": null,
+    "dimensions": "514*254*260 mm (20.24*10*10.24in)",
+    "frequency": "10-80 m in six bands:3.5-4 MHz6.95-7.5 MHz13.8-14.6 MHz20.6-22 MHz26.4-28.128.0-29.8 MHz",
+    "image": "Geloso/g207.jpg",
+    "weight": "13 Kg (28.66 lbs)"
+  },
+  {
+    "manufacturer": "Geloso",
+    "name": "G-208",
+    "modes": "AM/CW",
+    "type": "HF receiver",
+    "power": null,
+    "dimensions": "? mm",
+    "frequency": "0.5-30 MHz",
+    "image": "Geloso/g208.jpg",
+    "weight": "? gr"
+  },
+  {
+    "manufacturer": "Geloso",
+    "name": "G210TR",
+    "modes": "AM/CW",
+    "type": "Amateur HF transmitter",
+    "power": "40 W",
+    "dimensions": "? mm",
+    "frequency": "10-80 m",
+    "image": "Geloso/g210tr.jpg",
+    "weight": "? gr"
+  },
+  {
+    "manufacturer": "Geloso",
+    "name": "G4/214",
+    "modes": "AM/SSB/CW",
+    "type": "HF receiver",
+    "power": null,
+    "dimensions": "? mm",
+    "frequency": "10-80 m including 11 m (26-28 MHz)",
+    "image": "Geloso/g4214.jpg",
+    "weight": "? gr"
+  },
+  {
+    "manufacturer": "Geloso",
+    "name": "G4/216",
+    "modes": "AM/SSB/CW",
+    "type": "HF receiver",
+    "power": null,
+    "dimensions": "? mm",
+    "frequency": "10-80 m",
+    "image": "Geloso/g4216.jpg",
+    "weight": "? gr"
+  },
+  {
+    "manufacturer": "Geloso",
+    "name": "G4/218",
+    "modes": "AM/CW",
+    "type": "HF receiver",
+    "power": null,
+    "dimensions": "? mm",
+    "frequency": "0.52-31 MHz",
+    "image": "Geloso/g4218.jpg",
+    "weight": "? gr"
+  },
+  {
+    "manufacturer": "Geloso",
+    "name": "G4/223",
+    "modes": "AM/CW",
+    "type": "Amateur HF transmitter",
+    "power": "40 W",
+    "dimensions": "? mm",
+    "frequency": "10-80 m",
+    "image": "Geloso/g4223.jpg",
+    "weight": "? gr"
+  },
+  {
+    "manufacturer": "Geloso",
+    "name": "G4/225",
+    "modes": "SSB",
+    "type": "Amateur HF transmitter",
+    "power": "80 W",
+    "dimensions": "? mm",
+    "frequency": "10-80 m",
+    "image": "Geloso/g4225.jpg",
+    "weight": "? gr"
+  },
+  {
+    "manufacturer": "Geloso",
+    "name": "G4/228",
+    "modes": "SSB",
+    "type": "Amateur HF transmitter",
+    "power": "150 W",
+    "dimensions": "? mm",
+    "frequency": "10-80 m",
+    "image": "Geloso/g4228.jpg",
+    "weight": "? gr"
+  }
+]

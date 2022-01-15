@@ -1,0 +1,46 @@
+[
+  {
+    "manufacturer": "Teltow",
+    "name": "210",
+    "modes": "AM/SSB/CW",
+    "type": "Amateur HF transceiver",
+    "power": "100 W",
+    "dimensions": "? mm",
+    "frequency": "20, 40 \u0026 80 m",
+    "image": "Teltow/210.jpg",
+    "weight": "30 Kg (66.14 lbs)"
+  },
+  {
+    "manufacturer": "Teltow",
+    "name": "215",
+    "modes": "AM/SSB/CW",
+    "type": "Amateur HF transceiver",
+    "power": "100 W",
+    "dimensions": "? mm",
+    "frequency": "10-80 m",
+    "image": "Teltow/215.jpg",
+    "weight": "30 Kg (66.14 lbs)"
+  },
+  {
+    "manufacturer": "Teltow",
+    "name": "215B",
+    "modes": "AM/SSB/CW",
+    "type": "Amateur HF transceiver",
+    "power": "20-60 W",
+    "dimensions": "542*222*348 mm (21.34*8.74*13.7in)",
+    "frequency": "10-80 m",
+    "image": "Teltow/215b.jpg",
+    "weight": "27 Kg (59.52 lbs)"
+  },
+  {
+    "manufacturer": "Teltow",
+    "name": "215C",
+    "modes": "AM/SSB/CW",
+    "type": "Amateur HF transceiver",
+    "power": "100 W",
+    "dimensions": "? mm",
+    "frequency": "10-80 m",
+    "image": "Teltow/215c.jpg",
+    "weight": "30 Kg (66.14 lbs)"
+  }
+]

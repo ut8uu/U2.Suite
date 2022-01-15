@@ -1,0 +1,68 @@
+[
+  {
+    "manufacturer": "Hilberling",
+    "name": "MT80-10",
+    "modes": "SSB/CW",
+    "type": "Amateur HF transceiver",
+    "power": "100 W",
+    "dimensions": "? mm",
+    "frequency": "10-80 m",
+    "image": "Hilberling/mt8010.jpg",
+    "weight": "? Kg"
+  },
+  {
+    "manufacturer": "Hilberling",
+    "name": "MT80/20",
+    "modes": "SSB",
+    "type": "Amateur HF transceiver",
+    "power": "100 W",
+    "dimensions": "? mm",
+    "frequency": "20 \u0026 80 m",
+    "image": "Hilberling/mt8020.jpg",
+    "weight": "? Kg"
+  },
+  {
+    "manufacturer": "Hilberling",
+    "name": "PT-8000A",
+    "modes": "AM/AM-sync/FM/SSB/CW",
+    "type": "Amateur HF/VHF transceiver",
+    "power": "HF/6 m: 100 W (AM: 50 W)2 m: 10 W (AM: 2.5 W)",
+    "dimensions": "425*175*465 mm (16.7*6.9*18.3in)",
+    "frequency": "TX: 10-160 m \u002B WARC / 50-54 MHz (6 m) / 144-148 MHz (2 m)RX: 0.009-30 / 50-54 /  110-148 MHz",
+    "image": "Hilberling/pt8000a.jpg",
+    "weight": "28 Kg (62 lbs)"
+  },
+  {
+    "manufacturer": "Hilberling",
+    "name": "PT-8000A Version 2",
+    "modes": "AM/AM-sync/FM/SSB/CW",
+    "type": "Amateur HF/VHF transceiver",
+    "power": "HF: 200 W (AM: 50 W)6/4/2 m: 100 W (AM: 25 W)",
+    "dimensions": "425*175*465 mm (16.7*6.9*18.3in)",
+    "frequency": "TX: 10-160 m \u002B WARC / 50-54 MHz (6 m) / 69.9-70.5 MHz (4 m) / 144-148 MHz (2 m)RX: 0.009-30 / 50-54 / 69.9-70.5 / 110-148 MHz",
+    "image": "Hilberling/pt8000av2_and_psu.jpg",
+    "weight": "28 Kg (62 lbs)"
+  },
+  {
+    "manufacturer": "Hilberling",
+    "name": "RX14",
+    "modes": "SSB/CW",
+    "type": "HF receiver",
+    "power": null,
+    "dimensions": "? mm",
+    "frequency": "14-14.3 MHz",
+    "image": "Hilberling/rx14.jpg",
+    "weight": "? gr"
+  },
+  {
+    "manufacturer": "Hilberling",
+    "name": "RX16",
+    "modes": "AM/SSB",
+    "type": "HF receiver",
+    "power": null,
+    "dimensions": "? mm",
+    "frequency": "0.1-16 MHz",
+    "image": "Hilberling/rx16.jpg",
+    "weight": "? gr"
+  }
+]
