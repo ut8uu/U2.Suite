@@ -14,8 +14,6 @@ namespace U2.Library.Database.Models
 
         public LibraryDbContext()
         {
-            Vendors = default!;
-            Rigs = default!;
             _databasePath = FileSystemHelper.GetFullPath(DataBaseName);
         }
 
@@ -97,7 +95,6 @@ namespace U2.Library.Database.Models
                             PowerWatts = rigInfo.Power ?? string.Empty,
                             WeightGrams = rigInfo.Weight ?? string.Empty,
                             Dimensions = rigInfo.Dimensions ?? string.Empty,
-                            Vendor = vendor
                         };
                         list.Add(rig);
                     }
