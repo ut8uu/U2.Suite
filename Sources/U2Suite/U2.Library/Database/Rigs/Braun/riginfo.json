@@ -1,0 +1,101 @@
+[
+  {
+    "manufacturer": "Braun",
+    "name": "RX-420 dig",
+    "modes": "AM / FM / SSB",
+    "type": "VHF receiver",
+    "power": null,
+    "dimensions": "? mm (?in)",
+    "frequency": "144-146 MHz (430-440 MHz converter option)",
+    "image": "Braun/rx420.jpg",
+    "weight": "? g (? lb)"
+  },
+  {
+    "manufacturer": "Braun",
+    "name": "SE-280",
+    "modes": "FM",
+    "type": "Amateur VHF transceiver",
+    "power": "10 W",
+    "dimensions": "210*68*220 mm (8.27*2.68*8.66in)",
+    "frequency": "TX: 144-146 MHz, RX: 144-146 MHz",
+    "image": "Braun/se280.jpg",
+    "weight": "2.2 Kg (4.85 lb)"
+  },
+  {
+    "manufacturer": "Braun",
+    "name": "SE-285",
+    "modes": "FM",
+    "type": "Amateur VHF transceiver",
+    "power": "10 W",
+    "dimensions": "220*70*235 mm (8.67*2.76*9.25in)",
+    "frequency": "TX: 144-146 MHz, RX: 144-146 MHz",
+    "image": "Braun/se285.jpg",
+    "weight": "2.3 Kg (5.07 lb)"
+  },
+  {
+    "manufacturer": "Braun",
+    "name": "SE-300",
+    "modes": "USB / CW",
+    "type": "Amateur VHF transceiver",
+    "power": "10 W (PEP)",
+    "dimensions": "215*68*230 mm (8.46*2.68*9.06in)",
+    "frequency": "TX: 144-146 MHz, RX: 144-146 MHz",
+    "image": "Braun/se300.jpg",
+    "weight": "? Kg (? lb)"
+  },
+  {
+    "manufacturer": "Braun",
+    "name": "SE-400 dig",
+    "modes": "FM / SSB / CW",
+    "type": "Amateur VHF transceiver",
+    "power": "Max 10 W",
+    "dimensions": "307*117*260 mm (12.1*4.6*10.2in)",
+    "frequency": "144-146 MHz(May tune from ~142.350~147.350 MHz but specs not guaranteed)",
+    "image": "Braun/se400.jpg",
+    "weight": "7.3 Kg (16.1 lb)"
+  },
+  {
+    "manufacturer": "Braun",
+    "name": "SE-401 dig",
+    "modes": "FM / SSB / CW",
+    "type": "Amateur VHF transceiver",
+    "power": "FM/CW: 10 W\r\nSSB: Max 10 W (PEP)",
+    "dimensions": "305*120*270 mm (12*4.72*10.63in)",
+    "frequency": "TX: 144-146 MHz, RX: 144-146 MHz",
+    "image": "Braun/se401.jpg",
+    "weight": "7.3 Kg (16 lb)"
+  },
+  {
+    "manufacturer": "Braun",
+    "name": "SE-402 dig",
+    "modes": "FM / SSB / CW",
+    "type": "Amateur VHF transceiver",
+    "power": "Max 10 W",
+    "dimensions": "305*120*270 mm (12*4.72*10.63in)",
+    "frequency": "TX: 144-146 MHz, RX: 144-146 MHz",
+    "image": "Braun/se402.jpg",
+    "weight": "7.3 Kg (16 lb)"
+  },
+  {
+    "manufacturer": "Braun",
+    "name": "SE-600 dig",
+    "modes": "AM / FM / SSB / CW",
+    "type": "Amateur VHF transceiver",
+    "power": "AM/FM/CW: 12 W\r\nSSB: 40 W (PEP)",
+    "dimensions": "420*160*260 mm (16.54*6.3*10.24in)",
+    "frequency": "TX: 144-146 MHz, RX: 144-146 MHz",
+    "image": "Braun/se600dig.jpg",
+    "weight": "15.2 Kg (34 lb)"
+  },
+  {
+    "manufacturer": "Braun",
+    "name": "SE-600",
+    "modes": "AM / FM / SSB / CW",
+    "type": "Amateur VHF transceiver",
+    "power": "AM/FM/CW: 12 W\r\nSSB: 40 W (PEP)",
+    "dimensions": "420*160*260 mm (16.54*6.3*10.24in)",
+    "frequency": "TX: 144-146 MHz, RX: 144-146 MHz",
+    "image": "Braun/se600ana.jpg",
+    "weight": "12 Kg (26.46 lb)"
+  }
+]

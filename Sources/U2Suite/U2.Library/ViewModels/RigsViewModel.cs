@@ -67,6 +67,11 @@ namespace U2.Library.ViewModels
 
         public void FilterList()
         {
+            if (Vendors == null)
+            {
+                return;
+            }
+
             var vendor = Vendors.ElementAt(_selectedVendorIndex);
             var rigs = Rigs.Where(r => r.VendorId == vendor.Id);
             SelectedRigs = new ObservableCollection<RigDbo>(rigs);

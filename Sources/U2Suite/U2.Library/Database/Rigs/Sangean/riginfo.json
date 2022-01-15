@@ -1,0 +1,178 @@
+[
+  {
+    "manufacturer": "Sangean",
+    "name": "ATS-909X",
+    "modes": "AM/SSB/CW/WFM Stereo",
+    "type": "HF/VHF receiver",
+    "power": null,
+    "dimensions": "208*135*41 mm (8.19*5.32*1.61in)",
+    "frequency": "0.153-30 / 87.5-108 MHz",
+    "image": "Sangean/ats909x_blk.jpg",
+    "weight": "735 gr (1.62 lbs), without batteries"
+  },
+  {
+    "manufacturer": "Sangean",
+    "name": "ATS-202",
+    "modes": "AM/WFM Stereo",
+    "type": "HF/VHF receiver",
+    "power": null,
+    "dimensions": "? mm",
+    "frequency": "0.52-1.71 / 2.3-7.3 / 9.5-26.1 / 87.5-108 MHz9 / 10 KHz step switch on MW",
+    "image": "Sangean/ats202.jpg",
+    "weight": "? gr"
+  },
+  {
+    "manufacturer": "Sangean",
+    "name": "ATS-303",
+    "modes": "AM/WFM Stereo",
+    "type": "HF/VHF receiver",
+    "power": null,
+    "dimensions": "? mm",
+    "frequency": "0.52-1.71 / 2.3-7.3 / 9.5-26.1 / 87.5-108 MHz9 / 10 KHz step switch on MW",
+    "image": "Sangean/ats303.jpg",
+    "weight": "? gr"
+  },
+  {
+    "manufacturer": "Sangean",
+    "name": "ATS-404",
+    "modes": "AM/WFM Stereo",
+    "type": "HF/VHF receiver",
+    "power": null,
+    "dimensions": "? mm",
+    "frequency": "0.15-30 / 88-108 MHz9 / 10 KHz step switch on MW",
+    "image": "Sangean/ats404.jpg",
+    "weight": "? gr"
+  },
+  {
+    "manufacturer": "Sangean",
+    "name": "ATS-505",
+    "modes": "AM/SSB/CW/WFM Stereo",
+    "type": "HF/VHF receiver",
+    "power": null,
+    "dimensions": "214*128*38 mm (8.42*5.04*1.5in)",
+    "frequency": "0.15-30 / 88-108 MHz",
+    "image": "Sangean/ats505.jpg",
+    "weight": "840 gr (1.85 lbs), without batteries"
+  },
+  {
+    "manufacturer": "Sangean",
+    "name": "ATS-606A",
+    "modes": "AM/WFM Stereo",
+    "type": "HF/VHF receiver",
+    "power": null,
+    "dimensions": "133*89*32 mm (5.25*3.5*1.25in)",
+    "frequency": "0.153-30 / 87.5-108 MHz",
+    "image": "Sangean/ats606a.jpg",
+    "weight": "? gr"
+  },
+  {
+    "manufacturer": "Sangean",
+    "name": "ATS-800",
+    "modes": "AM/WFM Stereo",
+    "type": "HF/VHF receiver",
+    "power": null,
+    "dimensions": "? mm",
+    "frequency": "0.53-1.62 / 3.2-7.3 / 9.5-21.75 / 87.5-108 MHz",
+    "image": "Sangean/ats800.jpg",
+    "weight": "? gr"
+  },
+  {
+    "manufacturer": "Sangean",
+    "name": "ATS-800A",
+    "modes": "AM/WFM Stereo",
+    "type": "HF/VHF receiver",
+    "power": null,
+    "dimensions": "? mm",
+    "frequency": "0.53-1.62 / 2.3-7.3 / 9.5-26.1 / 87.5-108 MHz9 / 10 KHz step switch on MW",
+    "image": "Sangean/ats800a.jpg",
+    "weight": "? gr"
+  },
+  {
+    "manufacturer": "Sangean",
+    "name": "ATS-801",
+    "modes": "AM/WFM Stereo",
+    "type": "HF/VHF receiver",
+    "power": null,
+    "dimensions": "? mm",
+    "frequency": "0.155-0.281 / 0.53-1.62 / 5.8-15.5 / 87.5-108 MHz",
+    "image": "Sangean/ats801.jpg",
+    "weight": "? gr"
+  },
+  {
+    "manufacturer": "Sangean",
+    "name": "ATS-802",
+    "modes": "AM/WFM Stereo",
+    "type": "HF/VHF receiver",
+    "power": null,
+    "dimensions": "? mm",
+    "frequency": "0.155-0.281 / 0.53-1.62 / 5.8-15.5 / 87.5-108 MHz",
+    "image": "Sangean/ats802.jpg",
+    "weight": "? gr"
+  },
+  {
+    "manufacturer": "Sangean",
+    "name": "ATS-803",
+    "modes": "AM/SSB/CW/WFM Stereo",
+    "type": "HF/VHF receiver",
+    "power": null,
+    "dimensions": "293*160*60 mm (11.54*6.3*2.36in)",
+    "frequency": "0.150-30 / 87.5-108 MHz9 / 10 KHz step switch on MW",
+    "image": "Sangean/ats803.jpg",
+    "weight": "1.75 Kg (3.86 lbs)"
+  },
+  {
+    "manufacturer": "Sangean",
+    "name": "ATS-803A",
+    "modes": "AM/SSB/CW/WFM Stereo",
+    "type": "HF/VHF receiver",
+    "power": null,
+    "dimensions": "293*160*60 mm (11.54*6.3*2.36in)",
+    "frequency": "0.150-30 / 87.5-108 MHz9 / 10 KHz step switch on MW",
+    "image": "Sangean/ats803a.jpg",
+    "weight": "1.75 Kg (3.86 lbs)"
+  },
+  {
+    "manufacturer": "Sangean",
+    "name": "ATS-808A",
+    "modes": "AM/WFM Stereo",
+    "type": "HF/VHF receiver",
+    "power": null,
+    "dimensions": "190*152*38 mm (7.5*6*1.5in)",
+    "frequency": "0.15-30 / 87.5-108 MHz",
+    "image": "Sangean/ats808a.jpg",
+    "weight": "680 gr (1.5 lbs)"
+  },
+  {
+    "manufacturer": "Sangean",
+    "name": "ATS-818",
+    "modes": "AM/SSB/CW/WFM Stereo",
+    "type": "HF/VHF receiver",
+    "power": null,
+    "dimensions": "296*192*68 mm (11.65*7.56*2.68in)",
+    "frequency": "0.15-30 / 88-108 MHz",
+    "image": "Sangean/ats818.jpg",
+    "weight": "1.9 Kg (4.19 lbs), without batteries"
+  },
+  {
+    "manufacturer": "Sangean",
+    "name": "ATS-909",
+    "modes": "AM/SSB/CW/WFM Stereo",
+    "type": "HF/VHF receiver",
+    "power": null,
+    "dimensions": "215*133*38 mm (10.04*5.24*1.5in)",
+    "frequency": "0.153-30 / 87.5-108 MHz",
+    "image": "Sangean/ats909.jpg",
+    "weight": "850 gr (1.87 lb), without batteries"
+  },
+  {
+    "manufacturer": "Sangean",
+    "name": "SG-789",
+    "modes": "AM/WFM (Stereo with headphones)",
+    "type": "HF/VHF receiver",
+    "power": null,
+    "dimensions": "162*87*28 mm (6.38*3.42*1.1in)",
+    "frequency": "0.522-1.62 MHz\r\n2.30-5.20 MHz\r\n5.80-6.20 MHz (49 m)\r\n7.05-7.50 MHz (41 m)\r\n9.45-9.90 MHz (31 m)\r\n11.55-12.05 MHz (25 m)\r\n15.05-15.55 MHz (19 m)\r\n17.45-18.05 MHz (16 m)\r\n21.45-21.95 MHz (13 m)\r\n64-74 MHz or 88-108 MHz (Depending on market)",
+    "image": "Sangean/sg789.jpg",
+    "weight": "300 g (10.58 oz)"
+  }
+]

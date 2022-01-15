@@ -1,6 +1,7 @@
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
+using U2.Library.Database.Models;
 using U2.Library.ViewModels;
 using U2.Library.Views;
 

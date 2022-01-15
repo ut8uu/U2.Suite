@@ -1,0 +1,156 @@
+[
+  {
+    "manufacturer": "Clegg",
+    "name": "22\u0027er",
+    "modes": "AM",
+    "type": "Amateur VHF transceiver",
+    "power": "20 W (input)",
+    "dimensions": "? mm",
+    "frequency": "143.8-148.2 MHz",
+    "image": "Clegg/22er.jpg",
+    "weight": "? gr"
+  },
+  {
+    "manufacturer": "Clegg",
+    "name": "22\u0027er FM",
+    "modes": "FM",
+    "type": "Amateur VHF transceiver",
+    "power": "60 W",
+    "dimensions": "? mm",
+    "frequency": "146-147 MHz",
+    "image": "Clegg/22erfm.jpg",
+    "weight": "? gr"
+  },
+  {
+    "manufacturer": "Clegg",
+    "name": "66\u0027er",
+    "modes": "AM",
+    "type": "Amateur VHF transceiver",
+    "power": "10 W",
+    "dimensions": "? mm",
+    "frequency": "49.9-52.1 MHz",
+    "image": "Clegg/66er.jpg",
+    "weight": "? gr"
+  },
+  {
+    "manufacturer": "Clegg",
+    "name": "99\u0027er",
+    "modes": "AM",
+    "type": "Amateur VHF transceiver",
+    "power": "~5 W (8 W input)",
+    "dimensions": "? mm",
+    "frequency": "50-52 MHz",
+    "image": "Clegg/99er.jpg",
+    "weight": "? Kg"
+  },
+  {
+    "manufacturer": "Clegg",
+    "name": "Climaster 62 T10",
+    "modes": "AM/CW",
+    "type": "Amateur HF/VHF transmitter",
+    "power": "AM: 100 WCW: 140 W",
+    "dimensions": "? mm",
+    "frequency": "26.5-30 / 49.8-54.2 / 143.8-148.4 MHz",
+    "image": "Clegg/climaster62t10.jpg",
+    "weight": "? gr"
+  },
+  {
+    "manufacturer": "Clegg",
+    "name": "Climaster Zeus",
+    "modes": "AM/CW",
+    "type": "Amateur VHF transmitter",
+    "power": "AM: 90 W",
+    "dimensions": "? mm",
+    "frequency": "49.5-54.1 / 143.0-148.5 MHz",
+    "image": "Clegg/climasterzeus.jpg",
+    "weight": "? gr"
+  },
+  {
+    "manufacturer": "Clegg",
+    "name": "FM-27B",
+    "modes": "FM",
+    "type": "Amateur VHF transceiver",
+    "power": "25 W",
+    "dimensions": "? mm",
+    "frequency": "146-148 MHz",
+    "image": "Clegg/fm27b.jpg",
+    "weight": "? gr"
+  },
+  {
+    "manufacturer": "Clegg",
+    "name": "FM-76",
+    "modes": "FM",
+    "type": "Amateur VHF transceiver",
+    "power": "Hi: 10 W, Lo: 1 W",
+    "dimensions": "? mm",
+    "frequency": "220-225 MHz",
+    "image": "Clegg/fm76.jpg",
+    "weight": "? gr"
+  },
+  {
+    "manufacturer": "Clegg",
+    "name": "FM-88",
+    "modes": "FM",
+    "type": "Amateur VHF transceiver",
+    "power": "1-25 W",
+    "dimensions": "? mm",
+    "frequency": "143-149 MHz (5 KHz steps)",
+    "image": "Clegg/fm88.jpg",
+    "weight": "? gr"
+  },
+  {
+    "manufacturer": "Clegg",
+    "name": "FM-DX",
+    "modes": "FM",
+    "type": "Amateur VHF transceiver",
+    "power": "0.5-35 W",
+    "dimensions": "? mm",
+    "frequency": "143.5-148.5 MHz (5 KHz steps)",
+    "image": "Clegg/fmdx.jpg",
+    "weight": "? gr"
+  },
+  {
+    "manufacturer": "Clegg",
+    "name": "Interceptor B",
+    "modes": "AM/SSB/CW",
+    "type": "VHF receiver",
+    "power": null,
+    "dimensions": "? mm",
+    "frequency": "49.95-54.0 / 143.95-148 MHz (XTAL controlled converter on 2 m)",
+    "image": "Clegg/interceptorb.jpg",
+    "weight": "? Kg"
+  },
+  {
+    "manufacturer": "Clegg",
+    "name": "Mark 3",
+    "modes": "FM",
+    "type": "Amateur VHF transceiver",
+    "power": "Hi: 15 W, Lo: 1 W",
+    "dimensions": "250*60*225 mm (9.84*2.36*8.86in)",
+    "frequency": "144-148 MHz",
+    "image": "Clegg/mark3.jpg",
+    "weight": "2 Kg (4.41 lbs)"
+  },
+  {
+    "manufacturer": "Clegg",
+    "name": "Thor 6",
+    "modes": "AM/CW",
+    "type": "Amateur VHF transceiver",
+    "power": "40 W",
+    "dimensions": "? mm",
+    "frequency": "TX: 49.8-54.0 MHz, RX: 49.8-52.2 MHz",
+    "image": "Clegg/thor6.jpg",
+    "weight": "? gr"
+  },
+  {
+    "manufacturer": "Clegg",
+    "name": "Venus",
+    "modes": "AM/SSB/CW",
+    "type": "Amateur VHF transceiver",
+    "power": "AM: 40 WSSB: 120 W PEP (input)",
+    "dimensions": "? mm",
+    "frequency": "49.975-50.475 MHz",
+    "image": "Clegg/venus.jpg",
+    "weight": "? gr"
+  }
+]

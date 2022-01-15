@@ -1,0 +1,79 @@
+[
+  {
+    "manufacturer": "Xiegu",
+    "name": "G1M \u0022G-Core\u0022",
+    "modes": "TX: SSB/CWRX: AM/SSB/CW",
+    "type": "Amateur HF transceiver",
+    "power": "Max 5 W",
+    "dimensions": "97*40*155 mm (3.82*1.58*6.1in)",
+    "frequency": "TX: 15-80 mRX: 0.5-30 MHz",
+    "image": "Xiegu/xiegu_g1m.jpg",
+    "weight": "? g (? lb)"
+  },
+  {
+    "manufacturer": "Xiegu",
+    "name": "G90 \u0022G-Core\u0022",
+    "modes": "AM/SSB/CW (FM with optional GSOC controller)",
+    "type": "Amateur HF transceiver",
+    "power": "AM: 5 W (Carrier)\r\nFM: 20 W (With optional GSOC controller)\r\nSSB/CW: 20 W",
+    "dimensions": "120*45*210 mm (4.72*1.77*8.27in), without handles",
+    "frequency": "TX: 10-160 mRX: 0.5-30 MHz",
+    "image": "Xiegu/xiegu_g90.jpg",
+    "weight": "1.63 Kg (3.59 lb), without handles"
+  },
+  {
+    "manufacturer": "Xiegu",
+    "name": "X108",
+    "modes": "AM/USB/LSB/CW",
+    "type": "Amateur HF transceiver",
+    "power": "1-20 W",
+    "dimensions": "120*45*180 mm (4.75*1.75*7.06in)",
+    "frequency": "TX: 10-160 m \u002B WARCRX: 0.5-30 MHz",
+    "image": "Xiegu/xiegu_x108.jpg",
+    "weight": "885 gr (1.95 lbs)"
+  },
+  {
+    "manufacturer": "Xiegu",
+    "name": "X108G",
+    "modes": "AM/USB/LSB/CW",
+    "type": "Amateur HF transceiver",
+    "power": "1-20 W @ 13.8 VDC",
+    "dimensions": "120*45*180 mm (4.75*1.75*7.06in)",
+    "frequency": "TX: 10-160 m \u002B WARCRX: 0.5-30 MHz",
+    "image": "Xiegu/xiegu_x108g.jpg",
+    "weight": "1 Kg (2.2 lbs)"
+  },
+  {
+    "manufacturer": "Xiegu",
+    "name": "X1M",
+    "modes": "USB/LSB/CW",
+    "type": "Amateur HF transceiver",
+    "power": "Max 5 W",
+    "dimensions": "97*40*155 mm (3.82*1.58*6.1in)",
+    "frequency": "TX: 0.1-30 MHz, RX: 0.1-30 MHz(Band filters for 10/15/20/40/80 m)",
+    "image": "Xiegu/xiegu_x1m.jpg",
+    "weight": "650 gr (1.43 lb)"
+  },
+  {
+    "manufacturer": "Xiegu",
+    "name": "X1M Pro (Platinum)",
+    "modes": "USB/LSB/CW",
+    "type": "Amateur HF transceiver",
+    "power": "Max 5 W",
+    "dimensions": "97*40*155 mm (3.82*1.58*6.1in)",
+    "frequency": "TX: 0.1-30 MHz, RX: 0.1-30 MHz",
+    "image": "Xiegu/xiegu_x1mpro.jpg",
+    "weight": "650 g (1.43 lbs)"
+  },
+  {
+    "manufacturer": "Xiegu",
+    "name": "X5105",
+    "modes": "AM/FM/SSB/CW",
+    "type": "Amateur HF/VHF transceiver",
+    "power": "HF0.5-5 W (AM 1.5 W)\r\n\r\n\r\n6 m0.5-5 W (AM 1.5 W)",
+    "dimensions": "160*99*46 mm (6.3*3.9*1.8in)",
+    "frequency": "TX: 10-160 m \u002B WARC / 6 mRX: 0.5-55 MHz",
+    "image": "Xiegu/xiegu_x5105.jpg",
+    "weight": "940 g (2.07 lb)"
+  }
+]

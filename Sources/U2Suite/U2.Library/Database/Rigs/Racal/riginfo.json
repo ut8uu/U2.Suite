@@ -1,0 +1,68 @@
+[
+  {
+    "manufacturer": "Racal",
+    "name": "RA-117",
+    "modes": "?",
+    "type": "HF receiver",
+    "power": null,
+    "dimensions": "? mm",
+    "frequency": "1-30 MHz",
+    "image": "Racal/racal_ra117.jpg",
+    "weight": "28 Kg"
+  },
+  {
+    "manufacturer": "Racal",
+    "name": "RA-17L",
+    "modes": "?",
+    "type": "HF receiver",
+    "power": null,
+    "dimensions": "? mm",
+    "frequency": "?-? MHz",
+    "image": "Racal/racal_ra17l.jpg",
+    "weight": "? Kg"
+  },
+  {
+    "manufacturer": "Racal",
+    "name": "RA-217",
+    "modes": "?",
+    "type": "HF receiver",
+    "power": null,
+    "dimensions": "? mm",
+    "frequency": "?-? MHz",
+    "image": "Racal/ra217.jpg",
+    "weight": "28 Kg (61.73 lbs)"
+  },
+  {
+    "manufacturer": "Racal",
+    "name": "RA-6790/GM",
+    "modes": "All-mode",
+    "type": "HF receiver",
+    "power": null,
+    "dimensions": "483*133*470 mm (19*5.25*18.5in)",
+    "frequency": "0.5-30 MHz",
+    "image": "Racal/racal_ra6790gm.jpg",
+    "weight": "14.51 Kg (32 lbs)"
+  },
+  {
+    "manufacturer": "Racal",
+    "name": "RA-1218",
+    "modes": "AM/SSB/CW",
+    "type": "HF receiver",
+    "power": null,
+    "dimensions": "483*133*500 mm (19.02*5.24*19.69in)",
+    "frequency": "1-30 MHz",
+    "image": "Racal/racal_ra1218.jpg",
+    "weight": "15 Kg (33.07 lbs)"
+  },
+  {
+    "manufacturer": "Racal",
+    "name": "RA-1792",
+    "modes": "AM/FM/SSB/CW (ISB option)",
+    "type": "HF receiver",
+    "power": null,
+    "dimensions": "483*133*458 mm (19*5.29*18in)",
+    "frequency": "0.01-30 MHz",
+    "image": "Racal/racal_ra1792.jpg",
+    "weight": "14 Kg (31 lbs)"
+  }
+]

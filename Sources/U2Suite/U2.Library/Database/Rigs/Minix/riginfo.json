@@ -1,0 +1,79 @@
+[
+  {
+    "manufacturer": "Minix",
+    "name": "MR-101",
+    "modes": "AM/FM/CW",
+    "type": "VHF/UHF receiver",
+    "power": null,
+    "dimensions": "225*100*165 mm (8.86*3.94*6.5in)",
+    "frequency": "144-146 /432-434 MHz",
+    "image": "Minix/minix_mr101.jpg",
+    "weight": "2.5 Kg (5.51 lbs)"
+  },
+  {
+    "manufacturer": "Minix",
+    "name": "MR-12S",
+    "modes": "FM",
+    "type": "VHF receiver/scanner",
+    "power": null,
+    "dimensions": "150*45*155 mm (5.91*1.77*6.1in)",
+    "frequency": "144-146 MHz",
+    "image": "Minix/minix_mr12s.jpg",
+    "weight": "0.8 Kg (1.76 lbs)"
+  },
+  {
+    "manufacturer": "Minix",
+    "name": "MR-2S",
+    "modes": "FM",
+    "type": "VHF receiver/scanner",
+    "power": null,
+    "dimensions": "120*40*190 mm (4.72*1.58*7.48in)",
+    "frequency": "144-146 MHz",
+    "image": "Minix/minix_mr2s.jpg",
+    "weight": "750 gr (1.65 lbs)"
+  },
+  {
+    "manufacturer": "Minix",
+    "name": "MR-73B",
+    "modes": "AM/SSB/CW",
+    "type": "HF receiver",
+    "power": null,
+    "dimensions": "360*160*220 mm (14.17*6.3*8.66in)",
+    "frequency": "0.55-30 MHz in four bands",
+    "image": "Minix/minix_mr73b.jpg",
+    "weight": "6 Kg (13.23 lbs)"
+  },
+  {
+    "manufacturer": "Minix",
+    "name": "MTO-20A",
+    "modes": "AM",
+    "type": "Amateur VHF transmitter",
+    "power": "Max 10 W",
+    "dimensions": "320*150*220 mm (12.6*5.91*8.66in)",
+    "frequency": "144-146 MHz",
+    "image": "Minix/minix_mto20a.jpg",
+    "weight": "6 Kg (13.23 lbs)"
+  },
+  {
+    "manufacturer": "Minix",
+    "name": "MTR-25",
+    "modes": "AM",
+    "type": "Amateur VHF transmitter",
+    "power": "Max 10 W",
+    "dimensions": "300*160*340 mm (11.81*6.3*13.39in)",
+    "frequency": "144-146 MHz",
+    "image": "Minix/minix_mtr25.jpg",
+    "weight": "6 Kg (13.23 lbs)"
+  },
+  {
+    "manufacturer": "Minix",
+    "name": "MTR-25S",
+    "modes": "TX: AM/FMRX: AM/FM/CW",
+    "type": "Amateur VHF transceiver",
+    "power": "Max 8 W",
+    "dimensions": "300*160*340 mm (11.81*6.3*13.39in)",
+    "frequency": "144-146 MHz",
+    "image": "Minix/minix_mtr25s.jpg",
+    "weight": "6 Kg (13.23 lbs)"
+  }
+]

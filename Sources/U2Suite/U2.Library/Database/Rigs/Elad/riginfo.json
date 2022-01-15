@@ -1,0 +1,35 @@
+[
+  {
+    "manufacturer": "Elad",
+    "name": "FDM-77",
+    "modes": "AM/FM/SSB/CW/DRM",
+    "type": "HF/VHF SDR receiver",
+    "power": null,
+    "dimensions": "200*60*190 mm (7.87*2.36*7.48in)",
+    "frequency": "0.05-60 MHz",
+    "image": "Elad/fdm77.jpg",
+    "weight": "1 Kg (2.2 lbs)"
+  },
+  {
+    "manufacturer": "Elad",
+    "name": "FDM-Duo",
+    "modes": "StandaloneAM/SSB/CWWith external PC running suitable softwareAM/AM-sync/FM/WFM (with RDS)/SSB/DSB/CW/DRM/RTTY",
+    "type": "Amateur HF/VHF SDR transceiver",
+    "power": "Max 5 W",
+    "dimensions": "? mm",
+    "frequency": "TX: ?-? MHz, RX: 0.02-170 MHz",
+    "image": "Elad/fdmduo.jpg",
+    "weight": "? Kg"
+  },
+  {
+    "manufacturer": "Elad",
+    "name": "FDM-S1",
+    "modes": "AM/AM-sync/FM/WFM/SSB/DSB/CW/DRM",
+    "type": "HF/VHF SDR receiver",
+    "power": null,
+    "dimensions": "108*27*90 mm (4.25*1.06*3.54in)",
+    "frequency": "0.02-170 MHz",
+    "image": "Elad/fdms1.jpg",
+    "weight": "180 gr (6.35 oz)"
+  }
+]

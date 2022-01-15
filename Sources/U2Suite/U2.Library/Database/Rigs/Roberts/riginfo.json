@@ -1,0 +1,112 @@
+[
+  {
+    "manufacturer": "Roberts",
+    "name": "R-809",
+    "modes": "AM/WFM (WFM stereo via headphones)",
+    "type": "HF/VHF receiver",
+    "power": null,
+    "dimensions": "196*125*36 mm (7.72*4.92*1.42in)",
+    "frequency": "0.153-30 / 87.5-108 MHz",
+    "image": "Roberts/roberts_r809.jpg",
+    "weight": "720 gr (1.59 lbs)"
+  },
+  {
+    "manufacturer": "Roberts",
+    "name": "R-827",
+    "modes": "AM/WFM/SSB/CW (WFM stereo via headphones)",
+    "type": "HF/VHF receiver",
+    "power": null,
+    "dimensions": "296*192*68 mm (11.65*7.56*2.68in)",
+    "frequency": "0.15-30 / 87.5-108 MHz",
+    "image": "Roberts/roberts_r827.jpg",
+    "weight": "1.72 Kg (3.79 lbs)"
+  },
+  {
+    "manufacturer": "Roberts",
+    "name": "R-861",
+    "modes": "AM/WFM/SSB/CW (WFM stereo via headphones)",
+    "type": "HF/VHF receiver",
+    "power": null,
+    "dimensions": "223*135*38 mm (8.78*5.32*1.5in)",
+    "frequency": "0.153-30 / 87.5-108 MHz",
+    "image": "Roberts/roberts_r861.jpg",
+    "weight": "770 gr (1.7 lbs)"
+  },
+  {
+    "manufacturer": "Roberts",
+    "name": "R-862",
+    "modes": "AM/WFM",
+    "type": "HF/VHF receiver",
+    "power": null,
+    "dimensions": "135*78*28 mm (5.32*3.07*1.1in)",
+    "frequency": "0.15-0.281 / 0.522-1.62 / 4.6-21.95 / 87.5-108 MHz",
+    "image": "Roberts/roberts_r862.jpg",
+    "weight": "250 gr (8.82 oz)"
+  },
+  {
+    "manufacturer": "Roberts",
+    "name": "R-871",
+    "modes": "AM/WFM",
+    "type": "HF/VHF receiver",
+    "power": null,
+    "dimensions": "185*115*42 mm (7.28*4.53*1.65in)",
+    "frequency": "0.147-0.284 / 0.525-1.62 / 2.3-21.85 / 87.5-108 MHz",
+    "image": "Roberts/roberts_r871.jpg",
+    "weight": "475 gr (16.76 oz)"
+  },
+  {
+    "manufacturer": "Roberts",
+    "name": "R-876",
+    "modes": "AM/WFM (WFM stereo via headphones)",
+    "type": "HF/VHF receiver",
+    "power": null,
+    "dimensions": "148*89*30 mm (5.83*3.5*1.18in)",
+    "frequency": "0.153-30 / 87.5-108 MHz",
+    "image": "Roberts/roberts_r876.jpg",
+    "weight": "330 gr (11.64 oz)"
+  },
+  {
+    "manufacturer": "Roberts",
+    "name": "R-881",
+    "modes": "AM/WFM (WFM stereo via headphones)",
+    "type": "HF/VHF receiver",
+    "power": null,
+    "dimensions": "161*105*36 mm (6.34*4.13*1.42in)",
+    "frequency": "0.522-1.62 / 2.3-26.1 / 87.5-108 MHz",
+    "image": "Roberts/roberts_r881.jpg",
+    "weight": "370 gr (13.05 oz)"
+  },
+  {
+    "manufacturer": "Roberts",
+    "name": "R-9914",
+    "modes": "AM/WFM/SSB/CW (WFM stereo via headphones)",
+    "type": "HF/VHF receiver",
+    "power": null,
+    "dimensions": "215*125*35 mm (8.46*4.92*1.38in)",
+    "frequency": "0.153-30 / 87.5-108 MHz",
+    "image": "Roberts/roberts_r9914.jpg",
+    "weight": "575 gr (20.28 oz)"
+  },
+  {
+    "manufacturer": "Roberts",
+    "name": "R-9921",
+    "modes": "AM/WFM",
+    "type": "HF/VHF receiver",
+    "power": null,
+    "dimensions": "165*105*36 mm (6.5*4.13*1.42in)",
+    "frequency": "0.525-1.71 / 5.9-17.9 / 87.5-108 MHz",
+    "image": "Roberts/roberts_r9921.jpg",
+    "weight": "380 gr (13.4 oz)"
+  },
+  {
+    "manufacturer": "Roberts",
+    "name": "RC-828",
+    "modes": "AM/WFM/SSB/CW (WFM stereo via headphones)",
+    "type": "HF/VHF receiver",
+    "power": null,
+    "dimensions": "296*192*68 mm (11.65*7.56*2.68in)",
+    "frequency": "0.15-30 / 87.5-108 MHz",
+    "image": "Roberts/roberts_rc828.jpg",
+    "weight": "1.72 Kg (3.79 lbs)"
+  }
+]

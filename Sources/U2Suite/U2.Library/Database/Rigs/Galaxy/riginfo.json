@@ -1,0 +1,35 @@
+[
+  {
+    "manufacturer": "Galaxy",
+    "name": "GT-550",
+    "modes": "SSB/CW",
+    "type": "Amateur HF transceiver",
+    "power": "SSB: ~250 W (550 W input)\r\nCW: ~160 W (360 W input)",
+    "dimensions": "286*152*318 mm (11.25*6*12.5in)",
+    "frequency": "10-80 m in six bands:\r\n\r\n3.5-4.0 MHz (80 m)\r\n7.0-7.5 MHz (40 m)\r\n14.0-14.5 MHz (20 m)\r\n21.0-21.5 MHz (15 m)\r\n28.0-28.5 MHz (10 m)\r\n28.5-29.0 MHz (10 m)",
+    "image": "Galaxy/gt550.jpg",
+    "weight": "7.71 Kg (17 lbs)"
+  },
+  {
+    "manufacturer": "Galaxy",
+    "name": "R-530",
+    "modes": "AM/SSB",
+    "type": "HF receiver",
+    "power": null,
+    "dimensions": "432*152*356 mm (17*6*14in)",
+    "frequency": "0.5-30 MHz",
+    "image": "Galaxy/r530.jpg",
+    "weight": "11.3 Kg (25 lbs)"
+  },
+  {
+    "manufacturer": "Galaxy",
+    "name": "V Mark II",
+    "modes": "SSB/CW",
+    "type": "Amateur HF transceiver",
+    "power": "SSB: ~150 W PEP (300 W PEP input)CW: ~150 W (300 W input)",
+    "dimensions": "? mm",
+    "frequency": "10-80 m",
+    "image": "Galaxy/vmarkii.jpg",
+    "weight": "? Kg"
+  }
+]

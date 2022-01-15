@@ -1,0 +1,90 @@
+[
+  {
+    "manufacturer": "Star",
+    "name": "SR-100 \u0022Friend\u0022",
+    "modes": "AM/CW",
+    "type": "HF receiver",
+    "power": null,
+    "dimensions": "? mm",
+    "frequency": "0.55-1.6 / 3.5-12 MHz",
+    "image": "Star/sr100.jpg",
+    "weight": "? Kg"
+  },
+  {
+    "manufacturer": "Star",
+    "name": "SR-200",
+    "modes": "AM/SSB/CW",
+    "type": "HF receiver",
+    "power": null,
+    "dimensions": "? mm",
+    "frequency": "10-160 m",
+    "image": "Star/sr200.jpg",
+    "weight": "? Kg"
+  },
+  {
+    "manufacturer": "Star",
+    "name": "SR-550",
+    "modes": "AM/SSB/CW",
+    "type": "HF/VHF receiver",
+    "power": null,
+    "dimensions": "385*185*255 mm (15.2*7.3*10in)",
+    "frequency": "10-160 m/6 m",
+    "image": "Star/sr550.jpg",
+    "weight": "6.5 Kg (14.3 lbs)"
+  },
+  {
+    "manufacturer": "Star",
+    "name": "SR-600",
+    "modes": "AM/SSB/CW",
+    "type": "HF receiver",
+    "power": null,
+    "dimensions": "? mm",
+    "frequency": "10-80 m",
+    "image": "Star/sr600.jpg",
+    "weight": "? Kg"
+  },
+  {
+    "manufacturer": "Star",
+    "name": "SR-700A",
+    "modes": "AM/SSB/CW",
+    "type": "HF receiver",
+    "power": null,
+    "dimensions": "? mm",
+    "frequency": "10-80 m",
+    "image": "Star/sr700a.jpg",
+    "weight": "? Kg"
+  },
+  {
+    "manufacturer": "Star",
+    "name": "ST-200",
+    "modes": "SSB/CW",
+    "type": "Amateur HF transmitter",
+    "power": "? W",
+    "dimensions": "? mm",
+    "frequency": "10-80 m",
+    "image": "Star/st200.jpg",
+    "weight": "? Kg"
+  },
+  {
+    "manufacturer": "Star",
+    "name": "ST-333",
+    "modes": "AM/CW (SSB option)",
+    "type": "Amateur HF transmitter",
+    "power": "10 W",
+    "dimensions": "? mm",
+    "frequency": "10-160/6 m",
+    "image": "Star/st333.jpg",
+    "weight": "? Kg"
+  },
+  {
+    "manufacturer": "Star",
+    "name": "ST-700",
+    "modes": "SSB/CW",
+    "type": "Amateur HF transmitter",
+    "power": "? W",
+    "dimensions": "? mm",
+    "frequency": "10-80  m",
+    "image": "Star/st700.jpg",
+    "weight": "? Kg"
+  }
+]

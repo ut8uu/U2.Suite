@@ -1,0 +1,112 @@
+[
+  {
+    "manufacturer": "Belcom",
+    "name": "Kappa-15",
+    "modes": "USB",
+    "type": "Amateur HF transceiver",
+    "power": "10 W",
+    "dimensions": "? mm",
+    "frequency": "21.215-21.445 MHz",
+    "image": "Belcom/kappa15.jpg",
+    "weight": "? gr"
+  },
+  {
+    "manufacturer": "Belcom",
+    "name": "Liner 10",
+    "modes": "SSB",
+    "type": "Amateur HF transceiver",
+    "power": "Max 10 W (PEP)",
+    "dimensions": "220*70*250 mm (8.66*2.76*9.84in)",
+    "frequency": "10 m",
+    "image": "Belcom/liner10.jpg",
+    "weight": "3 Kg (6.61 lbs)"
+  },
+  {
+    "manufacturer": "Belcom",
+    "name": "Liner 2",
+    "modes": "USB",
+    "type": "Amateur VHF transceiver",
+    "power": "Max 10 W (PEP)",
+    "dimensions": "220*70*250 mm (8.66*2.76*9.84in)",
+    "frequency": "144-146 MHz(XTALs for 144.100-144.330 MHz factory installed)",
+    "image": "Belcom/liner2.jpg",
+    "weight": "3 Kg (6.61 lbs)"
+  },
+  {
+    "manufacturer": "Belcom",
+    "name": "Liner 2 DX",
+    "modes": "USB",
+    "type": "Amateur VHF transceiver",
+    "power": "Max ? W (PEP)",
+    "dimensions": "? mm (?in)",
+    "frequency": "144-146 MHz",
+    "image": "Belcom/liner2dx.jpg",
+    "weight": "? Kg (? lbs)"
+  },
+  {
+    "manufacturer": "Belcom",
+    "name": "Liner 70A",
+    "modes": "AM/FM/SSB/CW",
+    "type": "Amateur UHF transceiver",
+    "power": "AM: Max 4 W\r\nFM/SSB/CW: Max 10 W",
+    "dimensions": "280*110*355 mm (11.02*4.33*13.98in)",
+    "frequency": "430-440 MHz",
+    "image": "Belcom/liner70a.jpg",
+    "weight": "11.5 Kg (25.35 lbs)"
+  },
+  {
+    "manufacturer": "Belcom",
+    "name": "LS-102",
+    "modes": "AM/FM/SSB/CW",
+    "type": "Amateur HF transceiver",
+    "power": "Hi: ? W, Lo: ? W",
+    "dimensions": "? mm",
+    "frequency": "28.0-29.7 MHz",
+    "image": "Belcom/ls102.jpg",
+    "weight": "? gr"
+  },
+  {
+    "manufacturer": "Belcom",
+    "name": "LS-202E",
+    "modes": "FM / SSB",
+    "type": "Amateur VHF transceiver",
+    "power": "Hi: 3.5 W @ 10.8 VDC\r\nHi: 2.5 W @ 9 VDC\r\nHi: 1.5 W @ 7.2 VDC\r\nLo: 0.5 W @ 9 VDC",
+    "dimensions": "62*165*40 mm (2.44*6.5*1.58in)",
+    "frequency": "144-146 MHz(144-148 MHz after modification)",
+    "image": "Belcom/ls202e.jpg",
+    "weight": "500 g (1.1 lb), with batteries and rubber antenna"
+  },
+  {
+    "manufacturer": "Belcom",
+    "name": "LS-20F",
+    "modes": "FM",
+    "type": "Amateur VHF transceiver",
+    "power": "Hi: 10 W, Lo: 1 W",
+    "dimensions": "? mm",
+    "frequency": "144-146 MHz(10 / 100 KHz steps)",
+    "image": "Belcom/ls20f.jpg",
+    "weight": "? gr"
+  },
+  {
+    "manufacturer": "Belcom",
+    "name": "LS-20XE",
+    "modes": "FM",
+    "type": "Amateur VHF transceiver",
+    "power": "Hi: 1 WMid: 500 mW, Lo: 100 mW",
+    "dimensions": "69*140*26 mm (2.72*5.51*1.02in)",
+    "frequency": "144-146 MHz (5 KHz steps)",
+    "image": "Belcom/ls20xe.jpg",
+    "weight": "260 gr (9.17 oz), including batteries and antenna"
+  },
+  {
+    "manufacturer": "Belcom",
+    "name": "LS-602",
+    "modes": "AM/FM/SSB/CW",
+    "type": "Amateur VHF transceiver",
+    "power": "? W",
+    "dimensions": "? mm",
+    "frequency": "50.0-54.0 MHz",
+    "image": "Belcom/ls602.jpg",
+    "weight": "? gr"
+  }
+]

@@ -12,7 +12,7 @@ namespace U2.Library.ViewModels
     {
         private RigDbo _rig = default!;
         private List<KeyValuePair<string, string>> _rigCharacteristics = default!;
-        private string _rigImagePath = default!;
+        private string _rigImagePath = "pack://application:,,,/Database/Rigs/ADI/ar146.jpg";//default!;
 
         public RigDetailsViewModel()
         {
@@ -46,44 +46,34 @@ namespace U2.Library.ViewModels
                 var list = new List<KeyValuePair<string, string>>();
                 list.Add(new KeyValuePair<string, string>("Manufacturer", _rig.Vendor.Name));
                 list.Add(new KeyValuePair<string, string>("Name", _rig.Name));
-                if (_rig.PowerWatts.HasValue)
+                if (!string.IsNullOrEmpty(_rig.RigType))
                 {
-                    list.Add(new KeyValuePair<string, string>("Power, watts", _rig.PowerWatts.Value.ToString()));
+                    list.Add(new KeyValuePair<string, string>("Type", _rig.RigType));
                 }
 
-                if (_rig.ManufactureStart.HasValue)
+                if (!string.IsNullOrEmpty(_rig.PowerWatts))
                 {
-                    list.Add(new KeyValuePair<string, string>("Production start", _rig.ManufactureStart.Value.ToString()));
-
-                    if (_rig.ManufactureEnd.HasValue)
-                    {
-                        list.Add(new KeyValuePair<string, string>("Production end", _rig.ManufactureEnd.Value.ToString()));
-                    }
+                    list.Add(new KeyValuePair<string, string>("Power", _rig.PowerWatts));
                 }
 
-                if (_rig.Width.HasValue && _rig.Height.HasValue && _rig.Depth.HasValue)
+                if (!string.IsNullOrEmpty(_rig.Dimensions))
                 {
-                    var dimensions = $"{_rig.Width.Value} x {_rig.Height.Value} x {_rig.Depth.Value}";
-                    list.Add(new KeyValuePair<string, string>("Dimensions (W x H x D), mm", dimensions));
+                    list.Add(new KeyValuePair<string, string>("Dimensions (W x H x D)", _rig.Dimensions));
                 }
 
-                if (_rig.WeightGrams.HasValue)
+                if (!string.IsNullOrEmpty(_rig.WeightGrams))
                 {
-                    list.Add(new KeyValuePair<string, string>("Weight, g", _rig.WeightGrams.Value.ToString()));
+                    list.Add(new KeyValuePair<string, string>("Weight", _rig.WeightGrams));
                 }
 
                 RigImagePath = string.Empty;
-                if (!string.IsNullOrEmpty(_rig.DataDirectory))
+                if (!string.IsNullOrEmpty(_rig.Image))
                 {
-                    var dataDirectory = _rig.DataDirectory.Replace('/', Path.DirectorySeparatorChar);
-                    var imagesDirectory = FileSystemHelper.GetFullPath("Database", "Rigs", dataDirectory, "Images");
-                    if (Directory.Exists(imagesDirectory))
+                    var image = _rig.Image.Replace('/', Path.DirectorySeparatorChar);
+                    var imagePath = FileSystemHelper.GetFullPath("Database", "Rigs", image);
+                    if (File.Exists(imagePath))
                     {
-                        var firstImage = Directory.EnumerateFiles(imagesDirectory).FirstOrDefault();
-                        if (!string.IsNullOrEmpty(firstImage))
-                        {
-                            RigImagePath = firstImage;
-                        }
+                        RigImagePath = imagePath;
                     }
                 }
 

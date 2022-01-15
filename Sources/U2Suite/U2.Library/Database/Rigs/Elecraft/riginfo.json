@@ -1,0 +1,123 @@
+[
+  {
+    "manufacturer": "Elecraft",
+    "name": "K1",
+    "modes": "CW",
+    "type": "Amateur HF transceiver",
+    "power": "QRP",
+    "dimensions": "? mm",
+    "frequency": "?-? m",
+    "image": "Elecraft/elecraft_k1.jpg",
+    "weight": "? Kg"
+  },
+  {
+    "manufacturer": "Elecraft",
+    "name": "K2",
+    "modes": "CW (SSB option)",
+    "type": "Amateur HF transceiver",
+    "power": "0.1-15 W",
+    "dimensions": "198*74*208 mm (7.8*2.9*8.2in)",
+    "frequency": "TX: 10-80 m (160 m option)RX: 10-80 m (160 m option)",
+    "image": "Elecraft/elecraft_k2.jpg",
+    "weight": "1.5 Kg (3.3 lb), without options"
+  },
+  {
+    "manufacturer": "Elecraft",
+    "name": "KX1",
+    "modes": "TX: CWRX: SSB/CW",
+    "type": "Amateur HF transceiver",
+    "power": "1-4 W",
+    "dimensions": "135*30*80 mm (5.32*1.18*3.15in)",
+    "frequency": "TX: 20 \u0026 40 mRX: 5-8.5 / 12-16.5 MHz",
+    "image": "Elecraft/elecraft_kx1.jpg",
+    "weight": "250 gr (8.82 oz), without options"
+  },
+  {
+    "manufacturer": "Elecraft",
+    "name": "KX3",
+    "modes": "AM/FM/LSB/USB/CW/Data (PSK31 \u0026 RTTY)",
+    "type": "Amateur HF/VHF transceiver",
+    "power": "0-12 W (depending on voltage, band and setting)",
+    "dimensions": "188*88*41 mm (7.4*3.5*1.6in)",
+    "frequency": "TX: 10-160 m \u002B WARC / 6 m (2 m option)RX: 0.31-32 / 44-54 MHz (144-148 MHz with 2 m option)",
+    "image": "Elecraft/elecraft_kx3.jpg",
+    "weight": "680 gr (1.5 lbs) without options"
+  },
+  {
+    "manufacturer": "Elecraft",
+    "name": "K2/100",
+    "modes": "SSB/CW",
+    "type": "Amateur HF transceiver",
+    "power": "0.1-100 W",
+    "dimensions": "? mm",
+    "frequency": "10-80 m (160 m option)",
+    "image": "Elecraft/elecraft_k2.jpg",
+    "weight": "? Kg"
+  },
+  {
+    "manufacturer": "Elecraft",
+    "name": "K3/10",
+    "modes": "AM/FM/SSB/CW",
+    "type": "Amateur HF/VHF transceiver",
+    "power": "0.1-10 / 0.1-10 W",
+    "dimensions": "? mm",
+    "frequency": "TX: 10-160 m \u002B WARC / 6 mRX: 0.5-30 / 50-54 MHz",
+    "image": "Elecraft/k3.jpg",
+    "weight": "? Kg"
+  },
+  {
+    "manufacturer": "Elecraft",
+    "name": "K3/100",
+    "modes": "AM/FM/SSB/CW",
+    "type": "Amateur HF/VHF transceiver",
+    "power": "Max 100 / 100 W",
+    "dimensions": "? mm",
+    "frequency": "TX: 10-160 m \u002B WARC / 6 mRX: 0.5-30 / 50-54 MHz",
+    "image": "Elecraft/k3.jpg",
+    "weight": "? Kg"
+  },
+  {
+    "manufacturer": "Elecraft",
+    "name": "K4",
+    "modes": "AM/FM/SSB/CW/Data",
+    "type": "Amateur HF/VHF(UHF) transceiver",
+    "power": "100 W",
+    "dimensions": "343*114*254 mm (13.5*4.5*10in)",
+    "frequency": "TX: 10-160 m \u002B WARC / 6 m (Plus optional 2 m/70 cm band module)RX: 0.1-54 MHz (Plus optional 2 m/70 cm band module)",
+    "image": "Elecraft/k4.jpg",
+    "weight": "4.54 Kg (10 lbs)"
+  },
+  {
+    "manufacturer": "Elecraft",
+    "name": "K4D",
+    "modes": "AM/FM/SSB/CW/Data",
+    "type": "Amateur HF/VHF(UHF) transceiver",
+    "power": "100 W",
+    "dimensions": "343*114*254 mm (13.5*4.5*10in)",
+    "frequency": "TX: 10-160 m \u002B WARC / 6 m (Plus optional 2 m/70 cm band module)RX: 0.1-54 MHz (Plus optional 2 m/70 cm band module)",
+    "image": "Elecraft/k4.jpg",
+    "weight": "4.54 Kg (10 lbs)"
+  },
+  {
+    "manufacturer": "Elecraft",
+    "name": "K4HD",
+    "modes": "AM/FM/SSB/CW/Data",
+    "type": "Amateur HF/VHF(UHF) transceiver",
+    "power": "100 W",
+    "dimensions": "343*114*254 mm (13.5*4.5*10in)",
+    "frequency": "TX: 10-160 m \u002B WARC / 6 m (Plus optional 2 m/70 cm band module)RX: 0.1-54 MHz (Plus optional 2 m/70 cm band module)",
+    "image": "Elecraft/k4.jpg",
+    "weight": "4.54 Kg (10 lbs)"
+  },
+  {
+    "manufacturer": "Elecraft",
+    "name": "KX2",
+    "modes": "SSB/CW/Data",
+    "type": "Amateur HF transceiver",
+    "power": "10 and 12 mMax 8 W\r\n\r\n\r\n15-80 mMax 10 W\r\n\r\n\r\nRecommended TX duty cycle: 50 % all modes",
+    "dimensions": "147*50*40 mm (5.8*2.8*1.5in)",
+    "frequency": "TX: 10-80 m \u002B WARCRX: 0.5-32 MHz (reduced sensitivity @ 0.5-3 MHz)",
+    "image": "Elecraft/kx2.jpg",
+    "weight": "370 gr (13 oz), without options"
+  }
+]

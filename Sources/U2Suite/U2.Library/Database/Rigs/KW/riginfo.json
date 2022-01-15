@@ -1,0 +1,189 @@
+[
+  {
+    "manufacturer": "KW",
+    "name": "K.W. Electronics - KW 2000",
+    "modes": "SSB/CW",
+    "type": "Amateur HF transceiver",
+    "power": "SSB: ~50 W PEP (100 W PEP input)\r\nCW: ~50 W (100 W input)",
+    "dimensions": "? mm (?in)",
+    "frequency": "10-160 m in 11 ranges",
+    "image": "KW/2000.jpg",
+    "weight": "? Kg (? lbs)"
+  },
+  {
+    "manufacturer": "KW",
+    "name": "K.W. Electronics - KW 2000A",
+    "modes": "SSB/CW",
+    "type": "Amateur HF transceiver",
+    "power": "SSB: ~100 W PEP (180 W PEP input)\r\nCW: ~100 W (150 W input)",
+    "dimensions": "355*160*336 mm (13.98*6.3*13.23in)",
+    "frequency": "10-160 m",
+    "image": "KW/kw2000a.jpg",
+    "weight": "? Kg (? lbs)"
+  },
+  {
+    "manufacturer": "KW",
+    "name": "K.W. Electronics - KW 2000B",
+    "modes": "SSB/CW",
+    "type": "Amateur HF transceiver",
+    "power": "SSB: ~100 W PEP (180 W PEP input)\r\nCW: ~100 W (150 W input)",
+    "dimensions": "355*160*336 mm (13.98*6.3*13.23in)",
+    "frequency": "10-160 m in eleven 200 KHz ranges:\r\n1.8-2.0 MHz\r\n3.5-3.7 MHz\r\n3.7-3.9 MHz\r\n7.0-7.2 MHz\r\n14.0-14.2 MHz\r\n14.2-14.4 MHz\r\n21.0-21.2 MHz\r\n21.3-21.5 MHz\r\n28.0-28.2 MHz\r\n28.4-28.6 MHz\r\n28.6-28.8 MHz",
+    "image": "KW/kw2000b.jpg",
+    "weight": "8.2 Kg (18 lbs)"
+  },
+  {
+    "manufacturer": "KW",
+    "name": "K.W. Electronics - KW 2000D",
+    "modes": "SSB/CW",
+    "type": "Amateur HF transceiver",
+    "power": "SSB: ~100 W PEP (180 W PEP input)\r\nCW: ~100 W (150 W input)",
+    "dimensions": "355*160*336 mm (13.98*6.3*13.23in)",
+    "frequency": "10-160 m in 500 KHz ranges",
+    "image": "KW/2000d.jpg",
+    "weight": "8.2 Kg (18 lbs)"
+  },
+  {
+    "manufacturer": "KW",
+    "name": "K.W. Electronics - KW 2000E",
+    "modes": "SSB/CW",
+    "type": "Amateur HF transceiver",
+    "power": "SSB: ~100 W PEP (180 W PEP input)\r\nCW: ~100 W (150 W input)",
+    "dimensions": "355*160*336 mm (13.98*6.3*13.23in)",
+    "frequency": "10-160 m in 500 KHz ranges",
+    "image": "KW/kw2000e.jpg",
+    "weight": "8.2 Kg (18 lbs)"
+  },
+  {
+    "manufacturer": "KW",
+    "name": "K.W. Electronics - KW 76",
+    "modes": "AM/CW",
+    "type": "HF receiver",
+    "power": null,
+    "dimensions": "145*170*315 mm (5.7*6.7*12.4in)",
+    "frequency": "10-160 m",
+    "image": "KW/76.jpg",
+    "weight": "4.5 Kg (9.92 lbs)"
+  },
+  {
+    "manufacturer": "KW",
+    "name": "K.W. Electronics - KW 77 Mark I",
+    "modes": "AM/SSB/CW",
+    "type": "HF receiver",
+    "power": null,
+    "dimensions": "? mm (?in)",
+    "frequency": "10-160 m",
+    "image": "KW/77.jpg",
+    "weight": "? Kg (? lbs)"
+  },
+  {
+    "manufacturer": "KW",
+    "name": "K.W. Electronics - KW 77 Mark II",
+    "modes": "AM/SSB/CW",
+    "type": "HF receiver",
+    "power": null,
+    "dimensions": "? mm (?in)",
+    "frequency": "10-160 m",
+    "image": "KW/77markii.jpg",
+    "weight": "? Kg (? lbs)"
+  },
+  {
+    "manufacturer": "KW",
+    "name": "K.W. Electronics - KW Atlanta",
+    "modes": "AM/SSB/CW",
+    "type": "Amateur HF transceiver",
+    "power": "SSB: ~250 W PEP (500 W PEP input)\r\nCW: ~175 W (350 W input)\r\nAM: ~60 W (125 W input)",
+    "dimensions": "? mm",
+    "frequency": "10-80 m",
+    "image": "KW/atlanta.jpg",
+    "weight": "? Kg"
+  },
+  {
+    "manufacturer": "KW",
+    "name": "K.W. Electronics - KW 201",
+    "modes": "AM/SSB/CW",
+    "type": "Amateur HF receiver",
+    "power": null,
+    "dimensions": "? mm (?in)",
+    "frequency": "10-160 m in eleven ranges",
+    "image": "KW/kw201.jpg",
+    "weight": "? Kg (? lbs)"
+  },
+  {
+    "manufacturer": "KW",
+    "name": "K.W. Electronics - KW 202",
+    "modes": "AM/SSB/CW",
+    "type": "Amateur HF receiver",
+    "power": null,
+    "dimensions": "? mm (?in)",
+    "frequency": "10-160 m in nine 500 KHz segments\r\n1.8-2.3 MHz\r\n3.5-4.0 MHz\r\n7.0-7.5 MHz\r\n14.0-14.5 MHz\r\n21.0-21.5 MHz\r\n28.0-28.5 MHz\r\n28.5-29.0 MHz\r\n29.0-29.5 MHz\r\n29.5-30.0 MHz",
+    "image": "KW/kw202.jpg",
+    "weight": "7.71 Kg (17 lbs)"
+  },
+  {
+    "manufacturer": "KW",
+    "name": "K.W. Electronics - KW Valiant",
+    "modes": "AM/CW",
+    "type": "Amateur HF transmitter",
+    "power": "AM: ~25 W (~8 W on 160 m)",
+    "dimensions": "305*159*241 mm (12*6.25*9.5in)",
+    "frequency": "10-80 m or 10-160 m (Depending on version)",
+    "image": "KW/valiant.jpg",
+    "weight": "7.26 Kg (16 lbs)"
+  },
+  {
+    "manufacturer": "KW",
+    "name": "K.W. Electronics - KW Vanguard",
+    "modes": "AM/CW",
+    "type": "Amateur HF transmitter",
+    "power": "AM: 50 W",
+    "dimensions": "? mm (?in)",
+    "frequency": "10-80 m",
+    "image": "KW/vanguard.jpg",
+    "weight": "? Kg (? lbs)"
+  },
+  {
+    "manufacturer": "KW",
+    "name": "K.W. Electronics - KW Vespa Mark I",
+    "modes": "SSB/CW",
+    "type": "Amateur HF transmitter",
+    "power": "~50 W",
+    "dimensions": "? mm (?in)",
+    "frequency": "10-160 m in 11 ranges",
+    "image": "KW/vespamarki.jpg",
+    "weight": "? Kg (? lbs)"
+  },
+  {
+    "manufacturer": "KW",
+    "name": "K.W. Electronics - KW Vespa Mark II",
+    "modes": "SSB/CW",
+    "type": "Amateur HF transmitter",
+    "power": "SSB: ~100 W PEP (220 W PEP input)",
+    "dimensions": "? mm (?in)",
+    "frequency": "10-160 m in 11 ranges",
+    "image": "KW/vespamarkii.jpg",
+    "weight": "? Kg (? lbs)"
+  },
+  {
+    "manufacturer": "KW",
+    "name": "K.W. Electronics - KW Viceroy Mark III",
+    "modes": "AM/SSB/CW",
+    "type": "Amateur HF transmitter",
+    "power": "AM: Max 50 WSSB: Max 100 WCW: Max 80 W",
+    "dimensions": "? mm (?in)",
+    "frequency": "10-80 m",
+    "image": "KW/viceroymarkiii.jpg",
+    "weight": "20 Kg (44.1 lbs)"
+  },
+  {
+    "manufacturer": "KW",
+    "name": "K.W. Electronics - KW Victor",
+    "modes": "AM/CW",
+    "type": "Amateur HF transmitter",
+    "power": "AM: 100 W",
+    "dimensions": "? mm (?in)",
+    "frequency": "10-80 m",
+    "image": "KW/victor.jpg",
+    "weight": "? Kg (? lbs)"
+  }
+]
