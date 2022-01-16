@@ -58,8 +58,7 @@ namespace U2.Logger
                     _currentFormData = new ApplicationFormData();
                     break;
                 case ApplicationButton.SaveButton:
-                    SaveQso();
-                    _currentFormData = new ApplicationFormData();
+                    ProcessSaveButton();
                     break;
                 default:
                     // unknown buttons are ignored
@@ -68,14 +67,30 @@ namespace U2.Logger
             }
         }
 
-        private void SaveQso()
+        private void ProcessSaveButton()
         {
-            throw new NotImplementedException();
+            if (CanSaveQso())
+            {
+                Messenger.Default.Send(new ExecuteCommandMessage(CommandToExecute.SaveQso, _currentFormData));
+                Messenger.Default.Send(new ExecuteCommandMessage(CommandToExecute.ClearTextInputs));
+                _currentFormData = new ApplicationFormData();
+            }
+        }
+
+        private bool CanSaveQso()
+        {
+            if (string.IsNullOrEmpty(_currentFormData.Callsign))
+            {
+                return false;
+            }
+
+            return true;
         }
 
         public LoggerMainWindowViewModel(Window owner)
         {
             Owner = owner;
+            _currentFormData = new ApplicationFormData();
         }
 
         public Window Owner { get; } = default!;

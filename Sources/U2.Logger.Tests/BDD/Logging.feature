@@ -14,3 +14,12 @@ Scenario: Wipe button clicked
 	And Field 'Rst Received' contains ''
 	And Field 'Operator' contains ''
 	And Field 'Comments' contains ''
+
+Scenario: Save button clicked when callsign is empty
+	Given All fields are not empty
+	And Field 'Callsign' contains ''
+	When User clicks the 'Save' button
+	Then Field 'Rst Sent' is not empty
+	And Field 'Rst Received' is not empty
+	And Field 'Operator' is not empty
+	And Field 'Comments' is not empty

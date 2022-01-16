@@ -150,5 +150,22 @@ namespace U2.Logger.Tests
             Assert.AreEqual(expectedFieldValue, value);
         }
 
+        [Given(@"All fields are not empty")]
+        public void GivenAllFieldsAreNotEmpty()
+        {
+            SetFieldValue(CallsignField, "UT8UU");
+            SetFieldValue(RstReceivedField, "589");
+            SetFieldValue(RstSentField, "599");
+            SetFieldValue(OperatorField, "Sergey");
+            SetFieldValue(CommentsField, "good signal");
+        }
+
+        [Then(@"Field '(.*)' is not empty")]
+        public void ThenFieldIsNotEmpty(string fieldName)
+        {
+            var fieldValue = GetFieldValue(fieldName);
+            Assert.IsFalse(string.IsNullOrEmpty(fieldValue), $"Field {fieldName} is empty.");
+        }
+
     }
 }
