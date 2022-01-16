@@ -4,6 +4,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:logger="clr-namespace:U2.Logger"
         mc:Ignorable="d" d:DesignWidth="850" d:DesignHeight="375"
+        Width="850" Height="375"
         x:Class="U2.Logger.LogContentWindow"
         Title="LogContentWindow">
 

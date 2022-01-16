@@ -53,22 +53,15 @@ namespace U2.Logger
 
         private void SaveQso(ApplicationFormData formData)
         {
-            var newRecord = formData.Id == 0;
-            LogRecordDbo record;
+            var record = Records.Find(formData.RecordId);
+            var newRecord = record == null;
 
             if (newRecord)
             {
                 record = new LogRecordDbo();
             }
-            else
-            {
-                record = Records.Find(formData.Id);
-                if (record == null)
-                {
-                    record = new LogRecordDbo();
-                    newRecord = true;
-                }
-            }
+
+            Debug.Assert(record != null);
 
             record.RecordId = formData.RecordId;
             record.Callsign = formData.Callsign;

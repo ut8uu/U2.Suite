@@ -14,6 +14,12 @@ namespace U2.Logger
 
         }
 
+        public LogContentWindowViewModel(LoggerDbContext dbContext)
+        {
+            this._dbContext = dbContext;
+            FullList = new ObservableCollection<LogRecordDbo>(_dbContext.Records);
+        }
+
         public string CloseButtonText { get; set; } = "Close";
 
         public string CallsignColumnHeader { get; set; } = "Callsign";
@@ -24,11 +30,6 @@ namespace U2.Logger
         public string RstReceivedColumnHeader { get; set; } = "Rcv";
         public string NameColumnHeader { get; set; } = "Name";
         public string CommentsColumnHeader { get; set; } = "Comments";
-
-        public LogContentWindowViewModel(LoggerDbContext dbContext)
-        {
-            this._dbContext = dbContext;
-        }
 
         public ObservableCollection<LogRecordDbo> FullList { get; set; } = default!;
         public ObservableCollection<LogRecordDbo> FilteredList { get; set; } = default!;

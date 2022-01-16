@@ -17,8 +17,6 @@ namespace U2.Logger
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
                 var window = new LoggerMainWindow();
-                var viewModel = new LoggerMainWindowViewModel(window);
-                window.DataContext = viewModel;
                 desktop.MainWindow = window;
             }
 

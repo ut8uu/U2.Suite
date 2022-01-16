@@ -40,4 +40,7 @@
       <DependentUpon>LoggerMainWindow.axaml</DependentUpon>
     </Compile>
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+  </ItemGroup>
 </Project>
