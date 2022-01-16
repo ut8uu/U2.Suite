@@ -12,6 +12,14 @@ namespace U2.Logger
 {
     public sealed class TextInputPanelViewModel : ViewModelBase
     {
+        bool _internalChange = false;
+
+        public TextInputPanelViewModel()
+        {
+            Messenger.Default.Register<ButtonClickedMessage>(this,
+                AcceptButtonClickedMessage);
+        }
+
         public string CallsignInputTitle { get; set; } = "Callsign";
         public string RstSentInputTitle { get; set; } = "Rst Sent";
         public string RstRvcdInputTitle { get; set; } = "Rst Rvcd";
@@ -26,9 +34,43 @@ namespace U2.Logger
         public string Operator { get; set; } = default!;
         public string Comments { get; set; } = default!;
 
+        private void AcceptButtonClickedMessage(ButtonClickedMessage message)
+        {
+            switch (message.Button)
+            {
+                case ApplicationButton.WipeButton:
+                    ClearAll();
+                    break;
+                case ApplicationButton.SaveButton:
+                    ClearAll();
+                    break;
+                default:
+                    // not supported buttons are ignored
+                    break;
+            }
+        }
+
+        private void ClearAll()
+        {
+            _internalChange = true;
+
+            Callsign = string.Empty;
+            RstSent = string.Empty;
+            RstRcvd = string.Empty;
+            Operator = string.Empty;
+            Comments = string.Empty;
+
+            _internalChange = false;
+        }
+
         protected override void OnPropertyChanged([CallerMemberName] string? propertyName = null)
         {
             base.OnPropertyChanged(propertyName);
+
+            if (_internalChange)
+            {
+                return;
+            }
 
             TextChangedMessage message;
             switch (propertyName)

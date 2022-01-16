@@ -50,7 +50,25 @@ namespace U2.Logger
             }
         }
 
-        private void AcceptButtonClickedMessage(ButtonClickedMessage obj)
+        private void AcceptButtonClickedMessage(ButtonClickedMessage message)
+        {
+            switch (message.Button)
+            {
+                case ApplicationButton.WipeButton:
+                    _currentFormData = new ApplicationFormData();
+                    break;
+                case ApplicationButton.SaveButton:
+                    SaveQso();
+                    _currentFormData = new ApplicationFormData();
+                    break;
+                default:
+                    // unknown buttons are ignored
+#warning TODO What about logging this?
+                    break;
+            }
+        }
+
+        private void SaveQso()
         {
             throw new NotImplementedException();
         }
