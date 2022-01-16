@@ -29,6 +29,9 @@
           <MenuItem Header="Open" Command="{Binding Open}" />
           <MenuItem Header="Save As" Command="{Binding Save}" />
         </MenuItem>
+        <MenuItem Header="View">
+          <MenuItem Header="Log" Command="{Binding ViewLog}"></MenuItem>
+        </MenuItem>
       </Menu>
 
       <StackPanel DockPanel.Dock="Top">
