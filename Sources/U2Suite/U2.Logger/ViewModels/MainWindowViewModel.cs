@@ -55,6 +55,7 @@ namespace U2.Logger
             switch (message.Button)
             {
                 case ApplicationButton.WipeButton:
+                    Messenger.Default.Send(new ExecuteCommandMessage(CommandToExecute.ClearTextInputs));
                     _currentFormData = new ApplicationFormData();
                     break;
                 case ApplicationButton.SaveButton:

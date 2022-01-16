@@ -14,7 +14,7 @@
     <StackPanel>
       <StackPanel Orientation="Horizontal">
         <Button Margin="3 1" Command="{Binding Wipe}" Content="{Binding WipeButtonTitle}"></Button>
-          <Button Margin="3 1" Command="{Binding Save}" Content="{Binding SaveButtonTitle}"></Button>
+          <Button IsDefault="True" Margin="3 1" Command="{Binding Save}" Content="{Binding SaveButtonTitle}"></Button>
       </StackPanel>
     </StackPanel>
   </Border>

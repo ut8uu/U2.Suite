@@ -16,31 +16,31 @@
       <Border Padding="5 0 0 0">
         <StackPanel Width="120">
           <TextBlock Text="{Binding CallsignInputTitle}" Classes="Caption"></TextBlock>
-          <TextBox Text="{Binding Path=Callsign}" Width="120"></TextBox>
+          <TextBox Text="{Binding Path=Callsign}" Width="120" Name="CallsignTextBox" Focusable="True"></TextBox>
         </StackPanel>
       </Border>
       <Border Padding="5 0 0 0">
         <StackPanel Width="80">
           <TextBlock Text="{Binding RstSentInputTitle}" Classes="Caption"></TextBlock>
-          <TextBox Text="{Binding Path=RstSent}" Width="80"></TextBox>
+          <TextBox Text="{Binding Path=RstSent}" Width="80" Name="RstSentTextBox" Focusable="True"></TextBox>
         </StackPanel>
       </Border>
       <Border Padding="5 0 0 0">
         <StackPanel Width="80">
-          <TextBlock Text="{Binding RstRvcdInputTitle}" Classes="Caption"></TextBlock>
-          <TextBox Text="{Binding Path=RstRvcd}" Width="80"></TextBox>
+          <TextBlock Text="{Binding RstRcvdInputTitle}" Classes="Caption"></TextBlock>
+          <TextBox Text="{Binding Path=RstRcvd}" Width="80" Name="RstRcvdTextBox" Focusable="True"></TextBox>
         </StackPanel>
       </Border>
       <Border Padding="5 0 0 0">
         <StackPanel Width="80">
           <TextBlock Text="{Binding OperatorInputTitle}" Classes="Caption"></TextBlock>
-          <TextBox Text="{Binding Path=Operator}" Width="80"></TextBox>
+          <TextBox Text="{Binding Path=Operator}" Width="80" Name="OperatorTextBox" Focusable="True"></TextBox>
         </StackPanel>
       </Border>
       <Border Padding="5 0 0 0">
         <StackPanel Width="150">
           <TextBlock Text="{Binding CommentsInputTitle}" Classes="Caption"></TextBlock>
-          <TextBox Text="{Binding Path=Comments}" Width="150"></TextBox>
+          <TextBox Text="{Binding Path=Comments}" Width="150" Name="CommentsTextBox" Focusable="True"></TextBox>
         </StackPanel>
       </Border>
     </StackPanel>

@@ -18,14 +18,21 @@ namespace U2.Logger
         {
             Messenger.Default.Register<ButtonClickedMessage>(this,
                 AcceptButtonClickedMessage);
+            Messenger.Default.Register<ExecuteCommandMessage>(this,
+                AcceptExecuteCommandMessage);
         }
+
+        public const string CallsignTextBox = nameof(CallsignTextBox);
+        public const string RstSentTextBox = nameof(RstSentTextBox);
+        public const string RstRcvdTextBox = nameof(RstRcvdTextBox);
+        public const string OperatorTextBox = nameof(OperatorTextBox);
+        public const string CommentsTextBox = nameof(CommentsTextBox);
 
         public string CallsignInputTitle { get; set; } = "Callsign";
         public string RstSentInputTitle { get; set; } = "Rst Sent";
-        public string RstRvcdInputTitle { get; set; } = "Rst Rvcd";
+        public string RstRcvdInputTitle { get; set; } = "Rst Received";
         public string OperatorInputTitle { get; set; } = "Operator";
         public string CommentsInputTitle { get; set; } = "Comments";
-
 
         public Window Owner { get; set; } = default!;
         public string Callsign { get; set; } = default!;
@@ -34,19 +41,13 @@ namespace U2.Logger
         public string Operator { get; set; } = default!;
         public string Comments { get; set; } = default!;
 
-        private void AcceptButtonClickedMessage(ButtonClickedMessage message)
+        public ApplicationTextBox FocusedTextBox { get; set; } = ApplicationTextBox.Callsign;
+
+        private void AcceptExecuteCommandMessage(ExecuteCommandMessage message)
         {
-            switch (message.Button)
+            if (message.CommandToExecute == CommandToExecute.ClearTextInputs)
             {
-                case ApplicationButton.WipeButton:
-                    ClearAll();
-                    break;
-                case ApplicationButton.SaveButton:
-                    ClearAll();
-                    break;
-                default:
-                    // not supported buttons are ignored
-                    break;
+                ClearAll();
             }
         }
 
