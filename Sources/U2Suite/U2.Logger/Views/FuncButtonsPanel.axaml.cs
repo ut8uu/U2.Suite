@@ -1,7 +1,6 @@
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
-using U2.Logger.ViewModels;
 
 namespace U2.Logger
 {

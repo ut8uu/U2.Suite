@@ -4,8 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Avalonia.Controls;
+using GalaSoft.MvvmLight.Messaging;
 
-namespace U2.Logger.ViewModels
+namespace U2.Logger
 {
     public sealed class FuncButtonsPanelViewModel
     {
@@ -16,11 +17,12 @@ namespace U2.Logger.ViewModels
 
         public void Save()
         {
-
+            Messenger.Default.Send(new ButtonClickedMessage(this, ApplicationButton.SaveButton));
         }
+
         public void Wipe()
         {
-
+            Messenger.Default.Send(new ButtonClickedMessage(this, ApplicationButton.WipeButton));
         }
     }
 }
