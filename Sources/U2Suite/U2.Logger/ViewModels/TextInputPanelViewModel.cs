@@ -30,35 +30,28 @@ namespace U2.Logger
         {
             base.OnPropertyChanged(propertyName);
 
-            var textBox = ApplicationTextBox.Callsign;
-            var value = Callsign;
+            TextChangedMessage message;
             switch (propertyName)
             {
                 case nameof(Callsign):
-                    textBox = ApplicationTextBox.Callsign;
-                    value = Callsign;
+                    message = new TextChangedMessage(this, ApplicationTextBox.Callsign, Callsign);
                     break;
                 case nameof(RstRcvd):
-                    textBox = ApplicationTextBox.RstReceived;
-                    value = RstRcvd;
+                    message = new TextChangedMessage(this, ApplicationTextBox.RstReceived, RstRcvd);
                     break;
                 case nameof(RstSent):
-                    textBox = ApplicationTextBox.RstSent;
-                    value = RstSent;
+                    message = new TextChangedMessage(this, ApplicationTextBox.RstSent, RstSent);
                     break;
                 case nameof(Operator):
-                    textBox = ApplicationTextBox.Operator;
-                    value = Operator;
+                    message = new TextChangedMessage(this, ApplicationTextBox.Operator, Operator);
                     break;
                 case nameof(Comments):
-                    textBox = ApplicationTextBox.Comments;
-                    value = Comments;
+                    message = new TextChangedMessage(this, ApplicationTextBox.Comments, Comments);
                     break;
                 default:
                     return;
             }
 
-            var message = new TextChangedMessage(this, textBox, value);
             Messenger.Default.Send(message);
         }
     }
