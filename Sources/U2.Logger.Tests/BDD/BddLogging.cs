@@ -172,6 +172,7 @@ namespace U2.Logger.Tests
         {
             var db = _loggerVM._dbContext;
             db.Records.RemoveRange(db.Records);
+            db.SaveChanges();
 
             Assert.AreEqual(0, db.Records.Count());
         }
