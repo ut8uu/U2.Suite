@@ -18,9 +18,10 @@ namespace U2.Logger.Migrations
 
             modelBuilder.Entity("U2.Logger.LogRecordDbo", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("RecordId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(36);
 
                     b.Property<string>("Callsign")
                         .IsRequired()
@@ -43,9 +44,6 @@ namespace U2.Logger.Migrations
                         .HasColumnType("TEXT")
                         .HasMaxLength(64);
 
-                    b.Property<Guid>("RecordId")
-                        .HasColumnType("TEXT");
-
                     b.Property<string>("RstReceived")
                         .IsRequired()
                         .HasColumnType("TEXT")
@@ -56,7 +54,7 @@ namespace U2.Logger.Migrations
                         .HasColumnType("TEXT")
                         .HasMaxLength(8);
 
-                    b.HasKey("Id");
+                    b.HasKey("RecordId");
 
                     b.ToTable("Records");
                 });

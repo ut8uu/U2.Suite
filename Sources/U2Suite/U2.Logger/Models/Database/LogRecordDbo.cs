@@ -6,7 +6,7 @@ namespace U2.Logger
     public class LogRecordDbo
     {
         [Key]
-        public int Id { get; set; }
+        [StringLength(36)]
         public Guid RecordId { get; set; }
         [StringLength(50)]
         public string Callsign { get; set; } = default!;
