@@ -11,9 +11,7 @@ namespace U2.Logger.Migrations
                 name: "Records",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    RecordId = table.Column<Guid>(nullable: false),
+                    RecordId = table.Column<Guid>(maxLength: 36, nullable: false),
                     Callsign = table.Column<string>(maxLength: 50, nullable: false),
                     DateTime = table.Column<DateTime>(nullable: false),
                     Frequency = table.Column<double>(nullable: false),
@@ -24,7 +22,7 @@ namespace U2.Logger.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Records", x => x.Id);
+                    table.PrimaryKey("PK_Records", x => x.RecordId);
                 });
         }
 

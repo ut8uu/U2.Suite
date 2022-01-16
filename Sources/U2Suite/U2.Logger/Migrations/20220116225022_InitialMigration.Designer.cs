@@ -9,7 +9,7 @@ using U2.Logger;
 namespace U2.Logger.Migrations
 {
     [DbContext(typeof(LoggerDbContext))]
-    [Migration("20220116171046_InitialMigration")]
+    [Migration("20220116225022_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -20,9 +20,10 @@ namespace U2.Logger.Migrations
 
             modelBuilder.Entity("U2.Logger.LogRecordDbo", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("RecordId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(36);
 
                     b.Property<string>("Callsign")
                         .IsRequired()
@@ -45,9 +46,6 @@ namespace U2.Logger.Migrations
                         .HasColumnType("TEXT")
                         .HasMaxLength(64);
 
-                    b.Property<Guid>("RecordId")
-                        .HasColumnType("TEXT");
-
                     b.Property<string>("RstReceived")
                         .IsRequired()
                         .HasColumnType("TEXT")
@@ -58,7 +56,7 @@ namespace U2.Logger.Migrations
                         .HasColumnType("TEXT")
                         .HasMaxLength(8);
 
-                    b.HasKey("Id");
+                    b.HasKey("RecordId");
 
                     b.ToTable("Records");
                 });
