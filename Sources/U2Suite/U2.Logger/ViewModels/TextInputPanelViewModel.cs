@@ -12,15 +12,10 @@ namespace U2.Logger
 {
     public sealed class TextInputPanelViewModel : ViewModelBase
     {
-        [PropertyChanged.DoNotNotify]
         public string CallsignInputTitle { get; set; } = "Callsign";
-        [PropertyChanged.DoNotNotify]
         public string RstSentInputTitle { get; set; } = "Rst Sent";
-        [PropertyChanged.DoNotNotify]
         public string RstRvcdInputTitle { get; set; } = "Rst Rvcd";
-        [PropertyChanged.DoNotNotify]
         public string OperatorInputTitle { get; set; } = "Operator";
-        [PropertyChanged.DoNotNotify]
         public string CommentsInputTitle { get; set; } = "Comments";
 
 
