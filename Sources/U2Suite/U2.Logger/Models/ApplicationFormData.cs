@@ -4,6 +4,8 @@ namespace U2.Logger
 {
     public class ApplicationFormData
     {
+        private int _id;
+        private readonly Guid _recordId;
         private string _callsign = string.Empty;
         private string _operator = string.Empty;
         private string _rstSent = string.Empty;
@@ -13,6 +15,11 @@ namespace U2.Logger
         private string _band = string.Empty;
         private float _freqKhz = 0f;
         private string _mode = string.Empty;
+
+        public ApplicationFormData()
+        {
+            _recordId = Guid.NewGuid();
+        }
 
         public string Callsign
         {
@@ -105,6 +112,10 @@ namespace U2.Logger
         }
 
         public bool Modified { get; set; }
+
+        public Guid RecordId => _recordId;
+
+        public int Id { get => _id; set => _id = value; }
 
         public void Clear()
         {

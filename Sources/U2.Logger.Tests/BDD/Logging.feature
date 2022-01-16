@@ -23,3 +23,12 @@ Scenario: Save button clicked when callsign is empty
 	And Field 'Rst Received' is not empty
 	And Field 'Operator' is not empty
 	And Field 'Comments' is not empty
+
+Scenario: Save button clicked on correct data
+	Given All fields are not empty
+	And Log is empty
+	When User clicks the 'Save' button
+	Then All fields are empty
+	And Log contains 1 record
+
+

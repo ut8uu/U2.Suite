@@ -167,5 +167,30 @@ namespace U2.Logger.Tests
             Assert.IsFalse(string.IsNullOrEmpty(fieldValue), $"Field {fieldName} is empty.");
         }
 
+        [Given(@"Log is empty")]
+        public void GivenLogIsEmpty()
+        {
+            var db = _loggerVM._dbContext;
+            db.Records.RemoveRange(db.Records);
+
+            Assert.AreEqual(0, db.Records.Count());
+        }
+
+        [Then(@"All fields are empty")]
+        public void ThenAllFieldsAreEmpty()
+        {
+            Assert.IsTrue(string.IsNullOrEmpty(GetFieldValue(CallsignField)));
+            Assert.IsTrue(string.IsNullOrEmpty(GetFieldValue(RstReceivedField)));
+            Assert.IsTrue(string.IsNullOrEmpty(GetFieldValue(RstSentField)));
+            Assert.IsTrue(string.IsNullOrEmpty(GetFieldValue(OperatorField)));
+            Assert.IsTrue(string.IsNullOrEmpty(GetFieldValue(CommentsField)));
+        }
+
+        [Then(@"Log contains (.*) record")]
+        public void ThenLogContainsRecord(int expectedNumberOfRecords)
+        {
+            Assert.AreEqual(expectedNumberOfRecords, _loggerVM._dbContext.Records.Count());
+        }
+
     }
 }

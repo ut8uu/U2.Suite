@@ -13,6 +13,7 @@ namespace U2.Logger
         private TextInputPanel _textInputs = default!;
         private FuncButtonsPanel _funcButtonsPanel;
         internal ApplicationTextBox? _selectedTextBox = null;
+        private LoggerMainWindowViewModel _loggerViewModel = null;
 
         public LoggerMainWindow()
         {
@@ -20,6 +21,9 @@ namespace U2.Logger
 #if DEBUG
             this.AttachDevTools();
 #endif
+
+            _loggerViewModel = new LoggerMainWindowViewModel();
+            this.DataContext = _loggerViewModel;
 
             _textInputs = this.FindControl<TextInputPanel>("TextInputs");
             _textInputs.Owner = this;

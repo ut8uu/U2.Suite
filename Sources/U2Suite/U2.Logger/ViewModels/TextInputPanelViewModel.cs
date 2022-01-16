@@ -16,8 +16,6 @@ namespace U2.Logger
 
         public TextInputPanelViewModel()
         {
-            Messenger.Default.Register<ButtonClickedMessage>(this,
-                AcceptButtonClickedMessage);
             Messenger.Default.Register<ExecuteCommandMessage>(this,
                 AcceptExecuteCommandMessage);
         }

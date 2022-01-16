@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Text.Json;
+using GalaSoft.MvvmLight.Messaging;
 using Microsoft.EntityFrameworkCore;
 using U2.Core;
 
@@ -14,7 +16,11 @@ namespace U2.Logger
 
         public LoggerDbContext()
         {
-            _databasePath = FileSystemHelper.GetFullPath("Logger", DataBaseName);
+            var dbDirectory = FileSystemHelper.GetFullPath("Database", "Logger");
+            Directory.CreateDirectory(dbDirectory);
+            _databasePath = Path.Combine(dbDirectory, DataBaseName);
+
+            Messenger.Default.Register<ExecuteCommandMessage>(this, AcceptExecuteCommandMessage);
         }
 
         public DbSet<LogRecordDbo> Records { get; set; }
@@ -32,6 +38,53 @@ namespace U2.Logger
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+        }
+
+        private void AcceptExecuteCommandMessage(ExecuteCommandMessage message)
+        {
+            if (message.CommandToExecute == CommandToExecute.SaveQso)
+            {
+                if (message.CommandParameters is ApplicationFormData formData)
+                {
+                    SaveQso(formData);
+                }
+            }
+        }
+
+        private void SaveQso(ApplicationFormData formData)
+        {
+            var newRecord = formData.Id == 0;
+            LogRecordDbo record;
+
+            if (newRecord)
+            {
+                record = new LogRecordDbo();
+            }
+            else
+            {
+                record = Records.Find(formData.Id);
+                if (record == null)
+                {
+                    record = new LogRecordDbo();
+                    newRecord = true;
+                }
+            }
+
+            record.RecordId = formData.RecordId;
+            record.Callsign = formData.Callsign;
+            record.Comments = formData.Comments ?? string.Empty;
+            record.DateTime = formData.DateTime;
+            record.RstReceived = formData.RstRcvd;
+            record.RstSent = formData.RstSent;
+            record.Frequency = formData.FreqKhz;
+            record.Operator = formData.Operator;
+
+            if (newRecord)
+            {
+                Records.Add(record);
+            }
+
+            this.SaveChanges();
         }
     }
 }

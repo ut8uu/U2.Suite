@@ -2,6 +2,7 @@ using System;
 using System.Runtime.CompilerServices;
 using Avalonia.Controls;
 using GalaSoft.MvvmLight.Messaging;
+using Microsoft.EntityFrameworkCore;
 
 [assembly: InternalsVisibleTo("U2.Logger.Tests")]
 namespace U2.Logger
@@ -9,6 +10,7 @@ namespace U2.Logger
     public class LoggerMainWindowViewModel : ViewModelBase
     {
         internal ApplicationFormData _currentFormData;
+        internal LoggerDbContext _dbContext;
 
         public LoggerMainWindowViewModel()
         {
@@ -16,6 +18,19 @@ namespace U2.Logger
                 AcceptButtonClickedMessage);
             Messenger.Default.Register<TextChangedMessage>(this,
                 AcceptTextChangedMessage);
+
+            _dbContext = new LoggerDbContext();
+            try
+            {
+                _dbContext.Database.Migrate();
+            }
+            catch (Exception ex)
+            { 
+                if (ex != null)
+                {
+
+                }
+            }
         }
 
         private void AcceptTextChangedMessage(TextChangedMessage message)
