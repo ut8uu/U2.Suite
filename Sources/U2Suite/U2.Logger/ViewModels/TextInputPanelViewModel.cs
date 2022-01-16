@@ -27,7 +27,7 @@ namespace U2.Logger
         public Window Owner { get; set; } = default!;
         public string Callsign { get; set; } = default!;
         public string RstSent { get; set; } = default!;
-        public string RstRvcd { get; set; } = default!;
+        public string RstRcvd { get; set; } = default!;
         public string Operator { get; set; } = default!;
         public string Comments { get; set; } = default!;
 
@@ -43,9 +43,9 @@ namespace U2.Logger
                     textBox = ApplicationTextBox.Callsign;
                     value = Callsign;
                     break;
-                case nameof(RstRvcd):
+                case nameof(RstRcvd):
                     textBox = ApplicationTextBox.RstReceived;
-                    value = RstRvcd;
+                    value = RstRcvd;
                     break;
                 case nameof(RstSent):
                     textBox = ApplicationTextBox.RstSent;
@@ -63,12 +63,7 @@ namespace U2.Logger
                     return;
             }
 
-            var message = new TextChangedMessage
-            {
-                NewValue = value,
-                TextBox = textBox,
-                Sender = this
-            };
+            var message = new TextChangedMessage(this, textBox, value);
             Messenger.Default.Send(message);
         }
     }

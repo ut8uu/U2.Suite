@@ -45,7 +45,7 @@ namespace U2.Logger.Tests
                     model.Operator = expectedValue;
                     break;
                 case ApplicationTextBox.RstReceived:
-                    model.RstRvcd = expectedValue;
+                    model.RstRcvd = expectedValue;
                     break;
                 case ApplicationTextBox.RstSent:
                     model.RstSent = expectedValue;
