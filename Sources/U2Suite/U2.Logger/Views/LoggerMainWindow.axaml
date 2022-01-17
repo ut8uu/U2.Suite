@@ -31,7 +31,7 @@
         </MenuItem>
         <MenuItem Header="View">
           <MenuItem Header="Log" Command="{Binding ViewLog}"></MenuItem>
-            <MenuItem Header="Settings" Command="{Binding ViewSettings}"></MenuItem>
+          <MenuItem Header="Settings" Command="{Binding ViewSettings}"></MenuItem>
         </MenuItem>
       </Menu>
 

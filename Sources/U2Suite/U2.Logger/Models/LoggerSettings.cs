@@ -12,9 +12,16 @@ namespace U2.Logger.Models
 
         private readonly LoggerDbContext _dbContext;
 
-        public LoggerSettings(LoggerDbContext dbContext)
+        public static LoggerSettings Instance { get; }
+
+        static LoggerSettings()
         {
-            _dbContext = dbContext;
+            Instance = new LoggerSettings();
+        }
+
+        private LoggerSettings()
+        {
+            _dbContext = new LoggerDbContext();
         }
 
         private object GetSettingValue(string settingId, [CanBeNull] object defaultValue = null)
