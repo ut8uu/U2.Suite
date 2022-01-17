@@ -19,6 +19,9 @@ namespace U2.Logger
                 AcceptButtonClickedMessage);
             Messenger.Default.Register<TextChangedMessage>(this,
                 AcceptTextChangedMessage);
+            Messenger.Default.Register<ExecuteCommandMessage>(this, 
+                AcceptExecuteCommandMessage);
+
 
             _dbContext = new LoggerDbContext();
             try
@@ -116,6 +119,17 @@ namespace U2.Logger
         {
             var logWindow = new LogContentWindow();
             logWindow.Show(_owner);
+        }
+
+        private void AcceptExecuteCommandMessage(ExecuteCommandMessage message)
+        {
+            if (message.CommandToExecute == CommandToExecute.SaveQso)
+            {
+                if (message.CommandParameters is ApplicationFormData formData)
+                {
+                    _dbContext.SaveQso(formData);
+                }
+            }
         }
     }
 }

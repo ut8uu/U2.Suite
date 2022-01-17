@@ -19,8 +19,6 @@ namespace U2.Logger
             var dbDirectory = FileSystemHelper.GetFullPath("Database", "Logger");
             Directory.CreateDirectory(dbDirectory);
             _databasePath = Path.Combine(dbDirectory, DataBaseName);
-
-            Messenger.Default.Register<ExecuteCommandMessage>(this, AcceptExecuteCommandMessage);
         }
 
         public DbSet<LogRecordDbo> Records { get; set; }
@@ -40,18 +38,7 @@ namespace U2.Logger
             base.OnModelCreating(modelBuilder);
         }
 
-        private void AcceptExecuteCommandMessage(ExecuteCommandMessage message)
-        {
-            if (message.CommandToExecute == CommandToExecute.SaveQso)
-            {
-                if (message.CommandParameters is ApplicationFormData formData)
-                {
-                    SaveQso(formData);
-                }
-            }
-        }
-
-        private void SaveQso(ApplicationFormData formData)
+        public void SaveQso(ApplicationFormData formData)
         {
             var record = Records.Find(formData.RecordId);
             var newRecord = record == null;
