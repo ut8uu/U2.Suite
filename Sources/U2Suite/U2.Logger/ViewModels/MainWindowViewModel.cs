@@ -11,6 +11,7 @@ namespace U2.Logger
     {
         internal ApplicationFormData _currentFormData;
         internal LoggerDbContext _dbContext;
+
         private Window _owner;
 
         public LoggerMainWindowViewModel()
@@ -36,6 +37,15 @@ namespace U2.Logger
                 }
             }
         }
+
+        public Window Owner
+        {
+            get => _owner;
+            set => _owner = value;
+        }
+
+        public string StatusText { get; set; } = default!;
+
 
         public void SetOwner(Window owner)
         {
@@ -112,13 +122,16 @@ namespace U2.Logger
             return true;
         }
 
-        public Window Owner { get; set; } = default!;
-        public string StatusText { get; set; } = default!;
-
         public void ViewLog()
         {
             var logWindow = new LogContentWindow();
             logWindow.Show(_owner);
+        }
+
+        public void ViewSettings()
+        {
+            var settingsWindow = new LoggerSettingsWindow();
+            settingsWindow.ShowDialog(Owner);
         }
 
         private void AcceptExecuteCommandMessage(ExecuteCommandMessage message)

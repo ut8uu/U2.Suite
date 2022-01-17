@@ -39,6 +39,9 @@
     <Compile Update="Views\LoggerMainWindow.axaml.cs">
       <DependentUpon>LoggerMainWindow.axaml</DependentUpon>
     </Compile>
+    <Compile Update="Views\LoggerSettingsWindow.axaml.cs">
+      <DependentUpon>LoggerSettingsWindow.axaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Migrations\" />
