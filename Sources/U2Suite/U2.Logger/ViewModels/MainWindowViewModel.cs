@@ -14,7 +14,6 @@ namespace U2.Logger
         internal LoggerDbContext _dbContext;
 
         private Window _owner;
-        private LogContentWindow _logWindow;
 
         public LoggerMainWindowViewModel()
         {
@@ -120,12 +119,8 @@ namespace U2.Logger
 
         public void ViewLog()
         {
-            if (_logWindow == null)
-            {
-                _logWindow = new LogContentWindow();
-            }
-            _logWindow.Show(_owner);
-            LoggerSettings.Instance.ShowLogWindow = true;
+            var logWindow = new LogContentWindow();
+            logWindow.Show(_owner);
         }
 
         public void ViewSettings()
