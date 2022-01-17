@@ -12,6 +12,6 @@ namespace U2.Logger.Models.Database
         public string SettingId { get; set; } = default!;
 
         [StringLength(36)] 
-        public object Value { get; set; } = default!;
+        public string Value { get; set; } = default!;
     }
 }

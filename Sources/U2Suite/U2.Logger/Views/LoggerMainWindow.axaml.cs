@@ -23,7 +23,7 @@ namespace U2.Logger
 #endif
 
             _loggerViewModel = new LoggerMainWindowViewModel();
-            _loggerViewModel.SetOwner(this);
+            _loggerViewModel.Owner = this;
             this.DataContext = _loggerViewModel;
 
             _textInputs = this.FindControl<TextInputPanel>("TextInputs");

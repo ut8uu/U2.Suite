@@ -24,7 +24,7 @@ namespace U2.Logger.Models
             _dbContext = new LoggerDbContext();
         }
 
-        private object GetSettingValue(string settingId, [CanBeNull] object defaultValue = null)
+        private string GetSettingValue(string settingId, [CanBeNull] string defaultValue = null)
         {
             var setting = _dbContext.Settings.Find(settingId);
             if (setting == null)
@@ -41,7 +41,7 @@ namespace U2.Logger.Models
             return setting.Value;
         }
 
-        private void SetSettingValue(string settingId, object value)
+        private void SetSettingValue(string settingId, string value)
         {
             var setting = _dbContext.Settings.Find(settingId);
             if (setting == null)
@@ -64,8 +64,8 @@ namespace U2.Logger.Models
 
         public bool ShowLogWindow
         {
-            get => (bool) GetSettingValue(ShowLogWindowField);
-            set => SetSettingValue(ShowLogWindowField, value);
+            get => bool.Parse(GetSettingValue(ShowLogWindowField));
+            set => SetSettingValue(ShowLogWindowField, value.ToString());
         }
     }
 }

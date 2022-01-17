@@ -24,12 +24,27 @@ namespace U2.Logger.Migrations
                 {
                     table.PrimaryKey("PK_Records", x => x.RecordId);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "Settings",
+                columns: table => new
+                {
+                    SettingId = table.Column<string>(maxLength: 36, nullable: false),
+                    Value = table.Column<string>(maxLength: 36, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Settings", x => x.SettingId);
+                });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
                 name: "Records");
+
+            migrationBuilder.DropTable(
+                name: "Settings");
         }
     }
 }

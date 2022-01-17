@@ -3,6 +3,7 @@ using System.Runtime.CompilerServices;
 using Avalonia.Controls;
 using GalaSoft.MvvmLight.Messaging;
 using Microsoft.EntityFrameworkCore;
+using U2.Logger.Models;
 
 [assembly: InternalsVisibleTo("U2.Logger.Tests")]
 namespace U2.Logger
@@ -13,6 +14,7 @@ namespace U2.Logger
         internal LoggerDbContext _dbContext;
 
         private Window _owner;
+        private LogContentWindow _logWindow;
 
         public LoggerMainWindowViewModel()
         {
@@ -45,12 +47,6 @@ namespace U2.Logger
         }
 
         public string StatusText { get; set; } = default!;
-
-
-        public void SetOwner(Window owner)
-        {
-            _owner = owner;
-        }
 
         private void AcceptTextChangedMessage(TextChangedMessage message)
         {
@@ -124,8 +120,12 @@ namespace U2.Logger
 
         public void ViewLog()
         {
-            var logWindow = new LogContentWindow();
-            logWindow.Show(_owner);
+            if (_logWindow == null)
+            {
+                _logWindow = new LogContentWindow();
+            }
+            _logWindow.Show(_owner);
+            LoggerSettings.Instance.ShowLogWindow = true;
         }
 
         public void ViewSettings()
