@@ -1,0 +1,55 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:logger="clr-namespace:U2.Logger"
+        mc:Ignorable="d" d:DesignWidth="850" d:DesignHeight="375"
+        Width="850" Height="375"
+        x:Class="U2.Logger.LogContentWindow"
+        Title="LogContentWindow">
+
+  <Design.DataContext>
+    <logger:LogContentWindowViewModel/>
+  </Design.DataContext>
+
+  <Border Padding="2">
+    <DockPanel HorizontalAlignment="Stretch" VerticalAlignment="Top">
+      <StackPanel Height="60" DockPanel.Dock="Bottom" Orientation="Horizontal">
+        <Button Name="CloseButton" Content="{Binding CloseButtonText}"></Button>
+      </StackPanel>
+      <DataGrid Name="MainGrid" DockPanel.Dock="Top" Height="300"
+                ScrollViewer.VerticalScrollBarVisibility="Auto"
+                Items="{Binding FullList, Mode=OneWay}"
+                AutoGenerateColumns="False"
+                SelectionMode="Single"
+                >
+        <DataGrid.Columns>
+          <DataGridTextColumn Header="{Binding Path=TimestampColumnHeader}"
+                              Binding="{Binding DateTime}"
+                              Width="150"/>
+          <DataGridTextColumn Header="{Binding Path=CallsignColumnHeader}"
+                              Binding="{Binding Callsign}"
+                              Width="150"/>
+          <DataGridTextColumn Header="{Binding Path=FrequencyColumnHeader}"
+                              Binding="{Binding FreqKhz}"
+                              Width="100"/>
+          <DataGridTextColumn Header="{Binding Path=ModeColumnHeader}"
+                              Binding="{Binding Mode}"
+                              Width="70"/>
+          <DataGridTextColumn Header="{Binding Path=RstSentColumnHeader}"
+                              Binding="{Binding RstSent}"
+                              Width="70"/>
+          <DataGridTextColumn Header="{Binding Path=RstReceivedColumnHeader}"
+                              Binding="{Binding RstReceived}"
+                              Width="70"/>
+          <DataGridTextColumn Header="{Binding Path=NameColumnHeader}"
+                              Binding="{Binding Operator}"
+                              Width="100"/>
+          <DataGridTextColumn Header="{Binding Path=CommentsColumnHeader}"
+                              Binding="{Binding Comments}"
+                              Width="100"/>
+        </DataGrid.Columns>
+      </DataGrid>
+    </DockPanel>
+  </Border>
+</Window>

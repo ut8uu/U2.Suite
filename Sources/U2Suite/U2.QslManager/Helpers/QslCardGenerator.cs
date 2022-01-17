@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing.Imaging;
-using System.Text;
-using Avalonia.Media;
-using Avalonia;
-using Avalonia.Media.Imaging;
 using System.IO;
+using Avalonia;
+using Avalonia.Media;
+using Avalonia.Media.Imaging;
 
 namespace U2.QslManager.Helpers
 {
@@ -27,7 +25,7 @@ namespace U2.QslManager.Helpers
             ctxi.Clear(default);
             if (!string.IsNullOrEmpty(design.BackgroundColor))
             {
-                ctx.FillRectangle(Brush.Parse(design.BackgroundColor), 
+                ctx.FillRectangle(Brush.Parse(design.BackgroundColor),
                     new Rect(0, 0, cardWidth, cardHeight));
             }
 
@@ -40,8 +38,8 @@ namespace U2.QslManager.Helpers
         }
 
         private static void DrawBackgroundImage(
-            DrawingContext ctx, 
-            QslCardFieldsModel fields, 
+            DrawingContext ctx,
+            QslCardFieldsModel fields,
             QslCardDesign design)
         {
             if (string.IsNullOrEmpty(fields.BackgroundImage))
@@ -68,7 +66,7 @@ namespace U2.QslManager.Helpers
                 bitmapData.Stride);
             bitmapTmp.UnlockBits(bitmapData);
             bitmapTmp.Dispose();
-            
+
             var srcW = avaloniaBitmap.Size.Width;
             var srcH = avaloniaBitmap.Size.Height;
             var scale0 = srcW / srcH;
@@ -220,8 +218,8 @@ namespace U2.QslManager.Helpers
             }
             var designElement = design.Elements.GetByName(elementName);
             DrawingHelper.DrawText(ctx, design.DensityDpmm,
-                $"{designElement.ElementTitle}{text}", 
-                designElement.Font.Name, 
+                $"{designElement.ElementTitle}{text}",
+                designElement.Font.Name,
                 designElement.Font.Size * 1.7,
                 designElement.StartPositionMm.X, designElement.StartPositionMm.Y,
                 designElement.Font.Color,

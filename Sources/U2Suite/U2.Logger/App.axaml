@@ -1,0 +1,17 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="using:U2.Logger"
+             x:Class="U2.Logger.App">
+    <Application.DataTemplates>
+        <local:ViewLocator/>
+    </Application.DataTemplates>
+
+    <Application.Styles>
+      <!--<StyleInclude Source="avares://Citrus.Avalonia/Citrus.xaml"/>-->
+         <StyleInclude Source="avares://Citrus.Avalonia/Sea.xaml"/>
+        <!-- <StyleInclude Source="avares://Citrus.Avalonia/Rust.xaml"/> -->
+        <!-- <StyleInclude Source="avares://Citrus.Avalonia/Candy.xaml"/> -->
+        <!-- <StyleInclude Source="avares://Citrus.Avalonia/Magma.xaml"/> -->
+      <StyleInclude Source="avares://Avalonia.Controls.DataGrid/Themes/Default.xaml"/>
+    </Application.Styles>
+</Application>

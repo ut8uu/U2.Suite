@@ -1,0 +1,48 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="120"
+             Width="600" Height="120"
+             x:Class="U2.Logger.TextInputPanel"
+             xmlns:logger="clr-namespace:U2.Logger">
+
+  <Design.DataContext>
+    <logger:TextInputPanelViewModel/>
+  </Design.DataContext>
+
+  <Border Classes="Card">
+    <StackPanel Orientation="Horizontal">
+      <Border Padding="5 0 0 0">
+        <StackPanel Width="120">
+          <TextBlock Text="{Binding CallsignInputTitle}" Classes="Caption"></TextBlock>
+          <TextBox Text="{Binding Path=Callsign}" Width="120" Name="CallsignTextBox" Focusable="True"></TextBox>
+        </StackPanel>
+      </Border>
+      <Border Padding="5 0 0 0">
+        <StackPanel Width="80">
+          <TextBlock Text="{Binding RstSentInputTitle}" Classes="Caption"></TextBlock>
+          <TextBox Text="{Binding Path=RstSent}" Width="80" Name="RstSentTextBox" Focusable="True"></TextBox>
+        </StackPanel>
+      </Border>
+      <Border Padding="5 0 0 0">
+        <StackPanel Width="80">
+          <TextBlock Text="{Binding RstRcvdInputTitle}" Classes="Caption"></TextBlock>
+          <TextBox Text="{Binding Path=RstRcvd}" Width="80" Name="RstRcvdTextBox" Focusable="True"></TextBox>
+        </StackPanel>
+      </Border>
+      <Border Padding="5 0 0 0">
+        <StackPanel Width="80">
+          <TextBlock Text="{Binding OperatorInputTitle}" Classes="Caption"></TextBlock>
+          <TextBox Text="{Binding Path=Operator}" Width="80" Name="OperatorTextBox" Focusable="True"></TextBox>
+        </StackPanel>
+      </Border>
+      <Border Padding="5 0 0 0">
+        <StackPanel Width="150">
+          <TextBlock Text="{Binding CommentsInputTitle}" Classes="Caption"></TextBlock>
+          <TextBox Text="{Binding Path=Comments}" Width="150" Name="CommentsTextBox" Focusable="True"></TextBox>
+        </StackPanel>
+      </Border>
+    </StackPanel>
+  </Border>
+</UserControl>

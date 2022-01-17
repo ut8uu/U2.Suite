@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-
 using AvaloniaEdit.TextMate.Resources;
-
 using Newtonsoft.Json;
-
 using TextMateSharp.Internal.Themes.Reader;
 using TextMateSharp.Registry;
 using TextMateSharp.Themes;

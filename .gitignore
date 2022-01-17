@@ -4,3 +4,5 @@
 /Releases/*.zip
 *.zip
 **/FodyWeavers.xsd
+**/*.feature.cs
+**/*csproj.user

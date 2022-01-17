@@ -21,7 +21,7 @@ namespace U2.CommonControls
         private Button _ok = default!;
         private Button _cancel = default!;
 
-        public PromptDialog() 
+        public PromptDialog()
         {
             AssignControls();
         }

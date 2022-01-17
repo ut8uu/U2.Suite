@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using Avalonia.Controls;
 using GalaSoft.MvvmLight.Messaging;
 using Microsoft.EntityFrameworkCore;
 using U2.Library.Database.Models;
@@ -54,8 +51,8 @@ namespace U2.Library.ViewModels
             }
         }
 
-        public RigDbo SelectedRig 
-        { 
+        public RigDbo SelectedRig
+        {
             get => _selectedRig;
             set
             {
