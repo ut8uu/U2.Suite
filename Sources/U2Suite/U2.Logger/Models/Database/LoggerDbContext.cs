@@ -6,6 +6,7 @@ using System.Text.Json;
 using GalaSoft.MvvmLight.Messaging;
 using Microsoft.EntityFrameworkCore;
 using U2.Core;
+using U2.Logger.Models.Database;
 
 namespace U2.Logger
 {
@@ -22,6 +23,7 @@ namespace U2.Logger
         }
 
         public DbSet<LogRecordDbo> Records { get; set; }
+        public DbSet<SettingsDbo> Settings { get; set; }
 
         private string GetConnectionString()
         {

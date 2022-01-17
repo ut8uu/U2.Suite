@@ -58,6 +58,22 @@ namespace U2.Logger.Migrations
 
                     b.ToTable("Records");
                 });
+
+            modelBuilder.Entity("U2.Logger.Models.Database.SettingsDbo", b =>
+                {
+                    b.Property<string>("SettingId")
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(36);
+
+                    b.Property<string>("Value")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(36);
+
+                    b.HasKey("SettingId");
+
+                    b.ToTable("Settings");
+                });
 #pragma warning restore 612, 618
         }
     }

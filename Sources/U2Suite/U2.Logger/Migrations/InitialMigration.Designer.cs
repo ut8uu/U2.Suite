@@ -9,7 +9,7 @@ using U2.Logger;
 namespace U2.Logger.Migrations
 {
     [DbContext(typeof(LoggerDbContext))]
-    [Migration("20220116225022_InitialMigration")]
+    [Migration("InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -59,6 +59,22 @@ namespace U2.Logger.Migrations
                     b.HasKey("RecordId");
 
                     b.ToTable("Records");
+                });
+
+            modelBuilder.Entity("U2.Logger.Models.Database.SettingsDbo", b =>
+                {
+                    b.Property<string>("SettingId")
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(36);
+
+                    b.Property<string>("Value")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(36);
+
+                    b.HasKey("SettingId");
+
+                    b.ToTable("Settings");
                 });
 #pragma warning restore 612, 618
         }
