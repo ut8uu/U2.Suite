@@ -4,6 +4,7 @@
     {
         ClearTextInputs,
         SaveQso,
+        RefreshLog,
     }
 
     public sealed class ExecuteCommandMessage

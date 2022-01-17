@@ -128,6 +128,7 @@ namespace U2.Logger
                 if (message.CommandParameters is ApplicationFormData formData)
                 {
                     _dbContext.SaveQso(formData);
+                    Messenger.Default.Send(new ExecuteCommandMessage(CommandToExecute.RefreshLog));
                 }
             }
         }

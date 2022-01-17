@@ -1,7 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data.Entity.Core.Objects;
+using System.Data.Entity.Infrastructure;
+using System.Linq;
 using System.Text;
+using GalaSoft.MvvmLight.Messaging;
 
 namespace U2.Logger
 {
@@ -18,6 +22,9 @@ namespace U2.Logger
         {
             this._dbContext = dbContext;
             FullList = new ObservableCollection<LogRecordDbo>(_dbContext.Records);
+
+            Messenger.Default.Register<ExecuteCommandMessage>(this,
+                AcceptExecuteCommandMessage);
         }
 
         public string CloseButtonText { get; set; } = "Close";
@@ -34,5 +41,18 @@ namespace U2.Logger
         public ObservableCollection<LogRecordDbo> FullList { get; set; } = default!;
         public ObservableCollection<LogRecordDbo> FilteredList { get; set; } = default!;
 
+
+        private void AcceptExecuteCommandMessage(ExecuteCommandMessage message)
+        {
+            if (message.CommandToExecute == CommandToExecute.RefreshLog)
+            {
+                RefreshLog();
+            }
+        }
+
+        public void RefreshLog()
+        {
+            FullList = new ObservableCollection<LogRecordDbo>(_dbContext.Records);
+        }
     }
 }
