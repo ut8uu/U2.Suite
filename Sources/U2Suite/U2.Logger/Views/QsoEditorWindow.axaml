@@ -3,7 +3,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:logger="clr-namespace:U2.Logger"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="350"
         x:Class="U2.Logger.QsoEditorWindow"
         Title="QsoEditorWindow">
 
@@ -12,7 +12,7 @@
   </Design.DataContext>
 
   <Border Classes="Card">
-    <Grid ColumnDefinitions="*,10,*" RowDefinitions="*,*,*,*,*,*">
+    <Grid ColumnDefinitions="*,10,*" RowDefinitions="*,*,*,60">
       <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Vertical">
         <TextBlock Text="{Binding CallsignTitle}"></TextBlock>
         <TextBox Text="{Binding Callsign}"></TextBox>
@@ -42,9 +42,9 @@
         </Border>
 
       </StackPanel>
-      <StackPanel Orientation="Horizontal" Grid.Row="5" Grid.Column="0">
-        <Button Content="{Binding OkButtonTitle}" Command="{Binding OkButtonClick}"></Button>
-        <Button Content="{Binding OkButtonTitle}" Command="{Binding CancelButtonClick}"></Button>
+      <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="0">
+        <Button Margin="5" Content="{Binding OkButtonTitle}" Command="{Binding OkButtonClick}"></Button>
+        <Button Margin="5" Content="{Binding CancelButtonTitle}" Command="{Binding CancelButtonClick}"></Button>
       </StackPanel>
     </Grid>
 
