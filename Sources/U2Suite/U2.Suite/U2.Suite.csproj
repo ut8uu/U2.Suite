@@ -20,10 +20,12 @@
     <None Remove="Models\**" />
     <None Remove=".gitignore" />
     <None Remove="Images\library.png" />
+    <None Remove="Images\logger.png" />
     <None Remove="Images\qslmanager.png" />
   </ItemGroup>
   <ItemGroup>
     <AvaloniaResource Include="Images\library.png" />
+    <AvaloniaResource Include="Images\logger.png" />
     <AvaloniaResource Include="Images\qslmanager.png" />
   </ItemGroup>
   <ItemGroup>
