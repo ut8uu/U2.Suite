@@ -25,7 +25,7 @@
                 >
         <DataGrid.Columns>
           <DataGridTextColumn Header="{Binding Path=TimestampColumnHeader}"
-                              Binding="{Binding DateTime}"
+                              Binding="{Binding Timestamp}"
                               Width="150"/>
           <DataGridTextColumn Header="{Binding Path=CallsignColumnHeader}"
                               Binding="{Binding Callsign}"

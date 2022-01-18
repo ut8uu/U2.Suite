@@ -10,7 +10,7 @@ namespace U2.Logger
         public Guid RecordId { get; set; }
         [StringLength(50)]
         public string Callsign { get; set; } = default!;
-        public DateTime DateTime { get; set; }
+        public DateTime Timestamp { get; set; }
         public double Frequency { get; set; }
         [StringLength(8)]
         public string RstSent { get; set; } = default!;

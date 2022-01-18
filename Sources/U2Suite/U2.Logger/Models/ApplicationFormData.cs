@@ -11,7 +11,7 @@ namespace U2.Logger
         private string _operator = string.Empty;
         private string _rstSent = string.Empty;
         private string _rstRcvd = string.Empty;
-        private DateTime _dateTime = DateTime.UtcNow;
+        private DateTime _timestamp = DateTime.UtcNow;
         private string _comments = string.Empty;
         private RadioBandType _band = RadioBandType.Unspecified;
         private double? _freqKhz = null;
@@ -104,12 +104,12 @@ namespace U2.Logger
             }
         }
 
-        public DateTime DateTime
+        public DateTime Timestamp
         {
-            get => _dateTime;
+            get => _timestamp;
             set
             {
-                _dateTime = value;
+                _timestamp = value;
                 Modified = true;
             }
         }
@@ -133,7 +133,7 @@ namespace U2.Logger
             Callsign = string.Empty;
             RstSent = string.Empty;
             RstRcvd = string.Empty;
-            DateTime = DateTime.UtcNow;
+            Timestamp = DateTime.UtcNow;
             Comments = string.Empty;
             Band = RadioBandType.Unspecified;
             FreqKhz = null;
@@ -148,7 +148,7 @@ namespace U2.Logger
             Callsign = data.Callsign;
             RstSent = data.RstSent;
             RstRcvd = data.RstRcvd;
-            DateTime = data.DateTime;
+            Timestamp = data.Timestamp;
             Comments = data.Comments;
             Mode = data.Mode;
             Band = data.Band;
@@ -161,7 +161,7 @@ namespace U2.Logger
             Callsign = data.Callsign;
             RstSent = data.RstSent;
             RstRcvd = data.RstReceived;
-            DateTime = data.DateTime;
+            Timestamp = data.Timestamp;
             Comments = data.Comments;
             Mode = data.Mode;
             FreqKhz = data.Frequency;

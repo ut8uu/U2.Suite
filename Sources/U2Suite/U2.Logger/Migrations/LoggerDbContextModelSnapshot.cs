@@ -33,11 +33,13 @@ namespace U2.Logger.Migrations
                         .HasColumnType("TEXT")
                         .HasMaxLength(64);
 
-                    b.Property<DateTime>("DateTime")
-                        .HasColumnType("TEXT");
-
                     b.Property<double>("Frequency")
                         .HasColumnType("REAL");
+
+                    b.Property<string>("Mode")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(8);
 
                     b.Property<string>("Operator")
                         .IsRequired()
@@ -53,6 +55,9 @@ namespace U2.Logger.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT")
                         .HasMaxLength(8);
+
+                    b.Property<DateTime>("Timestamp")
+                        .HasColumnType("TEXT");
 
                     b.HasKey("RecordId");
 
