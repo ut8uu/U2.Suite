@@ -158,9 +158,20 @@ namespace U2.Logger.Tests
             SetFieldValue(RstSentField, "599");
             SetFieldValue(OperatorField, "Sergey");
             SetFieldValue(CommentsField, "good signal");
-            _loggerVM._currentFormData.Mode = "CW";
-            _loggerVM._currentFormData.FreqKhz = 14044.0;
         }
+
+        [Given(@"Mode is '(.*)'")]
+        public void GivenModeIs(string mode)
+        {
+            _loggerVM._currentFormData.Mode = mode;
+        }
+
+        [Given(@"Frequency is (.*)")]
+        public void GivenFrequencyIs(double frequency)
+        {
+            _loggerVM._currentFormData.FreqKhz = frequency;
+        }
+
 
         [Then(@"Field '(.*)' is not empty")]
         public void ThenFieldIsNotEmpty(string fieldName)

@@ -3,11 +3,9 @@
 
 @button_clicking
 Scenario: Wipe button clicked
-	Given Field 'Callsign' contains 'UT8UU'
-	And Field 'Rst Sent' contains '599'
-	And Field 'Rst Received' contains '599'
-	And Field 'Operator' contains 'Sergey'
-	And Field 'Comments' contains 'Strong signal'
+	Given All fields are not empty
+	And Mode is 'CW'
+	And Frequency is 14044.0
 	When User clicks the 'Wipe' button
 	Then Field 'Callsign' contains ''
 	And Field 'Rst Sent' contains ''
@@ -17,6 +15,8 @@ Scenario: Wipe button clicked
 
 Scenario: Save button clicked when callsign is empty
 	Given All fields are not empty
+	And Mode is 'CW'
+	And Frequency is 14044.0
 	And Field 'Callsign' contains ''
 	When User clicks the 'Save' button
 	Then Field 'Rst Sent' is not empty
@@ -26,6 +26,8 @@ Scenario: Save button clicked when callsign is empty
 
 Scenario: Save button clicked on correct data
 	Given All fields are not empty
+	And Mode is 'CW'
+	And Frequency is 14044.0
 	And Log is empty
 	When User clicks the 'Save' button
 	Then All fields are empty
