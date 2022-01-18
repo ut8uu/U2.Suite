@@ -15,13 +15,15 @@
   <Border Padding="2">
     <DockPanel HorizontalAlignment="Stretch" VerticalAlignment="Top">
       <StackPanel Height="60" DockPanel.Dock="Bottom" Orientation="Horizontal">
-        <Button Name="CloseButton" Content="{Binding CloseButtonText}"></Button>
+        <Button Margin="5" Name="CloseButton" Command="{Binding CloseButtonClick}" Content="{Binding CloseButtonText}"></Button>
+        <Button Margin="5" Name="EditButton" Command="{Binding EditButtonClick}" Content="{Binding EditButtonText}"></Button>
       </StackPanel>
       <DataGrid Name="MainGrid" DockPanel.Dock="Top" Height="300"
                 ScrollViewer.VerticalScrollBarVisibility="Auto"
                 Items="{Binding FullList, Mode=OneWay}"
                 AutoGenerateColumns="False"
                 SelectionMode="Single"
+                SelectedItem="{Binding SelectedRecord}"
                 >
         <DataGrid.Columns>
           <DataGridTextColumn Header="{Binding Path=TimestampColumnHeader}"

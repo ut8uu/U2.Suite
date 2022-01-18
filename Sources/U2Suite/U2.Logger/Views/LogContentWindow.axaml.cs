@@ -18,6 +18,7 @@ namespace U2.Logger
 #endif
             _dbContext = new LoggerDbContext();
             _viewModel = new LogContentWindowViewModel(_dbContext);
+            _viewModel.Owner = this;
             DataContext = _viewModel;
         }
 

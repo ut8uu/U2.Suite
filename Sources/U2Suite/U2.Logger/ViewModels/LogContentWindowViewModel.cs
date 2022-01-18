@@ -5,6 +5,7 @@ using System.Data.Entity.Core.Objects;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Text;
+using Avalonia.Controls;
 using GalaSoft.MvvmLight.Messaging;
 
 namespace U2.Logger
@@ -27,7 +28,10 @@ namespace U2.Logger
                 AcceptExecuteCommandMessage);
         }
 
+        public Window Owner { get; set; }
+
         public string CloseButtonText { get; set; } = "Close";
+        public string EditButtonText { get; set; } = "Edit";
 
         public string CallsignColumnHeader { get; set; } = "Callsign";
         public string TimestampColumnHeader { get; set; } = "Timestamp";
@@ -41,6 +45,7 @@ namespace U2.Logger
         public ObservableCollection<LogRecordDbo> FullList { get; set; } = default!;
         public ObservableCollection<LogRecordDbo> FilteredList { get; set; } = default!;
 
+        public LogRecordDbo SelectedRecord { get; set; } = default!;
 
         private void AcceptExecuteCommandMessage(ExecuteCommandMessage message)
         {
@@ -53,6 +58,22 @@ namespace U2.Logger
         public void RefreshLog()
         {
             FullList = new ObservableCollection<LogRecordDbo>(_dbContext.Records);
+        }
+
+        public void CloseButtonClick()
+        {
+
+        }
+
+        public void EditButtonClick()
+        {
+            if (SelectedRecord == null)
+            {
+                return;
+            }
+
+            var editor = new QsoEditorWindow(SelectedRecord);
+            editor.ShowDialog(Owner);
         }
     }
 }
