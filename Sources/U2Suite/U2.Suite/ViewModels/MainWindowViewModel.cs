@@ -46,5 +46,10 @@ namespace U2.Suite
         {
             Launcher.Launch(ApplicationNames.GetLibraryAppName(), string.Empty);
         }
+
+        public void LaunchLogger()
+        {
+            Launcher.Launch(ApplicationNames.GetLoggerAppName(), string.Empty);
+        }
     }
 }

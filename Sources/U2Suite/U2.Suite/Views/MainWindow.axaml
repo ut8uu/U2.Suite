@@ -7,8 +7,8 @@
         x:Class="U2.Suite.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
         Title="U2.Suite"
-        Height="200" Width="500"
-        d:DesignWidth="500" d:DesignHeight="200"
+        Height="200" Width="650"
+        d:DesignWidth="650" d:DesignHeight="200"
         Foreground="{DynamicResource ThemeForegroundBrush}"
         >
   <Design.DataContext>
@@ -34,9 +34,13 @@
       <Image Source="../Images/qslmanager.png"></Image>
     </Button>
 
-    <Button Command="{Binding LaunchLibrary}" Classes="h150">
-      <Image Source="../Images/library.png"></Image>
-    </Button>
+      <Button Command="{Binding LaunchLibrary}" Classes="h150">
+          <Image Source="../Images/library.png"></Image>
+      </Button>
+
+      <Button Command="{Binding LaunchLogger}" Classes="h150">
+          <Image Source="../Images/logger.png"></Image>
+      </Button>
 
     <StackPanel>
       <Button Width="150" Command="{Binding ShowAboutWindow}" Content="About U2.Suite"></Button>

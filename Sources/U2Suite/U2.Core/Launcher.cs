@@ -5,7 +5,7 @@ namespace U2.Core
 {
     public sealed class Launcher
     {
-        public static void Launch(string path, string commandLineArgs)
+        public static void Launch(string path, string commandLineArgs = "")
         {
             Debug.Assert(File.Exists(path));
             var startInfo = new ProcessStartInfo(path)
