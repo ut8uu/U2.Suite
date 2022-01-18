@@ -1,19 +1,20 @@
 ﻿using System;
+using U2.Contracts;
+using U2.Core;
 
 namespace U2.Logger
 {
     public class ApplicationFormData
     {
-        private int _id;
-        private readonly Guid _recordId;
+        private Guid _recordId;
         private string _callsign = string.Empty;
         private string _operator = string.Empty;
         private string _rstSent = string.Empty;
         private string _rstRcvd = string.Empty;
         private DateTime _dateTime = DateTime.UtcNow;
         private string _comments = string.Empty;
-        private string _band = string.Empty;
-        private float _freqKhz = 0f;
+        private RadioBandType _band = RadioBandType.Unspecified;
+        private double? _freqKhz = null;
         private string _mode = string.Empty;
 
         public ApplicationFormData()
@@ -41,22 +42,34 @@ namespace U2.Logger
             }
         }
 
-        public string Band
+        public RadioBandType Band
         {
             get => _band;
             set
             {
                 _band = value;
+                if (value != RadioBandType.Unspecified && !_freqKhz.HasValue)
+                {
+                    try
+                    {
+                        _freqKhz = ConversionHelper.BandToFrequency(value);
+                    }
+                    catch (ArgumentException)
+                    {
+                        _freqKhz = null;
+                    }
+                }
                 Modified = true;
             }
         }
 
-        public float FreqKhz
+        public double? FreqKhz
         {
             get => _freqKhz;
             set
             {
                 _freqKhz = value;
+                _band = ConversionHelper.FrequencyToBand(value.GetValueOrDefault(-1));
                 Modified = true;
             }
         }
@@ -115,8 +128,6 @@ namespace U2.Logger
 
         public Guid RecordId => _recordId;
 
-        public int Id { get => _id; set => _id = value; }
-
         public void Clear()
         {
             Callsign = string.Empty;
@@ -124,8 +135,10 @@ namespace U2.Logger
             RstRcvd = string.Empty;
             DateTime = DateTime.UtcNow;
             Comments = string.Empty;
-            Band = string.Empty;
+            Band = RadioBandType.Unspecified;
+            FreqKhz = null;
             Mode = string.Empty;
+            _recordId = Guid.NewGuid();
 
             Modified = false;
         }
@@ -139,6 +152,21 @@ namespace U2.Logger
             Comments = data.Comments;
             Mode = data.Mode;
             Band = data.Band;
+            FreqKhz = data.FreqKhz;
+            _recordId = data.RecordId;
+        }
+
+        public void Assign(LogRecordDbo data)
+        {
+            Callsign = data.Callsign;
+            RstSent = data.RstSent;
+            RstRcvd = data.RstReceived;
+            DateTime = data.DateTime;
+            Comments = data.Comments;
+            Mode = data.Mode;
+            FreqKhz = data.Frequency;
+            Band = ConversionHelper.FrequencyToBand(data.Frequency);
+            _recordId = data.RecordId;
         }
 
         public bool CanBeSaved()

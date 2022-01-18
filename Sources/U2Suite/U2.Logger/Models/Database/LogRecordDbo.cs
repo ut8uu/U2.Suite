@@ -15,6 +15,8 @@ namespace U2.Logger
         [StringLength(8)]
         public string RstSent { get; set; } = default!;
         [StringLength(8)]
+        public string Mode { get; set; } = default!;
+        [StringLength(8)]
         public string RstReceived { get; set; } = default!;
         [StringLength(64)]
         public string Operator { get; set; } = default!;

@@ -58,7 +58,7 @@ namespace U2.Logger
             record.DateTime = formData.DateTime;
             record.RstReceived = formData.RstRcvd;
             record.RstSent = formData.RstSent;
-            record.Frequency = formData.FreqKhz;
+            record.Frequency = formData.FreqKhz.GetValueOrDefault(-1);
             record.Operator = formData.Operator;
 
             if (newRecord)
