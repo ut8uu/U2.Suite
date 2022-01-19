@@ -39,7 +39,7 @@ namespace U2.Logger
         public string CancelButtonTitle { get; set; } = "Cancel";
         public string CallsignTitle { get; set; } = "Callsign";
         public string RstSentTitle { get; set; } = "RST sent";
-        public string RstReceivedTitle { get; set; } = "RS received";
+        public string RstReceivedTitle { get; set; } = "RST received";
         public string OperatorTitle { get; set; } = "Operator name";
         public string CommentsTitle { get; set; } = "Comments";
         public string FrequencyTitle { get; set; } = "Frequency";
@@ -58,7 +58,7 @@ namespace U2.Logger
         public ObservableCollection<string> AllModes =>
             new ObservableCollection<string>(new[]
             {
-                "Cw", "SSB", "RTTY", "Olivia", "THOR", "PSK"
+                "CW", "SSB", "RTTY", "Olivia", "THOR", "PSK"
             });
 
         public void OkButtonClick()

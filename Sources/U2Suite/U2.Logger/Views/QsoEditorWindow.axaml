@@ -3,7 +3,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:logger="clr-namespace:U2.Logger"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="350"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="400"
         x:Class="U2.Logger.QsoEditorWindow"
         Title="QsoEditorWindow">
 
@@ -12,14 +12,14 @@
   </Design.DataContext>
 
   <Border Classes="Card">
-    <Grid ColumnDefinitions="*,10,*" RowDefinitions="*,*,*,60">
+    <Grid ColumnDefinitions="*,10,*" RowDefinitions="*,*,*,*,60">
       <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Vertical">
         <TextBlock Text="{Binding CallsignTitle}"></TextBlock>
         <TextBox Text="{Binding Callsign}"></TextBox>
       </StackPanel>
       <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Vertical">
-        <TextBlock Text="{Binding OperatorTitle}"></TextBlock>
-        <TextBox Text="{Binding Operator}"></TextBox>
+        <TextBlock Text="{Binding TimestampTitle}"></TextBlock>
+        <TextBox Text="{Binding Timestamp}"></TextBox>
       </StackPanel>
 
       <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Vertical">
@@ -42,7 +42,17 @@
         </Border>
 
       </StackPanel>
-      <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="0">
+
+      <StackPanel Grid.Row="3" Grid.Column="0" Orientation="Vertical">
+        <TextBlock Text="{Binding OperatorTitle}"></TextBlock>
+        <TextBox Text="{Binding Operator}"></TextBox>
+      </StackPanel>
+      <StackPanel Grid.Row="3" Grid.Column="2" Orientation="Vertical">
+        <TextBlock Text="{Binding CommentsTitle}"></TextBlock>
+        <TextBox Text="{Binding Comments}"></TextBox>
+      </StackPanel>
+
+      <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.Column="0">
         <Button Margin="5" Content="{Binding OkButtonTitle}" Command="{Binding OkButtonClick}"></Button>
         <Button Margin="5" Content="{Binding CancelButtonTitle}" Command="{Binding CancelButtonClick}"></Button>
       </StackPanel>
