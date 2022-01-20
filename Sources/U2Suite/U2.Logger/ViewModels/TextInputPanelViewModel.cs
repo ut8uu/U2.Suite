@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Avalonia.Controls;
 using GalaSoft.MvvmLight.Messaging;
@@ -13,11 +14,22 @@ namespace U2.Logger
     public sealed class TextInputPanelViewModel : ViewModelBase
     {
         bool _internalChange = false;
+        private Timer _timer;
 
         public TextInputPanelViewModel()
         {
             Messenger.Default.Register<ExecuteCommandMessage>(this,
                 AcceptExecuteCommandMessage);
+
+            _timer = new Timer(TimerTick, null, TimeSpan.Zero, TimeSpan.FromSeconds(1));
+        }
+
+        private void TimerTick(object? state)
+        {
+            if (Realtime)
+            {
+                Timestamp = DateTime.UtcNow.ToString("g");
+            }
         }
 
         public const string CallsignTextBox = nameof(CallsignTextBox);
@@ -25,12 +37,19 @@ namespace U2.Logger
         public const string RstRcvdTextBox = nameof(RstRcvdTextBox);
         public const string OperatorTextBox = nameof(OperatorTextBox);
         public const string CommentsTextBox = nameof(CommentsTextBox);
+        public const string TimestampTextBox = nameof(TimestampTextBox);
+        public const string ModeTextBox = nameof(ModeTextBox);
+        public const string FrequencyTextBox = nameof(FrequencyTextBox);
 
         public string CallsignInputTitle { get; set; } = "Callsign";
         public string RstSentInputTitle { get; set; } = "Rst Sent";
         public string RstRcvdInputTitle { get; set; } = "Rst Received";
         public string OperatorInputTitle { get; set; } = "Operator";
+        public string FrequencyInputTitle { get; set; } = "Freq (MHz)";
+        public string ModeInputTitle { get; set; } = "Mode";
         public string CommentsInputTitle { get; set; } = "Comments";
+        public string TimestampInputTitle { get; set; } = "Timestamp";
+        public string RealtimeTitle { get; set; } = "realtime";
 
         public Window Owner { get; set; } = default!;
         public string Callsign { get; set; } = default!;
@@ -38,6 +57,11 @@ namespace U2.Logger
         public string RstRcvd { get; set; } = default!;
         public string Operator { get; set; } = default!;
         public string Comments { get; set; } = default!;
+        public string Frequency { get; set; } = default!;
+        public string Mode { get; set; } = default!;
+        public string Timestamp { get; set; } = DateTime.UtcNow.ToString("g");
+        public bool Realtime { get; set; } = true;
+        public bool TimestampEnabled => !Realtime;
 
         public ApplicationTextBox FocusedTextBox { get; set; } = ApplicationTextBox.Callsign;
 
@@ -58,6 +82,7 @@ namespace U2.Logger
             RstRcvd = string.Empty;
             Operator = string.Empty;
             Comments = string.Empty;
+            Timestamp = DateTime.UtcNow.ToString("g");
 
             _internalChange = false;
         }

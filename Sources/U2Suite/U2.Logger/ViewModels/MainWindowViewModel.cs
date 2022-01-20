@@ -109,6 +109,10 @@ namespace U2.Logger
 
         private bool CanSaveQso()
         {
+            if (_currentFormData == null)
+            {
+                return false;
+            }
             if (string.IsNullOrEmpty(_currentFormData.Callsign))
             {
                 return false;

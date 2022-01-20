@@ -23,6 +23,12 @@ namespace U2.Logger
                     return ApplicationTextBox.Operator;
                 case TextInputPanelViewModel.CommentsTextBox:
                     return ApplicationTextBox.Comments;
+                case TextInputPanelViewModel.TimestampTextBox:
+                    return ApplicationTextBox.Comments;
+                case TextInputPanelViewModel.ModeTextBox:
+                    return ApplicationTextBox.Mode;
+                case TextInputPanelViewModel.FrequencyTextBox:
+                    return ApplicationTextBox.Frequency;
                 default:
                     throw new ArgumentException($"Unrecognized text box '{fieldName}.'");
             }
