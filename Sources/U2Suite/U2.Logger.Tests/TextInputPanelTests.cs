@@ -1,5 +1,7 @@
+using System;
 using GalaSoft.MvvmLight.Messaging;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using U2.Contracts;
 using U2.Logger;
 
 namespace U2.Logger.Tests
@@ -34,11 +36,14 @@ namespace U2.Logger.Tests
         [DataRow(ApplicationTextBox.Comments)]
         [DataRow(ApplicationTextBox.Mode)]
         [DataRow(ApplicationTextBox.Band)]
-        [DataRow(ApplicationTextBox.Timestamp)]
+        //[DataRow(ApplicationTextBox.Timestamp)]
         [DataRow(ApplicationTextBox.Frequency)]
         public void ReportChangedTextBoxValue(ApplicationTextBox textBox)
         {
-            var model = new TextInputPanelViewModel();
+            var model = new TextInputPanelViewModel
+            {
+                Realtime = false
+            };
             var expectedValue = "test value";
             switch (textBox)
             {
@@ -58,12 +63,14 @@ namespace U2.Logger.Tests
                     model.Comments = expectedValue;
                     break;
                 case ApplicationTextBox.Timestamp:
+                    expectedValue = DateTime.UtcNow.ToString("g");
                     model.Timestamp = expectedValue;
                     break;
                 case ApplicationTextBox.Mode:
                     model.Mode = expectedValue;
                     break;
                 case ApplicationTextBox.Band:
+                    expectedValue = RadioBandName.B160m;
                     model.Band = expectedValue;
                     break;
                 case ApplicationTextBox.Frequency:

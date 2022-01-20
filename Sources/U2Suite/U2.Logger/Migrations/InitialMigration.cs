@@ -17,9 +17,10 @@ namespace U2.Logger.Migrations
                     Frequency = table.Column<double>(nullable: false),
                     RstSent = table.Column<string>(maxLength: 8, nullable: false),
                     Mode = table.Column<string>(maxLength: 8, nullable: false),
+                    Band = table.Column<string>(maxLength: 16, nullable: false),
                     RstReceived = table.Column<string>(maxLength: 8, nullable: false),
                     Operator = table.Column<string>(maxLength: 64, nullable: false),
-                    Comments = table.Column<string>(maxLength: 64, nullable: false)
+                    Comments = table.Column<string>(maxLength: 128, nullable: false)
                 },
                 constraints: table =>
                 {

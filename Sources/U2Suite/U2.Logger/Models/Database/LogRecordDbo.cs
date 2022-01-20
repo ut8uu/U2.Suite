@@ -16,11 +16,13 @@ namespace U2.Logger
         public string RstSent { get; set; } = default!;
         [StringLength(8)]
         public string Mode { get; set; } = default!;
+        [StringLength(16)]
+        public string Band { get; set; } = default!;
         [StringLength(8)]
         public string RstReceived { get; set; } = default!;
         [StringLength(64)]
         public string Operator { get; set; } = default!;
-        [StringLength(64)]
+        [StringLength(128)]
         public string Comments { get; set; } = default!;
     }
 }

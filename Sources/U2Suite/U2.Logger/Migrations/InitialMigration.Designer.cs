@@ -25,6 +25,11 @@ namespace U2.Logger.Migrations
                         .HasColumnType("TEXT")
                         .HasMaxLength(36);
 
+                    b.Property<string>("Band")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(16);
+
                     b.Property<string>("Callsign")
                         .IsRequired()
                         .HasColumnType("TEXT")
@@ -33,7 +38,7 @@ namespace U2.Logger.Migrations
                     b.Property<string>("Comments")
                         .IsRequired()
                         .HasColumnType("TEXT")
-                        .HasMaxLength(64);
+                        .HasMaxLength(128);
 
                     b.Property<double>("Frequency")
                         .HasColumnType("REAL");

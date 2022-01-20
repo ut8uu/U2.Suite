@@ -184,7 +184,11 @@ namespace U2.Logger.Tests
         public void GivenLogIsEmpty()
         {
             var db = _loggerVM._dbContext;
-            db.Records.RemoveRange(db.Records);
+            //db.Records.RemoveRange(db.Records);
+            foreach (var record in db.Records)
+            {
+                db.Records.Remove(record);
+            }
             db.SaveChanges();
 
             Assert.AreEqual(0, db.Records.Count());

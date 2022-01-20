@@ -13,7 +13,7 @@ namespace U2.Logger
         private string _rstRcvd = string.Empty;
         private DateTime _timestamp = DateTime.UtcNow;
         private string _comments = string.Empty;
-        private RadioBandType _band = RadioBandType.Unspecified;
+        private string _band = string.Empty;
         private double? _freqKhz = null;
         private string _mode = string.Empty;
 
@@ -42,17 +42,17 @@ namespace U2.Logger
             }
         }
 
-        public RadioBandType Band
+        public string Band
         {
             get => _band;
             set
             {
                 _band = value;
-                if (value != RadioBandType.Unspecified && !_freqKhz.HasValue)
+                if (!string.IsNullOrEmpty(value) && !_freqKhz.HasValue)
                 {
                     try
                     {
-                        _freqKhz = ConversionHelper.BandToFrequency(value);
+                        _freqKhz = ConversionHelper.BandNameToFrequency(value);
                     }
                     catch (ArgumentException)
                     {
@@ -69,7 +69,7 @@ namespace U2.Logger
             set
             {
                 _freqKhz = value;
-                _band = ConversionHelper.FrequencyToBand(value.GetValueOrDefault(-1));
+                _band = ConversionHelper.FrequencyToBandName(value.GetValueOrDefault(-1));
                 Modified = true;
             }
         }
@@ -135,7 +135,7 @@ namespace U2.Logger
             RstRcvd = string.Empty;
             Timestamp = DateTime.UtcNow;
             Comments = string.Empty;
-            Band = RadioBandType.Unspecified;
+            Band = string.Empty;
             FreqKhz = null;
             Mode = string.Empty;
             _recordId = Guid.NewGuid();
@@ -165,7 +165,7 @@ namespace U2.Logger
             Comments = data.Comments;
             Mode = data.Mode;
             FreqKhz = data.Frequency;
-            Band = ConversionHelper.FrequencyToBand(data.Frequency);
+            Band = ConversionHelper.FrequencyToBandName(data.Frequency);
             _recordId = data.RecordId;
         }
 

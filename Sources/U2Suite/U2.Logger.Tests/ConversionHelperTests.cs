@@ -11,19 +11,19 @@ namespace U2.Logger.Tests
     public class ConversionHelperTests
     {
         [TestMethod]
-        [DataRow(RadioBandType.B160m, 1810.0)]
-        public void BandToFreq(RadioBandType type, double expectedFreqKhz)
+        [DataRow(RadioBandName.B160m, 1.810)]
+        public void BandToFreq(string bandName, double expectedFreqMhz)
         {
-            var freq = ConversionHelper.BandToFrequency(type);
-            Assert.AreEqual(expectedFreqKhz, freq);
+            var freq = ConversionHelper.BandNameToFrequency(bandName);
+            Assert.AreEqual(expectedFreqMhz, freq);
         }
 
         [TestMethod]
-        [DataRow(1810.0, RadioBandType.B160m)]
-        [DataRow(1999.999, RadioBandType.B160m)]
-        public void FreqToBand_Success(double freqKhz, RadioBandType expectedBand)
+        [DataRow(1.810, RadioBandName.B160m)]
+        [DataRow(1.999, RadioBandName.B160m)]
+        public void FreqToBand_Success(double freqMhz, string expectedBand)
         {
-            var band = ConversionHelper.FrequencyToBand(freqKhz);
+            var band = ConversionHelper.FrequencyToBandName(freqMhz);
             Assert.AreEqual(expectedBand, band);
         }
     }

@@ -44,6 +44,7 @@ namespace U2.Logger
         public string CommentsTitle { get; set; } = "Comments";
         public string FrequencyTitle { get; set; } = "Frequency";
         public string ModeTitle { get; set; } = "Mode";
+        public string BandTitle { get; set; } = "Band";
         public string TimestampTitle { get; set; } = "Timestamp";
 
         public string Callsign { get; set; }
@@ -53,6 +54,7 @@ namespace U2.Logger
         public string Comments { get; set; }
         public string Frequency { get; set; }
         public string Mode { get; set; }
+        public string Band { get; set; }
         public DateTime Timestamp { get; set; }
 
         public ObservableCollection<string> AllModes =>
@@ -63,12 +65,16 @@ namespace U2.Logger
 
         public void OkButtonClick()
         {
+            if (string.IsNullOrWhiteSpace(this.Frequency))
+            {
+                this.Frequency = ConversionHelper.BandNameToFrequency(this.Band).ToString();
+            }
             var freq = double.Parse(this.Frequency, CultureInfo.InvariantCulture);
             var formData = new ApplicationFormData
             {
                 Callsign = this.Callsign,
                 FreqKhz = freq,
-                Band = ConversionHelper.FrequencyToBand(freq),
+                Band = ConversionHelper.FrequencyToBandName(freq),
                 Mode = this.Mode,
                 Comments = this.Comments,
                 Timestamp = this.Timestamp,

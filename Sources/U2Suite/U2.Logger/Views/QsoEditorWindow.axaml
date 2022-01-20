@@ -22,13 +22,24 @@
         <TextBox Text="{Binding Timestamp}"></TextBox>
       </StackPanel>
 
-      <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Vertical">
-        <TextBlock Text="{Binding RstSentTitle}"></TextBlock>
-        <TextBox Text="{Binding RstSent}"></TextBox>
+      <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal">
+        <StackPanel Width="175">
+          <TextBlock Text="{Binding RstSentTitle}"></TextBlock>
+          <TextBox Text="{Binding RstSent}"></TextBox>
+        </StackPanel>
+        <Border Padding="10 0 0 0">
+          <StackPanel Width="180">
+            <TextBlock Text="{Binding RstReceivedTitle}"></TextBlock>
+            <TextBox Text="{Binding RstReceived}"></TextBox>
+          </StackPanel>
+
+        </Border>
       </StackPanel>
       <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Vertical">
-        <TextBlock Text="{Binding RstReceivedTitle}"></TextBlock>
-        <TextBox Text="{Binding RstReceived}"></TextBox>
+        <TextBlock Text="{Binding ModeTitle}"></TextBlock>
+        <Border Padding="0 5 0 0">
+          <ComboBox Height="40" Items="{Binding AllModes}" SelectedItem="{Binding Mode}"></ComboBox>
+        </Border>
       </StackPanel>
 
       <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Vertical">
@@ -36,9 +47,9 @@
         <TextBox Text="{Binding Frequency}"></TextBox>
       </StackPanel>
       <StackPanel Grid.Row="2" Grid.Column="2" Orientation="Vertical">
-        <TextBlock Text="{Binding ModeTitle}"></TextBlock>
+        <TextBlock Text="{Binding BandTitle}"></TextBlock>
         <Border Padding="0 5 0 0">
-          <ComboBox Height="40" Items="{Binding AllModes}" SelectedItem="{Binding Mode}"></ComboBox>
+          <ComboBox Height="40" Items="{Binding AllBands}" SelectedItem="{Binding Band}"></ComboBox>
         </Border>
 
       </StackPanel>

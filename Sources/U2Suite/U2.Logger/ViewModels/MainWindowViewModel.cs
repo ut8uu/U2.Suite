@@ -85,7 +85,7 @@ namespace U2.Logger
                     formData.Mode = message.NewValue;
                     break;
                 case ApplicationTextBox.Band:
-                    formData.Band = ConversionHelper.AllBands.FirstOrDefault(b => b.Name == message.NewValue).Type;
+                    formData.Band = ConversionHelper.AllBands.FirstOrDefault(b => b.Name == message.NewValue).Name;
                     break;
                 case ApplicationTextBox.Frequency:
                     formData.Comments = message.NewValue;

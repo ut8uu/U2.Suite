@@ -61,6 +61,7 @@ namespace U2.Logger
             record.Frequency = formData.FreqKhz.GetValueOrDefault(-1);
             record.Operator = formData.Operator;
             record.Mode = formData.Mode;
+            record.Band = formData.Band;
 
             if (newRecord)
             {

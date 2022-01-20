@@ -50,7 +50,7 @@ namespace U2.Contracts
         /// <summary>
         /// A lower boundary of the band, inclusive.
         /// </summary>
-        public double BeginKhz { get; set; }
+        public double BeginMhz { get; set; }
         /// <summary>
         /// A type of the band.
         /// </summary>
@@ -58,7 +58,7 @@ namespace U2.Contracts
         /// <summary>
         /// An upper boundary of the band, exclusive.
         /// </summary>
-        public double EndKhz { get; set; }
+        public double EndMhz { get; set; }
         /// <summary>
         /// Optional collection of sub-bands.
         /// </summary>
@@ -74,11 +74,11 @@ namespace U2.Contracts
         /// <summary>
         /// A lower boundary of the band, inclusive.
         /// </summary>
-        public double BeginKhz { get; set; }
+        public double BeginMhz { get; set; }
         /// <summary>
         /// An upper boundary of the band, exclusive.
         /// </summary>
-        public double EndKhz { get; set; }
+        public double EndMhz { get; set; }
         /// <summary>
         /// A mode allowed on this sub-band.
         /// </summary>
