@@ -1,8 +1,10 @@
 using System;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using Avalonia.Controls;
 using GalaSoft.MvvmLight.Messaging;
 using Microsoft.EntityFrameworkCore;
+using U2.Core;
 using U2.Logger.Models;
 
 [assembly: InternalsVisibleTo("U2.Logger.Tests")]
@@ -74,6 +76,18 @@ namespace U2.Logger
                     formData.RstSent = message.NewValue;
                     break;
                 case ApplicationTextBox.Comments:
+                    formData.Comments = message.NewValue;
+                    break;
+                case ApplicationTextBox.Timestamp:
+                    formData.Timestamp = DateTime.Parse(message.NewValue);
+                    break;
+                case ApplicationTextBox.Mode:
+                    formData.Mode = message.NewValue;
+                    break;
+                case ApplicationTextBox.Band:
+                    formData.Band = ConversionHelper.AllBands.FirstOrDefault(b => b.Name == message.NewValue).Type;
+                    break;
+                case ApplicationTextBox.Frequency:
                     formData.Comments = message.NewValue;
                     break;
             }

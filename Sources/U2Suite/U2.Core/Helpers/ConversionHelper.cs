@@ -13,6 +13,15 @@ namespace U2.Core
             new Band160M(),
         };
 
+        public static List<RadioMode> AllModes = new List<RadioMode>
+        {
+            new RadioModeCW(),
+            new RadioModeDigivoice(),
+            new RadioModeFM(),
+            new RadioModeRtty(),
+            new RadioModeSSB(),
+        };
+
         /// <summary>
         /// Converts given band to its most lower frequency.
         /// </summary>
@@ -69,7 +78,7 @@ namespace U2.Core
                 {
                     BeginKhz = 1810.0,
                     EndKhz = 1838.0,
-                    Modes = new RadioMode[] {RadioMode.CW}
+                    Modes = new RadioModeType[] {RadioModeType.CW}
                 }
             };
         }

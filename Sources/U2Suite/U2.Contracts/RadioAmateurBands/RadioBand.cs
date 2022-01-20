@@ -34,15 +34,6 @@ namespace U2.Contracts
         UHF
     }
 
-    public enum RadioMode
-    {
-        CW,
-        SSB,
-        DIGI,
-        RTTY,
-        FM
-    }
-
     /// <summary>
     /// Represents an amateur radio band
     /// </summary>
@@ -91,7 +82,7 @@ namespace U2.Contracts
         /// <summary>
         /// A mode allowed on this sub-band.
         /// </summary>
-        public RadioMode[] Modes { get; set; }
+        public RadioModeType[] Modes { get; set; }
     }
 
     public static class RadioBandName

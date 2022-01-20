@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -8,6 +9,8 @@ using System.Threading.Tasks;
 using Avalonia.Controls;
 using GalaSoft.MvvmLight.Messaging;
 using Tmds.DBus;
+using U2.Contracts;
+using U2.Core;
 
 namespace U2.Logger
 {
@@ -47,6 +50,7 @@ namespace U2.Logger
         public string OperatorInputTitle { get; set; } = "Operator";
         public string FrequencyInputTitle { get; set; } = "Freq (MHz)";
         public string ModeInputTitle { get; set; } = "Mode";
+        public string BandInputTitle { get; set; } = "Band";
         public string CommentsInputTitle { get; set; } = "Comments";
         public string TimestampInputTitle { get; set; } = "Timestamp";
         public string RealtimeTitle { get; set; } = "realtime";
@@ -59,11 +63,15 @@ namespace U2.Logger
         public string Comments { get; set; } = default!;
         public string Frequency { get; set; } = default!;
         public string Mode { get; set; } = default!;
+        public string Band { get; set; } = default!;
         public string Timestamp { get; set; } = DateTime.UtcNow.ToString("g");
         public bool Realtime { get; set; } = true;
         public bool TimestampEnabled => !Realtime;
 
         public ApplicationTextBox FocusedTextBox { get; set; } = ApplicationTextBox.Callsign;
+
+        public ObservableCollection<string> AllModes => new ObservableCollection<string>(ConversionHelper.AllModes.Select(m => m.Name)); 
+        public ObservableCollection<string> AllBands => new ObservableCollection<string>(ConversionHelper.AllBands.Select(m => m.Name)); 
 
         private void AcceptExecuteCommandMessage(ExecuteCommandMessage message)
         {
@@ -113,6 +121,18 @@ namespace U2.Logger
                     break;
                 case nameof(Comments):
                     message = new TextChangedMessage(this, ApplicationTextBox.Comments, Comments);
+                    break;
+                case nameof(Mode):
+                    message = new TextChangedMessage(this, ApplicationTextBox.Mode, Mode);
+                    break;
+                case nameof(Band):
+                    message = new TextChangedMessage(this, ApplicationTextBox.Band, Band);
+                    break;
+                case nameof(Timestamp):
+                    message = new TextChangedMessage(this, ApplicationTextBox.Timestamp, Timestamp);
+                    break;
+                case nameof(Frequency):
+                    message = new TextChangedMessage(this, ApplicationTextBox.Frequency, Frequency);
                     break;
                 default:
                     return;

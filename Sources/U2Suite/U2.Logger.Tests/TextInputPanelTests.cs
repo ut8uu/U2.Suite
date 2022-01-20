@@ -32,6 +32,10 @@ namespace U2.Logger.Tests
         [DataRow(ApplicationTextBox.RstSent)]
         [DataRow(ApplicationTextBox.Operator)]
         [DataRow(ApplicationTextBox.Comments)]
+        [DataRow(ApplicationTextBox.Mode)]
+        [DataRow(ApplicationTextBox.Band)]
+        [DataRow(ApplicationTextBox.Timestamp)]
+        [DataRow(ApplicationTextBox.Frequency)]
         public void ReportChangedTextBoxValue(ApplicationTextBox textBox)
         {
             var model = new TextInputPanelViewModel();
@@ -52,6 +56,18 @@ namespace U2.Logger.Tests
                     break;
                 case ApplicationTextBox.Comments:
                     model.Comments = expectedValue;
+                    break;
+                case ApplicationTextBox.Timestamp:
+                    model.Timestamp = expectedValue;
+                    break;
+                case ApplicationTextBox.Mode:
+                    model.Mode = expectedValue;
+                    break;
+                case ApplicationTextBox.Band:
+                    model.Band = expectedValue;
+                    break;
+                case ApplicationTextBox.Frequency:
+                    model.Frequency = expectedValue;
                     break;
             }
 
