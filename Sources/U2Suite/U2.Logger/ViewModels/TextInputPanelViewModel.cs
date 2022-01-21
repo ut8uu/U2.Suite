@@ -25,6 +25,11 @@ namespace U2.Logger
                 AcceptExecuteCommandMessage);
 
             _timer = new Timer(TimerTick, null, TimeSpan.Zero, TimeSpan.FromSeconds(1));
+            Mode = AllModes.First();
+            Band = AllBands.First();
+            Frequency = ConversionHelper.BandNameAndModeToFrequency(Band, Mode).ToString();
+            RstSent = ConversionHelper.ModeToDefaultReport(Mode);
+            RstRcvd = RstSent;
         }
 
         private void TimerTick(object? state)

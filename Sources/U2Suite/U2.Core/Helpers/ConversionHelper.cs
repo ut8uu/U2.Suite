@@ -25,6 +25,29 @@ namespace U2.Core
         };
 
         /// <summary>
+        /// Converts given mode to a default report in this mode.
+        /// Digital modes are not covered - no default report is there.
+        /// </summary>
+        /// <param name="modeName">A name of the mode to be processed.</param>
+        /// <returns>Returns default report for mode or emmpty string if not applicable.</returns>
+        public static string ModeToDefaultReport(string modeName)
+        {
+            if (modeName.Equals(RadioMode.CW, StringComparison.InvariantCultureIgnoreCase))
+            {
+                return "599";
+            }
+            if (modeName.Equals(RadioMode.SSB, StringComparison.InvariantCultureIgnoreCase))
+            {
+                return "59";
+            }
+            if (modeName.Equals(RadioMode.FM, StringComparison.InvariantCultureIgnoreCase))
+            {
+                return "595";
+            }
+            return string.Empty;
+        }
+
+        /// <summary>
         /// Converts given band to its most lower frequency.
         /// </summary>
         /// <param name="bandType">A band type to process.</param>
