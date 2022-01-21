@@ -35,7 +35,7 @@ namespace U2.Logger
 
         public string CallsignColumnHeader { get; set; } = "Callsign";
         public string TimestampColumnHeader { get; set; } = "Timestamp";
-        public string FrequencyColumnHeader { get; set; } = "Freq";
+        public string FrequencyColumnHeader { get; set; } = "Freq (MHz)";
         public string ModeColumnHeader { get; set; } = "Mode";
         public string RstSentColumnHeader { get; set; } = "Snt";
         public string RstReceivedColumnHeader { get; set; } = "Rcv";
