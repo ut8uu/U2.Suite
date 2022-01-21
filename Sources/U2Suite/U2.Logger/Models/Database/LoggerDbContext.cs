@@ -58,10 +58,14 @@ namespace U2.Logger
             record.Timestamp = formData.Timestamp;
             record.RstReceived = formData.RstRcvd;
             record.RstSent = formData.RstSent;
-            record.Frequency = formData.FreqMhz.GetValueOrDefault(-1);
             record.Operator = formData.Operator;
             record.Mode = formData.Mode;
             record.Band = formData.Band;
+            record.Frequency = formData.FreqMhz.GetValueOrDefault(-1);
+            if (record.Frequency<0)
+            {
+                record.Frequency = ConversionHelper.BandNameAndModeToFrequency(formData.Band, formData.Mode);
+            }
 
             if (newRecord)
             {

@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using Avalonia.Controls;
@@ -88,8 +89,17 @@ namespace U2.Logger
                     formData.Band = ConversionHelper.AllBands.FirstOrDefault(b => b.Name == message.NewValue).Name;
                     break;
                 case ApplicationTextBox.Frequency:
-                    formData.Comments = message.NewValue;
+                    if (double.TryParse(message.NewValue, NumberStyles.Number, CultureInfo.DefaultThreadCurrentUICulture, out var freq))
+                    {
+                        formData.FreqMhz = freq;
+                    }
+                    else
+                    {
+                        formData.FreqMhz = ConversionHelper.BandNameToFrequency(formData.Band);
+                    }
                     break;
+                default:
+                    throw new NotImplementedException($"Handler for field {message.TextBox} not implemented.");
             }
         }
 
@@ -118,6 +128,7 @@ namespace U2.Logger
                 Messenger.Default.Send(new ExecuteCommandMessage(CommandToExecute.SaveQso, _currentFormData));
                 Messenger.Default.Send(new ExecuteCommandMessage(CommandToExecute.ClearTextInputs));
                 _currentFormData = new ApplicationFormData();
+                Messenger.Default.Send(new ExecuteCommandMessage(CommandToExecute.InitQso));
             }
         }
 
