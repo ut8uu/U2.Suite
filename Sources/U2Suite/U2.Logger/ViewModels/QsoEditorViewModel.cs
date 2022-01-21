@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data.SQLite;
 using System.Globalization;
+using System.Linq;
 using System.Text;
 using Avalonia.Controls;
 using GalaSoft.MvvmLight.Messaging;
@@ -47,21 +48,19 @@ namespace U2.Logger
         public string BandTitle { get; set; } = "Band";
         public string TimestampTitle { get; set; } = "Timestamp";
 
-        public string Callsign { get; set; }
-        public string RstSent { get; set; }
-        public string RstReceived { get; set; }
-        public string Operator { get; set; }
-        public string Comments { get; set; }
-        public string Frequency { get; set; }
-        public string Mode { get; set; }
-        public string Band { get; set; }
-        public DateTime Timestamp { get; set; }
+        public string Callsign { get; set; } = default!;
+        public string RstSent { get; set; } = default!;
+        public string RstReceived { get; set; } = default!;
+        public string Operator { get; set; } = default!;
+        public string Comments { get; set; } = default!;
+        public string Frequency { get; set; } = default!;
+        public string Mode { get; set; } = default!;
+        public string Band { get; set; } = default!;
+        public DateTime Timestamp { get; set; } = DateTime.UtcNow;
 
         public ObservableCollection<string> AllModes =>
-            new ObservableCollection<string>(new[]
-            {
-                "CW", "SSB", "RTTY", "Olivia", "THOR", "PSK"
-            });
+            new ObservableCollection<string>(
+                ConversionHelper.AllModes.Select(m=>m.Name).OrderBy(mode => mode));
 
         public void OkButtonClick()
         {

@@ -69,6 +69,7 @@ namespace U2.Logger.Tests
                     model.Timestamp = expectedValue;
                     break;
                 case ApplicationTextBox.Mode:
+                    expectedValue = ConversionHelper.AllModes.First().Name;
                     model.Mode = expectedValue;
                     break;
                 case ApplicationTextBox.Band:

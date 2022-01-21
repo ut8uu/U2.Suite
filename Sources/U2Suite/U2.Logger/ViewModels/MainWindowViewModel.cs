@@ -12,7 +12,7 @@ namespace U2.Logger
 {
     public class LoggerMainWindowViewModel : ViewModelBase
     {
-        internal ApplicationFormData _currentFormData;
+        internal ApplicationFormData _currentFormData = new ApplicationFormData();
         internal LoggerDbContext _dbContext;
 
         private Window _owner;

@@ -8,7 +8,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Avalonia.Controls;
 using GalaSoft.MvvmLight.Messaging;
-using Tmds.DBus;
 using U2.Contracts;
 using U2.Core;
 
