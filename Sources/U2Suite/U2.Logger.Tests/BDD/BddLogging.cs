@@ -169,7 +169,7 @@ namespace U2.Logger.Tests
         [Given(@"Frequency is (.*)")]
         public void GivenFrequencyIs(double frequency)
         {
-            _loggerVM._currentFormData.FreqKhz = frequency;
+            _loggerVM._currentFormData.FreqMhz = frequency;
         }
 
 

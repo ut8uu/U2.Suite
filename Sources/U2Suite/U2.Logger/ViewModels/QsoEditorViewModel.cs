@@ -73,7 +73,7 @@ namespace U2.Logger
             var formData = new ApplicationFormData
             {
                 Callsign = this.Callsign,
-                FreqKhz = freq,
+                FreqMhz = freq,
                 Band = ConversionHelper.FrequencyToBandName(freq),
                 Mode = this.Mode,
                 Comments = this.Comments,

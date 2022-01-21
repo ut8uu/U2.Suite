@@ -14,7 +14,7 @@ namespace U2.Logger
         private DateTime _timestamp = DateTime.UtcNow;
         private string _comments = string.Empty;
         private string _band = string.Empty;
-        private double? _freqKhz = null;
+        private double? _freqMhz = null;
         private string _mode = string.Empty;
 
         public ApplicationFormData()
@@ -48,27 +48,27 @@ namespace U2.Logger
             set
             {
                 _band = value;
-                if (!string.IsNullOrEmpty(value) && !_freqKhz.HasValue)
+                if (!string.IsNullOrEmpty(value) && !_freqMhz.HasValue)
                 {
                     try
                     {
-                        _freqKhz = ConversionHelper.BandNameToFrequency(value);
+                        _freqMhz = ConversionHelper.BandNameToFrequency(value);
                     }
                     catch (ArgumentException)
                     {
-                        _freqKhz = null;
+                        _freqMhz = null;
                     }
                 }
                 Modified = true;
             }
         }
 
-        public double? FreqKhz
+        public double? FreqMhz
         {
-            get => _freqKhz;
+            get => _freqMhz;
             set
             {
-                _freqKhz = value;
+                _freqMhz = value;
                 _band = ConversionHelper.FrequencyToBandName(value.GetValueOrDefault(-1));
                 Modified = true;
             }
@@ -136,7 +136,7 @@ namespace U2.Logger
             Timestamp = DateTime.UtcNow;
             Comments = string.Empty;
             Band = string.Empty;
-            FreqKhz = null;
+            FreqMhz = null;
             Mode = string.Empty;
             _recordId = Guid.NewGuid();
 
@@ -152,7 +152,7 @@ namespace U2.Logger
             Comments = data.Comments;
             Mode = data.Mode;
             Band = data.Band;
-            FreqKhz = data.FreqKhz;
+            FreqMhz = data.FreqMhz;
             _recordId = data.RecordId;
         }
 
@@ -164,7 +164,7 @@ namespace U2.Logger
             Timestamp = data.Timestamp;
             Comments = data.Comments;
             Mode = data.Mode;
-            FreqKhz = data.Frequency;
+            FreqMhz = data.Frequency;
             Band = ConversionHelper.FrequencyToBandName(data.Frequency);
             _recordId = data.RecordId;
         }
