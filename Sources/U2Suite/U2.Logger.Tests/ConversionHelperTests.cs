@@ -26,5 +26,19 @@ namespace U2.Logger.Tests
             var band = ConversionHelper.FrequencyToBandName(freqMhz);
             Assert.AreEqual(expectedBand, band);
         }
+
+        [TestMethod]
+        [DataRow(RadioBandName.B160m, RadioMode.CW, 1.81)]
+        [DataRow(RadioBandName.B160m, RadioMode.PSK, 1.838)]
+        [DataRow(RadioBandName.B160m, RadioMode.RTTY, 1.838)]
+        [DataRow(RadioBandName.B160m, RadioMode.DIGITALVOICE, 1.840)]
+        [DataRow(RadioBandName.B160m, RadioMode.SSB, 1.840)]
+        [DataRow(RadioBandName.B160m, RadioMode.FM, 1.840)]
+        [DataRow(RadioBandName.B160m, "unknown", 1.81)]
+        public void BandAndModeToFreq(string bandName, string modeName, double expectedFrequency)
+        {
+            var frequency = ConversionHelper.BandNameAndModeToFrequency(bandName, modeName);
+            Assert.AreEqual(expectedFrequency, frequency, 0.0000001);
+        }
     }
 }
