@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using U2.Contracts;
@@ -16,10 +17,11 @@ namespace U2.Core
         public static List<RadioMode> AllModes = new List<RadioMode>
         {
             new RadioModeCW(),
-            new RadioModeDigivoice(),
+            new RadioModeDigitalVoice(),
             new RadioModeFM(),
             new RadioModeRtty(),
             new RadioModeSSB(),
+            new RadioModePsk(),
         };
 
         /// <summary>
@@ -46,6 +48,52 @@ namespace U2.Core
         }
 
         /// <summary>
+        /// Converts given band to the frequency of the given band and mode.
+        /// </summary>
+        /// <param name="bandName">A band type to process.</param>
+        /// <param name="modeName">A mode to process.</param>
+        /// <returns>Returns the most lower frequency of the given band.</returns>
+        /// <exception cref="ArgumentException">Thrown when Unspecified is passed.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown when unknown band is passed.</exception>
+        public static double BandNameAndModeToFrequency(string bandName, string modeName)
+        {
+            if (string.IsNullOrEmpty(bandName))
+            {
+                throw new ArgumentException($"Band {bandName} not specified.");
+            }
+
+            var band = AllBands.FirstOrDefault(b => b.Name == bandName);
+            if (band == null)
+            {
+                throw new ArgumentOutOfRangeException($"Band {bandName} is unknown.");
+            }
+
+            if (string.IsNullOrEmpty(modeName))
+            {
+                return band.BeginMhz;
+            }
+
+            var mode = AllModes.FirstOrDefault(
+                m => m.Name.Equals(modeName, StringComparison.InvariantCultureIgnoreCase));
+            if (mode == null)
+            {
+                return band.BeginMhz;
+            }
+
+            if (band.SubBands.Any())
+            {
+                var subBand = band.SubBands.FirstOrDefault(sb => 
+                    sb.Modes.Any(m => m.Equals(mode.Type)));
+                if (subBand != null)
+                {
+                    return subBand.BeginMhz;
+                }
+            }
+
+            return band.BeginMhz;
+        }
+
+        /// <summary>
         /// Converts given frequency to an amateur band.
         /// </summary>
         /// <param name="frequencyKhz">A frequency in kilohertz.</param>
@@ -60,27 +108,6 @@ namespace U2.Core
             }
 
             return band.Name;
-        }
-    }
-
-    public class Band160M : RadioBand
-    {
-        public Band160M()
-        {
-            Name = RadioBandName.B160m;
-            BeginMhz = 1.810;
-            EndMhz = 2.000;
-            Group = RadioBandGroup.HF;
-            Type = RadioBandType.B160m;
-            SubBands = new List<SubBand>
-            {
-                new SubBand
-                {
-                    BeginMhz = 1.8100,
-                    EndMhz = 1.8380,
-                    Modes = new RadioModeType[] {RadioModeType.CW}
-                }
-            };
         }
     }
 }
