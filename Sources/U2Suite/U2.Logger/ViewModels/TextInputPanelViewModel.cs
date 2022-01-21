@@ -24,11 +24,7 @@ namespace U2.Logger
                 AcceptExecuteCommandMessage);
 
             _timer = new Timer(TimerTick, null, TimeSpan.Zero, TimeSpan.FromSeconds(1));
-            Mode = AllModes.First();
-            Band = AllBands.First();
-            Frequency = ConversionHelper.BandNameAndModeToFrequency(Band, Mode).ToString();
-            RstSent = ConversionHelper.ModeToDefaultReport(Mode);
-            RstRcvd = RstSent;
+            SetDefaultValues();
         }
 
         private void TimerTick(object? state)
@@ -82,6 +78,10 @@ namespace U2.Logger
             if (message.CommandToExecute == CommandToExecute.ClearTextInputs)
             {
                 ClearAll();
+            }
+            else if (message.CommandToExecute == CommandToExecute.InitQso)
+            {
+                SetDefaultValues();
             }
         }
 
@@ -143,6 +143,26 @@ namespace U2.Logger
             }
 
             Messenger.Default.Send(message);
+        }
+
+        private void SetDefaultValues()
+        {
+            if (string.IsNullOrEmpty(Mode))
+            {
+                Mode = AllModes.First();
+            }
+            if (string.IsNullOrEmpty(Band))
+            {
+                Band = AllBands.First();
+            }
+
+            // force initialization of Mode and Band
+            OnPropertyChanged(nameof(Band));
+            OnPropertyChanged(nameof(Mode));
+
+            Frequency = ConversionHelper.BandNameAndModeToFrequency(Band, Mode).ToString();
+            RstSent = ConversionHelper.ModeToDefaultReport(Mode);
+            RstRcvd = RstSent;
         }
     }
 }
