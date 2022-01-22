@@ -32,6 +32,7 @@ namespace U2.Logger
 
         public string CloseButtonText { get; set; } = "Close";
         public string EditButtonText { get; set; } = "Edit";
+        public string DeleteButtonText { get; set; } = "Delete";
 
         public string CallsignColumnHeader { get; set; } = "Callsign";
         public string TimestampColumnHeader { get; set; } = "Timestamp";
@@ -46,6 +47,7 @@ namespace U2.Logger
         public ObservableCollection<LogRecordDbo> FilteredList { get; set; } = default!;
 
         public LogRecordDbo SelectedRecord { get; set; } = default!;
+        public List<LogRecordDbo> SelectedItems = new List<LogRecordDbo>();
 
         private void AcceptExecuteCommandMessage(ExecuteCommandMessage message)
         {
@@ -74,6 +76,41 @@ namespace U2.Logger
 
             var editor = new QsoEditorWindow(SelectedRecord);
             editor.ShowDialog(Owner);
+        }
+
+        public void SelectItems(List<object> selectedItems)
+        {
+            if (selectedItems == null)
+            {
+                return;
+            }
+            SelectedItems.AddRange(selectedItems.Cast<LogRecordDbo>().Except(SelectedItems));
+        }
+
+        public void DeselectItems(IEnumerable<LogRecordDbo> deselectedItems)
+        {
+            if (deselectedItems == null)
+            {
+                return;
+            }
+            SelectedItems = SelectedItems.Except(deselectedItems).ToList();
+        }
+
+        /// <summary>
+        /// Emits a commend for QSO deletion.
+        /// Sends identifiers of all the selected records, if any.
+        /// </summary>
+        public void DeleteButtonClick()
+        {
+            if (!SelectedItems.Any())
+            {
+                return;
+            }
+
+            var message = new ExecuteCommandMessage(CommandToExecute.DeleteQso, 
+                SelectedItems.Select(i => i.RecordId).ToArray());
+            Messenger.Default.Send(message);
+            SelectedItems = new List<LogRecordDbo>();
         }
     }
 }

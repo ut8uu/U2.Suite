@@ -25,7 +25,7 @@ namespace U2.Logger
             _record = record;
 
             Callsign = record.Callsign;
-            Operator = record.Callsign;
+            Operator = record.Operator;
             RstReceived = record.RstReceived;
             RstSent = record.RstSent;
             Comments = record.Comments;

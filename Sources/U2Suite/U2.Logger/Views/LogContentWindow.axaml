@@ -17,12 +17,13 @@
       <StackPanel Height="60" DockPanel.Dock="Bottom" Orientation="Horizontal">
         <Button Margin="5" Name="CloseButton" Command="{Binding CloseButtonClick}" Content="{Binding CloseButtonText}"></Button>
         <Button Margin="5" Name="EditButton" Command="{Binding EditButtonClick}" Content="{Binding EditButtonText}"></Button>
+        <Button Margin="5" Name="DeleteButton" Command="{Binding DeleteButtonClick}" Content="{Binding DeleteButtonText}"></Button>
       </StackPanel>
       <DataGrid Name="MainGrid" DockPanel.Dock="Top" Height="300"
                 ScrollViewer.VerticalScrollBarVisibility="Auto"
                 Items="{Binding FullList, Mode=OneWay}"
                 AutoGenerateColumns="False"
-                SelectionMode="Single"
+                SelectionMode="Extended"
                 SelectedItem="{Binding SelectedRecord}"
                 >
         <DataGrid.Columns>
