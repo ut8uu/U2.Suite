@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
@@ -10,6 +11,8 @@ namespace U2.Logger
         private LogContentWindowViewModel _viewModel = default!;
         private LoggerDbContext _dbContext = default!;
 
+        private DataGrid _mainGrid;
+
         public LogContentWindow()
         {
             InitializeComponent();
@@ -20,6 +23,16 @@ namespace U2.Logger
             _viewModel = new LogContentWindowViewModel(_dbContext);
             _viewModel.Owner = this;
             DataContext = _viewModel;
+
+            _mainGrid = (DataGrid)this.Find<DataGrid>("MainGrid");
+            _mainGrid.SelectionChanged += _mainGrid_SelectionChanged;
+        }
+
+        private void _mainGrid_SelectionChanged(object? sender, 
+            SelectionChangedEventArgs e)
+        {
+            _viewModel.SelectItems(e.AddedItems as List<object>);
+            _viewModel.DeselectItems(e.RemovedItems as List<LogRecordDbo>);
         }
 
         private void InitializeComponent()

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -165,6 +166,14 @@ namespace U2.Logger
                 if (message.CommandParameters is ApplicationFormData formData)
                 {
                     _dbContext.SaveQso(formData);
+                    Messenger.Default.Send(new ExecuteCommandMessage(CommandToExecute.RefreshLog));
+                }
+            }
+            else if (message.CommandToExecute == CommandToExecute.DeleteQso)
+            {
+                if (message.CommandParameters is Guid[] records)
+                {
+                    _dbContext.DeleteQso(records);
                     Messenger.Default.Send(new ExecuteCommandMessage(CommandToExecute.RefreshLog));
                 }
             }

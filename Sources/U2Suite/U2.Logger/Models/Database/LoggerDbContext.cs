@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Text.Json;
 using GalaSoft.MvvmLight.Messaging;
 using Microsoft.EntityFrameworkCore;
@@ -72,6 +73,17 @@ namespace U2.Logger
                 Records.Add(record);
             }
 
+            this.SaveChanges();
+        }
+
+        /// <summary>
+        /// Deletes a given collection of QSO.
+        /// </summary>
+        /// <param name="recordIds"></param>
+        public void DeleteQso(Guid[] recordIds)
+        {
+            var recordsToDelete = Records.Where(r => recordIds.Contains(r.RecordId)).ToList();
+            Records.RemoveRange(recordsToDelete);
             this.SaveChanges();
         }
     }

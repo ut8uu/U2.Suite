@@ -5,6 +5,7 @@
         ClearTextInputs,
         InitQso,
         SaveQso,
+        DeleteQso,
         RefreshLog,
     }
 
