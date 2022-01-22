@@ -1,19 +1,20 @@
 ﻿using System;
+using U2.Contracts;
+using U2.Core;
 
 namespace U2.Logger
 {
     public class ApplicationFormData
     {
-        private int _id;
-        private readonly Guid _recordId;
+        private Guid _recordId;
         private string _callsign = string.Empty;
         private string _operator = string.Empty;
         private string _rstSent = string.Empty;
         private string _rstRcvd = string.Empty;
-        private DateTime _dateTime = DateTime.UtcNow;
+        private DateTime _timestamp = DateTime.UtcNow;
         private string _comments = string.Empty;
         private string _band = string.Empty;
-        private float _freqKhz = 0f;
+        private double? _freqMhz = null;
         private string _mode = string.Empty;
 
         public ApplicationFormData()
@@ -47,16 +48,28 @@ namespace U2.Logger
             set
             {
                 _band = value;
+                if (!string.IsNullOrEmpty(value) && !_freqMhz.HasValue)
+                {
+                    try
+                    {
+                        _freqMhz = ConversionHelper.BandNameToFrequency(value);
+                    }
+                    catch (ArgumentException)
+                    {
+                        _freqMhz = null;
+                    }
+                }
                 Modified = true;
             }
         }
 
-        public float FreqKhz
+        public double? FreqMhz
         {
-            get => _freqKhz;
+            get => _freqMhz;
             set
             {
-                _freqKhz = value;
+                _freqMhz = value;
+                _band = ConversionHelper.FrequencyToBandName(value.GetValueOrDefault(-1));
                 Modified = true;
             }
         }
@@ -91,12 +104,12 @@ namespace U2.Logger
             }
         }
 
-        public DateTime DateTime
+        public DateTime Timestamp
         {
-            get => _dateTime;
+            get => _timestamp;
             set
             {
-                _dateTime = value;
+                _timestamp = value;
                 Modified = true;
             }
         }
@@ -115,17 +128,17 @@ namespace U2.Logger
 
         public Guid RecordId => _recordId;
 
-        public int Id { get => _id; set => _id = value; }
-
         public void Clear()
         {
             Callsign = string.Empty;
             RstSent = string.Empty;
             RstRcvd = string.Empty;
-            DateTime = DateTime.UtcNow;
+            Timestamp = DateTime.UtcNow;
             Comments = string.Empty;
             Band = string.Empty;
+            FreqMhz = null;
             Mode = string.Empty;
+            _recordId = Guid.NewGuid();
 
             Modified = false;
         }
@@ -135,10 +148,25 @@ namespace U2.Logger
             Callsign = data.Callsign;
             RstSent = data.RstSent;
             RstRcvd = data.RstRcvd;
-            DateTime = data.DateTime;
+            Timestamp = data.Timestamp;
             Comments = data.Comments;
             Mode = data.Mode;
             Band = data.Band;
+            FreqMhz = data.FreqMhz;
+            _recordId = data.RecordId;
+        }
+
+        public void Assign(LogRecordDbo data)
+        {
+            Callsign = data.Callsign;
+            RstSent = data.RstSent;
+            RstRcvd = data.RstReceived;
+            Timestamp = data.Timestamp;
+            Comments = data.Comments;
+            Mode = data.Mode;
+            FreqMhz = data.Frequency;
+            Band = ConversionHelper.FrequencyToBandName(data.Frequency);
+            _recordId = data.RecordId;
         }
 
         public bool CanBeSaved()

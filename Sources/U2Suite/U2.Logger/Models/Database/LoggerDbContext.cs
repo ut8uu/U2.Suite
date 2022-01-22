@@ -55,11 +55,17 @@ namespace U2.Logger
             record.RecordId = formData.RecordId;
             record.Callsign = formData.Callsign;
             record.Comments = formData.Comments ?? string.Empty;
-            record.DateTime = formData.DateTime;
+            record.Timestamp = formData.Timestamp;
             record.RstReceived = formData.RstRcvd;
             record.RstSent = formData.RstSent;
-            record.Frequency = formData.FreqKhz;
             record.Operator = formData.Operator;
+            record.Mode = formData.Mode;
+            record.Band = formData.Band;
+            record.Frequency = formData.FreqMhz.GetValueOrDefault(-1);
+            if (record.Frequency<0)
+            {
+                record.Frequency = ConversionHelper.BandNameAndModeToFrequency(formData.Band, formData.Mode);
+            }
 
             if (newRecord)
             {

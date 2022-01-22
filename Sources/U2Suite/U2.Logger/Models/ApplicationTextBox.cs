@@ -7,7 +7,8 @@
         RstSent,
         RstReceived,
         Comments,
-        DateTime,
+        Timestamp,
+        Frequency,
         Band,
         Mode,
     }

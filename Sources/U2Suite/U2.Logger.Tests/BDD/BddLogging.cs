@@ -160,6 +160,19 @@ namespace U2.Logger.Tests
             SetFieldValue(CommentsField, "good signal");
         }
 
+        [Given(@"Mode is '(.*)'")]
+        public void GivenModeIs(string mode)
+        {
+            _loggerVM._currentFormData.Mode = mode;
+        }
+
+        [Given(@"Frequency is (.*)")]
+        public void GivenFrequencyIs(double frequency)
+        {
+            _loggerVM._currentFormData.FreqMhz = frequency;
+        }
+
+
         [Then(@"Field '(.*)' is not empty")]
         public void ThenFieldIsNotEmpty(string fieldName)
         {
@@ -171,7 +184,11 @@ namespace U2.Logger.Tests
         public void GivenLogIsEmpty()
         {
             var db = _loggerVM._dbContext;
-            db.Records.RemoveRange(db.Records);
+            //db.Records.RemoveRange(db.Records);
+            foreach (var record in db.Records)
+            {
+                db.Records.Remove(record);
+            }
             db.SaveChanges();
 
             Assert.AreEqual(0, db.Records.Count());

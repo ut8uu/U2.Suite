@@ -1,0 +1,74 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:logger="clr-namespace:U2.Logger"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="400"
+        x:Class="U2.Logger.QsoEditorWindow"
+        Title="QsoEditorWindow">
+
+  <Design.DataContext>
+    <logger:QsoEditorViewModel/>
+  </Design.DataContext>
+
+  <Border Classes="Card">
+    <Grid ColumnDefinitions="*,10,*" RowDefinitions="*,*,*,*,60">
+      <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Vertical">
+        <TextBlock Text="{Binding CallsignTitle}"></TextBlock>
+        <TextBox Text="{Binding Callsign}"></TextBox>
+      </StackPanel>
+      <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Vertical">
+        <TextBlock Text="{Binding TimestampTitle}"></TextBlock>
+        <TextBox Text="{Binding Timestamp}"></TextBox>
+      </StackPanel>
+
+      <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal">
+        <StackPanel Width="175">
+          <TextBlock Text="{Binding RstSentTitle}"></TextBlock>
+          <TextBox Text="{Binding RstSent}"></TextBox>
+        </StackPanel>
+        <Border Padding="10 0 0 0">
+          <StackPanel Width="180">
+            <TextBlock Text="{Binding RstReceivedTitle}"></TextBlock>
+            <TextBox Text="{Binding RstReceived}"></TextBox>
+          </StackPanel>
+
+        </Border>
+      </StackPanel>
+      <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Vertical">
+        <TextBlock Text="{Binding ModeTitle}"></TextBlock>
+        <Border Padding="0 5 0 0">
+          <ComboBox Height="40" Items="{Binding AllModes}" SelectedItem="{Binding Mode}"></ComboBox>
+        </Border>
+      </StackPanel>
+
+      <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Vertical">
+        <TextBlock Text="{Binding FrequencyTitle}"></TextBlock>
+        <TextBox Text="{Binding Frequency}"></TextBox>
+      </StackPanel>
+      <StackPanel Grid.Row="2" Grid.Column="2" Orientation="Vertical">
+        <TextBlock Text="{Binding BandTitle}"></TextBlock>
+        <Border Padding="0 5 0 0">
+          <ComboBox Height="40" Items="{Binding AllBands}" SelectedItem="{Binding Band}"></ComboBox>
+        </Border>
+
+      </StackPanel>
+
+      <StackPanel Grid.Row="3" Grid.Column="0" Orientation="Vertical">
+        <TextBlock Text="{Binding OperatorTitle}"></TextBlock>
+        <TextBox Text="{Binding Operator}"></TextBox>
+      </StackPanel>
+      <StackPanel Grid.Row="3" Grid.Column="2" Orientation="Vertical">
+        <TextBlock Text="{Binding CommentsTitle}"></TextBlock>
+        <TextBox Text="{Binding Comments}"></TextBox>
+      </StackPanel>
+
+      <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.Column="0">
+        <Button Margin="5" Content="{Binding OkButtonTitle}" Command="{Binding OkButtonClick}"></Button>
+        <Button Margin="5" Content="{Binding CancelButtonTitle}" Command="{Binding CancelButtonClick}"></Button>
+      </StackPanel>
+    </Grid>
+
+
+  </Border>
+</Window>

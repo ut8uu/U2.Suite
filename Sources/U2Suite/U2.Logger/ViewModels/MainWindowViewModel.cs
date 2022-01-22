@@ -1,8 +1,11 @@
 using System;
+using System.Globalization;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using Avalonia.Controls;
 using GalaSoft.MvvmLight.Messaging;
 using Microsoft.EntityFrameworkCore;
+using U2.Core;
 using U2.Logger.Models;
 
 [assembly: InternalsVisibleTo("U2.Logger.Tests")]
@@ -10,7 +13,7 @@ namespace U2.Logger
 {
     public class LoggerMainWindowViewModel : ViewModelBase
     {
-        internal ApplicationFormData _currentFormData;
+        internal ApplicationFormData _currentFormData = new ApplicationFormData();
         internal LoggerDbContext _dbContext;
 
         private Window _owner;
@@ -76,6 +79,27 @@ namespace U2.Logger
                 case ApplicationTextBox.Comments:
                     formData.Comments = message.NewValue;
                     break;
+                case ApplicationTextBox.Timestamp:
+                    formData.Timestamp = DateTime.Parse(message.NewValue);
+                    break;
+                case ApplicationTextBox.Mode:
+                    formData.Mode = message.NewValue;
+                    break;
+                case ApplicationTextBox.Band:
+                    formData.Band = ConversionHelper.AllBands.FirstOrDefault(b => b.Name == message.NewValue).Name;
+                    break;
+                case ApplicationTextBox.Frequency:
+                    if (double.TryParse(message.NewValue, NumberStyles.Number, CultureInfo.DefaultThreadCurrentUICulture, out var freq))
+                    {
+                        formData.FreqMhz = freq;
+                    }
+                    else
+                    {
+                        formData.FreqMhz = ConversionHelper.BandNameToFrequency(formData.Band);
+                    }
+                    break;
+                default:
+                    throw new NotImplementedException($"Handler for field {message.TextBox} not implemented.");
             }
         }
 
@@ -104,11 +128,16 @@ namespace U2.Logger
                 Messenger.Default.Send(new ExecuteCommandMessage(CommandToExecute.SaveQso, _currentFormData));
                 Messenger.Default.Send(new ExecuteCommandMessage(CommandToExecute.ClearTextInputs));
                 _currentFormData = new ApplicationFormData();
+                Messenger.Default.Send(new ExecuteCommandMessage(CommandToExecute.InitQso));
             }
         }
 
         private bool CanSaveQso()
         {
+            if (_currentFormData == null)
+            {
+                return false;
+            }
             if (string.IsNullOrEmpty(_currentFormData.Callsign))
             {
                 return false;

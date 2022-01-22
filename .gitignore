@@ -6,3 +6,4 @@
 **/FodyWeavers.xsd
 **/*.feature.cs
 **/*csproj.user
+**/*.user

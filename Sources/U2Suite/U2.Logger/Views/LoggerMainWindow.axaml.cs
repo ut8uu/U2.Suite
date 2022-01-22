@@ -13,7 +13,7 @@ namespace U2.Logger
         private TextInputPanel _textInputs = default!;
         private FuncButtonsPanel _funcButtonsPanel;
         internal ApplicationTextBox? _selectedTextBox = null;
-        private LoggerMainWindowViewModel _loggerViewModel = null;
+        private LoggerMainWindowViewModel _loggerViewModel;
 
         public LoggerMainWindow()
         {

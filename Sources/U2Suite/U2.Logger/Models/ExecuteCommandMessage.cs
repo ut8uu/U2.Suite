@@ -3,6 +3,7 @@
     public enum CommandToExecute
     {
         ClearTextInputs,
+        InitQso,
         SaveQso,
         RefreshLog,
     }
