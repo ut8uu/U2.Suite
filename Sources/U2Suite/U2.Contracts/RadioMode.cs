@@ -13,6 +13,8 @@ namespace U2.Contracts
         RTTY,
         FM,
         DIGITALVOICE,
+        AM,
+        SATELLITES
     }
 
     public abstract class RadioMode
@@ -20,9 +22,11 @@ namespace U2.Contracts
         public const string CW = nameof(CW);
         public const string SSB = nameof(SSB);
         public const string RTTY = nameof(RTTY);
+        public const string AM = nameof(AM);
         public const string FM = nameof(FM);
         public const string DIGITALVOICE = nameof(DIGITALVOICE);
         public const string PSK = nameof(PSK);
+        public const string SATELLITES = nameof(SATELLITES);
 
         public RadioModeType Type { get; }
         public string Name { get; }
@@ -32,6 +36,78 @@ namespace U2.Contracts
             Type = type;
             Name = name;
         }
+
+        public static RadioModeType[] AllModes =>
+            new[]
+            {
+                RadioModeType.CW,
+                RadioModeType.PSK,
+                RadioModeType.RTTY,
+                RadioModeType.DIGITALVOICE,
+                RadioModeType.SSB,
+                RadioModeType.FM,
+                RadioModeType.AM,
+                RadioModeType.SATELLITES,
+            };
+
+        public static RadioModeType[] CwModes =>
+            new[]
+            {
+                RadioModeType.CW,
+            };
+
+        public static RadioModeType[] CwSsbModes =>
+            new[]
+            {
+                RadioModeType.CW,
+                RadioModeType.SSB,
+            };
+
+        public static RadioModeType[] NarrowBandModes =>
+            new[]
+            {
+                RadioModeType.CW,
+                RadioModeType.PSK,
+                RadioModeType.RTTY,
+            };
+
+        public static RadioModeType[] NarrowBandDigitalModes =>
+            new[]
+            {
+                RadioModeType.PSK,
+                RadioModeType.RTTY,
+            };
+
+        public static RadioModeType[] VoiceModes =>
+            new[]
+            {
+                RadioModeType.DIGITALVOICE,
+                RadioModeType.SSB,
+                RadioModeType.FM,
+                RadioModeType.AM,
+            };
+
+        public static RadioModeType[] FmDigitalModes =>
+            new[]
+            {
+                RadioModeType.FM,
+                RadioModeType.PSK,
+                RadioModeType.RTTY,
+                RadioModeType.DIGITALVOICE,
+            };
+
+        public static RadioModeType[] AmFmModes =>
+            new[]
+            {
+                RadioModeType.FM,
+                RadioModeType.AM,
+            };
+
+        public static RadioModeType[] SatelliteModes =>
+            new[]
+            {
+                RadioModeType.SATELLITES,
+            };
     }
 
     public sealed class RadioModeFM : RadioMode
@@ -42,6 +118,11 @@ namespace U2.Contracts
     public sealed class RadioModeCW : RadioMode
     {
         public RadioModeCW() : base(RadioModeType.CW, RadioMode.CW) { }
+    }
+
+    public sealed class RadioModeAM : RadioMode
+    {
+        public RadioModeAM() : base(RadioModeType.AM, RadioMode.AM) { }
     }
 
     public sealed class RadioModeSSB : RadioMode

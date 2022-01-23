@@ -87,6 +87,19 @@ namespace U2.Contracts
 
     public static class RadioBandName
     {
-        public const string B160m = "160 m";
+        public const string B160m = "160m";
+        public const string B80m = "80m";
+        public const string B60m = "60m";
+        public const string B40m = "40m";
+        public const string B30m = "30m";
+        public const string B20m = "20m";
+        public const string B17m = "17m";
+        public const string B15m = "15m";
+        public const string B12m = "12m";
+        public const string B10m = "10m";
+        public const string B6m = "6m";
+        public const string B4m = "4m";
+        public const string B2m = "2m";
+        public const string B70cm = "70cm";
     }
 }

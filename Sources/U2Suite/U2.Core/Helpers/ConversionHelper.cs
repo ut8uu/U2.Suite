@@ -12,6 +12,19 @@ namespace U2.Core
         public static List<RadioBand> AllBands = new List<RadioBand>
         {
             new Band160M(),
+            new Band80M(),
+            new Band60M(),
+            new Band40M(),
+            new Band30M(),
+            new Band20M(),
+            new Band17M(),
+            new Band15M(),
+            new Band12M(),
+            new Band10M(),
+            new Band6M(),
+            new Band4M(),
+            new Band2M(),
+            new Band70CM(),
         };
 
         public static List<RadioMode> AllModes = new List<RadioMode>
@@ -21,7 +34,7 @@ namespace U2.Core
             new RadioModeFM(),
             new RadioModeRtty(),
             new RadioModeSSB(),
-            new RadioModePsk(),
+            new RadioModePsk(),            
         };
 
         /// <summary>
