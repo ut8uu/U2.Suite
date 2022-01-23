@@ -21,6 +21,7 @@ namespace U2.Contracts
         public const string CW = nameof(CW);
         public const string SSB = nameof(SSB);
         public const string RTTY = nameof(RTTY);
+        public const string AM = nameof(AM);
         public const string FM = nameof(FM);
         public const string DIGITALVOICE = nameof(DIGITALVOICE);
         public const string PSK = nameof(PSK);
@@ -108,6 +109,11 @@ namespace U2.Contracts
     public sealed class RadioModeCW : RadioMode
     {
         public RadioModeCW() : base(RadioModeType.CW, RadioMode.CW) { }
+    }
+
+    public sealed class RadioModeAM : RadioMode
+    {
+        public RadioModeAM() : base(RadioModeType.AM, RadioMode.AM) { }
     }
 
     public sealed class RadioModeSSB : RadioMode
