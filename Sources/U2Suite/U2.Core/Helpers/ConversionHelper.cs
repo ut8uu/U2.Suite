@@ -24,6 +24,7 @@ namespace U2.Core
             new Band6M(),
             new Band4M(),
             new Band2M(),
+            new Band70CM(),
         };
 
         public static List<RadioMode> AllModes = new List<RadioMode>

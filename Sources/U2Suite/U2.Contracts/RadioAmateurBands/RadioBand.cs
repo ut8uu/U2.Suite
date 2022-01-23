@@ -100,5 +100,6 @@ namespace U2.Contracts
         public const string B6m = "6m";
         public const string B4m = "4m";
         public const string B2m = "2m";
+        public const string B70cm = "70cm";
     }
 }

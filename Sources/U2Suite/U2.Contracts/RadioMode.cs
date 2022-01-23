@@ -14,6 +14,7 @@ namespace U2.Contracts
         FM,
         DIGITALVOICE,
         AM,
+        SATELLITES
     }
 
     public abstract class RadioMode
@@ -25,6 +26,7 @@ namespace U2.Contracts
         public const string FM = nameof(FM);
         public const string DIGITALVOICE = nameof(DIGITALVOICE);
         public const string PSK = nameof(PSK);
+        public const string SATELLITES = nameof(SATELLITES);
 
         public RadioModeType Type { get; }
         public string Name { get; }
@@ -45,6 +47,7 @@ namespace U2.Contracts
                 RadioModeType.SSB,
                 RadioModeType.FM,
                 RadioModeType.AM,
+                RadioModeType.SATELLITES,
             };
 
         public static RadioModeType[] CwModes =>
@@ -98,6 +101,12 @@ namespace U2.Contracts
             {
                 RadioModeType.FM,
                 RadioModeType.AM,
+            };
+
+        public static RadioModeType[] SatelliteModes =>
+            new[]
+            {
+                RadioModeType.SATELLITES,
             };
     }
 
