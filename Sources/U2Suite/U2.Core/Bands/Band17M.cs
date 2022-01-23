@@ -3,33 +3,33 @@ using U2.Contracts;
 
 namespace U2.Core
 {
-    public class Band160M : RadioBand
+    public class Band17M : RadioBand
     {
-        public Band160M()
+        public Band17M()
         {
-            Name = RadioBandName.B160m;
-            BeginMhz = 1.810;
-            EndMhz = 2.000;
+            Name = RadioBandName.B17m;
+            BeginMhz = 18.068;
+            EndMhz = 18.168;
             Group = RadioBandGroup.HF;
-            Type = RadioBandType.B160m;
+            Type = RadioBandType.B17m;
             SubBands = new List<SubBand>
             {
                 new SubBand
                 {
-                    BeginMhz = 1.8100,
-                    EndMhz = 1.8380,
+                    BeginMhz = 18.068,
+                    EndMhz = 18.095,
                     Modes = RadioMode.CwModes,
                 },
                 new SubBand
                 {
-                    BeginMhz = 1.8380,
-                    EndMhz = 1.840,
-                    Modes = RadioMode.NarrowBandModes,
+                    BeginMhz = 18.095,
+                    EndMhz = 18.109,
+                    Modes = RadioMode.NarrowBandDigitalModes,
                 },
                 new SubBand
                 {
-                    BeginMhz = 1.840,
-                    EndMhz = 2.000,
+                    BeginMhz = 18.111,
+                    EndMhz = 18.168,
                     Modes = RadioMode.AllModes,
                 },
             };

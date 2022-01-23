@@ -13,6 +13,7 @@ namespace U2.Contracts
         RTTY,
         FM,
         DIGITALVOICE,
+        AM,
     }
 
     public abstract class RadioMode
@@ -32,6 +33,71 @@ namespace U2.Contracts
             Type = type;
             Name = name;
         }
+
+        public static RadioModeType[] AllModes =>
+            new[]
+            {
+                RadioModeType.CW,
+                RadioModeType.PSK,
+                RadioModeType.RTTY,
+                RadioModeType.DIGITALVOICE,
+                RadioModeType.SSB,
+                RadioModeType.FM,
+                RadioModeType.AM,
+            };
+
+        public static RadioModeType[] CwModes =>
+            new[]
+            {
+                RadioModeType.CW,
+            };
+
+        public static RadioModeType[] CwSsbModes =>
+            new[]
+            {
+                RadioModeType.CW,
+                RadioModeType.SSB,
+            };
+
+        public static RadioModeType[] NarrowBandModes =>
+            new[]
+            {
+                RadioModeType.CW,
+                RadioModeType.PSK,
+                RadioModeType.RTTY,
+            };
+
+        public static RadioModeType[] NarrowBandDigitalModes =>
+            new[]
+            {
+                RadioModeType.PSK,
+                RadioModeType.RTTY,
+            };
+
+        public static RadioModeType[] VoiceModes =>
+            new[]
+            {
+                RadioModeType.DIGITALVOICE,
+                RadioModeType.SSB,
+                RadioModeType.FM,
+                RadioModeType.AM,
+            };
+
+        public static RadioModeType[] FmDigitalModes =>
+            new[]
+            {
+                RadioModeType.FM,
+                RadioModeType.PSK,
+                RadioModeType.RTTY,
+                RadioModeType.DIGITALVOICE,
+            };
+
+        public static RadioModeType[] AmFmModes =>
+            new[]
+            {
+                RadioModeType.FM,
+                RadioModeType.AM,
+            };
     }
 
     public sealed class RadioModeFM : RadioMode
