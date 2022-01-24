@@ -132,18 +132,43 @@ namespace U2.Core
         /// <summary>
         /// Converts given frequency to an amateur band.
         /// </summary>
-        /// <param name="frequencyKhz">A frequency in kilohertz.</param>
+        /// <param name="frequencyMhz">A frequency in kilohertz.</param>
         /// <returns>Returns object of type <see cref="RadioBandType"/>.</returns>
-        public static string FrequencyToBandName(double frequencyKhz)
+        public static string FrequencyToBandName(double frequencyMhz)
         {
             var band = AllBands.FirstOrDefault(b =>
-                b.BeginMhz <= frequencyKhz && b.EndMhz > frequencyKhz);
+                b.BeginMhz <= frequencyMhz && b.EndMhz > frequencyMhz);
             if (band == null)
             {
-                return AllBands.First().Name;
+                return string.Empty;
             }
 
             return band.Name;
         }
+
+        /// <summary>
+        /// Fixes value of the report based on the given mode.
+        /// </summary>
+        /// <param name="modeName">A name of the current mode</param>
+        /// <param name="rst">An RST to be fixed.</param>
+        /// <returns>Returns the updated or original RST.</returns>
+        public static string FixRst(string modeName, string rst)
+        {
+            if (modeName == RadioMode.CW)
+            {
+
+            }
+            else if (modeName == RadioMode.SSB)
+            {
+
+            }
+            else if (modeName == RadioMode.FM)
+            {
+
+            }
+
+            return rst;
+        }
+
     }
 }

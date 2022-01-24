@@ -27,7 +27,7 @@ Scenario: Save button clicked when callsign is empty
 Scenario: Save button clicked on correct data
 	Given All fields are not empty
 	And Mode is 'CW'
-	And Frequency is 14044.0
+	And Frequency is 14.044
 	And Log is empty
 	When User clicks the 'Save' button
 	Then All fields are empty

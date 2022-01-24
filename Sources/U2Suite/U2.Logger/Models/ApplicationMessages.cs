@@ -17,18 +17,4 @@ namespace U2.Logger
         public object? Sender { get; set; }
         public ApplicationButton Button { get; set; }
     }
-
-    public sealed class TextChangedMessage
-    {
-        public TextChangedMessage(object? sender, ApplicationTextBox textBox, string newValue)
-        {
-            Sender = sender;
-            TextBox = textBox;
-            NewValue = newValue;
-        }
-
-        public object? Sender { get; set; }
-        public ApplicationTextBox TextBox { get; set; }
-        public string NewValue { get; set; } = default!;
-    }
 }

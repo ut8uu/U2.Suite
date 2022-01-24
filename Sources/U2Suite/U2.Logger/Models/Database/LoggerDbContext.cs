@@ -41,7 +41,7 @@ namespace U2.Logger
             base.OnModelCreating(modelBuilder);
         }
 
-        public void SaveQso(ApplicationFormData formData)
+        public void SaveQso(QsoData formData)
         {
             var record = Records.Find(formData.RecordId);
             var newRecord = record == null;
