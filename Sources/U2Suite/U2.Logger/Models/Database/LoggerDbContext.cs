@@ -59,7 +59,7 @@ namespace U2.Logger
             record.Timestamp = formData.Timestamp;
             record.RstReceived = formData.RstRcvd;
             record.RstSent = formData.RstSent;
-            record.Operator = formData.Operator;
+            record.Operator = formData.Operator ?? string.Empty;
             record.Mode = formData.Mode;
             record.Band = formData.Band;
             record.Frequency = formData.FreqMhz.GetValueOrDefault(-1);

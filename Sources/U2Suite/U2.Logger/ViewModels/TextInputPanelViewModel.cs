@@ -94,8 +94,18 @@ namespace U2.Logger
                     _logger.Debug("Accepted SaveQso(null) command.");
                     // empty parameters are being sent when this is 
                     // an initial command
-                    var frequency = double.Parse(this.Frequency, System.Globalization.NumberStyles.Number,
-                        CultureInfo.DefaultThreadCurrentUICulture);
+                    var frequency = 0.0;
+                    if (!double.TryParse(this.Frequency, NumberStyles.Number,
+                        CultureInfo.DefaultThreadCurrentUICulture, out frequency))
+                    {
+                        if (!double.TryParse(Frequency, NumberStyles.Number, CultureInfo.InvariantCulture,
+                            out frequency))
+                        {
+                            _logger.Error($"Cannot parse given double value: {Frequency}.");
+                            frequency = ConversionHelper.BandNameAndModeToFrequency(Band, Mode);
+                            _logger.Info($"Frequency {frequency} calculated based on mode {Mode} and band {Band}.");
+                        }
+                    }
                     var formData = new QsoData
                     {
                         Band = this.Band,
@@ -110,7 +120,7 @@ namespace U2.Logger
                     };
                     var saveQsoMessage = new ExecuteCommandMessage(CommandToExecute.SaveQso, formData);
                     Messenger.Default.Send(saveQsoMessage);
-                    _logger.Debug($"Save message sent. Content: {formData.ToString()}.");
+                    //_logger.Debug($"Save message sent. Content: {formData.ToString()}.");
                 }
             }
         }
