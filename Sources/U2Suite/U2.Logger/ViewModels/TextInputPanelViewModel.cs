@@ -10,8 +10,6 @@ using System.Threading.Tasks;
 using Avalonia.Controls;
 using GalaSoft.MvvmLight.Messaging;
 using log4net;
-using log4net.Core;
-using U2.Contracts;
 using U2.Core;
 
 namespace U2.Logger
@@ -35,7 +33,7 @@ namespace U2.Logger
         {
             if (Realtime)
             {
-                Timestamp = DateTime.UtcNow.ToString("g");
+                Timestamp = DateTime.UtcNow;
             }
         }
 
@@ -68,7 +66,7 @@ namespace U2.Logger
         public string Frequency { get; set; } = default!;
         public string Mode { get; set; } = default!;
         public string Band { get; set; } = default!;
-        public string Timestamp { get; set; } = DateTime.UtcNow.ToString("g");
+        public DateTime Timestamp { get; set; } = DateTime.UtcNow;
         public bool Realtime { get; set; } = true;
         public bool TimestampEnabled => !Realtime;
 
@@ -108,7 +106,7 @@ namespace U2.Logger
                         Operator = this.Operator,
                         RstRcvd = this.RstRcvd,
                         RstSent = this.RstSent,
-                        Timestamp = DateTime.Parse(this.Timestamp, CultureInfo.DefaultThreadCurrentUICulture),
+                        Timestamp = this.Timestamp,
                     };
                     var saveQsoMessage = new ExecuteCommandMessage(CommandToExecute.SaveQso, formData);
                     Messenger.Default.Send(saveQsoMessage);
@@ -126,7 +124,7 @@ namespace U2.Logger
             RstRcvd = string.Empty;
             Operator = string.Empty;
             Comments = string.Empty;
-            Timestamp = DateTime.UtcNow.ToString("g");
+            Timestamp = DateTime.UtcNow;
 
             _internalChange = false;
         }

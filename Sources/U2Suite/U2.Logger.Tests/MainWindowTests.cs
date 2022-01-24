@@ -20,7 +20,7 @@ namespace U2.Logger.Tests
             model.Mode = RadioMode.FM;
             model.Band = RadioBandName.B10m;
             model.Frequency = "28.5";
-            model.Timestamp = DateTime.UtcNow.ToString("g");
+            model.Timestamp = DateTime.UtcNow;
 
             return model;
         }
