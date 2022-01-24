@@ -4,9 +4,11 @@ using System.Collections.ObjectModel;
 using System.Data.SQLite;
 using System.Globalization;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using Avalonia.Controls;
 using GalaSoft.MvvmLight.Messaging;
+using log4net;
 using U2.Core;
 
 namespace U2.Logger
@@ -14,6 +16,8 @@ namespace U2.Logger
     public sealed class QsoEditorViewModel : ViewModelBase
     {
         private LogRecordDbo _record = default!;
+        private bool _internalChange;
+        ILog _logger = LogManager.GetLogger("Logger");
 
         public QsoEditorViewModel()
         {
@@ -30,6 +34,7 @@ namespace U2.Logger
             RstSent = record.RstSent;
             Comments = record.Comments;
             Frequency = record.Frequency.ToString(CultureInfo.DefaultThreadCurrentUICulture);
+            Band = record.Band;
             Mode = record.Mode;
             Timestamp = record.Timestamp;
         }
@@ -60,7 +65,13 @@ namespace U2.Logger
 
         public ObservableCollection<string> AllModes =>
             new ObservableCollection<string>(
-                ConversionHelper.AllModes.Select(m=>m.Name).OrderBy(mode => mode));
+                ConversionHelper.AllModes.Select(m=>m.Name)
+                .OrderBy(mode => mode));
+
+        public ObservableCollection<string> AllBands =>
+            new ObservableCollection<string>(
+                ConversionHelper.AllBands.Select(b => b.Name)
+                .OrderBy(name => name));
 
         public void OkButtonClick()
         {
@@ -69,7 +80,7 @@ namespace U2.Logger
                 this.Frequency = ConversionHelper.BandNameToFrequency(this.Band).ToString();
             }
             var freq = double.Parse(this.Frequency, CultureInfo.InvariantCulture);
-            var formData = new QsoData
+            var formData = new QsoData(_record.RecordId)
             {
                 Callsign = this.Callsign,
                 FreqMhz = freq,
@@ -80,6 +91,8 @@ namespace U2.Logger
                 Operator = this.Operator,
                 RstRcvd = this.RstReceived,
                 RstSent = this.RstSent,
+                Modified = true,
+
             };
             Messenger.Default.Send(new ExecuteCommandMessage(CommandToExecute.SaveQso, formData));
             Owner.Close();
@@ -88,6 +101,47 @@ namespace U2.Logger
         public void CancelButtonClick()
         {
             Owner.Close();
+        }
+
+        protected override void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+        {
+            base.OnPropertyChanged(propertyName);
+
+            if (_internalChange)
+            {
+                return;
+            }
+
+            switch (propertyName)
+            {
+                case nameof(Callsign):
+                    _internalChange = true;
+                    Callsign = Callsign.ToUpper();
+                    OnPropertyChanged(nameof(Callsign));
+                    _internalChange = false;
+                    _logger.Debug($"New {propertyName} value: {Callsign}");
+                    break;
+                case nameof(Frequency):
+                    if (double.TryParse(Frequency, out var freq))
+                    {
+                        var bandName = ConversionHelper.FrequencyToBandName(freq);
+                        if (!string.IsNullOrEmpty(bandName))
+                        {
+                            if (Band != bandName)
+                            {
+                                Band = bandName;
+                                _internalChange = true;
+                                OnPropertyChanged(nameof(Band));
+                                _internalChange = false;
+                                _logger.Debug($"Frequency is {Frequency}. Mode changed to {Mode}.");
+                            }
+                        }
+                        _logger.Debug($"New {propertyName} value: {Frequency}");
+                    }
+                    break;
+                default:
+                    return;
+            }
         }
     }
 }

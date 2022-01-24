@@ -153,6 +153,7 @@ namespace U2.Logger
                 case nameof(Callsign):
                     _internalChange = true;
                     Callsign = Callsign.ToUpper();
+                    OnPropertyChanged(nameof(Callsign));
                     _internalChange = false;
                     _logger.Debug($"New {propertyName} value: {Callsign}");
                     break;
@@ -191,6 +192,9 @@ namespace U2.Logger
                             if (Band != bandName)
                             {
                                 Band = bandName;
+                                _internalChange = true;
+                                OnPropertyChanged(nameof(Band));
+                                _internalChange = false;
                                 _logger.Debug($"Frequency is {Frequency}. Mode changed to {Mode}.");
                             }
                         }

@@ -17,6 +17,7 @@ namespace U2.Logger
 #endif
 
             _qsoEditorVM = new QsoEditorViewModel(new LogRecordDbo());
+            _qsoEditorVM.Owner = this;
             DataContext = _qsoEditorVM;
         }
 
@@ -28,6 +29,7 @@ namespace U2.Logger
 #endif
 
             _qsoEditorVM = new QsoEditorViewModel(record);
+            _qsoEditorVM.Owner = this;
             DataContext = _qsoEditorVM;
         }
 
