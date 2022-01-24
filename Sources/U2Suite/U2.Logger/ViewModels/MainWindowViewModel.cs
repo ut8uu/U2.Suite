@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using Avalonia.Controls;
 using GalaSoft.MvvmLight.Messaging;
+using log4net;
 using Microsoft.EntityFrameworkCore;
 using U2.Core;
 using U2.Logger.Models;
@@ -14,7 +15,7 @@ namespace U2.Logger
 {
     public class LoggerMainWindowViewModel : ViewModelBase
     {
-        internal ApplicationFormData _currentFormData = new ApplicationFormData();
+        ILog _logger = LogManager.GetLogger("Logger");
         internal LoggerDbContext _dbContext;
 
         private Window _owner;
@@ -23,8 +24,6 @@ namespace U2.Logger
         {
             Messenger.Default.Register<ButtonClickedMessage>(this,
                 AcceptButtonClickedMessage);
-            Messenger.Default.Register<TextChangedMessage>(this,
-                AcceptTextChangedMessage);
             Messenger.Default.Register<ExecuteCommandMessage>(this, 
                 AcceptExecuteCommandMessage);
 
@@ -51,100 +50,24 @@ namespace U2.Logger
 
         public string StatusText { get; set; } = default!;
 
-        private void AcceptTextChangedMessage(TextChangedMessage message)
-        {
-            if (_currentFormData == null)
-            {
-                _currentFormData = new ApplicationFormData();
-            }
-
-            ProcessTextChangedMessage(message, _currentFormData);
-        }
-
-        internal static void ProcessTextChangedMessage(TextChangedMessage message, ApplicationFormData formData)
-        {
-            switch (message.TextBox)
-            {
-                case ApplicationTextBox.Callsign:
-                    formData.Callsign = message.NewValue;
-                    break;
-                case ApplicationTextBox.Operator:
-                    formData.Operator = message.NewValue;
-                    break;
-                case ApplicationTextBox.RstReceived:
-                    formData.RstRcvd = message.NewValue;
-                    break;
-                case ApplicationTextBox.RstSent:
-                    formData.RstSent = message.NewValue;
-                    break;
-                case ApplicationTextBox.Comments:
-                    formData.Comments = message.NewValue;
-                    break;
-                case ApplicationTextBox.Timestamp:
-                    formData.Timestamp = DateTime.Parse(message.NewValue);
-                    break;
-                case ApplicationTextBox.Mode:
-                    formData.Mode = message.NewValue;
-                    break;
-                case ApplicationTextBox.Band:
-                    formData.Band = ConversionHelper.AllBands.FirstOrDefault(b => b.Name == message.NewValue).Name;
-                    break;
-                case ApplicationTextBox.Frequency:
-                    if (double.TryParse(message.NewValue, NumberStyles.Number, CultureInfo.DefaultThreadCurrentUICulture, out var freq))
-                    {
-                        formData.FreqMhz = freq;
-                    }
-                    else
-                    {
-                        formData.FreqMhz = ConversionHelper.BandNameToFrequency(formData.Band);
-                    }
-                    break;
-                default:
-                    throw new NotImplementedException($"Handler for field {message.TextBox} not implemented.");
-            }
-        }
-
         private void AcceptButtonClickedMessage(ButtonClickedMessage message)
         {
             switch (message.Button)
             {
                 case ApplicationButton.WipeButton:
+                    _logger.Debug("Accepted WipeButtonClicked command.");
                     Messenger.Default.Send(new ExecuteCommandMessage(CommandToExecute.ClearTextInputs));
-                    _currentFormData = new ApplicationFormData();
                     break;
                 case ApplicationButton.SaveButton:
-                    ProcessSaveButton();
+                    _logger.Debug("Accepted SaveButtonClicked command.");
+                    _logger.Debug("Issued SaveQso(null) command.");
+                    Messenger.Default.Send(new ExecuteCommandMessage(CommandToExecute.SaveQso, null));
                     break;
                 default:
                     // unknown buttons are ignored
 #warning TODO What about logging this?
                     break;
             }
-        }
-
-        private void ProcessSaveButton()
-        {
-            if (CanSaveQso())
-            {
-                Messenger.Default.Send(new ExecuteCommandMessage(CommandToExecute.SaveQso, _currentFormData));
-                Messenger.Default.Send(new ExecuteCommandMessage(CommandToExecute.ClearTextInputs));
-                _currentFormData = new ApplicationFormData();
-                Messenger.Default.Send(new ExecuteCommandMessage(CommandToExecute.InitQso));
-            }
-        }
-
-        private bool CanSaveQso()
-        {
-            if (_currentFormData == null)
-            {
-                return false;
-            }
-            if (string.IsNullOrEmpty(_currentFormData.Callsign))
-            {
-                return false;
-            }
-
-            return true;
         }
 
         public void ViewLog()
@@ -163,10 +86,16 @@ namespace U2.Logger
         {
             if (message.CommandToExecute == CommandToExecute.SaveQso)
             {
-                if (message.CommandParameters is ApplicationFormData formData)
+                if (message.CommandParameters is QsoData formData)
                 {
-                    _dbContext.SaveQso(formData);
-                    Messenger.Default.Send(new ExecuteCommandMessage(CommandToExecute.RefreshLog));
+                    _logger.Debug($"Accepted SaveQso(notNullObject) command. Value: \r\n{formData.ToString()}");
+                    if (formData.CanBeSaved())
+                    {
+                        _dbContext.SaveQso(formData);
+                        Messenger.Default.Send(new ExecuteCommandMessage(CommandToExecute.ClearTextInputs, null));
+                        Messenger.Default.Send(new ExecuteCommandMessage(CommandToExecute.InitQso, null));
+                        Messenger.Default.Send(new ExecuteCommandMessage(CommandToExecute.RefreshLog));
+                    }
                 }
             }
             else if (message.CommandToExecute == CommandToExecute.DeleteQso)

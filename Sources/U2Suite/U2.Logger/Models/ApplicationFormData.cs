@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Text;
 using U2.Contracts;
 using U2.Core;
 
 namespace U2.Logger
 {
-    public class ApplicationFormData
+    public class QsoData
     {
         private Guid _recordId;
         private string _callsign = string.Empty;
@@ -17,7 +18,7 @@ namespace U2.Logger
         private double? _freqMhz = null;
         private string _mode = string.Empty;
 
-        public ApplicationFormData()
+        public QsoData()
         {
             _recordId = Guid.NewGuid();
         }
@@ -143,7 +144,7 @@ namespace U2.Logger
             Modified = false;
         }
 
-        public void Assign(ApplicationFormData data)
+        public void Assign(QsoData data)
         {
             Callsign = data.Callsign;
             RstSent = data.RstSent;
@@ -175,6 +176,22 @@ namespace U2.Logger
                    && !string.IsNullOrEmpty(Callsign)
                    && !string.IsNullOrEmpty(RstSent)
                    && !string.IsNullOrEmpty(RstRcvd);
+        }
+
+        public new string ToString()
+        {
+            var sb = new StringBuilder();
+            sb.AppendLine($"Callsign: {Callsign}");
+            sb.AppendLine($"Timestamp: {Timestamp}");
+            sb.AppendLine($"Band: {Band}");
+            sb.AppendLine($"FreqMhz: {FreqMhz}");
+            sb.AppendLine($"Mode: {Mode}");
+            sb.AppendLine($"Operator: {Operator}");
+            sb.AppendLine($"RstSent: {RstSent}");
+            sb.AppendLine($"RstRcvd: {RstRcvd}");
+            sb.AppendLine($"Comments: {Comments}");
+
+            return sb.ToString();
         }
     }
 }

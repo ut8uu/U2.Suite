@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using GalaSoft.MvvmLight.Messaging;
@@ -163,13 +164,13 @@ namespace U2.Logger.Tests
         [Given(@"Mode is '(.*)'")]
         public void GivenModeIs(string mode)
         {
-            _loggerVM._currentFormData.Mode = mode;
+            _textInputVM.Mode = mode;
         }
 
         [Given(@"Frequency is (.*)")]
         public void GivenFrequencyIs(double frequency)
         {
-            _loggerVM._currentFormData.FreqMhz = frequency;
+            _textInputVM.Frequency = frequency.ToString(CultureInfo.DefaultThreadCurrentUICulture);
         }
 
 
@@ -198,8 +199,6 @@ namespace U2.Logger.Tests
         public void ThenAllFieldsAreEmpty()
         {
             Assert.IsTrue(string.IsNullOrEmpty(GetFieldValue(CallsignField)));
-            Assert.IsTrue(string.IsNullOrEmpty(GetFieldValue(RstReceivedField)));
-            Assert.IsTrue(string.IsNullOrEmpty(GetFieldValue(RstSentField)));
             Assert.IsTrue(string.IsNullOrEmpty(GetFieldValue(OperatorField)));
             Assert.IsTrue(string.IsNullOrEmpty(GetFieldValue(CommentsField)));
         }

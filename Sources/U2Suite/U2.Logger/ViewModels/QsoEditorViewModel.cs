@@ -69,7 +69,7 @@ namespace U2.Logger
                 this.Frequency = ConversionHelper.BandNameToFrequency(this.Band).ToString();
             }
             var freq = double.Parse(this.Frequency, CultureInfo.InvariantCulture);
-            var formData = new ApplicationFormData
+            var formData = new QsoData
             {
                 Callsign = this.Callsign,
                 FreqMhz = freq,
