@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Data.SQLite;
 using System.Globalization;
 using System.Linq;
+using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Text;
 using Avalonia.Controls;
@@ -37,21 +38,22 @@ namespace U2.Logger
             Band = record.Band;
             Mode = record.Mode;
             Timestamp = record.Timestamp;
+            TimestampString = record.Timestamp.ToString("g");
         }
 
         public Window Owner { get; set; }
 
-        public string OkButtonTitle { get; set; } = "OK";
-        public string CancelButtonTitle { get; set; } = "Cancel";
-        public string CallsignTitle { get; set; } = "Callsign";
-        public string RstSentTitle { get; set; } = "RST sent";
-        public string RstReceivedTitle { get; set; } = "RST received";
-        public string OperatorTitle { get; set; } = "Operator name";
-        public string CommentsTitle { get; set; } = "Comments";
-        public string FrequencyTitle { get; set; } = "Frequency";
-        public string ModeTitle { get; set; } = "Mode";
-        public string BandTitle { get; set; } = "Band";
-        public string TimestampTitle { get; set; } = "Timestamp";
+        public string OkButtonTitle { get; set; } = Resources.OK;
+        public string CancelButtonTitle { get; set; } = Resources.Cancel;
+        public string CallsignTitle { get; set; } = Resources.Callsign;
+        public string RstSentTitle { get; set; } = Resources.RstSent;
+        public string RstReceivedTitle { get; set; } = Resources.RstReceived;
+        public string OperatorTitle { get; set; } = Resources.Operator;
+        public string CommentsTitle { get; set; } = Resources.Comments;
+        public string FrequencyTitle { get; set; } = Resources.Frequency;
+        public string ModeTitle { get; set; } = Resources.Mode;
+        public string BandTitle { get; set; } = Resources.Band;
+        public string TimestampTitle { get; set; } = Resources.Timestamp;
 
         public string Callsign { get; set; } = default!;
         public string RstSent { get; set; } = default!;
@@ -62,6 +64,7 @@ namespace U2.Logger
         public string Mode { get; set; } = default!;
         public string Band { get; set; } = default!;
         public DateTime Timestamp { get; set; } = DateTime.UtcNow;
+        public string TimestampString { get; set; }
 
         public ObservableCollection<string> AllModes =>
             new ObservableCollection<string>(
@@ -77,9 +80,14 @@ namespace U2.Logger
         {
             if (string.IsNullOrWhiteSpace(this.Frequency))
             {
-                this.Frequency = ConversionHelper.BandNameToFrequency(this.Band).ToString();
+                this.Frequency = ConversionHelper.BandNameToFrequency(this.Band).ToString(CultureInfo.InvariantCulture);
             }
-            var freq = double.Parse(this.Frequency, CultureInfo.InvariantCulture);
+
+            var freq = StringConverter.StringToDouble(this.Frequency);
+            if (freq < 1)
+            {
+                freq = ConversionHelper.BandNameAndModeToFrequency(Band, Mode);
+            }
             var formData = new QsoData(_record.RecordId)
             {
                 Callsign = this.Callsign,
@@ -117,12 +125,12 @@ namespace U2.Logger
                 case nameof(Callsign):
                     _internalChange = true;
                     Callsign = Callsign.ToUpper();
-                    OnPropertyChanged(nameof(Callsign));
                     _internalChange = false;
                     _logger.Debug($"New {propertyName} value: {Callsign}");
                     break;
                 case nameof(Frequency):
-                    if (double.TryParse(Frequency, out var freq))
+                    var freq = StringConverter.StringToDouble(Frequency);
+                    if (freq > 0)
                     {
                         var bandName = ConversionHelper.FrequencyToBandName(freq);
                         if (!string.IsNullOrEmpty(bandName))
@@ -139,9 +147,34 @@ namespace U2.Logger
                         _logger.Debug($"New {propertyName} value: {Frequency}");
                     }
                     break;
+                case nameof(TimestampString):
+                    if (!IsTimestampValid())
+                    {
+                        throw new Avalonia.Data.DataValidationException(Resources.TimestampNotRecognized);
+                    }
+                    break;
                 default:
                     return;
             }
+        }
+
+        private bool IsTimestampValid()
+        {
+            return (DateTime.TryParse(TimestampString, out var _)
+                    || DateTime.TryParse(TimestampString,
+                        CultureInfo.InvariantCulture, 
+                        DateTimeStyles.AssumeUniversal, out _));
+        }
+
+        private bool IsCallsignValid()
+        {
+            return !string.IsNullOrEmpty(Callsign);
+        }
+
+        internal bool CanSave()
+        {
+            return IsCallsignValid()
+                   && IsTimestampValid();
         }
     }
 }
