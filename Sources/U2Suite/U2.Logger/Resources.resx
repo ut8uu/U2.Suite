@@ -132,6 +132,9 @@
   <data name="Frequency" xml:space="preserve">
     <value>Frequency</value>
   </data>
+  <data name="FrequencyNotResolved" xml:space="preserve">
+    <value>Frequency not recognized as a valid one.</value>
+  </data>
   <data name="Mode" xml:space="preserve">
     <value>Mode</value>
   </data>
@@ -151,6 +154,6 @@
     <value>Timestamp</value>
   </data>
   <data name="TimestampNotRecognized" xml:space="preserve">
-    <value>"Timestamp not recognized as a valid date and time value."</value>
+    <value>Timestamp not recognized as a valid date and time value.</value>
   </data>
 </root>

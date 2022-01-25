@@ -129,22 +129,25 @@ namespace U2.Logger
                     _logger.Debug($"New {propertyName} value: {Callsign}");
                     break;
                 case nameof(Frequency):
+                    var bandName = string.Empty;
                     var freq = StringConverter.StringToDouble(Frequency);
                     if (freq > 0)
                     {
-                        var bandName = ConversionHelper.FrequencyToBandName(freq);
-                        if (!string.IsNullOrEmpty(bandName))
+                        bandName = ConversionHelper.FrequencyToBandName(freq);
+                    }
+
+                    if (!string.IsNullOrEmpty(bandName))
+                    {
+                        if (Band != bandName)
                         {
-                            if (Band != bandName)
-                            {
-                                Band = bandName;
-                                _internalChange = true;
-                                OnPropertyChanged(nameof(Band));
-                                _internalChange = false;
-                                _logger.Debug($"Frequency is {Frequency}. Mode changed to {Mode}.");
-                            }
+                            Band = bandName;
+                            _logger.Debug($"Frequency is {Frequency}. Mode changed to {Mode}.");
                         }
-                        _logger.Debug($"New {propertyName} value: {Frequency}");
+                    }
+                    else
+                    {
+                        Band = string.Empty;
+                        throw new Avalonia.Data.DataValidationException(Resources.FrequencyNotResolved);
                     }
                     break;
                 case nameof(TimestampString):

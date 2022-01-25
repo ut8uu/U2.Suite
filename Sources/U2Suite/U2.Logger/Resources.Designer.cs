@@ -106,6 +106,15 @@ namespace U2.Logger {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Frequency not recognized as a valid one..
+        /// </summary>
+        internal static string FrequencyNotResolved {
+            get {
+                return ResourceManager.GetString("FrequencyNotResolved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Mode.
         /// </summary>
         internal static string Mode {
@@ -160,7 +169,7 @@ namespace U2.Logger {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &quot;Timestamp not recognized as a valid date and time value.&quot;.
+        ///   Looks up a localized string similar to Timestamp not recognized as a valid date and time value..
         /// </summary>
         internal static string TimestampNotRecognized {
             get {
