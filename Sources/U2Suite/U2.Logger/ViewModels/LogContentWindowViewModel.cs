@@ -64,7 +64,7 @@ namespace U2.Logger
 
         public void CloseButtonClick()
         {
-
+            Owner.Close();
         }
 
         public void EditButtonClick()

@@ -23,6 +23,11 @@ namespace U2.Logger
             _recordId = Guid.NewGuid();
         }
 
+        public QsoData(Guid recordId)
+        {
+            _recordId = recordId;
+        }
+
         public string Callsign
         {
             get => _callsign;

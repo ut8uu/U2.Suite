@@ -151,10 +151,6 @@ namespace U2.Logger
             switch (propertyName)
             {
                 case nameof(Callsign):
-                    _internalChange = true;
-                    Callsign = Callsign.ToUpper();
-                    _internalChange = false;
-                    _logger.Debug($"New {propertyName} value: {Callsign}");
                     break;
                 case nameof(RstRcvd):
                     _internalChange = true;
@@ -183,19 +179,27 @@ namespace U2.Logger
                 case nameof(Timestamp):
                     break;
                 case nameof(Frequency):
-                    if (double.TryParse(Frequency, out var freq))
+                    var bandName = string.Empty;
+                    var freq = StringConverter.StringToDouble(Frequency);
+                    if (freq > 0)
                     {
-                        var bandName = ConversionHelper.FrequencyToBandName(freq);
-                        if (!string.IsNullOrEmpty(bandName))
-                        {
-                            if (Band != bandName)
-                            {
-                                Band = bandName;
-                                _logger.Debug($"Frequency is {Frequency}. Mode changed to {Mode}.");
-                            }
-                        }
-                        _logger.Debug($"New {propertyName} value: {Frequency}");
+                        bandName = ConversionHelper.FrequencyToBandName(freq);
                     }
+
+                    if (!string.IsNullOrEmpty(bandName))
+                    {
+                        if (Band != bandName)
+                        {
+                            Band = bandName;
+                            _logger.Debug($"Frequency is {Frequency}. Mode changed to {Mode}.");
+                        }
+                    }
+                    else
+                    {
+                        Band = string.Empty;
+                        throw new Avalonia.Data.DataValidationException(Resources.FrequencyNotResolved);
+                    }
+                    _logger.Debug($"New {propertyName} value: {Frequency}");
                     break;
                 default:
                     return;

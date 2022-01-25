@@ -37,6 +37,11 @@
     <ProjectReference Include="..\U2.Resources\U2.Resources.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Update="Views\LoggerMainWindow.axaml.cs">
       <DependentUpon>LoggerMainWindow.axaml</DependentUpon>
     </Compile>
@@ -45,7 +50,14 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Converters\" />
     <Folder Include="Views\Controls\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Update="Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <None Update="log4net.config">
