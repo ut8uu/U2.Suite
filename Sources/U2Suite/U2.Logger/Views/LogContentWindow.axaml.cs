@@ -9,7 +9,6 @@ namespace U2.Logger
     public partial class LogContentWindow : Window
     {
         private LogContentWindowViewModel _viewModel = default!;
-        private LoggerDbContext _dbContext = default!;
 
         private DataGrid _mainGrid;
 
@@ -19,8 +18,7 @@ namespace U2.Logger
 #if DEBUG
             this.AttachDevTools();
 #endif
-            _dbContext = new LoggerDbContext();
-            _viewModel = new LogContentWindowViewModel(_dbContext);
+            _viewModel = new LogContentWindowViewModel();
             _viewModel.Owner = this;
             DataContext = _viewModel;
 

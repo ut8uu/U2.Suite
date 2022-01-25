@@ -12,16 +12,11 @@ namespace U2.Logger
 {
     public sealed class LogContentWindowViewModel : ViewModelBase
     {
-        private readonly LoggerDbContext _dbContext;
+        private LoggerDbContext _dbContext;
 
         public LogContentWindowViewModel()
         {
-
-        }
-
-        public LogContentWindowViewModel(LoggerDbContext dbContext)
-        {
-            this._dbContext = dbContext;
+            this._dbContext = new LoggerDbContext();
             FullList = new ObservableCollection<LogRecordDbo>(_dbContext.Records);
 
             Messenger.Default.Register<ExecuteCommandMessage>(this,
@@ -59,6 +54,7 @@ namespace U2.Logger
 
         public void RefreshLog()
         {
+            _dbContext = new LoggerDbContext();
             FullList = new ObservableCollection<LogRecordDbo>(_dbContext.Records);
         }
 

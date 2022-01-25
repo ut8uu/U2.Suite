@@ -72,8 +72,8 @@ namespace U2.Logger
 
         public ApplicationTextBox FocusedTextBox { get; set; } = ApplicationTextBox.Callsign;
 
-        public ObservableCollection<string> AllModes => new ObservableCollection<string>(ConversionHelper.AllModes.Select(m => m.Name)); 
-        public ObservableCollection<string> AllBands => new ObservableCollection<string>(ConversionHelper.AllBands.Select(m => m.Name)); 
+        public ObservableCollection<string> AllModes => new ObservableCollection<string>(ConversionHelper.AllModes.Select(m => m.Name));
+        public ObservableCollection<string> AllBands => new ObservableCollection<string>(ConversionHelper.AllBands.Select(m => m.Name));
 
         private void AcceptExecuteCommandMessage(ExecuteCommandMessage message)
         {
@@ -174,7 +174,20 @@ namespace U2.Logger
                     _logger.Debug($"New {propertyName} value: {Mode}");
                     break;
                 case nameof(Band):
-                    _logger.Debug($"New {propertyName} value: {Band}");
+                    {
+                        if (!string.IsNullOrEmpty(Mode) && !string.IsNullOrEmpty(Band))
+                        {
+                            var frequency = StringConverter.StringToDouble(Frequency);
+                            var bandByFreq = ConversionHelper.FrequencyToBandName(frequency);
+                            if (bandByFreq != Band)
+                            {
+                                _internalChange = true;
+                                Frequency = ConversionHelper.BandNameAndModeToFrequency(Band, Mode).ToString();
+                                _internalChange = false;
+                            }
+                        }
+                        _logger.Debug($"New {propertyName} value: {Band}");
+                    }
                     break;
                 case nameof(Timestamp):
                     break;
