@@ -28,9 +28,9 @@
       <Directory Id="ProgramFilesFolder">
         <Directory Id="INSTALLFOLDER" Name="U2.Suite" />
       </Directory>
-      <Directory Id="ProgramMenuDir" Name="U2.Suite"></Directory>
-      <Directory Id="DesktopFolder" Name="U2.Suite"></Directory>
     </Directory>
+    <Directory Id="ProgramMenuDir" Name="U2.Suite"></Directory>
+    <Directory Id="DesktopFolder" Name="U2.Suite"></Directory>
   </Fragment>
 
   <Fragment>
