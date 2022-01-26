@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+
+  <?define BuildDirectory = $(sys.SOURCEFILEDIR)..\..?>
+  <?define BinariesDirectory = $(var.BuildDirectory)\Binaries\AnyCPU\Release\?>
+
+  <Product Id="49D42D7D-C7D0-4061-88EB-2ACE8863D2CB" 
+           Name="U2.Suite" 
+           Language="1033" 
+           Version="1.0.0.0" 
+           Manufacturer="UT8UU" 
+           UpgradeCode="946ce716-a326-43a3-b4b0-0e810b86b31a">
+		<Package InstallerVersion="200" 
+             Compressed="yes" 
+             InstallScope="perMachine"
+             Manufacturer="UT8UU"/>
+
+		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+		<MediaTemplate />
+
+		<Feature Id="ProductFeature" Title="U2.Suite" Level="1">
+			<ComponentGroupRef Id="ProductComponents" />
+		</Feature>
+	</Product>
+
+	<Fragment>
+		<Directory Id="TARGETDIR" Name="SourceDir">
+			<Directory Id="ProgramFilesFolder">
+				<Directory Id="INSTALLFOLDER" Name="U2.Suite" />
+			</Directory>
+		</Directory>
+	</Fragment>
+
+	<Fragment>
+		<ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
+      <Component Id="AvaloniaBinaries" Guid="28D7BBF2-EC15-4E76-A29F-8B80566255FC">
+        <File Source="$(var.BinariesDirectory)Avalonia.Animation.dll"/>
+        <File Source="$(var.BinariesDirectory)Avalonia.Base.dll"/>
+        <File Source="$(var.BinariesDirectory)Avalonia.Controls.DataGrid.dll"/>
+        <File Source="$(var.BinariesDirectory)Avalonia.Controls.dll"/>
+        <File Source="$(var.BinariesDirectory)Avalonia.DesignerSupport.dll"/>
+        <File Source="$(var.BinariesDirectory)Avalonia.Desktop.dll"/>
+        <File Source="$(var.BinariesDirectory)Avalonia.DesktopRuntime.dll"/>
+        <File Source="$(var.BinariesDirectory)Avalonia.Diagnostics.dll"/>
+        <File Source="$(var.BinariesDirectory)Avalonia.Dialogs.dll"/>
+        <File Source="$(var.BinariesDirectory)Avalonia.dll"/>
+        <File Source="$(var.BinariesDirectory)Avalonia.FreeDesktop.dll"/>
+        <File Source="$(var.BinariesDirectory)Avalonia.Input.dll"/>
+        <File Source="$(var.BinariesDirectory)Avalonia.Interactivity.dll"/>
+        <File Source="$(var.BinariesDirectory)Avalonia.Layout.dll"/>
+        <File Source="$(var.BinariesDirectory)Avalonia.Markup.dll"/>
+        <File Source="$(var.BinariesDirectory)Avalonia.Markup.Xaml.dll"/>
+        <File Source="$(var.BinariesDirectory)Avalonia.MicroCom.dll"/>
+        <File Source="$(var.BinariesDirectory)Avalonia.Native.dll"/>
+        <File Source="$(var.BinariesDirectory)Avalonia.OpenGL.dll"/>
+        <File Source="$(var.BinariesDirectory)Avalonia.ReactiveUI.dll"/>
+        <File Source="$(var.BinariesDirectory)Avalonia.Remote.Protocol.dll"/>
+        <File Source="$(var.BinariesDirectory)Avalonia.Skia.dll"/>
+        <File Source="$(var.BinariesDirectory)Avalonia.Styling.dll"/>
+        <File Source="$(var.BinariesDirectory)Avalonia.Themes.Default.dll"/>
+        <File Source="$(var.BinariesDirectory)Avalonia.Themes.Fluent.dll"/>
+        <File Source="$(var.BinariesDirectory)Avalonia.Visuals.dll"/>
+        <File Source="$(var.BinariesDirectory)Avalonia.Win32.dll"/>
+        <File Source="$(var.BinariesDirectory)Avalonia.X11.dll"/>
+        <File Source="$(var.BinariesDirectory)Citrus.Avalonia.dll"/>
+      </Component>
+      <Component Id="SqliteBinaries" Guid="271F5837-651E-4196-96DC-D004068E276F">
+        <File Source="$(var.BinariesDirectory)SQLitePCLRaw.batteries_v2.dll"/>
+        <File Source="$(var.BinariesDirectory)SQLitePCLRaw.core.dll"/>
+        <File Source="$(var.BinariesDirectory)SQLitePCLRaw.provider.e_sqlite3.dll"/>
+      </Component>
+      <Component Id="NetCoreBinaries" Guid="E785ED50-B878-48EC-8F2C-2787CCF526B8">
+        <File Source="$(var.BinariesDirectory)Microsoft.Bcl.AsyncInterfaces.dll"/>
+        <File Source="$(var.BinariesDirectory)Microsoft.Bcl.HashCode.dll"/>
+        <File Source="$(var.BinariesDirectory)Microsoft.CodeAnalysis.CSharp.dll"/>
+        <File Source="$(var.BinariesDirectory)Microsoft.CodeAnalysis.CSharp.Scripting.dll"/>
+        <File Source="$(var.BinariesDirectory)Microsoft.CodeAnalysis.dll"/>
+        <File Source="$(var.BinariesDirectory)Microsoft.CodeAnalysis.Scripting.dll"/>
+        <File Source="$(var.BinariesDirectory)Microsoft.Data.Sqlite.dll"/>
+        <File Source="$(var.BinariesDirectory)Microsoft.DotNet.PlatformAbstractions.dll"/>
+        <File Source="$(var.BinariesDirectory)Microsoft.EntityFrameworkCore.Abstractions.dll"/>
+        <File Source="$(var.BinariesDirectory)Microsoft.EntityFrameworkCore.Design.dll"/>
+        <File Source="$(var.BinariesDirectory)Microsoft.EntityFrameworkCore.dll"/>
+        <File Source="$(var.BinariesDirectory)Microsoft.EntityFrameworkCore.Relational.Design.dll"/>
+        <File Source="$(var.BinariesDirectory)Microsoft.EntityFrameworkCore.Relational.dll"/>
+        <File Source="$(var.BinariesDirectory)Microsoft.EntityFrameworkCore.Sqlite.Design.dll"/>
+        <File Source="$(var.BinariesDirectory)Microsoft.EntityFrameworkCore.Sqlite.dll"/>
+        <File Source="$(var.BinariesDirectory)Microsoft.Extensions.Caching.Abstractions.dll"/>
+        <File Source="$(var.BinariesDirectory)Microsoft.Extensions.Caching.Memory.dll"/>
+        <File Source="$(var.BinariesDirectory)Microsoft.Extensions.Configuration.Abstractions.dll"/>
+        <File Source="$(var.BinariesDirectory)Microsoft.Extensions.Configuration.Binder.dll"/>
+        <File Source="$(var.BinariesDirectory)Microsoft.Extensions.Configuration.dll"/>
+        <File Source="$(var.BinariesDirectory)Microsoft.Extensions.DependencyInjection.Abstractions.dll"/>
+        <File Source="$(var.BinariesDirectory)Microsoft.Extensions.DependencyInjection.dll"/>
+        <File Source="$(var.BinariesDirectory)Microsoft.Extensions.DependencyModel.dll"/>
+        <File Source="$(var.BinariesDirectory)Microsoft.Extensions.Logging.Abstractions.dll"/>
+        <File Source="$(var.BinariesDirectory)Microsoft.Extensions.Logging.dll"/>
+        <File Source="$(var.BinariesDirectory)Microsoft.Extensions.Options.dll"/>
+        <File Source="$(var.BinariesDirectory)Microsoft.Extensions.Primitives.dll"/>
+        <File Source="$(var.BinariesDirectory)Microsoft.Win32.SystemEvents.dll"/>
+        <File Source="$(var.BinariesDirectory)System.CodeDom.dll"/>
+        <File Source="$(var.BinariesDirectory)System.Collections.Immutable.dll"/>
+        <File Source="$(var.BinariesDirectory)System.Configuration.ConfigurationManager.dll"/>
+        <File Source="$(var.BinariesDirectory)System.Data.SqlClient.dll"/>
+        <File Source="$(var.BinariesDirectory)System.Data.SQLite.dll"/>
+        <File Source="$(var.BinariesDirectory)System.Data.SQLite.EF6.dll"/>
+        <File Source="$(var.BinariesDirectory)System.Diagnostics.DiagnosticSource.dll"/>
+        <File Source="$(var.BinariesDirectory)System.Drawing.Common.dll"/>
+        <File Source="$(var.BinariesDirectory)System.Reactive.dll"/>
+        <File Source="$(var.BinariesDirectory)System.Security.Cryptography.ProtectedData.dll"/>
+        <File Source="$(var.BinariesDirectory)System.Security.Permissions.dll"/>
+        <File Source="$(var.BinariesDirectory)System.Text.Json.dll"/>
+        <File Source="$(var.BinariesDirectory)System.Windows.Extensions.dll"/>
+        <File Source="$(var.BinariesDirectory)Tmds.DBus.dll"/>
+      </Component>
+      <Component Id="EntityFrameworkBinaries" Guid="8914BB90-59D0-4AC4-A8FC-CF49008CFCC3">
+        <File Source="$(var.BinariesDirectory)EntityFramework.dll"/>
+        <File Source="$(var.BinariesDirectory)EntityFramework.SqlServer.dll"/>
+      </Component>
+      <Component Id="OtherBinaries" Guid="7D4E6B5F-205E-43CC-83CD-D66406B749F2">
+        <File Source="$(var.BinariesDirectory)DynamicData.dll"/>
+        <File Source="$(var.BinariesDirectory)GalaSoft.MvvmLight.dll"/>
+        <File Source="$(var.BinariesDirectory)HarfBuzzSharp.dll"/>
+        <File Source="$(var.BinariesDirectory)JetBrains.Annotations.dll"/>
+        <File Source="$(var.BinariesDirectory)log4net.dll"/>
+        <File Source="$(var.BinariesDirectory)ReactiveUI.dll"/>
+        <File Source="$(var.BinariesDirectory)SkiaSharp.dll"/>
+        <File Source="$(var.BinariesDirectory)Splat.dll"/>
+      </Component>
+      <Component Id="U2Binaries" Guid="E7BCC4F4-8B54-4A17-9A31-FEABBC7B4495">
+        <File Source="$(var.BinariesDirectory)U2.Suite.exe">
+          <Shortcut Id="U2SuiteExeStartMenu" 
+                    Directory="ProgramMenuDir" 
+                    Name="U2 Suite"
+                    WorkingDirectory='INSTALLDIR' 
+                    Icon="U2.Suite.exe" IconIndex="0" Advertise="yes" />
+          <Shortcut Id="U2LoggerExeDesktopLink"
+                    Directory="DesktopFolder"
+                    Name="U2 Suite"
+                    WorkingDirectory='INSTALLDIR'
+                    Icon="U2.Suite.exe" IconIndex="0" Advertise="yes" />
+        </File>
+        <File Source="$(var.BinariesDirectory)U2.Logger.exe">
+        </File>
+        <File Source="$(var.BinariesDirectory)U2.QslManager.exe"/>
+        <File Source="$(var.BinariesDirectory)U2.CommonControls.dll"/>
+        <File Source="$(var.BinariesDirectory)U2.Contracts.dll"/>
+        <File Source="$(var.BinariesDirectory)U2.Core.dll"/>
+        <File Source="$(var.BinariesDirectory)U2.Logger.dll"/>
+        <File Source="$(var.BinariesDirectory)U2.Resources.dll"/>
+      </Component>
+		</ComponentGroup>
+	</Fragment>
+</Wix>

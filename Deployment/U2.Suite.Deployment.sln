@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32002.261
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "U2.Suite.WindowsInstaller", "U2.Suite.WindowsInstaller\U2.Suite.WindowsInstaller.wixproj", "{DB7B6ECF-5921-4EDE-839C-3AD48512D246}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DB7B6ECF-5921-4EDE-839C-3AD48512D246}.Debug|x86.ActiveCfg = Debug|x86
+		{DB7B6ECF-5921-4EDE-839C-3AD48512D246}.Debug|x86.Build.0 = Debug|x86
+		{DB7B6ECF-5921-4EDE-839C-3AD48512D246}.Release|x86.ActiveCfg = Release|x86
+		{DB7B6ECF-5921-4EDE-839C-3AD48512D246}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1A217C9E-4551-4CE1-866E-5D336D5F2985}
+	EndGlobalSection
+EndGlobal
