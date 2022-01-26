@@ -27,10 +27,10 @@
     <Directory Id="TARGETDIR" Name="SourceDir">
       <Directory Id="ProgramFilesFolder">
         <Directory Id="INSTALLFOLDER" Name="U2.Suite" />
+        <Directory Id="ProgramMenuDir" Name="U2.Suite"></Directory>
+        <Directory Id="DesktopFolder" Name="U2.Suite"></Directory>
       </Directory>
     </Directory>
-    <Directory Id="ProgramMenuDir" Name="U2.Suite"></Directory>
-    <Directory Id="DesktopFolder" Name="U2.Suite"></Directory>
   </Fragment>
 
   <Fragment>
@@ -370,7 +370,7 @@
         <File Source="$(var.BinariesDirectory)WindowsBase.dll" />
       </Component>
       <Component Id="U2Binaries" Guid="E7BCC4F4-8B54-4A17-9A31-FEABBC7B4495">
-        <File Source="$(var.BinariesDirectory)U2.Suite.exe">
+        <File Id="U2Suite" Source="$(var.BinariesDirectory)U2.Suite.exe" KeyPath='yes'>
           <Shortcut Id="U2SuiteExeStartMenu"
                     Directory="ProgramMenuDir"
                     Name="U2 Suite"
