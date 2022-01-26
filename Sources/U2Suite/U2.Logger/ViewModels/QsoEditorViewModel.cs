@@ -129,25 +129,44 @@ namespace U2.Logger
                     _logger.Debug($"New {propertyName} value: {Callsign}");
                     break;
                 case nameof(Frequency):
-                    var bandName = string.Empty;
-                    var freq = StringConverter.StringToDouble(Frequency);
-                    if (freq > 0)
+                    if (!string.IsNullOrEmpty(Frequency))
                     {
-                        bandName = ConversionHelper.FrequencyToBandName(freq);
-                    }
-
-                    if (!string.IsNullOrEmpty(bandName))
-                    {
-                        if (Band != bandName)
+                        var bandName = string.Empty;
+                        var freq = StringConverter.StringToDouble(Frequency);
+                        if (freq > 0)
                         {
-                            Band = bandName;
-                            _logger.Debug($"Frequency is {Frequency}. Mode changed to {Mode}.");
+                            bandName = ConversionHelper.FrequencyToBandName(freq);
+                        }
+
+                        if (!string.IsNullOrEmpty(bandName))
+                        {
+                            if (Band != bandName)
+                            {
+                                Band = bandName;
+                                _logger.Debug($"Frequency is {Frequency}. Mode changed to {Mode}.");
+                            }
+                        }
+                        else
+                        {
+                            Band = string.Empty;
+                            throw new Avalonia.Data.DataValidationException(Resources.FrequencyNotResolved);
                         }
                     }
-                    else
+                    break;
+                case nameof(Band):
                     {
-                        Band = string.Empty;
-                        throw new Avalonia.Data.DataValidationException(Resources.FrequencyNotResolved);
+                        if (!string.IsNullOrEmpty(Mode) && !string.IsNullOrEmpty(Band))
+                        {
+                            var frequency = StringConverter.StringToDouble(Frequency);
+                            var bandByFreq = ConversionHelper.FrequencyToBandName(frequency);
+                            if (bandByFreq != Band)
+                            {
+                                _internalChange = true;
+                                Frequency = ConversionHelper.BandNameAndModeToFrequency(Band, Mode).ToString();
+                                _internalChange = false;
+                            }
+                        }
+                        _logger.Debug($"New {propertyName} value: {Band}");
                     }
                     break;
                 case nameof(TimestampString):
