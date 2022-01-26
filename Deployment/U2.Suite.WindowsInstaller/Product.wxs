@@ -2,153 +2,396 @@
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
 
   <?define BuildDirectory = $(sys.SOURCEFILEDIR)..\..?>
-  <?define BinariesDirectory = $(var.BuildDirectory)\Binaries\AnyCPU\Release\?>
+  <?define BinariesDirectory = $(var.BuildDirectory)\Binaries\AnyCPU\Release\win-x64\?>
 
-  <Product Id="49D42D7D-C7D0-4061-88EB-2ACE8863D2CB" 
-           Name="U2.Suite" 
-           Language="1033" 
-           Version="1.0.0.0" 
-           Manufacturer="UT8UU" 
+  <Product Id="49D42D7D-C7D0-4061-88EB-2ACE8863D2CB"
+           Name="U2.Suite"
+           Language="1033"
+           Version="1.0.0.0"
+           Manufacturer="UT8UU"
            UpgradeCode="946ce716-a326-43a3-b4b0-0e810b86b31a">
-		<Package InstallerVersion="200" 
-             Compressed="yes" 
+    <Package InstallerVersion="200"
+             Compressed="yes"
              InstallScope="perMachine"
              Manufacturer="UT8UU"/>
 
-		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
-		<MediaTemplate />
+    <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+    <MediaTemplate />
 
-		<Feature Id="ProductFeature" Title="U2.Suite" Level="1">
-			<ComponentGroupRef Id="ProductComponents" />
-		</Feature>
-	</Product>
+    <Feature Id="ProductFeature" Title="U2.Suite" Level="1">
+      <ComponentGroupRef Id="ProductComponents" />
+    </Feature>
+  </Product>
 
-	<Fragment>
-		<Directory Id="TARGETDIR" Name="SourceDir">
-			<Directory Id="ProgramFilesFolder">
-				<Directory Id="INSTALLFOLDER" Name="U2.Suite" />
-			</Directory>
-		</Directory>
-	</Fragment>
+  <Fragment>
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFilesFolder">
+        <Directory Id="INSTALLFOLDER" Name="U2.Suite" />
+      </Directory>
+      <Directory Id="ProgramMenuDir" Name="U2.Suite"></Directory>
+      <Directory Id="DesktopFolder" Name="U2.Suite"></Directory>
+    </Directory>
+  </Fragment>
 
-	<Fragment>
-		<ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
+  <Fragment>
+    <ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
       <Component Id="AvaloniaBinaries" Guid="28D7BBF2-EC15-4E76-A29F-8B80566255FC">
-        <File Source="$(var.BinariesDirectory)Avalonia.Animation.dll"/>
-        <File Source="$(var.BinariesDirectory)Avalonia.Base.dll"/>
-        <File Source="$(var.BinariesDirectory)Avalonia.Controls.DataGrid.dll"/>
-        <File Source="$(var.BinariesDirectory)Avalonia.Controls.dll"/>
-        <File Source="$(var.BinariesDirectory)Avalonia.DesignerSupport.dll"/>
-        <File Source="$(var.BinariesDirectory)Avalonia.Desktop.dll"/>
-        <File Source="$(var.BinariesDirectory)Avalonia.DesktopRuntime.dll"/>
-        <File Source="$(var.BinariesDirectory)Avalonia.Diagnostics.dll"/>
-        <File Source="$(var.BinariesDirectory)Avalonia.Dialogs.dll"/>
-        <File Source="$(var.BinariesDirectory)Avalonia.dll"/>
-        <File Source="$(var.BinariesDirectory)Avalonia.FreeDesktop.dll"/>
-        <File Source="$(var.BinariesDirectory)Avalonia.Input.dll"/>
-        <File Source="$(var.BinariesDirectory)Avalonia.Interactivity.dll"/>
-        <File Source="$(var.BinariesDirectory)Avalonia.Layout.dll"/>
-        <File Source="$(var.BinariesDirectory)Avalonia.Markup.dll"/>
-        <File Source="$(var.BinariesDirectory)Avalonia.Markup.Xaml.dll"/>
-        <File Source="$(var.BinariesDirectory)Avalonia.MicroCom.dll"/>
-        <File Source="$(var.BinariesDirectory)Avalonia.Native.dll"/>
-        <File Source="$(var.BinariesDirectory)Avalonia.OpenGL.dll"/>
-        <File Source="$(var.BinariesDirectory)Avalonia.ReactiveUI.dll"/>
-        <File Source="$(var.BinariesDirectory)Avalonia.Remote.Protocol.dll"/>
-        <File Source="$(var.BinariesDirectory)Avalonia.Skia.dll"/>
-        <File Source="$(var.BinariesDirectory)Avalonia.Styling.dll"/>
-        <File Source="$(var.BinariesDirectory)Avalonia.Themes.Default.dll"/>
-        <File Source="$(var.BinariesDirectory)Avalonia.Themes.Fluent.dll"/>
-        <File Source="$(var.BinariesDirectory)Avalonia.Visuals.dll"/>
-        <File Source="$(var.BinariesDirectory)Avalonia.Win32.dll"/>
-        <File Source="$(var.BinariesDirectory)Avalonia.X11.dll"/>
-        <File Source="$(var.BinariesDirectory)Citrus.Avalonia.dll"/>
+        <File Source="$(var.BinariesDirectory)Avalonia.Animation.dll" />
+        <File Source="$(var.BinariesDirectory)Avalonia.Base.dll" />
+        <File Source="$(var.BinariesDirectory)Avalonia.Controls.DataGrid.dll" />
+        <File Source="$(var.BinariesDirectory)Avalonia.Controls.dll" />
+        <File Source="$(var.BinariesDirectory)Avalonia.DesignerSupport.dll" />
+        <File Source="$(var.BinariesDirectory)Avalonia.Desktop.dll" />
+        <File Source="$(var.BinariesDirectory)Avalonia.DesktopRuntime.dll" />
+        <File Source="$(var.BinariesDirectory)Avalonia.Diagnostics.dll" />
+        <File Source="$(var.BinariesDirectory)Avalonia.Dialogs.dll" />
+        <File Source="$(var.BinariesDirectory)Avalonia.dll" />
+        <File Source="$(var.BinariesDirectory)Avalonia.FreeDesktop.dll" />
+        <File Source="$(var.BinariesDirectory)Avalonia.Input.dll" />
+        <File Source="$(var.BinariesDirectory)Avalonia.Interactivity.dll" />
+        <File Source="$(var.BinariesDirectory)Avalonia.Layout.dll" />
+        <File Source="$(var.BinariesDirectory)Avalonia.Markup.dll" />
+        <File Source="$(var.BinariesDirectory)Avalonia.Markup.Xaml.dll" />
+        <File Source="$(var.BinariesDirectory)Avalonia.MicroCom.dll" />
+        <File Source="$(var.BinariesDirectory)Avalonia.Native.dll" />
+        <File Source="$(var.BinariesDirectory)Avalonia.OpenGL.dll" />
+        <File Source="$(var.BinariesDirectory)Avalonia.ReactiveUI.dll" />
+        <File Source="$(var.BinariesDirectory)Avalonia.Remote.Protocol.dll" />
+        <File Source="$(var.BinariesDirectory)Avalonia.Skia.dll" />
+        <File Source="$(var.BinariesDirectory)Avalonia.Styling.dll" />
+        <File Source="$(var.BinariesDirectory)Avalonia.Themes.Default.dll" />
+        <File Source="$(var.BinariesDirectory)Avalonia.Themes.Fluent.dll" />
+        <File Source="$(var.BinariesDirectory)Avalonia.Visuals.dll" />
+        <File Source="$(var.BinariesDirectory)Avalonia.Win32.dll" />
+        <File Source="$(var.BinariesDirectory)Avalonia.X11.dll" />
+        <File Source="$(var.BinariesDirectory)AvaloniaEdit.dll" />
+        <File Source="$(var.BinariesDirectory)AvaloniaEdit.Editor.dll" />
+        <File Source="$(var.BinariesDirectory)AvaloniaEdit.TextMate.dll" />
+        <File Source="$(var.BinariesDirectory)Citrus.Avalonia.dll" />
+        <File Source="$(var.BinariesDirectory)MessageBox.Avalonia.dll" />
+        <File Source="$(var.BinariesDirectory)TextMateSharp.dll" />
       </Component>
       <Component Id="SqliteBinaries" Guid="271F5837-651E-4196-96DC-D004068E276F">
-        <File Source="$(var.BinariesDirectory)SQLitePCLRaw.batteries_v2.dll"/>
-        <File Source="$(var.BinariesDirectory)SQLitePCLRaw.core.dll"/>
-        <File Source="$(var.BinariesDirectory)SQLitePCLRaw.provider.e_sqlite3.dll"/>
+        <File Source="$(var.BinariesDirectory)e_sqlite3.dll" />
+        <File Source="$(var.BinariesDirectory)SQLite.Interop.dll" />
+        <File Source="$(var.BinariesDirectory)SQLitePCLRaw.batteries_v2.dll" />
+        <File Source="$(var.BinariesDirectory)SQLitePCLRaw.core.dll" />
+        <File Source="$(var.BinariesDirectory)SQLitePCLRaw.provider.e_sqlite3.dll" />
       </Component>
       <Component Id="NetCoreBinaries" Guid="E785ED50-B878-48EC-8F2C-2787CCF526B8">
-        <File Source="$(var.BinariesDirectory)Microsoft.Bcl.AsyncInterfaces.dll"/>
-        <File Source="$(var.BinariesDirectory)Microsoft.Bcl.HashCode.dll"/>
-        <File Source="$(var.BinariesDirectory)Microsoft.CodeAnalysis.CSharp.dll"/>
-        <File Source="$(var.BinariesDirectory)Microsoft.CodeAnalysis.CSharp.Scripting.dll"/>
-        <File Source="$(var.BinariesDirectory)Microsoft.CodeAnalysis.dll"/>
-        <File Source="$(var.BinariesDirectory)Microsoft.CodeAnalysis.Scripting.dll"/>
-        <File Source="$(var.BinariesDirectory)Microsoft.Data.Sqlite.dll"/>
-        <File Source="$(var.BinariesDirectory)Microsoft.DotNet.PlatformAbstractions.dll"/>
-        <File Source="$(var.BinariesDirectory)Microsoft.EntityFrameworkCore.Abstractions.dll"/>
-        <File Source="$(var.BinariesDirectory)Microsoft.EntityFrameworkCore.Design.dll"/>
-        <File Source="$(var.BinariesDirectory)Microsoft.EntityFrameworkCore.dll"/>
-        <File Source="$(var.BinariesDirectory)Microsoft.EntityFrameworkCore.Relational.Design.dll"/>
-        <File Source="$(var.BinariesDirectory)Microsoft.EntityFrameworkCore.Relational.dll"/>
-        <File Source="$(var.BinariesDirectory)Microsoft.EntityFrameworkCore.Sqlite.Design.dll"/>
-        <File Source="$(var.BinariesDirectory)Microsoft.EntityFrameworkCore.Sqlite.dll"/>
-        <File Source="$(var.BinariesDirectory)Microsoft.Extensions.Caching.Abstractions.dll"/>
-        <File Source="$(var.BinariesDirectory)Microsoft.Extensions.Caching.Memory.dll"/>
-        <File Source="$(var.BinariesDirectory)Microsoft.Extensions.Configuration.Abstractions.dll"/>
-        <File Source="$(var.BinariesDirectory)Microsoft.Extensions.Configuration.Binder.dll"/>
-        <File Source="$(var.BinariesDirectory)Microsoft.Extensions.Configuration.dll"/>
-        <File Source="$(var.BinariesDirectory)Microsoft.Extensions.DependencyInjection.Abstractions.dll"/>
-        <File Source="$(var.BinariesDirectory)Microsoft.Extensions.DependencyInjection.dll"/>
-        <File Source="$(var.BinariesDirectory)Microsoft.Extensions.DependencyModel.dll"/>
-        <File Source="$(var.BinariesDirectory)Microsoft.Extensions.Logging.Abstractions.dll"/>
-        <File Source="$(var.BinariesDirectory)Microsoft.Extensions.Logging.dll"/>
-        <File Source="$(var.BinariesDirectory)Microsoft.Extensions.Options.dll"/>
-        <File Source="$(var.BinariesDirectory)Microsoft.Extensions.Primitives.dll"/>
-        <File Source="$(var.BinariesDirectory)Microsoft.Win32.SystemEvents.dll"/>
-        <File Source="$(var.BinariesDirectory)System.CodeDom.dll"/>
-        <File Source="$(var.BinariesDirectory)System.Collections.Immutable.dll"/>
-        <File Source="$(var.BinariesDirectory)System.Configuration.ConfigurationManager.dll"/>
-        <File Source="$(var.BinariesDirectory)System.Data.SqlClient.dll"/>
-        <File Source="$(var.BinariesDirectory)System.Data.SQLite.dll"/>
-        <File Source="$(var.BinariesDirectory)System.Data.SQLite.EF6.dll"/>
-        <File Source="$(var.BinariesDirectory)System.Diagnostics.DiagnosticSource.dll"/>
-        <File Source="$(var.BinariesDirectory)System.Drawing.Common.dll"/>
-        <File Source="$(var.BinariesDirectory)System.Reactive.dll"/>
-        <File Source="$(var.BinariesDirectory)System.Security.Cryptography.ProtectedData.dll"/>
-        <File Source="$(var.BinariesDirectory)System.Security.Permissions.dll"/>
-        <File Source="$(var.BinariesDirectory)System.Text.Json.dll"/>
-        <File Source="$(var.BinariesDirectory)System.Windows.Extensions.dll"/>
-        <File Source="$(var.BinariesDirectory)Tmds.DBus.dll"/>
+        <File Source="$(var.BinariesDirectory)api-ms-win-core-console-l1-1-0.dll" />
+        <File Source="$(var.BinariesDirectory)api-ms-win-core-datetime-l1-1-0.dll" />
+        <File Source="$(var.BinariesDirectory)api-ms-win-core-debug-l1-1-0.dll" />
+        <File Source="$(var.BinariesDirectory)api-ms-win-core-errorhandling-l1-1-0.dll" />
+        <File Source="$(var.BinariesDirectory)api-ms-win-core-file-l1-1-0.dll" />
+        <File Source="$(var.BinariesDirectory)api-ms-win-core-file-l1-2-0.dll" />
+        <File Source="$(var.BinariesDirectory)api-ms-win-core-file-l2-1-0.dll" />
+        <File Source="$(var.BinariesDirectory)api-ms-win-core-handle-l1-1-0.dll" />
+        <File Source="$(var.BinariesDirectory)api-ms-win-core-heap-l1-1-0.dll" />
+        <File Source="$(var.BinariesDirectory)api-ms-win-core-interlocked-l1-1-0.dll" />
+        <File Source="$(var.BinariesDirectory)api-ms-win-core-libraryloader-l1-1-0.dll" />
+        <File Source="$(var.BinariesDirectory)api-ms-win-core-localization-l1-2-0.dll" />
+        <File Source="$(var.BinariesDirectory)api-ms-win-core-memory-l1-1-0.dll" />
+        <File Source="$(var.BinariesDirectory)api-ms-win-core-namedpipe-l1-1-0.dll" />
+        <File Source="$(var.BinariesDirectory)api-ms-win-core-processenvironment-l1-1-0.dll" />
+        <File Source="$(var.BinariesDirectory)api-ms-win-core-processthreads-l1-1-0.dll" />
+        <File Source="$(var.BinariesDirectory)api-ms-win-core-processthreads-l1-1-1.dll" />
+        <File Source="$(var.BinariesDirectory)api-ms-win-core-profile-l1-1-0.dll" />
+        <File Source="$(var.BinariesDirectory)api-ms-win-core-rtlsupport-l1-1-0.dll" />
+        <File Source="$(var.BinariesDirectory)api-ms-win-core-string-l1-1-0.dll" />
+        <File Source="$(var.BinariesDirectory)api-ms-win-core-synch-l1-1-0.dll" />
+        <File Source="$(var.BinariesDirectory)api-ms-win-core-synch-l1-2-0.dll" />
+        <File Source="$(var.BinariesDirectory)api-ms-win-core-sysinfo-l1-1-0.dll" />
+        <File Source="$(var.BinariesDirectory)api-ms-win-core-timezone-l1-1-0.dll" />
+        <File Source="$(var.BinariesDirectory)api-ms-win-core-util-l1-1-0.dll" />
+        <File Source="$(var.BinariesDirectory)api-ms-win-crt-conio-l1-1-0.dll" />
+        <File Source="$(var.BinariesDirectory)api-ms-win-crt-convert-l1-1-0.dll" />
+        <File Source="$(var.BinariesDirectory)api-ms-win-crt-environment-l1-1-0.dll" />
+        <File Source="$(var.BinariesDirectory)api-ms-win-crt-filesystem-l1-1-0.dll" />
+        <File Source="$(var.BinariesDirectory)api-ms-win-crt-heap-l1-1-0.dll" />
+        <File Source="$(var.BinariesDirectory)api-ms-win-crt-locale-l1-1-0.dll" />
+        <File Source="$(var.BinariesDirectory)api-ms-win-crt-math-l1-1-0.dll" />
+        <File Source="$(var.BinariesDirectory)api-ms-win-crt-multibyte-l1-1-0.dll" />
+        <File Source="$(var.BinariesDirectory)api-ms-win-crt-private-l1-1-0.dll" />
+        <File Source="$(var.BinariesDirectory)api-ms-win-crt-process-l1-1-0.dll" />
+        <File Source="$(var.BinariesDirectory)api-ms-win-crt-runtime-l1-1-0.dll" />
+        <File Source="$(var.BinariesDirectory)api-ms-win-crt-stdio-l1-1-0.dll" />
+        <File Source="$(var.BinariesDirectory)api-ms-win-crt-string-l1-1-0.dll" />
+        <File Source="$(var.BinariesDirectory)api-ms-win-crt-time-l1-1-0.dll" />
+        <File Source="$(var.BinariesDirectory)api-ms-win-crt-utility-l1-1-0.dll" />
+        <File Source="$(var.BinariesDirectory)Microsoft.Bcl.AsyncInterfaces.dll" />
+        <File Source="$(var.BinariesDirectory)Microsoft.Bcl.HashCode.dll" />
+        <File Source="$(var.BinariesDirectory)Microsoft.CodeAnalysis.CSharp.dll" />
+        <File Source="$(var.BinariesDirectory)Microsoft.CodeAnalysis.CSharp.Scripting.dll" />
+        <File Source="$(var.BinariesDirectory)Microsoft.CodeAnalysis.dll" />
+        <File Source="$(var.BinariesDirectory)Microsoft.CodeAnalysis.Scripting.dll" />
+        <File Source="$(var.BinariesDirectory)Microsoft.CSharp.dll" />
+        <File Source="$(var.BinariesDirectory)Microsoft.Data.Sqlite.dll" />
+        <File Source="$(var.BinariesDirectory)Microsoft.DiaSymReader.Native.amd64.dll" />
+        <File Source="$(var.BinariesDirectory)Microsoft.DotNet.PlatformAbstractions.dll" />
+        <File Source="$(var.BinariesDirectory)Microsoft.EntityFrameworkCore.Abstractions.dll" />
+        <File Source="$(var.BinariesDirectory)Microsoft.EntityFrameworkCore.Design.dll" />
+        <File Source="$(var.BinariesDirectory)Microsoft.EntityFrameworkCore.dll" />
+        <File Source="$(var.BinariesDirectory)Microsoft.EntityFrameworkCore.Relational.Design.dll" />
+        <File Source="$(var.BinariesDirectory)Microsoft.EntityFrameworkCore.Relational.dll" />
+        <File Source="$(var.BinariesDirectory)Microsoft.EntityFrameworkCore.Sqlite.Design.dll" />
+        <File Source="$(var.BinariesDirectory)Microsoft.EntityFrameworkCore.Sqlite.dll" />
+        <File Source="$(var.BinariesDirectory)Microsoft.Extensions.Caching.Abstractions.dll" />
+        <File Source="$(var.BinariesDirectory)Microsoft.Extensions.Caching.Memory.dll" />
+        <File Source="$(var.BinariesDirectory)Microsoft.Extensions.Configuration.Abstractions.dll" />
+        <File Source="$(var.BinariesDirectory)Microsoft.Extensions.Configuration.Binder.dll" />
+        <File Source="$(var.BinariesDirectory)Microsoft.Extensions.Configuration.dll" />
+        <File Source="$(var.BinariesDirectory)Microsoft.Extensions.DependencyInjection.Abstractions.dll" />
+        <File Source="$(var.BinariesDirectory)Microsoft.Extensions.DependencyInjection.dll" />
+        <File Source="$(var.BinariesDirectory)Microsoft.Extensions.DependencyModel.dll" />
+        <File Source="$(var.BinariesDirectory)Microsoft.Extensions.Logging.Abstractions.dll" />
+        <File Source="$(var.BinariesDirectory)Microsoft.Extensions.Logging.dll" />
+        <File Source="$(var.BinariesDirectory)Microsoft.Extensions.Options.dll" />
+        <File Source="$(var.BinariesDirectory)Microsoft.Extensions.Primitives.dll" />
+        <File Source="$(var.BinariesDirectory)Microsoft.VisualBasic.Core.dll" />
+        <File Source="$(var.BinariesDirectory)Microsoft.VisualBasic.dll" />
+        <File Source="$(var.BinariesDirectory)Microsoft.Win32.Primitives.dll" />
+        <File Source="$(var.BinariesDirectory)Microsoft.Win32.Registry.dll" />
+        <File Source="$(var.BinariesDirectory)Microsoft.Win32.SystemEvents.dll" />
+        <File Source="$(var.BinariesDirectory)mscordaccore.dll" />
+        <File Source="$(var.BinariesDirectory)mscordaccore_amd64_amd64_4.700.21.56803.dll" />
+        <File Source="$(var.BinariesDirectory)mscordbi.dll" />
+        <File Source="$(var.BinariesDirectory)mscorlib.dll" />
+        <File Source="$(var.BinariesDirectory)mscorrc.debug.dll" />
+        <File Source="$(var.BinariesDirectory)mscorrc.dll" />
+        <File Source="$(var.BinariesDirectory)netstandard.dll" />
+        <File Source="$(var.BinariesDirectory)System.AppContext.dll" />
+        <File Source="$(var.BinariesDirectory)System.Buffers.dll" />
+        <File Source="$(var.BinariesDirectory)System.CodeDom.dll" />
+        <File Source="$(var.BinariesDirectory)System.Collections.Concurrent.dll" />
+        <File Source="$(var.BinariesDirectory)System.Collections.dll" />
+        <File Source="$(var.BinariesDirectory)System.Collections.Immutable.dll" />
+        <File Source="$(var.BinariesDirectory)System.Collections.NonGeneric.dll" />
+        <File Source="$(var.BinariesDirectory)System.Collections.Specialized.dll" />
+        <File Source="$(var.BinariesDirectory)System.ComponentModel.Annotations.dll" />
+        <File Source="$(var.BinariesDirectory)System.ComponentModel.DataAnnotations.dll" />
+        <File Source="$(var.BinariesDirectory)System.ComponentModel.dll" />
+        <File Source="$(var.BinariesDirectory)System.ComponentModel.EventBasedAsync.dll" />
+        <File Source="$(var.BinariesDirectory)System.ComponentModel.Primitives.dll" />
+        <File Source="$(var.BinariesDirectory)System.ComponentModel.TypeConverter.dll" />
+        <File Source="$(var.BinariesDirectory)System.Configuration.ConfigurationManager.dll" />
+        <File Source="$(var.BinariesDirectory)System.Configuration.dll" />
+        <File Source="$(var.BinariesDirectory)System.Console.dll" />
+        <File Source="$(var.BinariesDirectory)System.Core.dll" />
+        <File Source="$(var.BinariesDirectory)System.Data.Common.dll" />
+        <File Source="$(var.BinariesDirectory)System.Data.DataSetExtensions.dll" />
+        <File Source="$(var.BinariesDirectory)System.Data.dll" />
+        <File Source="$(var.BinariesDirectory)System.Data.SqlClient.dll" />
+        <File Source="$(var.BinariesDirectory)System.Data.SQLite.dll" />
+        <File Source="$(var.BinariesDirectory)System.Data.SQLite.EF6.dll" />
+        <File Source="$(var.BinariesDirectory)System.Diagnostics.Contracts.dll" />
+        <File Source="$(var.BinariesDirectory)System.Diagnostics.Debug.dll" />
+        <File Source="$(var.BinariesDirectory)System.Diagnostics.DiagnosticSource.dll" />
+        <File Source="$(var.BinariesDirectory)System.Diagnostics.FileVersionInfo.dll" />
+        <File Source="$(var.BinariesDirectory)System.Diagnostics.Process.dll" />
+        <File Source="$(var.BinariesDirectory)System.Diagnostics.StackTrace.dll" />
+        <File Source="$(var.BinariesDirectory)System.Diagnostics.TextWriterTraceListener.dll" />
+        <File Source="$(var.BinariesDirectory)System.Diagnostics.Tools.dll" />
+        <File Source="$(var.BinariesDirectory)System.Diagnostics.TraceSource.dll" />
+        <File Source="$(var.BinariesDirectory)System.Diagnostics.Tracing.dll" />
+        <File Source="$(var.BinariesDirectory)System.dll" />
+        <File Source="$(var.BinariesDirectory)System.Drawing.Common.dll" />
+        <File Source="$(var.BinariesDirectory)System.Drawing.dll" />
+        <File Source="$(var.BinariesDirectory)System.Drawing.Primitives.dll" />
+        <File Source="$(var.BinariesDirectory)System.Dynamic.Runtime.dll" />
+        <File Source="$(var.BinariesDirectory)System.Globalization.Calendars.dll" />
+        <File Source="$(var.BinariesDirectory)System.Globalization.dll" />
+        <File Source="$(var.BinariesDirectory)System.Globalization.Extensions.dll" />
+        <File Source="$(var.BinariesDirectory)System.IO.Compression.Brotli.dll" />
+        <File Source="$(var.BinariesDirectory)System.IO.Compression.dll" />
+        <File Source="$(var.BinariesDirectory)System.IO.Compression.FileSystem.dll" />
+        <File Source="$(var.BinariesDirectory)System.IO.Compression.ZipFile.dll" />
+        <File Source="$(var.BinariesDirectory)System.IO.dll" />
+        <File Source="$(var.BinariesDirectory)System.IO.FileSystem.AccessControl.dll" />
+        <File Source="$(var.BinariesDirectory)System.IO.FileSystem.dll" />
+        <File Source="$(var.BinariesDirectory)System.IO.FileSystem.DriveInfo.dll" />
+        <File Source="$(var.BinariesDirectory)System.IO.FileSystem.Primitives.dll" />
+        <File Source="$(var.BinariesDirectory)System.IO.FileSystem.Watcher.dll" />
+        <File Source="$(var.BinariesDirectory)System.IO.IsolatedStorage.dll" />
+        <File Source="$(var.BinariesDirectory)System.IO.MemoryMappedFiles.dll" />
+        <File Source="$(var.BinariesDirectory)System.IO.Pipes.AccessControl.dll" />
+        <File Source="$(var.BinariesDirectory)System.IO.Pipes.dll" />
+        <File Source="$(var.BinariesDirectory)System.IO.UnmanagedMemoryStream.dll" />
+        <File Source="$(var.BinariesDirectory)System.Linq.dll" />
+        <File Source="$(var.BinariesDirectory)System.Linq.Expressions.dll" />
+        <File Source="$(var.BinariesDirectory)System.Linq.Parallel.dll" />
+        <File Source="$(var.BinariesDirectory)System.Linq.Queryable.dll" />
+        <File Source="$(var.BinariesDirectory)System.Memory.dll" />
+        <File Source="$(var.BinariesDirectory)System.Net.dll" />
+        <File Source="$(var.BinariesDirectory)System.Net.Http.dll" />
+        <File Source="$(var.BinariesDirectory)System.Net.HttpListener.dll" />
+        <File Source="$(var.BinariesDirectory)System.Net.Mail.dll" />
+        <File Source="$(var.BinariesDirectory)System.Net.NameResolution.dll" />
+        <File Source="$(var.BinariesDirectory)System.Net.NetworkInformation.dll" />
+        <File Source="$(var.BinariesDirectory)System.Net.Ping.dll" />
+        <File Source="$(var.BinariesDirectory)System.Net.Primitives.dll" />
+        <File Source="$(var.BinariesDirectory)System.Net.Requests.dll" />
+        <File Source="$(var.BinariesDirectory)System.Net.Security.dll" />
+        <File Source="$(var.BinariesDirectory)System.Net.ServicePoint.dll" />
+        <File Source="$(var.BinariesDirectory)System.Net.Sockets.dll" />
+        <File Source="$(var.BinariesDirectory)System.Net.WebClient.dll" />
+        <File Source="$(var.BinariesDirectory)System.Net.WebHeaderCollection.dll" />
+        <File Source="$(var.BinariesDirectory)System.Net.WebProxy.dll" />
+        <File Source="$(var.BinariesDirectory)System.Net.WebSockets.Client.dll" />
+        <File Source="$(var.BinariesDirectory)System.Net.WebSockets.dll" />
+        <File Source="$(var.BinariesDirectory)System.Numerics.dll" />
+        <File Source="$(var.BinariesDirectory)System.Numerics.Vectors.dll" />
+        <File Source="$(var.BinariesDirectory)System.ObjectModel.dll" />
+        <File Source="$(var.BinariesDirectory)System.Private.CoreLib.dll" />
+        <File Source="$(var.BinariesDirectory)System.Private.DataContractSerialization.dll" />
+        <File Source="$(var.BinariesDirectory)System.Private.Uri.dll" />
+        <File Source="$(var.BinariesDirectory)System.Private.Xml.dll" />
+        <File Source="$(var.BinariesDirectory)System.Private.Xml.Linq.dll" />
+        <File Source="$(var.BinariesDirectory)System.Reactive.dll" />
+        <File Source="$(var.BinariesDirectory)System.Reflection.DispatchProxy.dll" />
+        <File Source="$(var.BinariesDirectory)System.Reflection.dll" />
+        <File Source="$(var.BinariesDirectory)System.Reflection.Emit.dll" />
+        <File Source="$(var.BinariesDirectory)System.Reflection.Emit.ILGeneration.dll" />
+        <File Source="$(var.BinariesDirectory)System.Reflection.Emit.Lightweight.dll" />
+        <File Source="$(var.BinariesDirectory)System.Reflection.Extensions.dll" />
+        <File Source="$(var.BinariesDirectory)System.Reflection.Metadata.dll" />
+        <File Source="$(var.BinariesDirectory)System.Reflection.Primitives.dll" />
+        <File Source="$(var.BinariesDirectory)System.Reflection.TypeExtensions.dll" />
+        <File Source="$(var.BinariesDirectory)System.Resources.Reader.dll" />
+        <File Source="$(var.BinariesDirectory)System.Resources.ResourceManager.dll" />
+        <File Source="$(var.BinariesDirectory)System.Resources.Writer.dll" />
+        <File Source="$(var.BinariesDirectory)System.Runtime.CompilerServices.Unsafe.dll" />
+        <File Source="$(var.BinariesDirectory)System.Runtime.CompilerServices.VisualC.dll" />
+        <File Source="$(var.BinariesDirectory)System.Runtime.dll" />
+        <File Source="$(var.BinariesDirectory)System.Runtime.Extensions.dll" />
+        <File Source="$(var.BinariesDirectory)System.Runtime.Handles.dll" />
+        <File Source="$(var.BinariesDirectory)System.Runtime.InteropServices.dll" />
+        <File Source="$(var.BinariesDirectory)System.Runtime.InteropServices.RuntimeInformation.dll" />
+        <File Source="$(var.BinariesDirectory)System.Runtime.InteropServices.WindowsRuntime.dll" />
+        <File Source="$(var.BinariesDirectory)System.Runtime.Intrinsics.dll" />
+        <File Source="$(var.BinariesDirectory)System.Runtime.Loader.dll" />
+        <File Source="$(var.BinariesDirectory)System.Runtime.Numerics.dll" />
+        <File Source="$(var.BinariesDirectory)System.Runtime.Serialization.dll" />
+        <File Source="$(var.BinariesDirectory)System.Runtime.Serialization.Formatters.dll" />
+        <File Source="$(var.BinariesDirectory)System.Runtime.Serialization.Json.dll" />
+        <File Source="$(var.BinariesDirectory)System.Runtime.Serialization.Primitives.dll" />
+        <File Source="$(var.BinariesDirectory)System.Runtime.Serialization.Xml.dll" />
+        <File Source="$(var.BinariesDirectory)System.Runtime.WindowsRuntime.dll" />
+        <File Source="$(var.BinariesDirectory)System.Runtime.WindowsRuntime.UI.Xaml.dll" />
+        <File Source="$(var.BinariesDirectory)System.Security.AccessControl.dll" />
+        <File Source="$(var.BinariesDirectory)System.Security.Claims.dll" />
+        <File Source="$(var.BinariesDirectory)System.Security.Cryptography.Algorithms.dll" />
+        <File Source="$(var.BinariesDirectory)System.Security.Cryptography.Cng.dll" />
+        <File Source="$(var.BinariesDirectory)System.Security.Cryptography.Csp.dll" />
+        <File Source="$(var.BinariesDirectory)System.Security.Cryptography.Encoding.dll" />
+        <File Source="$(var.BinariesDirectory)System.Security.Cryptography.OpenSsl.dll" />
+        <File Source="$(var.BinariesDirectory)System.Security.Cryptography.Primitives.dll" />
+        <File Source="$(var.BinariesDirectory)System.Security.Cryptography.ProtectedData.dll" />
+        <File Source="$(var.BinariesDirectory)System.Security.Cryptography.X509Certificates.dll" />
+        <File Source="$(var.BinariesDirectory)System.Security.dll" />
+        <File Source="$(var.BinariesDirectory)System.Security.Permissions.dll" />
+        <File Source="$(var.BinariesDirectory)System.Security.Principal.dll" />
+        <File Source="$(var.BinariesDirectory)System.Security.Principal.Windows.dll" />
+        <File Source="$(var.BinariesDirectory)System.Security.SecureString.dll" />
+        <File Source="$(var.BinariesDirectory)System.ServiceModel.Web.dll" />
+        <File Source="$(var.BinariesDirectory)System.ServiceProcess.dll" />
+        <File Source="$(var.BinariesDirectory)System.Text.Encoding.CodePages.dll" />
+        <File Source="$(var.BinariesDirectory)System.Text.Encoding.dll" />
+        <File Source="$(var.BinariesDirectory)System.Text.Encoding.Extensions.dll" />
+        <File Source="$(var.BinariesDirectory)System.Text.Encodings.Web.dll" />
+        <File Source="$(var.BinariesDirectory)System.Text.Json.dll" />
+        <File Source="$(var.BinariesDirectory)System.Text.RegularExpressions.dll" />
+        <File Source="$(var.BinariesDirectory)System.Threading.Channels.dll" />
+        <File Source="$(var.BinariesDirectory)System.Threading.dll" />
+        <File Source="$(var.BinariesDirectory)System.Threading.Overlapped.dll" />
+        <File Source="$(var.BinariesDirectory)System.Threading.Tasks.Dataflow.dll" />
+        <File Source="$(var.BinariesDirectory)System.Threading.Tasks.dll" />
+        <File Source="$(var.BinariesDirectory)System.Threading.Tasks.Extensions.dll" />
+        <File Source="$(var.BinariesDirectory)System.Threading.Tasks.Parallel.dll" />
+        <File Source="$(var.BinariesDirectory)System.Threading.Thread.dll" />
+        <File Source="$(var.BinariesDirectory)System.Threading.ThreadPool.dll" />
+        <File Source="$(var.BinariesDirectory)System.Threading.Timer.dll" />
+        <File Source="$(var.BinariesDirectory)System.Transactions.dll" />
+        <File Source="$(var.BinariesDirectory)System.Transactions.Local.dll" />
+        <File Source="$(var.BinariesDirectory)System.ValueTuple.dll" />
+        <File Source="$(var.BinariesDirectory)System.Web.dll" />
+        <File Source="$(var.BinariesDirectory)System.Web.HttpUtility.dll" />
+        <File Source="$(var.BinariesDirectory)System.Windows.dll" />
+        <File Source="$(var.BinariesDirectory)System.Windows.Extensions.dll" />
+        <File Source="$(var.BinariesDirectory)System.Windows.Interactivity.dll" />
+        <File Source="$(var.BinariesDirectory)System.Xml.dll" />
+        <File Source="$(var.BinariesDirectory)System.Xml.Linq.dll" />
+        <File Source="$(var.BinariesDirectory)System.Xml.ReaderWriter.dll" />
+        <File Source="$(var.BinariesDirectory)System.Xml.Serialization.dll" />
+        <File Source="$(var.BinariesDirectory)System.Xml.XDocument.dll" />
+        <File Source="$(var.BinariesDirectory)System.Xml.XmlDocument.dll" />
+        <File Source="$(var.BinariesDirectory)System.Xml.XmlSerializer.dll" />
+        <File Source="$(var.BinariesDirectory)System.Xml.XPath.dll" />
+        <File Source="$(var.BinariesDirectory)System.Xml.XPath.XDocument.dll" />
       </Component>
       <Component Id="EntityFrameworkBinaries" Guid="8914BB90-59D0-4AC4-A8FC-CF49008CFCC3">
-        <File Source="$(var.BinariesDirectory)EntityFramework.dll"/>
-        <File Source="$(var.BinariesDirectory)EntityFramework.SqlServer.dll"/>
+        <File Source="$(var.BinariesDirectory)EntityFramework.dll" />
+        <File Source="$(var.BinariesDirectory)EntityFramework.SqlServer.dll" />
       </Component>
       <Component Id="OtherBinaries" Guid="7D4E6B5F-205E-43CC-83CD-D66406B749F2">
-        <File Source="$(var.BinariesDirectory)DynamicData.dll"/>
-        <File Source="$(var.BinariesDirectory)GalaSoft.MvvmLight.dll"/>
-        <File Source="$(var.BinariesDirectory)HarfBuzzSharp.dll"/>
-        <File Source="$(var.BinariesDirectory)JetBrains.Annotations.dll"/>
-        <File Source="$(var.BinariesDirectory)log4net.dll"/>
-        <File Source="$(var.BinariesDirectory)ReactiveUI.dll"/>
-        <File Source="$(var.BinariesDirectory)SkiaSharp.dll"/>
-        <File Source="$(var.BinariesDirectory)Splat.dll"/>
+        <File Source="$(var.BinariesDirectory)BoDi.dll" />
+        <File Source="$(var.BinariesDirectory)clrcompression.dll" />
+        <File Source="$(var.BinariesDirectory)clretwrc.dll" />
+        <File Source="$(var.BinariesDirectory)clrjit.dll" />
+        <File Source="$(var.BinariesDirectory)CommandLine.dll" />
+        <File Source="$(var.BinariesDirectory)coreclr.dll" />
+        <File Source="$(var.BinariesDirectory)dbgshim.dll" />
+        <File Source="$(var.BinariesDirectory)DeepCopy.Expression.dll" />
+        <File Source="$(var.BinariesDirectory)DynamicData.dll" />
+        <File Source="$(var.BinariesDirectory)GalaSoft.MvvmLight.dll" />
+        <File Source="$(var.BinariesDirectory)GalaSoft.MvvmLight.Extras.dll" />
+        <File Source="$(var.BinariesDirectory)GalaSoft.MvvmLight.Platform.dll" />
+        <File Source="$(var.BinariesDirectory)Gherkin.dll" />
+        <File Source="$(var.BinariesDirectory)HarfBuzzSharp.dll" />
+        <File Source="$(var.BinariesDirectory)hostfxr.dll" />
+        <File Source="$(var.BinariesDirectory)hostpolicy.dll" />
+        <File Source="$(var.BinariesDirectory)JetBrains.Annotations.dll" />
+        <File Source="$(var.BinariesDirectory)JsonSnakeCaseNamingPolicy.dll" />
+        <File Source="$(var.BinariesDirectory)libHarfBuzzSharp.dll" />
+        <File Source="$(var.BinariesDirectory)libSkiaSharp.dll" />
+        <File Source="$(var.BinariesDirectory)log4net.dll" />
+        <File Source="$(var.BinariesDirectory)Newtonsoft.Json.dll" />
+        <File Source="$(var.BinariesDirectory)NuGet.Frameworks.dll" />
+        <File Source="$(var.BinariesDirectory)onigwrap.dll" />
+        <File Source="$(var.BinariesDirectory)PropertyChanged.dll" />
+        <File Source="$(var.BinariesDirectory)ReactiveUI.dll" />
+        <File Source="$(var.BinariesDirectory)SixLabors.ImageSharp.dll" />
+        <File Source="$(var.BinariesDirectory)SkiaSharp.dll" />
+        <File Source="$(var.BinariesDirectory)sni.dll" />
+        <File Source="$(var.BinariesDirectory)Splat.dll" />
+        <File Source="$(var.BinariesDirectory)testhost.dll" />
+        <File Source="$(var.BinariesDirectory)Tmds.DBus.dll" />
+        <File Source="$(var.BinariesDirectory)ucrtbase.dll" />
+        <File Source="$(var.BinariesDirectory)WindowsBase.dll" />
       </Component>
       <Component Id="U2Binaries" Guid="E7BCC4F4-8B54-4A17-9A31-FEABBC7B4495">
         <File Source="$(var.BinariesDirectory)U2.Suite.exe">
-          <Shortcut Id="U2SuiteExeStartMenu" 
-                    Directory="ProgramMenuDir" 
+          <Shortcut Id="U2SuiteExeStartMenu"
+                    Directory="ProgramMenuDir"
                     Name="U2 Suite"
-                    WorkingDirectory='INSTALLDIR' 
-                    Icon="U2.Suite.exe" IconIndex="0" Advertise="yes" />
+                    WorkingDirectory='INSTALLDIR'
+                     Advertise="yes" />
           <Shortcut Id="U2LoggerExeDesktopLink"
                     Directory="DesktopFolder"
                     Name="U2 Suite"
                     WorkingDirectory='INSTALLDIR'
-                    Icon="U2.Suite.exe" IconIndex="0" Advertise="yes" />
+                    Advertise="yes" />
         </File>
         <File Source="$(var.BinariesDirectory)U2.Logger.exe">
         </File>
-        <File Source="$(var.BinariesDirectory)U2.QslManager.exe"/>
-        <File Source="$(var.BinariesDirectory)U2.CommonControls.dll"/>
-        <File Source="$(var.BinariesDirectory)U2.Contracts.dll"/>
-        <File Source="$(var.BinariesDirectory)U2.Core.dll"/>
-        <File Source="$(var.BinariesDirectory)U2.Logger.dll"/>
-        <File Source="$(var.BinariesDirectory)U2.Resources.dll"/>
+        <File Source="$(var.BinariesDirectory)U2.CommonControls.dll" />
+        <File Source="$(var.BinariesDirectory)U2.Contracts.dll" />
+        <File Source="$(var.BinariesDirectory)U2.Core.dll" />
+        <File Source="$(var.BinariesDirectory)U2.Logger.dll" />
+        <File Source="$(var.BinariesDirectory)U2.QslManager.dll" />
+        <File Source="$(var.BinariesDirectory)U2.Resources.dll" />
+        <File Source="$(var.BinariesDirectory)U2.Suite.dll" />
       </Component>
-		</ComponentGroup>
-	</Fragment>
+    </ComponentGroup>
+  </Fragment>
 </Wix>
