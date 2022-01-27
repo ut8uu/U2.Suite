@@ -27,9 +27,9 @@
     <Directory Id="TARGETDIR" Name="SourceDir">
       <Directory Id="ProgramFilesFolder">
         <Directory Id="INSTALLFOLDER" Name="U2.Suite" />
-        <Directory Id="ProgramMenuDir" Name="U2.Suite"></Directory>
-        <Directory Id="DesktopFolder" Name="U2.Suite"></Directory>
       </Directory>
+      <Directory Id="ProgramMenuFolder" Name="U2.Suite"></Directory>
+      <Directory Id="DesktopFolder" Name="U2.Suite"></Directory>
     </Directory>
   </Fragment>
 
@@ -369,10 +369,38 @@
         <File Source="$(var.BinariesDirectory)ucrtbase.dll" />
         <File Source="$(var.BinariesDirectory)WindowsBase.dll" />
       </Component>
+      <Component Id="ConfigFiles" Guid="33D04C4C-9967-4370-B97E-A0B9DBD70432">
+        <File Source="$(var.BinariesDirectory)AvaloniaEdit.Editor.deps.json" />
+        <File Source="$(var.BinariesDirectory)AvaloniaEdit.Editor.runtimeconfig.dev.json" />
+        <File Source="$(var.BinariesDirectory)AvaloniaEdit.Editor.runtimeconfig.json" />
+        <File Source="$(var.BinariesDirectory)AvaloniaEdit.TextMate.deps.json" />
+        <File Source="$(var.BinariesDirectory)U2.CommonControls.deps.json" />
+        <File Source="$(var.BinariesDirectory)U2.Contracts.deps.json" />
+        <File Source="$(var.BinariesDirectory)U2.Core.deps.json" />
+        <File Source="$(var.BinariesDirectory)U2.Library.deps.json" />
+        <File Source="$(var.BinariesDirectory)U2.Library.runtimeconfig.dev.json" />
+        <File Source="$(var.BinariesDirectory)U2.Library.runtimeconfig.json" />
+        <File Source="$(var.BinariesDirectory)U2.Logger.deps.json" />
+        <File Source="$(var.BinariesDirectory)U2.Logger.runtimeconfig.dev.json" />
+        <File Source="$(var.BinariesDirectory)U2.Logger.runtimeconfig.json" />
+        <File Source="$(var.BinariesDirectory)U2.Logger.Tests.deps.json" />
+        <File Source="$(var.BinariesDirectory)U2.Logger.Tests.runtimeconfig.dev.json" />
+        <File Source="$(var.BinariesDirectory)U2.Logger.Tests.runtimeconfig.json" />
+        <File Source="$(var.BinariesDirectory)U2.QslManager.deps.json" />
+        <File Source="$(var.BinariesDirectory)U2.QslManager.runtimeconfig.dev.json" />
+        <File Source="$(var.BinariesDirectory)U2.QslManager.runtimeconfig.json" />
+        <File Source="$(var.BinariesDirectory)U2.Resources.deps.json" />
+        <File Source="$(var.BinariesDirectory)U2.Suite.deps.json" />
+        <File Source="$(var.BinariesDirectory)U2.Suite.runtimeconfig.dev.json" />
+        <File Source="$(var.BinariesDirectory)U2.Suite.runtimeconfig.json" />
+        <File Source="$(var.BinariesDirectory)U2.Suite.Tests.deps.json" />
+        <File Source="$(var.BinariesDirectory)U2.Suite.Tests.runtimeconfig.dev.json" />
+        <File Source="$(var.BinariesDirectory)U2.Suite.Tests.runtimeconfig.json" />
+      </Component>
       <Component Id="U2Binaries" Guid="E7BCC4F4-8B54-4A17-9A31-FEABBC7B4495">
         <File Id="U2Suite" Source="$(var.BinariesDirectory)U2.Suite.exe" KeyPath='yes'>
           <Shortcut Id="U2SuiteExeStartMenu"
-                    Directory="ProgramMenuDir"
+                    Directory="ProgramMenuFolder"
                     Name="U2 Suite"
                     WorkingDirectory='INSTALLDIR'
                      Advertise="yes" />
