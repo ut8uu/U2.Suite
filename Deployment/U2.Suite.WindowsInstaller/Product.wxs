@@ -369,6 +369,9 @@
         <File Source="$(var.BinariesDirectory)ucrtbase.dll" />
         <File Source="$(var.BinariesDirectory)WindowsBase.dll" />
       </Component>
+      <Component Id="Icons" Guid="AD867F56-34D1-4C45-B031-8BD627487465">
+        <File Id="LoggerIcon" Source="$(var.BinaryDirectory)logger.ico"></File>
+      </Component>
       <Component Id="U2Binaries" Guid="E7BCC4F4-8B54-4A17-9A31-FEABBC7B4495">
         <File Id="U2Suite" Source="$(var.BinariesDirectory)U2.Suite.exe" KeyPath='yes'>
           <Shortcut Id="U2SuiteExeStartMenu"
@@ -383,6 +386,16 @@
                     Advertise="yes" />
         </File>
         <File Source="$(var.BinariesDirectory)U2.Logger.exe">
+          <Shortcut Id="U2SuiteExeStartMenu"
+                    Directory="ProgramMenuFolder"
+                    Name="U2 Suite"
+                    WorkingDirectory='INSTALLDIR'
+                    Icon="logger.ico" Advertise="yes" />
+          <Shortcut Id="U2LoggerExeDesktopLink"
+                    Directory="DesktopFolder"
+                    Name="U2 Suite"
+                    WorkingDirectory='INSTALLDIR'
+                    Advertise="yes" />
         </File>
         <File Source="$(var.BinariesDirectory)U2.CommonControls.dll" />
         <File Source="$(var.BinariesDirectory)U2.Contracts.dll" />
