@@ -7,3 +7,5 @@
 **/*.feature.cs
 **/*csproj.user
 **/*.user
+bin
+obj
