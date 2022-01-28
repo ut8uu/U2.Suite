@@ -18,7 +18,8 @@ namespace U2.Logger
 
         public LoggerDbContext()
         {
-            var dbDirectory = FileSystemHelper.GetFullPath("Database", "Logger");
+            var appDataFolder = FileSystemHelper.GetDatabaseFolderPath();
+            var dbDirectory = Path.Combine(appDataFolder, "Logger");
             Directory.CreateDirectory(dbDirectory);
             _databasePath = Path.Combine(dbDirectory, DataBaseName);
         }
