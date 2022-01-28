@@ -7,7 +7,7 @@
   <Product Id="49D42D7D-C7D0-4061-88EB-2ACE8863D2CB"
            Name="U2.Suite"
            Language="1033"
-           Version="1.0.0.0"
+           Version="1.2.3.0"
            Manufacturer="UT8UU"
            UpgradeCode="946ce716-a326-43a3-b4b0-0e810b86b31a">
     <Package InstallerVersion="200"
