@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using U2.Core.Exceptions;
 
@@ -6,6 +7,17 @@ namespace U2.Core
 {
     public static class FileSystemHelper
     {
+        public static string GetAppDataFolderPath()
+        {
+            var basePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            return Path.Combine(basePath, "U2Suite", "ApplicationData");
+        }
+
+        public static string GetDatabaseFolderPath()
+        {
+            return Path.Combine(GetAppDataFolderPath(), "Database");
+        }
+
         public static string GetFullPath(string fileName)
         {
             return GetFullPath(new string[] { fileName });

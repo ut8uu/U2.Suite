@@ -369,6 +369,10 @@
         <File Source="$(var.BinariesDirectory)ucrtbase.dll" />
         <File Source="$(var.BinariesDirectory)WindowsBase.dll" />
       </Component>
+      
+      <Component Id="Icons" Guid="AD867F56-34D1-4C45-B031-8BD627487465">
+        <File Id="LoggerIcon" Source="$(var.BinariesDirectory)logger.ico"></File>
+	  </Component>
       <Component Id="ConfigFiles" Guid="33D04C4C-9967-4370-B97E-A0B9DBD70432">
         <File Source="$(var.BinariesDirectory)AvaloniaEdit.Editor.deps.json" />
         <File Source="$(var.BinariesDirectory)AvaloniaEdit.Editor.runtimeconfig.dev.json" />
@@ -404,13 +408,23 @@
                     Name="U2 Suite"
                     WorkingDirectory='INSTALLDIR'
                      Advertise="yes" />
-          <Shortcut Id="U2LoggerExeDesktopLink"
+          <Shortcut Id="U2SuiteExeDesktopLink"
                     Directory="DesktopFolder"
                     Name="U2 Suite"
                     WorkingDirectory='INSTALLDIR'
                     Advertise="yes" />
         </File>
         <File Source="$(var.BinariesDirectory)U2.Logger.exe">
+          <Shortcut Id="U2LoggerExeStartMenu"
+                    Directory="ProgramMenuFolder"
+                    Name="U2.Logger"
+                    WorkingDirectory='INSTALLDIR'
+                    IconIndex="0" Advertise="yes" />
+          <Shortcut Id="U2LoggerExeDesktopLink"
+                    Directory="DesktopFolder"
+                    Name="U2.Logger"
+                    WorkingDirectory='INSTALLDIR'
+                    Advertise="yes" />
         </File>
         <File Source="$(var.BinariesDirectory)U2.CommonControls.dll" />
         <File Source="$(var.BinariesDirectory)U2.Contracts.dll" />
