@@ -14,16 +14,18 @@
              Compressed="yes"
              InstallScope="perMachine"
              Manufacturer="UT8UU"/>
+    
+    <Media Id="1" Cabinet="cab1.cab" EmbedCab="yes"></Media>
 
     <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
-    <MediaTemplate />
 
     <Feature Id="ProductFeature" Title="U2.Suite" Level="1">
       <ComponentGroupRef Id="ProductComponents" />
     </Feature>
-  </Product>
+  
+    <Icon Id="U2.Logger.exe" SourceFile="$(var.BinariesDirectory)U2.Logger.exe" />
+    <Icon Id="U2.Suite.exe" SourceFile="$(var.BinariesDirectory)U2.Suite.exe" />
 
-  <Fragment>
     <Directory Id="TARGETDIR" Name="SourceDir">
       <Directory Id="ProgramFilesFolder">
         <Directory Id="INSTALLFOLDER" Name="U2.Suite" />
@@ -31,10 +33,11 @@
       <Directory Id="ProgramMenuFolder" Name="U2.Suite"></Directory>
       <Directory Id="DesktopFolder" Name="U2.Suite"></Directory>
     </Directory>
-  </Fragment>
 
-  <Fragment>
     <ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
+      <Component Id="Icons" Guid="AD867F56-34D1-4C45-B031-8BD627487465">
+        <File Id="LoggerIcon" Source="$(var.BinariesDirectory)logger.ico"></File>
+      </Component>
       <Component Id="AvaloniaBinaries" Guid="28D7BBF2-EC15-4E76-A29F-8B80566255FC">
         <File Source="$(var.BinariesDirectory)Avalonia.Animation.dll" />
         <File Source="$(var.BinariesDirectory)Avalonia.Base.dll" />
@@ -369,10 +372,6 @@
         <File Source="$(var.BinariesDirectory)ucrtbase.dll" />
         <File Source="$(var.BinariesDirectory)WindowsBase.dll" />
       </Component>
-      
-      <Component Id="Icons" Guid="AD867F56-34D1-4C45-B031-8BD627487465">
-        <File Id="LoggerIcon" Source="$(var.BinariesDirectory)logger.ico"></File>
-	  </Component>
       <Component Id="ConfigFiles" Guid="33D04C4C-9967-4370-B97E-A0B9DBD70432">
         <File Source="$(var.BinariesDirectory)AvaloniaEdit.Editor.deps.json" />
         <File Source="$(var.BinariesDirectory)AvaloniaEdit.Editor.runtimeconfig.dev.json" />
@@ -407,23 +406,32 @@
                     Directory="ProgramMenuFolder"
                     Name="U2 Suite"
                     WorkingDirectory='INSTALLDIR'
-                     Advertise="yes" />
+                    Icon="U2.Suite.exe"
+                    IconIndex="0"
+                    Advertise="yes" />
           <Shortcut Id="U2SuiteExeDesktopLink"
                     Directory="DesktopFolder"
                     Name="U2 Suite"
                     WorkingDirectory='INSTALLDIR'
+                    Icon="U2.Suite.exe"
+                    IconIndex="0"
                     Advertise="yes" />
         </File>
-        <File Source="$(var.BinariesDirectory)U2.Logger.exe">
+        <File Id="U2LoggerExe" Source="$(var.BinariesDirectory)U2.Logger.exe">
           <Shortcut Id="U2LoggerExeStartMenu"
                     Directory="ProgramMenuFolder"
                     Name="U2.Logger"
                     WorkingDirectory='INSTALLDIR'
-                    IconIndex="0" Advertise="yes" />
+                    Icon="U2.Logger.exe"
+                    IconIndex="0"
+                    Advertise="yes" >
+          </Shortcut>
           <Shortcut Id="U2LoggerExeDesktopLink"
                     Directory="DesktopFolder"
                     Name="U2.Logger"
                     WorkingDirectory='INSTALLDIR'
+                    Icon="U2.Logger.exe"
+                    IconIndex="0"
                     Advertise="yes" />
         </File>
         <File Source="$(var.BinariesDirectory)U2.CommonControls.dll" />
@@ -435,5 +443,5 @@
         <File Source="$(var.BinariesDirectory)U2.Suite.dll" />
       </Component>
     </ComponentGroup>
-  </Fragment>
+  </Product>
 </Wix>
