@@ -14,6 +14,7 @@
     <Product>U2.Suite</Product>
     <Company>HamStudio</Company>
     <Authors>Sergey Usmanov, UT8UU</Authors>
+    <ApplicationIcon>qslmanager.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <AvaloniaResource Include="Assets\**" />
