@@ -79,6 +79,10 @@
         <File Source="$(var.BinariesDirectory)Designs\HorizontalSampleDesign2.json" />
         <File Source="$(var.BinariesDirectory)Designs\VerticalSampleDesign.json" />
       </Component>
+      <Component Id="log4net" Guid="C09A448F-D78E-42F2-A686-58991597A7EA">
+        <File Source="$(var.BinariesDirectory)log4net.dll" />
+        <File Source="$(var.BinariesDirectory)log4net.config" />
+      </Component>
       <Component Id="SqliteBinaries" Guid="271F5837-651E-4196-96DC-D004068E276F">
         <File Source="$(var.BinariesDirectory)e_sqlite3.dll" />
         <File Source="$(var.BinariesDirectory)SQLite.Interop.dll" />
@@ -362,7 +366,6 @@
         <File Source="$(var.BinariesDirectory)JsonSnakeCaseNamingPolicy.dll" />
         <File Source="$(var.BinariesDirectory)libHarfBuzzSharp.dll" />
         <File Source="$(var.BinariesDirectory)libSkiaSharp.dll" />
-        <File Source="$(var.BinariesDirectory)log4net.dll" />
         <File Source="$(var.BinariesDirectory)Newtonsoft.Json.dll" />
         <File Source="$(var.BinariesDirectory)NuGet.Frameworks.dll" />
         <File Source="$(var.BinariesDirectory)onigwrap.dll" />
