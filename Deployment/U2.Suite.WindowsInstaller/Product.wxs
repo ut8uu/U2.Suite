@@ -27,6 +27,7 @@
     <Icon Id="U2.Suite.exe" SourceFile="$(var.BinariesDirectory)U2.Suite.exe" />
     <Icon Id="U2.QslManager.exe" SourceFile="$(var.BinariesDirectory)U2.QslManager.exe" />
 
+
     <Directory Id="TARGETDIR" Name="SourceDir">
       <Directory Id="ProgramFilesFolder">
         <Directory Id="INSTALLFOLDER" Name="U2.Suite" />
@@ -395,9 +396,6 @@
         <File Source="$(var.BinariesDirectory)U2.Logger.deps.json" />
         <File Source="$(var.BinariesDirectory)U2.Logger.runtimeconfig.dev.json" />
         <File Source="$(var.BinariesDirectory)U2.Logger.runtimeconfig.json" />
-        <File Source="$(var.BinariesDirectory)U2.Logger.Tests.deps.json" />
-        <File Source="$(var.BinariesDirectory)U2.Logger.Tests.runtimeconfig.dev.json" />
-        <File Source="$(var.BinariesDirectory)U2.Logger.Tests.runtimeconfig.json" />
         <File Source="$(var.BinariesDirectory)U2.QslManager.deps.json" />
         <File Source="$(var.BinariesDirectory)U2.QslManager.runtimeconfig.dev.json" />
         <File Source="$(var.BinariesDirectory)U2.QslManager.runtimeconfig.json" />
@@ -405,9 +403,6 @@
         <File Source="$(var.BinariesDirectory)U2.Suite.deps.json" />
         <File Source="$(var.BinariesDirectory)U2.Suite.runtimeconfig.dev.json" />
         <File Source="$(var.BinariesDirectory)U2.Suite.runtimeconfig.json" />
-        <File Source="$(var.BinariesDirectory)U2.Suite.Tests.deps.json" />
-        <File Source="$(var.BinariesDirectory)U2.Suite.Tests.runtimeconfig.dev.json" />
-        <File Source="$(var.BinariesDirectory)U2.Suite.Tests.runtimeconfig.json" />
       </Component>
       <Component Id="U2Binaries" Guid="E7BCC4F4-8B54-4A17-9A31-FEABBC7B4495">
         <File Id="U2Suite" Source="$(var.BinariesDirectory)U2.Suite.exe" KeyPath='yes'>
