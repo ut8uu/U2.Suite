@@ -14,7 +14,7 @@
              Compressed="yes"
              InstallScope="perMachine"
              Manufacturer="UT8UU"/>
-    
+
     <Media Id="1" Cabinet="cab1.cab" EmbedCab="yes"></Media>
 
     <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
@@ -22,9 +22,10 @@
     <Feature Id="ProductFeature" Title="U2.Suite" Level="1">
       <ComponentGroupRef Id="ProductComponents" />
     </Feature>
-  
+
     <Icon Id="U2.Logger.exe" SourceFile="$(var.BinariesDirectory)U2.Logger.exe" />
     <Icon Id="U2.Suite.exe" SourceFile="$(var.BinariesDirectory)U2.Suite.exe" />
+    <Icon Id="U2.QslManager.exe" SourceFile="$(var.BinariesDirectory)U2.QslManager.exe" />
 
     <Directory Id="TARGETDIR" Name="SourceDir">
       <Directory Id="ProgramFilesFolder">
@@ -446,9 +447,27 @@
         <File Source="$(var.BinariesDirectory)U2.Contracts.dll" />
         <File Source="$(var.BinariesDirectory)U2.Core.dll" />
         <File Source="$(var.BinariesDirectory)U2.Logger.dll" />
+        <File Source="$(var.BinariesDirectory)U2.QslManager.exe">
+          <Shortcut Id="U2QslManagerExeStartMenu"
+                    Directory="ProgramMenuFolder"
+                    Name="U2.QslManager"
+                    WorkingDirectory='INSTALLDIR'
+                    Icon="U2.QslManager.exe"
+                    IconIndex="0"
+                    Advertise="yes" >
+          </Shortcut>
+          <Shortcut Id="U2QslManagerExeDesktopLink"
+                    Directory="DesktopFolder"
+                    Name="U2.QslManager"
+                    WorkingDirectory="INSTALLDIR"
+                    Icon="U2.QslManager.exe"
+                    IconIndex="0"
+                    Advertise="yes" />
+        </File>
         <File Source="$(var.BinariesDirectory)U2.QslManager.dll" />
         <File Source="$(var.BinariesDirectory)U2.Resources.dll" />
         <File Source="$(var.BinariesDirectory)U2.Suite.dll" />
+        <File Source="$(var.BinariesDirectory)AvaloniaEdit.Editor.exe" />
       </Component>
     </ComponentGroup>
   </Product>
