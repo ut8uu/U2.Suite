@@ -83,7 +83,7 @@
       </Component>
       <Component Id="log4net" Guid="C09A448F-D78E-42F2-A686-58991597A7EA">
         <File Source="$(var.BinariesDirectory)log4net.dll" />
-        <File Source="$(var.BinariesDirectory)log4net.config" />
+        <File Source="$(var.BinariesDirectory)log4net.logger.config" />
       </Component>
       <Component Id="SqliteBinaries" Guid="271F5837-651E-4196-96DC-D004068E276F">
         <File Source="$(var.BinariesDirectory)e_sqlite3.dll" />

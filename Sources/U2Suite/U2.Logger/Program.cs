@@ -1,7 +1,7 @@
 using System;
 using Avalonia;
 using Avalonia.ReactiveUI;
-[assembly: log4net.Config.XmlConfigurator(ConfigFile = "log4net.config")]
+[assembly: log4net.Config.XmlConfigurator(ConfigFile = "log4net.logger.config")]
 
 namespace U2.Logger
 {
