@@ -74,6 +74,11 @@
         <File Source="$(var.BinariesDirectory)MessageBox.Avalonia.dll" />
         <File Source="$(var.BinariesDirectory)TextMateSharp.dll" />
       </Component>
+      <Component Id="DesignFiles" Guid="976CE465-C6CC-46EC-AEBD-29FDF65DADD5">
+        <File Source="$(var.BinariesDirectory)Designs\HorizontalSampleDesign.json" />
+        <File Source="$(var.BinariesDirectory)Designs\HorizontalSampleDesign2.json" />
+        <File Source="$(var.BinariesDirectory)Designs\VerticalSampleDesign.json" />
+      </Component>
       <Component Id="SqliteBinaries" Guid="271F5837-651E-4196-96DC-D004068E276F">
         <File Source="$(var.BinariesDirectory)e_sqlite3.dll" />
         <File Source="$(var.BinariesDirectory)SQLite.Interop.dll" />
