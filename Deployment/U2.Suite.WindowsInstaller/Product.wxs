@@ -21,22 +21,42 @@
 
     <Feature Id="ProductFeature" Title="U2.Suite" Level="1">
       <ComponentGroupRef Id="ProductComponents" />
+      <ComponentRef Id="U2DesktopShortcuts"/>
     </Feature>
 
     <Icon Id="U2.Logger.exe" SourceFile="$(var.BinariesDirectory)U2.Logger.exe" />
     <Icon Id="U2.Suite.exe" SourceFile="$(var.BinariesDirectory)U2.Suite.exe" />
     <Icon Id="U2.QslManager.exe" SourceFile="$(var.BinariesDirectory)U2.QslManager.exe" />
 
-
     <Directory Id="TARGETDIR" Name="SourceDir">
       <Directory Id="ProgramFilesFolder">
         <Directory Id="INSTALLFOLDER" Name="U2.Suite" />
       </Directory>
       <Directory Id="ProgramMenuFolder" Name="U2.Suite"></Directory>
-      <Directory Id="DesktopFolder" Name="U2.Suite"></Directory>
+      <Directory Id="DesktopFolder" Name="U2.Suite">
+      </Directory>
     </Directory>
 
     <ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
+      <Component Id="U2DesktopShortcuts" Guid="*">
+        <Shortcut Id="U2LoggerExeStartMenu"
+                  Directory="ProgramMenuFolder" Name="U2.Logger"
+                  WorkingDirectory='INSTALLFOLDER'
+                  Target='[INSTALLFOLDER]U2.Logger.exe'
+                  Icon="U2.Logger.exe" IconIndex="0" >
+        </Shortcut>
+        <Shortcut Id="U2LoggerExeDesktopLink"
+                  Directory="DesktopFolder" Name="U2.Logger"
+                  WorkingDirectory='INSTALLFOLDER'
+                  Target='[INSTALLFOLDER]U2.Logger.exe'
+                  Icon="U2.Logger.exe" IconIndex="0"/>
+        <RegistryValue Root="HKCU"
+                       Key="Software\U2.Suite\U2.Suite"
+                       Name="installed"
+                      Type="integer"
+                      Value="1"
+                      KeyPath="yes" />
+      </Component>
       <Component Id="Icons" Guid="AD867F56-34D1-4C45-B031-8BD627487465">
         <File Id="LoggerIcon" Source="$(var.BinariesDirectory)logger.ico"></File>
       </Component>
@@ -421,23 +441,7 @@
                     IconIndex="0"
                     Advertise="yes" />
         </File>
-        <File Id="U2LoggerExe" Source="$(var.BinariesDirectory)U2.Logger.exe">
-          <Shortcut Id="U2LoggerExeStartMenu"
-                    Directory="ProgramMenuFolder"
-                    Name="U2.Logger"
-                    WorkingDirectory='INSTALLDIR'
-                    Icon="U2.Logger.exe"
-                    IconIndex="0"
-                    Advertise="yes" >
-          </Shortcut>
-          <Shortcut Id="U2LoggerExeDesktopLink"
-                    Directory="DesktopFolder"
-                    Name="U2.Logger"
-                    WorkingDirectory='INSTALLDIR'
-                    Icon="U2.Logger.exe"
-                    IconIndex="0"
-                    Advertise="yes" />
-        </File>
+        <File Id="U2LoggerExe" Source="$(var.BinariesDirectory)U2.Logger.exe" />
         <File Source="$(var.BinariesDirectory)U2.CommonControls.dll" />
         <File Source="$(var.BinariesDirectory)U2.Contracts.dll" />
         <File Source="$(var.BinariesDirectory)U2.Core.dll" />
