@@ -21,6 +21,7 @@
 
     <Feature Id="ProductFeature" Title="U2.Suite" Level="1">
       <ComponentGroupRef Id="ProductComponents" />
+      <ComponentGroupRef Id="U2QslManagerDesigns"/>
       <ComponentRef Id="U2DesktopShortcuts"/>
     </Feature>
 
@@ -30,13 +31,22 @@
 
     <Directory Id="TARGETDIR" Name="SourceDir">
       <Directory Id="ProgramFilesFolder">
-        <Directory Id="INSTALLFOLDER" Name="U2.Suite" />
+        <Directory Id="INSTALLFOLDER" Name="U2.Suite">
+          <Directory Id="DesignsFolder" Name="Designs"/>
+        </Directory>
       </Directory>
       <Directory Id="ProgramMenuFolder" Name="U2.Suite"></Directory>
       <Directory Id="DesktopFolder" Name="U2.Suite">
       </Directory>
     </Directory>
 
+    <ComponentGroup Id="U2QslManagerDesigns" Directory="DesignsFolder">
+      <Component Id="DesignFiles" Guid="976CE465-C6CC-46EC-AEBD-29FDF65DADD5">
+        <File Source="$(var.BinariesDirectory)Designs\HorizontalSampleDesign.json" />
+        <File Source="$(var.BinariesDirectory)Designs\HorizontalSampleDesign2.json" />
+        <File Source="$(var.BinariesDirectory)Designs\VerticalSampleDesign.json" />
+      </Component>
+    </ComponentGroup>
     <ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
       <Component Id="U2DesktopShortcuts" Guid="*">
         <Shortcut Id="U2SuiteExeStartMenu"
@@ -49,7 +59,7 @@
                   WorkingDirectory='INSTALLFOLDER'
                   Target='[INSTALLFOLDER]U2.Suite.exe'
                   Icon="U2.Suite.exe" IconIndex="0"/>
-        
+
         <Shortcut Id="U2QslManagerExeStartMenu"
                   Directory="ProgramMenuFolder" Name="U2.QslManager"
                   WorkingDirectory='INSTALLFOLDER'
@@ -60,7 +70,7 @@
                   WorkingDirectory='INSTALLFOLDER'
                   Target='[INSTALLFOLDER]U2.QslManager.exe'
                   Icon="U2.QslManager.exe" IconIndex="0"/>
-        
+
         <Shortcut Id="U2LoggerExeStartMenu"
                   Directory="ProgramMenuFolder" Name="U2.Logger"
                   WorkingDirectory='INSTALLFOLDER'
@@ -117,11 +127,6 @@
         <File Source="$(var.BinariesDirectory)Citrus.Avalonia.dll" />
         <File Source="$(var.BinariesDirectory)MessageBox.Avalonia.dll" />
         <File Source="$(var.BinariesDirectory)TextMateSharp.dll" />
-      </Component>
-      <Component Id="DesignFiles" Guid="976CE465-C6CC-46EC-AEBD-29FDF65DADD5">
-        <File Source="$(var.BinariesDirectory)Designs\HorizontalSampleDesign.json" />
-        <File Source="$(var.BinariesDirectory)Designs\HorizontalSampleDesign2.json" />
-        <File Source="$(var.BinariesDirectory)Designs\VerticalSampleDesign.json" />
       </Component>
       <Component Id="log4net" Guid="C09A448F-D78E-42F2-A686-58991597A7EA">
         <File Source="$(var.BinariesDirectory)log4net.dll" />
