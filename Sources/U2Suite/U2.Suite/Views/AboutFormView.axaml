@@ -12,7 +12,7 @@
       </Panel>
       <Panel>
         <StackPanel>
-          <TextBlock Classes="font20 margin5">© 2021 Sergey Usmanov, UT8UU</TextBlock>
+          <TextBlock Classes="font20 margin5">© 2022 Sergey Usmanov, UT8UU</TextBlock>
           <StackPanel Orientation="Horizontal">
             <TextBlock Classes="font20 margin5">License: GPLv3.</TextBlock>
             <Button Command="{Binding ShowLicense}" Margin="0">Show license</Button>
@@ -23,14 +23,18 @@
         <TextBlock Classes="font30" Grid.Column="0" Grid.Row="0">Components</TextBlock>
         <Grid ColumnDefinitions="200,*" RowDefinitions="50,30,30,30,30,30,30,30">
 
-          <TextBlock Classes="font20 yellow" Grid.Column="0" Grid.Row="1">U2.Suite</TextBlock>
-          <TextBlock Classes="font20" Grid.Column="1" Grid.Row="1" Text="The application launcher."></TextBlock>
+          <TextBlock Classes="font20 yellow" Grid.Column="0" Grid.Row="1">Avalonia Editor</TextBlock>
+          <TextBlock Classes="font20" Grid.Column="1" Grid.Row="1" Text="A third-party application for template editing."></TextBlock>
 
-          <TextBlock Classes="font20 yellow" Grid.Column="0" Grid.Row="2">U2.QslManager</TextBlock>
-          <TextBlock Classes="font20" Grid.Column="1" Grid.Row="2" Text="A tool for QSL card authoring."></TextBlock>
+          <TextBlock Classes="font20 yellow" Grid.Column="0" Grid.Row="2">U2.Suite</TextBlock>
+          <TextBlock Classes="font20" Grid.Column="1" Grid.Row="2" Text="The application launcher."></TextBlock>
 
-          <TextBlock Classes="font20 yellow" Grid.Column="0" Grid.Row="3">Avalonia Editor</TextBlock>
-          <TextBlock Classes="font20" Grid.Column="1" Grid.Row="3" Text="A third-party application for template editing."></TextBlock>
+          <TextBlock Classes="font20 yellow" Grid.Column="0" Grid.Row="3">U2.QslManager</TextBlock>
+          <TextBlock Classes="font20" Grid.Column="1" Grid.Row="3" Text="A tool for QSL card authoring."></TextBlock>
+
+          <TextBlock Classes="font20 yellow" Grid.Column="0" Grid.Row="4">U2.Logger</TextBlock>
+          <TextBlock Classes="font20" Grid.Column="1" Grid.Row="4" Text="A simple logger."></TextBlock>
+
         </Grid>
       </Panel>
     </StackPanel>
