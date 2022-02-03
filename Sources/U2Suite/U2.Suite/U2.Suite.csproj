@@ -11,6 +11,7 @@
     <PackageProjectUrl>https://github.com/ut8uu/U2.Suite</PackageProjectUrl>
     <Company>HamStudio</Company>
     <Copyright>© 2022 Sergey Usmanov, UT8UU</Copyright>
+    <ApplicationIcon>u2suite.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <AvaloniaResource Include="Assets\**" />

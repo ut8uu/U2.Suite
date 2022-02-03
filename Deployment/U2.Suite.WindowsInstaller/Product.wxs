@@ -21,22 +21,74 @@
 
     <Feature Id="ProductFeature" Title="U2.Suite" Level="1">
       <ComponentGroupRef Id="ProductComponents" />
+      <ComponentGroupRef Id="U2QslManagerDesigns"/>
+      <ComponentRef Id="U2DesktopShortcuts"/>
     </Feature>
 
     <Icon Id="U2.Logger.exe" SourceFile="$(var.BinariesDirectory)U2.Logger.exe" />
     <Icon Id="U2.Suite.exe" SourceFile="$(var.BinariesDirectory)U2.Suite.exe" />
     <Icon Id="U2.QslManager.exe" SourceFile="$(var.BinariesDirectory)U2.QslManager.exe" />
 
-
     <Directory Id="TARGETDIR" Name="SourceDir">
       <Directory Id="ProgramFilesFolder">
-        <Directory Id="INSTALLFOLDER" Name="U2.Suite" />
+        <Directory Id="INSTALLFOLDER" Name="U2.Suite">
+          <Directory Id="DesignsFolder" Name="Designs"/>
+        </Directory>
       </Directory>
       <Directory Id="ProgramMenuFolder" Name="U2.Suite"></Directory>
-      <Directory Id="DesktopFolder" Name="U2.Suite"></Directory>
+      <Directory Id="DesktopFolder" Name="U2.Suite">
+      </Directory>
     </Directory>
 
+    <ComponentGroup Id="U2QslManagerDesigns" Directory="DesignsFolder">
+      <Component Id="DesignFiles" Guid="976CE465-C6CC-46EC-AEBD-29FDF65DADD5">
+        <File Source="$(var.BinariesDirectory)Designs\HorizontalSampleDesign.json" />
+        <File Source="$(var.BinariesDirectory)Designs\HorizontalSampleDesign2.json" />
+        <File Source="$(var.BinariesDirectory)Designs\VerticalSampleDesign.json" />
+      </Component>
+    </ComponentGroup>
     <ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
+      <Component Id="U2DesktopShortcuts" Guid="*">
+        <Shortcut Id="U2SuiteExeStartMenu"
+                  Directory="ProgramMenuFolder" Name="U2.Logger"
+                  WorkingDirectory='INSTALLFOLDER'
+                  Target='[INSTALLFOLDER]U2.Suite.exe'
+                  Icon="U2.Suite.exe" IconIndex="0" />
+        <Shortcut Id="U2SuiteExeDesktopLink"
+                  Directory="DesktopFolder" Name="U2.Suite"
+                  WorkingDirectory='INSTALLFOLDER'
+                  Target='[INSTALLFOLDER]U2.Suite.exe'
+                  Icon="U2.Suite.exe" IconIndex="0"/>
+
+        <Shortcut Id="U2QslManagerExeStartMenu"
+                  Directory="ProgramMenuFolder" Name="U2.QslManager"
+                  WorkingDirectory='INSTALLFOLDER'
+                  Target='[INSTALLFOLDER]U2.QslManager.exe'
+                  Icon="U2.QslManager.exe" IconIndex="0" />
+        <Shortcut Id="U2QslManagerExeDesktopLink"
+                  Directory="DesktopFolder" Name="U2.QslManager"
+                  WorkingDirectory='INSTALLFOLDER'
+                  Target='[INSTALLFOLDER]U2.QslManager.exe'
+                  Icon="U2.QslManager.exe" IconIndex="0"/>
+
+        <Shortcut Id="U2LoggerExeStartMenu"
+                  Directory="ProgramMenuFolder" Name="U2.Logger"
+                  WorkingDirectory='INSTALLFOLDER'
+                  Target='[INSTALLFOLDER]U2.Logger.exe'
+                  Icon="U2.Logger.exe" IconIndex="0" />
+        <Shortcut Id="U2LoggerExeDesktopLink"
+                  Directory="DesktopFolder" Name="U2.Logger"
+                  WorkingDirectory='INSTALLFOLDER'
+                  Target='[INSTALLFOLDER]U2.Logger.exe'
+                  Icon="U2.Logger.exe" IconIndex="0"/>
+
+        <RegistryValue Root="HKCU"
+                       Key="Software\U2.Suite\U2.Suite"
+                       Name="installed"
+                      Type="integer"
+                      Value="1"
+                      KeyPath="yes" />
+      </Component>
       <Component Id="Icons" Guid="AD867F56-34D1-4C45-B031-8BD627487465">
         <File Id="LoggerIcon" Source="$(var.BinariesDirectory)logger.ico"></File>
       </Component>
@@ -76,14 +128,9 @@
         <File Source="$(var.BinariesDirectory)MessageBox.Avalonia.dll" />
         <File Source="$(var.BinariesDirectory)TextMateSharp.dll" />
       </Component>
-      <Component Id="DesignFiles" Guid="976CE465-C6CC-46EC-AEBD-29FDF65DADD5">
-        <File Source="$(var.BinariesDirectory)Designs\HorizontalSampleDesign.json" />
-        <File Source="$(var.BinariesDirectory)Designs\HorizontalSampleDesign2.json" />
-        <File Source="$(var.BinariesDirectory)Designs\VerticalSampleDesign.json" />
-      </Component>
       <Component Id="log4net" Guid="C09A448F-D78E-42F2-A686-58991597A7EA">
         <File Source="$(var.BinariesDirectory)log4net.dll" />
-        <File Source="$(var.BinariesDirectory)log4net.config" />
+        <File Source="$(var.BinariesDirectory)log4net.logger.config" />
       </Component>
       <Component Id="SqliteBinaries" Guid="271F5837-651E-4196-96DC-D004068E276F">
         <File Source="$(var.BinariesDirectory)e_sqlite3.dll" />
@@ -360,7 +407,6 @@
         <File Source="$(var.BinariesDirectory)GalaSoft.MvvmLight.dll" />
         <File Source="$(var.BinariesDirectory)GalaSoft.MvvmLight.Extras.dll" />
         <File Source="$(var.BinariesDirectory)GalaSoft.MvvmLight.Platform.dll" />
-        <File Source="$(var.BinariesDirectory)Gherkin.dll" />
         <File Source="$(var.BinariesDirectory)HarfBuzzSharp.dll" />
         <File Source="$(var.BinariesDirectory)hostfxr.dll" />
         <File Source="$(var.BinariesDirectory)hostpolicy.dll" />
@@ -369,96 +415,44 @@
         <File Source="$(var.BinariesDirectory)libHarfBuzzSharp.dll" />
         <File Source="$(var.BinariesDirectory)libSkiaSharp.dll" />
         <File Source="$(var.BinariesDirectory)Newtonsoft.Json.dll" />
-        <File Source="$(var.BinariesDirectory)NuGet.Frameworks.dll" />
         <File Source="$(var.BinariesDirectory)onigwrap.dll" />
-        <File Source="$(var.BinariesDirectory)PropertyChanged.dll" />
         <File Source="$(var.BinariesDirectory)ReactiveUI.dll" />
         <File Source="$(var.BinariesDirectory)SixLabors.ImageSharp.dll" />
         <File Source="$(var.BinariesDirectory)SkiaSharp.dll" />
         <File Source="$(var.BinariesDirectory)sni.dll" />
         <File Source="$(var.BinariesDirectory)Splat.dll" />
-        <File Source="$(var.BinariesDirectory)testhost.dll" />
         <File Source="$(var.BinariesDirectory)Tmds.DBus.dll" />
         <File Source="$(var.BinariesDirectory)ucrtbase.dll" />
         <File Source="$(var.BinariesDirectory)WindowsBase.dll" />
+        <File Source="$(var.BinariesDirectory)SOS_README.md" />
       </Component>
       <Component Id="ConfigFiles" Guid="33D04C4C-9967-4370-B97E-A0B9DBD70432">
         <File Source="$(var.BinariesDirectory)AvaloniaEdit.Editor.deps.json" />
-        <File Source="$(var.BinariesDirectory)AvaloniaEdit.Editor.runtimeconfig.dev.json" />
         <File Source="$(var.BinariesDirectory)AvaloniaEdit.Editor.runtimeconfig.json" />
         <File Source="$(var.BinariesDirectory)AvaloniaEdit.TextMate.deps.json" />
         <File Source="$(var.BinariesDirectory)U2.CommonControls.deps.json" />
         <File Source="$(var.BinariesDirectory)U2.Contracts.deps.json" />
         <File Source="$(var.BinariesDirectory)U2.Core.deps.json" />
         <File Source="$(var.BinariesDirectory)U2.Library.deps.json" />
-        <File Source="$(var.BinariesDirectory)U2.Library.runtimeconfig.dev.json" />
         <File Source="$(var.BinariesDirectory)U2.Library.runtimeconfig.json" />
         <File Source="$(var.BinariesDirectory)U2.Logger.deps.json" />
-        <File Source="$(var.BinariesDirectory)U2.Logger.runtimeconfig.dev.json" />
         <File Source="$(var.BinariesDirectory)U2.Logger.runtimeconfig.json" />
+        <File Source="$(var.BinariesDirectory)U2.Logger.runtimeconfig.dev.json" />
         <File Source="$(var.BinariesDirectory)U2.QslManager.deps.json" />
-        <File Source="$(var.BinariesDirectory)U2.QslManager.runtimeconfig.dev.json" />
         <File Source="$(var.BinariesDirectory)U2.QslManager.runtimeconfig.json" />
+        <File Source="$(var.BinariesDirectory)U2.QslManager.runtimeconfig.dev.json" />
         <File Source="$(var.BinariesDirectory)U2.Resources.deps.json" />
         <File Source="$(var.BinariesDirectory)U2.Suite.deps.json" />
-        <File Source="$(var.BinariesDirectory)U2.Suite.runtimeconfig.dev.json" />
         <File Source="$(var.BinariesDirectory)U2.Suite.runtimeconfig.json" />
       </Component>
       <Component Id="U2Binaries" Guid="E7BCC4F4-8B54-4A17-9A31-FEABBC7B4495">
-        <File Id="U2Suite" Source="$(var.BinariesDirectory)U2.Suite.exe" KeyPath='yes'>
-          <Shortcut Id="U2SuiteExeStartMenu"
-                    Directory="ProgramMenuFolder"
-                    Name="U2 Suite"
-                    WorkingDirectory='INSTALLDIR'
-                    Icon="U2.Suite.exe"
-                    IconIndex="0"
-                    Advertise="yes" />
-          <Shortcut Id="U2SuiteExeDesktopLink"
-                    Directory="DesktopFolder"
-                    Name="U2 Suite"
-                    WorkingDirectory='INSTALLDIR'
-                    Icon="U2.Suite.exe"
-                    IconIndex="0"
-                    Advertise="yes" />
-        </File>
-        <File Id="U2LoggerExe" Source="$(var.BinariesDirectory)U2.Logger.exe">
-          <Shortcut Id="U2LoggerExeStartMenu"
-                    Directory="ProgramMenuFolder"
-                    Name="U2.Logger"
-                    WorkingDirectory='INSTALLDIR'
-                    Icon="U2.Logger.exe"
-                    IconIndex="0"
-                    Advertise="yes" >
-          </Shortcut>
-          <Shortcut Id="U2LoggerExeDesktopLink"
-                    Directory="DesktopFolder"
-                    Name="U2.Logger"
-                    WorkingDirectory='INSTALLDIR'
-                    Icon="U2.Logger.exe"
-                    IconIndex="0"
-                    Advertise="yes" />
-        </File>
+        <File Id="U2Suite" Source="$(var.BinariesDirectory)U2.Suite.exe" KeyPath='yes'/>
+        <File Id="U2LoggerExe" Source="$(var.BinariesDirectory)U2.Logger.exe" />
         <File Source="$(var.BinariesDirectory)U2.CommonControls.dll" />
         <File Source="$(var.BinariesDirectory)U2.Contracts.dll" />
         <File Source="$(var.BinariesDirectory)U2.Core.dll" />
         <File Source="$(var.BinariesDirectory)U2.Logger.dll" />
-        <File Source="$(var.BinariesDirectory)U2.QslManager.exe">
-          <Shortcut Id="U2QslManagerExeStartMenu"
-                    Directory="ProgramMenuFolder"
-                    Name="U2.QslManager"
-                    WorkingDirectory='INSTALLDIR'
-                    Icon="U2.QslManager.exe"
-                    IconIndex="0"
-                    Advertise="yes" >
-          </Shortcut>
-          <Shortcut Id="U2QslManagerExeDesktopLink"
-                    Directory="DesktopFolder"
-                    Name="U2.QslManager"
-                    WorkingDirectory="INSTALLDIR"
-                    Icon="U2.QslManager.exe"
-                    IconIndex="0"
-                    Advertise="yes" />
-        </File>
+        <File Source="$(var.BinariesDirectory)U2.QslManager.exe"/>
         <File Source="$(var.BinariesDirectory)U2.QslManager.dll" />
         <File Source="$(var.BinariesDirectory)U2.Resources.dll" />
         <File Source="$(var.BinariesDirectory)U2.Suite.dll" />
