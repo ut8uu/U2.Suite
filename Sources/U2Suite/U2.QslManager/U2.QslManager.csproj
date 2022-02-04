@@ -15,6 +15,7 @@
     <Company>HamStudio</Company>
     <Authors>Sergey Usmanov, UT8UU</Authors>
     <ApplicationIcon>qslmanager.ico</ApplicationIcon>
+    <Version>1.4.1</Version>
   </PropertyGroup>
   <ItemGroup>
     <AvaloniaResource Include="Assets\**" />

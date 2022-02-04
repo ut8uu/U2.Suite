@@ -4,6 +4,14 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <Nullable>enable</Nullable>
     <ApplicationIcon>logger.ico</ApplicationIcon>
+    <Company>HamStudio</Company>
+    <Version>1.0.1</Version>
+    <AssemblyVersion>1.0.1.20204</AssemblyVersion>
+    <FileVersion>1.0.1.20204</FileVersion>
+    <Authors>Sergey Usmanov</Authors>
+    <PackageId>U2.Logger</PackageId>
+    <Product>U2.Suite</Product>
+    <Copyright>© 2022 Sergey Usmanov, UT8UU</Copyright>
   </PropertyGroup>
   <ItemGroup>
     <AvaloniaResource Include="Assets\**" />

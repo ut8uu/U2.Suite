@@ -4,14 +4,19 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <RuntimeIdentifiers>win-x64;osx-x64;linux-x64</RuntimeIdentifiers>
     <Nullable>enable</Nullable>
-    <AssemblyVersion>1.2.1.20105</AssemblyVersion>
-    <FileVersion>1.2.1.20105</FileVersion>
+    <AssemblyVersion>1.3.1.20204</AssemblyVersion>
+    <FileVersion>1.3.1.20204</FileVersion>
     <RepositoryUrl>https://github.com/ut8uu/U2.Suite</RepositoryUrl>
     <RepositoryType>github</RepositoryType>
     <PackageProjectUrl>https://github.com/ut8uu/U2.Suite</PackageProjectUrl>
     <Company>HamStudio</Company>
     <Copyright>© 2022 Sergey Usmanov, UT8UU</Copyright>
     <ApplicationIcon>u2suite.ico</ApplicationIcon>
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>u2suite.snk</AssemblyOriginatorKeyFile>
+    <Version>1.3.1</Version>
+    <Authors>Sergey Usmanov</Authors>
   </PropertyGroup>
   <ItemGroup>
     <AvaloniaResource Include="Assets\**" />

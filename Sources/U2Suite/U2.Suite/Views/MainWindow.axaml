@@ -7,7 +7,7 @@
         x:Class="U2.Suite.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
         Title="U2.Suite"
-        Height="200" Width="520s"
+        Height="200" Width="520"
         d:DesignWidth="520" d:DesignHeight="200"
         Foreground="{DynamicResource ThemeForegroundBrush}"
         >
