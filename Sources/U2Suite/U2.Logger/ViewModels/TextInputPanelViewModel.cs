@@ -46,16 +46,16 @@ namespace U2.Logger
             }
         }
 
-        public string CallsignInputTitle { get; set; } = "Callsign";
-        public string RstSentInputTitle { get; set; } = "Rst Sent";
-        public string RstRcvdInputTitle { get; set; } = "Rst Received";
-        public string OperatorInputTitle { get; set; } = "Operator";
-        public string FrequencyInputTitle { get; set; } = "Freq (MHz)";
-        public string ModeInputTitle { get; set; } = "Mode";
-        public string BandInputTitle { get; set; } = "Band";
-        public string CommentsInputTitle { get; set; } = "Comments";
-        public string TimestampInputTitle { get; set; } = "Timestamp";
-        public string RealtimeTitle { get; set; } = "realtime";
+        public string CallsignInputTitle { get; set; } = Resources.Callsign;
+        public string RstSentInputTitle { get; set; } = Resources.RstSent;
+        public string RstRcvdInputTitle { get; set; } = Resources.RstReceived;
+        public string OperatorInputTitle { get; set; } = Resources.Operator;
+        public string FrequencyInputTitle { get; set; } = Resources.FreqMhz;
+        public string ModeInputTitle { get; set; } = Resources.Mode;
+        public string BandInputTitle { get; set; } = Resources.Band;
+        public string CommentsInputTitle { get; set; } = Resources.Comments;
+        public string TimestampInputTitle { get; set; } = Resources.Timestamp;
+        public string RealtimeTitle { get; set; } = Resources.realtime;
 
         public Window Owner { get; set; } = default!;
         public string Callsign { get; set; } = default!;

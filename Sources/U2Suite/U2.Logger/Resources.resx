@@ -129,6 +129,9 @@
   <data name="Comments" xml:space="preserve">
     <value>Comments</value>
   </data>
+  <data name="FreqMhz" xml:space="preserve">
+    <value>Freq (MHz)</value>
+  </data>
   <data name="Frequency" xml:space="preserve">
     <value>Frequency</value>
   </data>
@@ -143,6 +146,9 @@
   </data>
   <data name="Operator" xml:space="preserve">
     <value>Operator</value>
+  </data>
+  <data name="realtime" xml:space="preserve">
+    <value>real-time</value>
   </data>
   <data name="RstReceived" xml:space="preserve">
     <value>RST Received</value>

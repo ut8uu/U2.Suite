@@ -10,8 +10,8 @@ namespace U2.Logger
 {
     public sealed class FuncButtonsPanelViewModel
     {
-        public string WipeButtonTitle { get; set; } = "Wipe";
-        public string SaveButtonTitle { get; set; } = "Save";
+        public string WipeButtonTitle { get; set; } = Resources.WipeButtonTitle;
+        public string SaveButtonTitle { get; set; } = Resources.SaveButtonTitle;
 
         public Window Owner { get; set; } = default!;
 

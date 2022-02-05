@@ -88,11 +88,47 @@ namespace U2.Logger {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Close.
+        /// </summary>
+        internal static string CloseButtonTitle {
+            get {
+                return ResourceManager.GetString("CloseButtonTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Comments.
         /// </summary>
         internal static string Comments {
             get {
                 return ResourceManager.GetString("Comments", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete.
+        /// </summary>
+        internal static string DeleteButtonTitle {
+            get {
+                return ResourceManager.GetString("DeleteButtonTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit.
+        /// </summary>
+        internal static string EditButtonTitle {
+            get {
+                return ResourceManager.GetString("EditButtonTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Freq (MHz).
+        /// </summary>
+        internal static string FreqMhz {
+            get {
+                return ResourceManager.GetString("FreqMhz", resourceCulture);
             }
         }
         
@@ -142,6 +178,24 @@ namespace U2.Logger {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Rcv.
+        /// </summary>
+        internal static string Rcv {
+            get {
+                return ResourceManager.GetString("Rcv", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to real-time.
+        /// </summary>
+        internal static string realtime {
+            get {
+                return ResourceManager.GetString("realtime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to RST Received.
         /// </summary>
         internal static string RstReceived {
@@ -160,6 +214,24 @@ namespace U2.Logger {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        internal static string SaveButtonTitle {
+            get {
+                return ResourceManager.GetString("SaveButtonTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Snt.
+        /// </summary>
+        internal static string Snt {
+            get {
+                return ResourceManager.GetString("Snt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Timestamp.
         /// </summary>
         internal static string Timestamp {
@@ -174,6 +246,15 @@ namespace U2.Logger {
         internal static string TimestampNotRecognized {
             get {
                 return ResourceManager.GetString("TimestampNotRecognized", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wipe.
+        /// </summary>
+        internal static string WipeButtonTitle {
+            get {
+                return ResourceManager.GetString("WipeButtonTitle", resourceCulture);
             }
         }
     }

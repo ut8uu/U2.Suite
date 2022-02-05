@@ -152,6 +152,7 @@ namespace U2.Core
         /// <param name="modeName">A name of the current mode</param>
         /// <param name="rst">An RST to be fixed.</param>
         /// <returns>Returns the updated or original RST.</returns>
+        #warning TODO Implement this
         public static string FixRst(string modeName, string rst)
         {
             if (modeName == RadioMode.CW)

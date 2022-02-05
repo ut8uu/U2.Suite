@@ -25,18 +25,18 @@ namespace U2.Logger
 
         public Window Owner { get; set; }
 
-        public string CloseButtonText { get; set; } = "Close";
-        public string EditButtonText { get; set; } = "Edit";
-        public string DeleteButtonText { get; set; } = "Delete";
+        public string CloseButtonText { get; set; } = Resources.CloseButtonTitle;
+        public string EditButtonText { get; set; } = Resources.EditButtonTitle;
+        public string DeleteButtonText { get; set; } = Resources.DeleteButtonTitle;
 
-        public string CallsignColumnHeader { get; set; } = "Callsign";
-        public string TimestampColumnHeader { get; set; } = "Timestamp";
-        public string FrequencyColumnHeader { get; set; } = "Freq (MHz)";
-        public string ModeColumnHeader { get; set; } = "Mode";
-        public string RstSentColumnHeader { get; set; } = "Snt";
-        public string RstReceivedColumnHeader { get; set; } = "Rcv";
-        public string NameColumnHeader { get; set; } = "Name";
-        public string CommentsColumnHeader { get; set; } = "Comments";
+        public string CallsignColumnHeader { get; set; } = Resources.Callsign;
+        public string TimestampColumnHeader { get; set; } = Resources.Timestamp;
+        public string FrequencyColumnHeader { get; set; } = Resources.FreqMhz;
+        public string ModeColumnHeader { get; set; } = Resources.Mode;
+        public string RstSentColumnHeader { get; set; } = Resources.Snt;
+        public string RstReceivedColumnHeader { get; set; } = Resources.Rcv;
+        public string NameColumnHeader { get; set; } = Resources.Operator;
+        public string CommentsColumnHeader { get; set; } = Resources.Comments;
 
         public ObservableCollection<LogRecordDbo> FullList { get; set; } = default!;
         public ObservableCollection<LogRecordDbo> FilteredList { get; set; } = default!;
