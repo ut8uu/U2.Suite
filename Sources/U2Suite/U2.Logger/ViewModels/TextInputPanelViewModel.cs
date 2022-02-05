@@ -20,6 +20,15 @@ namespace U2.Logger
         private Timer _timer;
         ILog _logger = LogManager.GetLogger("Logger");
 
+        public const string CallsignTextBox = nameof(CallsignTextBox);
+        public const string RstSentTextBox = nameof(RstSentTextBox);
+        public const string RstRcvdTextBox = nameof(RstRcvdTextBox);
+        public const string OperatorTextBox = nameof(OperatorTextBox);
+        public const string CommentsTextBox = nameof(CommentsTextBox);
+        public const string TimestampTextBox = nameof(TimestampTextBox);
+        public const string ModeTextBox = nameof(ModeTextBox);
+        public const string FrequencyTextBox = nameof(FrequencyTextBox);
+
         public TextInputPanelViewModel()
         {
             Messenger.Default.Register<ExecuteCommandMessage>(this,
@@ -36,15 +45,6 @@ namespace U2.Logger
                 Timestamp = DateTime.UtcNow;
             }
         }
-
-        public const string CallsignTextBox = nameof(CallsignTextBox);
-        public const string RstSentTextBox = nameof(RstSentTextBox);
-        public const string RstRcvdTextBox = nameof(RstRcvdTextBox);
-        public const string OperatorTextBox = nameof(OperatorTextBox);
-        public const string CommentsTextBox = nameof(CommentsTextBox);
-        public const string TimestampTextBox = nameof(TimestampTextBox);
-        public const string ModeTextBox = nameof(ModeTextBox);
-        public const string FrequencyTextBox = nameof(FrequencyTextBox);
 
         public string CallsignInputTitle { get; set; } = "Callsign";
         public string RstSentInputTitle { get; set; } = "Rst Sent";
@@ -94,9 +94,8 @@ namespace U2.Logger
                     _logger.Debug("Accepted SaveQso(null) command.");
                     // empty parameters are being sent when this is 
                     // an initial command
-                    var frequency = 0.0;
                     if (!double.TryParse(this.Frequency, NumberStyles.Number,
-                        CultureInfo.DefaultThreadCurrentUICulture, out frequency))
+                        CultureInfo.DefaultThreadCurrentUICulture, out double frequency))
                     {
                         if (!double.TryParse(Frequency, NumberStyles.Number, CultureInfo.InvariantCulture,
                             out frequency))
@@ -120,7 +119,6 @@ namespace U2.Logger
                     };
                     var saveQsoMessage = new ExecuteCommandMessage(CommandToExecute.SaveQso, formData);
                     Messenger.Default.Send(saveQsoMessage);
-                    //_logger.Debug($"Save message sent. Content: {formData.ToString()}.");
                 }
             }
         }
@@ -130,8 +128,8 @@ namespace U2.Logger
             _internalChange = true;
 
             Callsign = string.Empty;
-            RstSent = string.Empty;
-            RstRcvd = string.Empty;
+            RstSent = ConversionHelper.ModeToDefaultReport(Mode);
+            RstRcvd = ConversionHelper.ModeToDefaultReport(Mode);
             Operator = string.Empty;
             Comments = string.Empty;
             Timestamp = DateTime.UtcNow;
