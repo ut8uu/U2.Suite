@@ -33,4 +33,19 @@
     <ProjectReference Include="..\U2.Contracts\U2.Contracts.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="U2.Core.Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>U2.Core.Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="U2.Core.Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>U2.Core.Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
 </Project>

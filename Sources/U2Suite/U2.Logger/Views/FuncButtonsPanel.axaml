@@ -13,8 +13,8 @@
   <Border Padding="5 0">
     <Border Classes="Card2">
       <StackPanel Orientation="Horizontal">
-        <Button Margin="3 1" Command="{Binding Wipe}" Content="{Binding WipeButtonTitle}"></Button>
-        <Button IsDefault="True" Margin="3 1" Command="{Binding Save}" Content="{Binding SaveButtonTitle}"></Button>
+        <Button Name="WipeButton" Margin="3 1" Command="{Binding Wipe}" Content="{Binding WipeButtonTitle}"></Button>
+        <Button Name="SaveButton" IsDefault="True" Margin="3 1" Command="{Binding Save}" Content="{Binding SaveButtonTitle}"></Button>
       </StackPanel>
     </Border>
   </Border>
