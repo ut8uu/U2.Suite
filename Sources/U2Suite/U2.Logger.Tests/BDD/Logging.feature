@@ -5,18 +5,18 @@
 Scenario: Wipe button clicked
 	Given All fields are not empty
 	And Mode is 'CW'
-	And Frequency is 14044.0
+	And Frequency is 14.044
 	When User clicks the 'Wipe' button
 	Then Field 'Callsign' contains ''
-	And Field 'Rst Sent' contains ''
-	And Field 'Rst Received' contains ''
+	And Field 'Rst Sent' contains '599'
+	And Field 'Rst Received' contains '599'
 	And Field 'Operator' contains ''
 	And Field 'Comments' contains ''
 
 Scenario: Save button clicked when callsign is empty
 	Given All fields are not empty
 	And Mode is 'CW'
-	And Frequency is 14044.0
+	And Frequency is 14.044
 	And Field 'Callsign' contains ''
 	When User clicks the 'Save' button
 	Then Field 'Rst Sent' is not empty
