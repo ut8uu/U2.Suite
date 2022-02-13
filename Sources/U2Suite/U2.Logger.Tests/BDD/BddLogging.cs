@@ -25,6 +25,8 @@ namespace U2.Logger.Tests
         const string WipeButton = "Wipe";
         const string SaveButton = "Save";
 
+        readonly List<Exception> _caughtExceptions = new List<Exception>();
+
         public BddLogging(ScenarioContext scenarioContext)
         {
             _scenarioContext = scenarioContext;
@@ -35,6 +37,7 @@ namespace U2.Logger.Tests
         {
             _textInputVM = new TextInputPanelViewModel();
             _loggerVM = new LoggerMainWindowViewModel();
+            _caughtExceptions.Clear();
         }
 
         private static ApplicationTextBox TextBoxFromString(string fieldName)
@@ -170,7 +173,14 @@ namespace U2.Logger.Tests
         [Given(@"Frequency is (.*)")]
         public void GivenFrequencyIs(double frequency)
         {
-            _textInputVM.Frequency = frequency.ToString(CultureInfo.DefaultThreadCurrentUICulture);
+            try
+            {
+                _textInputVM.Frequency = frequency.ToString(CultureInfo.DefaultThreadCurrentUICulture);
+            }
+            catch (Avalonia.Data.DataValidationException ex)
+            {
+                _caughtExceptions.Add(ex);
+            }
         }
 
 
@@ -207,6 +217,13 @@ namespace U2.Logger.Tests
         public void ThenLogContainsRecord(int expectedNumberOfRecords)
         {
             Assert.AreEqual(expectedNumberOfRecords, _loggerVM._dbContext.Records.Count());
+        }
+
+        [Then(@"Exception with text '(.*)' should be thrown")]
+        public void ThenExceptionWithTextShouldBeThrown(string msg)
+        {
+            Assert.IsTrue(_caughtExceptions.Any(ex => ex.Message.Contains(msg, StringComparison.InvariantCultureIgnoreCase)));
+            _caughtExceptions.Clear();
         }
 
     }

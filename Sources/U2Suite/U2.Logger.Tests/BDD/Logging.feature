@@ -31,6 +31,9 @@ Scenario: Save button clicked on correct data
 	And Log is empty
 	When User clicks the 'Save' button
 	Then All fields are empty
-	And Log contains 1 record
+	And Log contains 1 record 
 
-
+Scenario: Can handle bad frequency
+	Given All fields are not empty
+	And Frequency is 8
+	Then Exception with text 'Frequency not recognized as a valid one.' should be thrown
