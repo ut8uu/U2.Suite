@@ -16,14 +16,14 @@ namespace U2.Logger.Tests
         private TextInputPanelViewModel _textInputVM;
         private LoggerMainWindowViewModel _loggerVM;
 
-        const string CallsignField = "Callsign";
-        const string RstSentField = "Rst Sent";
-        const string RstReceivedField = "Rst Received";
-        const string OperatorField = "Operator";
-        const string CommentsField = "Comments";
+        readonly static string CallsignField = Resources.Callsign;
+        readonly static string RstSentField = Resources.RstSent;
+        readonly static string RstReceivedField = Resources.RstReceived;
+        readonly static string OperatorField = Resources.Operator;
+        readonly static string CommentsField = Resources.Comments;
 
-        const string WipeButton = "Wipe";
-        const string SaveButton = "Save";
+        readonly static string WipeButton = Resources.WipeButtonTitle;
+        readonly static string SaveButton = Resources.SaveButtonTitle;
 
         readonly List<Exception> _caughtExceptions = new List<Exception>();
 
