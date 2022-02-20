@@ -21,6 +21,7 @@ namespace U2.Logger.Tests
         readonly static string RstReceivedField = Resources.RstReceived;
         readonly static string OperatorField = Resources.Operator;
         readonly static string CommentsField = Resources.Comments;
+        readonly static string BandField = Resources.Band;
 
         readonly static string WipeButton = Resources.WipeButtonTitle;
         readonly static string SaveButton = Resources.SaveButtonTitle;
@@ -130,31 +131,35 @@ namespace U2.Logger.Tests
             {
                 return _textInputVM.Comments;
             }
+            if (fieldName.Equals(BandField, StringComparison.InvariantCultureIgnoreCase))
+            {
+                return _textInputVM.Band;
+            }
 
             throw new ArgumentException($"Unknown field name '{fieldName}'");
         }
 
-        [Given(@"Field '(.*)' contains '(.*)'")]
+        [Given("Field '(.*)' contains '(.*)'")]
         public void GivenFieldContains(string fieldName, string fieldValue)
         {
             SetFieldValue(fieldName, fieldValue);            
         }
 
-        [When(@"User clicks the '(.*)' button")]
+        [When("User clicks the '(.*)' button")]
         public void WhenUserClicksTheButton(string buttonName)
         {
             var button = ButtonFromString(buttonName);
             Messenger.Default.Send(new ButtonClickedMessage(this, button));
         }
 
-        [Then(@"Field '(.*)' contains '(.*)'")]
+        [Then("Field '(.*)' contains '(.*)'")]
         public void ThenFieldContains(string fieldName, string expectedFieldValue)
         {
             var value = GetFieldValue(fieldName);
             Assert.AreEqual(expectedFieldValue, value);
         }
 
-        [Given(@"All fields are not empty")]
+        [Given("All fields are not empty")]
         public void GivenAllFieldsAreNotEmpty()
         {
             SetFieldValue(CallsignField, "UT8UU");
@@ -164,13 +169,13 @@ namespace U2.Logger.Tests
             SetFieldValue(CommentsField, "good signal");
         }
 
-        [Given(@"Mode is '(.*)'")]
+        [Given("Mode is '(.*)'")]
         public void GivenModeIs(string mode)
         {
             _textInputVM.Mode = mode;
         }
 
-        [Given(@"Frequency is (.*)")]
+        [Given("Frequency is (.*)")]
         public void GivenFrequencyIs(double frequency)
         {
             try
@@ -184,14 +189,14 @@ namespace U2.Logger.Tests
         }
 
 
-        [Then(@"Field '(.*)' is not empty")]
+        [Then("Field '(.*)' is not empty")]
         public void ThenFieldIsNotEmpty(string fieldName)
         {
             var fieldValue = GetFieldValue(fieldName);
             Assert.IsFalse(string.IsNullOrEmpty(fieldValue), $"Field {fieldName} is empty.");
         }
 
-        [Given(@"Log is empty")]
+        [Given("Log is empty")]
         public void GivenLogIsEmpty()
         {
             var db = _loggerVM._dbContext;
@@ -205,7 +210,7 @@ namespace U2.Logger.Tests
             Assert.AreEqual(0, db.Records.Count());
         }
 
-        [Then(@"All fields are empty")]
+        [Then("All fields are empty")]
         public void ThenAllFieldsAreEmpty()
         {
             Assert.IsTrue(string.IsNullOrEmpty(GetFieldValue(CallsignField)));
@@ -213,18 +218,23 @@ namespace U2.Logger.Tests
             Assert.IsTrue(string.IsNullOrEmpty(GetFieldValue(CommentsField)));
         }
 
-        [Then(@"Log contains (.*) record")]
+        [Then("Log contains (.*) records")]
         public void ThenLogContainsRecord(int expectedNumberOfRecords)
         {
             Assert.AreEqual(expectedNumberOfRecords, _loggerVM._dbContext.Records.Count());
         }
 
-        [Then(@"Exception with text '(.*)' should be thrown")]
-        public void ThenExceptionWithTextShouldBeThrown(string msg)
+        [Then("Exception with text '(.*)' was thrown")]
+        public void ThenExceptionWithTextWasThrown(string msg)
         {
             Assert.IsTrue(_caughtExceptions.Any(ex => ex.Message.Contains(msg, StringComparison.InvariantCultureIgnoreCase)));
             _caughtExceptions.Clear();
         }
 
+        [Then("Band is '(.*)'")]
+        public void ThenBandIs(string bandName)
+        {
+            Assert.AreEqual(bandName, GetFieldValue(BandField));
+        }
     }
 }
