@@ -156,6 +156,9 @@
   <data name="LogName" xml:space="preserve">
     <value>Log name</value>
   </data>
+  <data name="LogNameIsInUseFmt" xml:space="preserve">
+    <value>Log name {0} is already in use. Please use another one.</value>
+  </data>
   <data name="LogNameToolTip" xml:space="preserve">
     <value>A short yet descriptive name of the log.</value>
   </data>

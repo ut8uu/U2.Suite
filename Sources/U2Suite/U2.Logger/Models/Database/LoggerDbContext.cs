@@ -13,15 +13,15 @@ namespace U2.Logger
 {
     public sealed class LoggerDbContext : DbContext
     {
-        private const string DataBaseName = "logger.sqlite";
+        private string _dataBaseName = "logger.sqlite";
         private readonly string _databasePath;
 
         public LoggerDbContext()
         {
-            var appDataFolder = FileSystemHelper.GetDatabaseFolderPath();
-            var dbDirectory = Path.Combine(appDataFolder, "Logger");
+            var dbDirectory = FileSystemHelper.GetDatabaseFolderPath(U2.Resources.ApplicationNames.LoggerOsx);
             Directory.CreateDirectory(dbDirectory);
-            _databasePath = Path.Combine(dbDirectory, DataBaseName);
+            _dataBaseName = $"{AppSettings.Default.LogName}.sqlite";
+            _databasePath = Path.Combine(dbDirectory, _dataBaseName);
         }
 
         public DbSet<LogRecordDbo> Records { get; set; }

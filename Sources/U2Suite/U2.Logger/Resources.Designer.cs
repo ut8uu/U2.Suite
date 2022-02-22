@@ -178,6 +178,15 @@ namespace U2.Logger {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Log name {0} is already in use. Please use another one..
+        /// </summary>
+        internal static string LogNameIsInUseFmt {
+            get {
+                return ResourceManager.GetString("LogNameIsInUseFmt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to A short yet descriptive name of the log..
         /// </summary>
         internal static string LogNameToolTip {
