@@ -33,12 +33,13 @@
 
       <Menu DockPanel.Dock="Top">
         <MenuItem Header="File">
-          <MenuItem Header="Open" Command="{Binding Open}" />
-          <MenuItem Header="Save As" Command="{Binding Save}" />
+          <MenuItem Header="New" Command="{Binding NewLog}" HotKey="Ctrl+N" />
+          <MenuItem Header="Open" Command="{Binding OpenLog}" HotKey="Ctrl+O" />
+          <MenuItem Header="Save" Command="{Binding SaveLog}" HotKey="Ctrl+S" />
         </MenuItem>
         <MenuItem Header="View">
-          <MenuItem Header="Log" Command="{Binding ViewLog}"></MenuItem>
-          <MenuItem Header="Settings" Command="{Binding ViewSettings}"></MenuItem>
+          <MenuItem Header="Log" Command="{Binding ViewLog}" HotKey="Ctrl+L"></MenuItem>
+          <MenuItem Header="Settings" Command="{Binding ViewSettings}" HotKey="F9"></MenuItem>
         </MenuItem>
       </Menu>
 

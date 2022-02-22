@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using Avalonia.Controls;
 using GalaSoft.MvvmLight.Messaging;
 using log4net;
@@ -27,7 +28,6 @@ namespace U2.Logger
             Messenger.Default.Register<ExecuteCommandMessage>(this, 
                 AcceptExecuteCommandMessage);
 
-
             _dbContext = new LoggerDbContext();
             try
             {
@@ -35,10 +35,7 @@ namespace U2.Logger
             }
             catch (Exception ex)
             { 
-                if (ex != null)
-                {
-
-                }
+                _logger.Error(ex);
             }
         }
 
@@ -106,6 +103,12 @@ namespace U2.Logger
                     Messenger.Default.Send(new ExecuteCommandMessage(CommandToExecute.RefreshLog));
                 }
             }
+        }
+
+        public async Task NewLog()
+        {
+            var form = new LogInfoWindow();
+            await form.ShowDialog(Owner);
         }
     }
 }

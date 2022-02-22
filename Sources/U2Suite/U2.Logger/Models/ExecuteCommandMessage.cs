@@ -7,6 +7,8 @@
         SaveQso,
         DeleteQso,
         RefreshLog,
+        CreateLog,
+        OpenLog,
     }
 
     public sealed class ExecuteCommandMessage

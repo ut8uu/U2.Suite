@@ -135,6 +135,12 @@
   <data name="DeleteButtonTitle" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="Description" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="DescriptionToolTip" xml:space="preserve">
+    <value>A more or less informative description of the log.</value>
+  </data>
   <data name="EditButtonTitle" xml:space="preserve">
     <value>Edit</value>
   </data>
@@ -146,6 +152,12 @@
   </data>
   <data name="FrequencyNotResolved" xml:space="preserve">
     <value>Frequency not recognized as a valid one.</value>
+  </data>
+  <data name="LogName" xml:space="preserve">
+    <value>Log name</value>
+  </data>
+  <data name="LogNameToolTip" xml:space="preserve">
+    <value>A short yet descriptive name of the log.</value>
   </data>
   <data name="Mode" xml:space="preserve">
     <value>Mode</value>
