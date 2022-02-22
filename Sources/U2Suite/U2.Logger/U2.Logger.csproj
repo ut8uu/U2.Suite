@@ -51,10 +51,10 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Update="Settings.Designer.cs">
+    <Compile Update="AppSettings.Designer.cs">
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
+      <DependentUpon>AppSettings.settings</DependentUpon>
     </Compile>
     <Compile Update="Views\LoggerMainWindow.axaml.cs">
       <DependentUpon>LoggerMainWindow.axaml</DependentUpon>
@@ -81,9 +81,9 @@
     <None Update="logger.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Settings.settings">
+    <None Update="AppSettings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+      <LastGenOutput>AppSettings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
 </Project>

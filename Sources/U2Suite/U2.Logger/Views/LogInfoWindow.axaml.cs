@@ -36,6 +36,9 @@ namespace U2.Logger
             };
             var message = new ExecuteCommandMessage(CommandToExecute.CreateLog, logInfo);
             Messenger.Default.Send(message);
+
+            AppSettings.Default.LogName = _viewModel.LogName;
+            AppSettings.Default.Save();
             Close();
         }
 
