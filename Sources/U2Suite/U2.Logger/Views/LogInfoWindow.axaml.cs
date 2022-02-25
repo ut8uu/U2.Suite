@@ -17,7 +17,7 @@ namespace U2.Logger
 #if DEBUG
             this.AttachDevTools();
 #endif
-            _viewModel = new LogInfoWindowViewModel();
+            _viewModel = new LogInfoWindowViewModel(CommandToExecute.CreateLog);
             _viewModel.Owner = this;
             DataContext = _viewModel;
         }
@@ -25,26 +25,6 @@ namespace U2.Logger
         private void InitializeComponent()
         {
             AvaloniaXamlLoader.Load(this);
-        }
-
-        public void CreateNewLog()
-        {
-            var logInfo = new LogInfo
-            {
-                LogName = _viewModel.LogName,
-                Description = _viewModel.Description,
-            };
-            var message = new ExecuteCommandMessage(CommandToExecute.CreateLog, logInfo);
-            Messenger.Default.Send(message);
-
-            AppSettings.Default.LogName = _viewModel.LogName;
-            AppSettings.Default.Save();
-            Close();
-        }
-
-        public void CloseWindow()
-        {
-            Close();
         }
     }
 }

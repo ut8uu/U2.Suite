@@ -8,6 +8,7 @@
         DeleteQso,
         RefreshLog,
         CreateLog,
+        UpdateLog,
         OpenLog,
     }
 

@@ -18,12 +18,16 @@
 			<Grid DockPanel.Dock="Top"
 				  RowDefinitions="50,120"
 				  ColumnDefinitions="200,280">
-				<TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding Path=LogNameTitle}"></TextBlock>
+				<TextBlock Grid.Row="0" Grid.Column="0" 
+						   Text="{Binding Path=LogNameTitle}"
+						   Margin="0 12"></TextBlock>
 				<TextBox Grid.Row="0" Grid.Column="1"
 						 Text="{Binding LogName}"
 						 ToolTip.Tip="{Binding LogNameToolTip}"></TextBox>
 
-				<TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding DescriptionTitle}"></TextBlock>
+				<TextBlock Grid.Row="1" Grid.Column="0" 
+						   Text="{Binding DescriptionTitle}"
+						   Margin="0 12"></TextBlock>
 				<TextBox Grid.Row="1" Grid.Column="1"
 						 Text="{Binding Description}"
 						 ToolTip.Tip="{Binding DescriptionToolTip}"></TextBox>
@@ -31,7 +35,8 @@
 
 			<Border Padding="30 0 0 0" DockPanel.Dock="Bottom">
 				<StackPanel Orientation="Horizontal" Height="30">
-					<Button Name="OkButton" Margin="3 1" Command="{Binding CreateNewLog}"
+					<Button Name="OkButton" Margin="3 1" 
+							Command="{Binding CreateNewLog}"
 							Content="{Binding OkButtonTitle}"></Button>
 					<Button Name="CancelButton" IsDefault="True" Margin="3 1"
 							Command="{Binding CloseWindow}"

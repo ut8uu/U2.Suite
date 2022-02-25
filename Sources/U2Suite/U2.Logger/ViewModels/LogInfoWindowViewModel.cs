@@ -1,4 +1,5 @@
 ﻿using Avalonia.Controls;
+using GalaSoft.MvvmLight.Messaging;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -6,12 +7,18 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using U2.Core;
+using U2.Logger.Models;
 
 namespace U2.Logger
 {
     public sealed class LogInfoWindowViewModel : ViewModelBase
     {
         private Window _owner;
+
+        public LogInfoWindowViewModel(CommandToExecute commandToExecute)
+        {
+            CommandToExecute = commandToExecute;
+        }
 
         public string LogNameTitle { get; set; } = Resources.LogName;
         public string LogNameToolTip { get; set; } = Resources.LogNameToolTip;
@@ -25,6 +32,7 @@ namespace U2.Logger
             get => _owner;
             set => _owner = value;
         }
+        public CommandToExecute CommandToExecute { get; set; }
 
         public string LogName { get; set; } = default!;
         public string Description { get; set; } = default!;
@@ -44,6 +52,26 @@ namespace U2.Logger
                 }
             }
             base.OnPropertyChanged(propertyName);
+        }
+
+        public void CreateNewLog()
+        {
+            var logInfo = new LogInfo
+            {
+                LogName = this.LogName,
+                Description = this.Description,
+            };
+            var message = new ExecuteCommandMessage(CommandToExecute, logInfo);
+            Messenger.Default.Send(message);
+
+            AppSettings.Default.LogName = this.LogName;
+            AppSettings.Default.Save();
+            Owner.Close();
+        }
+
+        public void CloseWindow()
+        {
+            Owner.Close();
         }
     }
 }
