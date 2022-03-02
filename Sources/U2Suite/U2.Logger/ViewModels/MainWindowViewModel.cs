@@ -107,7 +107,7 @@ namespace U2.Logger
 
         public async Task NewLog()
         {
-            var form = new LogInfoWindow();
+            var form = new LogInfoWindow(CommandToExecute.CreateLog);
             await form.ShowDialog(Owner);
         }
     }

@@ -1,8 +1,7 @@
+using System;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
-using GalaSoft.MvvmLight.Messaging;
-using U2.Logger.Models;
 
 namespace U2.Logger
 {
@@ -11,14 +10,18 @@ namespace U2.Logger
     {
         LogInfoWindowViewModel _viewModel;
 
-        public LogInfoWindow()
+        public LogInfoWindow() { }
+
+        public LogInfoWindow(CommandToExecute commandToExecute)
         {
             InitializeComponent();
 #if DEBUG
             this.AttachDevTools();
 #endif
-            _viewModel = new LogInfoWindowViewModel(CommandToExecute.CreateLog);
-            _viewModel.Owner = this;
+            _viewModel = new LogInfoWindowViewModel(commandToExecute)
+            {
+                Owner = this
+            };
             DataContext = _viewModel;
         }
 
