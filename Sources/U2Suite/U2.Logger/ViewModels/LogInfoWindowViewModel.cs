@@ -15,7 +15,11 @@ namespace U2.Logger
     {
         private Window _owner;
 
-        public LogInfoWindowViewModel() { }
+        public LogInfoWindowViewModel() 
+        {
+            CommandToExecute = CommandToExecute.CreateLog;
+            WindowTitle = Resources.CreateNewLog;
+        }
 
         public LogInfoWindowViewModel(CommandToExecute commandToExecute)
         {
@@ -23,8 +27,8 @@ namespace U2.Logger
 
             WindowTitle = commandToExecute switch
             {
-                CommandToExecute.CreateLog => Logger.Resources.CreateNewLog,
-                CommandToExecute.UpdateLog => Logger.Resources.UpdateLog,
+                CommandToExecute.CreateLog => Resources.CreateNewLog,
+                CommandToExecute.UpdateLog => Resources.UpdateLog,
                 _ => throw new ArgumentOutOfRangeException(nameof(commandToExecute)),
             };
         }
@@ -99,6 +103,15 @@ namespace U2.Logger
                     ContentTitle = "Error",
                     ContentMessage = errorMessage,
                     SizeToContent = SizeToContent.WidthAndHeight,
+                    ButtonDefinitions = new[]
+                    {
+                        new MessageBox.Avalonia.Models.ButtonDefinition
+                        {
+                            Name = "OK",
+                            Type = MessageBox.Avalonia.Enums.ButtonType.Default,
+                            IsDefault = true,
+                        }
+                    }
                 };
 
                 var messageBox = MessageBox.Avalonia.MessageBoxManager.GetMessageBoxCustomWindow(@params);
