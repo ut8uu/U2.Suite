@@ -132,6 +132,9 @@
   <data name="Comments" xml:space="preserve">
     <value>Comments</value>
   </data>
+  <data name="CreateNewLog" xml:space="preserve">
+    <value>Create new log</value>
+  </data>
   <data name="DeleteButtonTitle" xml:space="preserve">
     <value>Delete</value>
   </data>
@@ -143,6 +146,9 @@
   </data>
   <data name="EditButtonTitle" xml:space="preserve">
     <value>Edit</value>
+  </data>
+  <data name="EmptyLogNameException" xml:space="preserve">
+    <value>A log name cannot be empty.</value>
   </data>
   <data name="FreqMhz" xml:space="preserve">
     <value>Freq (MHz)</value>
@@ -194,6 +200,9 @@
   </data>
   <data name="TimestampNotRecognized" xml:space="preserve">
     <value>Timestamp not recognized as a valid date and time value.</value>
+  </data>
+  <data name="UpdateLog" xml:space="preserve">
+    <value>Update existing log</value>
   </data>
   <data name="WipeButtonTitle" xml:space="preserve">
     <value>Wipe</value>

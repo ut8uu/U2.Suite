@@ -106,6 +106,15 @@ namespace U2.Logger {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Create new log.
+        /// </summary>
+        internal static string CreateNewLog {
+            get {
+                return ResourceManager.GetString("CreateNewLog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Delete.
         /// </summary>
         internal static string DeleteButtonTitle {
@@ -138,6 +147,15 @@ namespace U2.Logger {
         internal static string EditButtonTitle {
             get {
                 return ResourceManager.GetString("EditButtonTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A log name cannot be empty..
+        /// </summary>
+        internal static string EmptyLogNameException {
+            get {
+                return ResourceManager.GetString("EmptyLogNameException", resourceCulture);
             }
         }
         
@@ -291,6 +309,15 @@ namespace U2.Logger {
         internal static string TimestampNotRecognized {
             get {
                 return ResourceManager.GetString("TimestampNotRecognized", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update existing log.
+        /// </summary>
+        internal static string UpdateLog {
+            get {
+                return ResourceManager.GetString("UpdateLog", resourceCulture);
             }
         }
         
