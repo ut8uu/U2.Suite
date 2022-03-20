@@ -10,14 +10,14 @@
         Width="600" Height="259"
         x:Class="U2.Logger.LoggerMainWindow"
         Icon="/Assets/avalonia-logo.ico"
-        Title="U2.Logger">
+        Title="{Binding Path='WindowTitle'}">
 
   <Window.Resources>
     <core:ToUpperCaseConverter x:Key="UpperCaseConverter" />
   </Window.Resources>
 
   <Design.DataContext>
-    <logger:LoggerMainWindowViewModel/>
+    <logger:MainWindowViewModel/>
   </Design.DataContext>
 
   <Border Padding="2">

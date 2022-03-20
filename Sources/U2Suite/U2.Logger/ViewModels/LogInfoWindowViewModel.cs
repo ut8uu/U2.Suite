@@ -8,6 +8,7 @@ using Avalonia.Controls;
 using GalaSoft.MvvmLight.Messaging;
 using U2.Core;
 using U2.Logger.Models;
+using U2.Resources;
 
 namespace U2.Logger
 {
@@ -72,9 +73,9 @@ namespace U2.Logger
                 return false;
             }
 
-            var logDirectory = FileSystemHelper.GetDatabaseFolderPath("U2.Logger");
+            var logDirectory = FileSystemHelper.GetDatabaseFolderPath(ApplicationNames.LoggerLinux);
             Directory.CreateDirectory(logDirectory);
-            var logFiles = Directory.GetFiles(logDirectory, "*.sqlite");
+            var logFiles = Directory.GetFiles(logDirectory, CommonConstants.DatabaseExtension);
             if (logFiles.Any(f => Path.GetFileNameWithoutExtension(f)
                 .Equals(LogName, StringComparison.InvariantCultureIgnoreCase)))
             {
@@ -127,8 +128,6 @@ namespace U2.Logger
             var message = new ExecuteCommandMessage(CommandToExecute, logInfo);
             Messenger.Default.Send(message);
 
-            AppSettings.Default.LogName = this.LogName;
-            AppSettings.Default.Save();
             Owner.Close();
         }
 

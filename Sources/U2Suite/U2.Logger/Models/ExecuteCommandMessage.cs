@@ -10,6 +10,8 @@
         CreateLog,
         UpdateLog,
         OpenLog,
+        SwitchLog,
+        ShowMessage,
     }
 
     public sealed class ExecuteCommandMessage

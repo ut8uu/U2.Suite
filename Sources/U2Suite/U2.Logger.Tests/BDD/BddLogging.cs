@@ -14,7 +14,7 @@ namespace U2.Logger.Tests
     {
         private readonly ScenarioContext _scenarioContext;
         private TextInputPanelViewModel _textInputVM;
-        private LoggerMainWindowViewModel _loggerVM;
+        private MainWindowViewModel _loggerVM;
 
         readonly static string CallsignField = Resources.Callsign;
         readonly static string RstSentField = Resources.RstSent;
@@ -37,7 +37,7 @@ namespace U2.Logger.Tests
         public void InitTest()
         {
             _textInputVM = new TextInputPanelViewModel();
-            _loggerVM = new LoggerMainWindowViewModel();
+            _loggerVM = new MainWindowViewModel();
             _caughtExceptions.Clear();
         }
 

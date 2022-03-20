@@ -169,21 +169,14 @@ namespace U2.Logger
                     _logger.Debug($"New {propertyName} value: {Comments}");
                     break;
                 case nameof(Mode):
-                    _logger.Debug($"New {propertyName} value: {Mode}");
+                    {
+                        UpdateFrequencyFromModeAndBand();
+                        _logger.Debug($"New {propertyName} value: {Mode}");
+                    }
                     break;
                 case nameof(Band):
                     {
-                        if (!string.IsNullOrEmpty(Mode) && !string.IsNullOrEmpty(Band))
-                        {
-                            var frequency = StringConverter.StringToDouble(Frequency);
-                            var bandByFreq = ConversionHelper.FrequencyToBandName(frequency);
-                            if (bandByFreq != Band)
-                            {
-                                _internalChange = true;
-                                Frequency = ConversionHelper.BandNameAndModeToFrequency(Band, Mode).ToString();
-                                _internalChange = false;
-                            }
-                        }
+                        UpdateFrequencyFromModeAndBand();
                         _logger.Debug($"New {propertyName} value: {Band}");
                     }
                     break;
@@ -214,6 +207,16 @@ namespace U2.Logger
                     break;
                 default:
                     return;
+            }
+        }
+
+        private void UpdateFrequencyFromModeAndBand()
+        {
+            if (!string.IsNullOrEmpty(Mode) && !string.IsNullOrEmpty(Band))
+            {
+                _internalChange = true;
+                Frequency = ConversionHelper.BandNameAndModeToFrequency(Band, Mode).ToString("F3");
+                _internalChange = false;
             }
         }
 
