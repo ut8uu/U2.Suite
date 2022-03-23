@@ -11,7 +11,7 @@
 		CanResize="False"
 		WindowStartupLocation="CenterOwner"
         Title="{Binding WindowTitle}">
-
+	
 	<Design.DataContext>
 		<logger:LogInfoWindowViewModel/>
 	</Design.DataContext>
@@ -19,8 +19,8 @@
 	<Border Padding="10">
 		<DockPanel>
 			<Grid DockPanel.Dock="Top"
-				  RowDefinitions="50,120"
-				  ColumnDefinitions="200,280">
+			  RowDefinitions="50,120"
+			  ColumnDefinitions="200,280">
 				<TextBlock Grid.Row="0" Grid.Column="0"
 						   Text="{Binding Path=LogNameTitle}"
 						   Margin="0 12"></TextBlock>

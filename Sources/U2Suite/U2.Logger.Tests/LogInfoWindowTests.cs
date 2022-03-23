@@ -2,9 +2,7 @@ using System;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.ReactiveUI;
-using GalaSoft.MvvmLight.Messaging;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using U2.Contracts;
 
 namespace U2.Logger.Tests
 {
