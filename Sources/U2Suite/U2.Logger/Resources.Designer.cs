@@ -178,11 +178,11 @@ namespace U2.Logger {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Frequency not recognized as a valid one..
+        ///   Looks up a localized string similar to Frequency {0} not recognized as a valid one..
         /// </summary>
-        internal static string FrequencyNotResolved {
+        internal static string FrequencyNotResolvedFmt {
             get {
-                return ResourceManager.GetString("FrequencyNotResolved", resourceCulture);
+                return ResourceManager.GetString("FrequencyNotResolvedFmt", resourceCulture);
             }
         }
         

@@ -156,8 +156,8 @@
   <data name="Frequency" xml:space="preserve">
     <value>Frequency</value>
   </data>
-  <data name="FrequencyNotResolved" xml:space="preserve">
-    <value>Frequency not recognized as a valid one.</value>
+  <data name="FrequencyNotResolvedFmt" xml:space="preserve">
+    <value>Frequency {0} not recognized as a valid one.</value>
   </data>
   <data name="LogName" xml:space="preserve">
     <value>Log name</value>
