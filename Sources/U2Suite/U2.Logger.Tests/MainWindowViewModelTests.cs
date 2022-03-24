@@ -70,8 +70,8 @@ namespace U2.Logger.Tests
             // file should not be overwritten
             Assert.AreEqual(expectedFileContent.Length, fileInfo.Length);
 
-            // settings should point to the previous log
-            Assert.AreEqual(expectedLogName, AppSettings.Default.LogName);
+            // settings should point to the current log
+            Assert.AreEqual(parameters.LogName, AppSettings.Default.LogName);
         }
     }
 }
