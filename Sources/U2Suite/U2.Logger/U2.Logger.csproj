@@ -15,6 +15,10 @@
 	</PropertyGroup>
 	<ItemGroup>
 		<AvaloniaResource Include="Assets\**" />
+		<AvaloniaXaml Remove="Converters\**" />
+		<Compile Remove="Converters\**" />
+		<EmbeddedResource Remove="Converters\**" />
+		<None Remove="Converters\**" />
 		<None Remove=".gitignore" />
 	</ItemGroup>
 	<ItemGroup>
@@ -65,7 +69,6 @@
 		</Compile>
 	</ItemGroup>
 	<ItemGroup>
-		<Folder Include="Converters\" />
 		<Folder Include="Migrations\" />
 		<Folder Include="Views\Controls\" />
 	</ItemGroup>

@@ -18,10 +18,8 @@ namespace U2.Logger
 {
     public class MainWindowViewModel : ViewModelBase
     {
-        ILog _logger = LogManager.GetLogger("Logger");
-        internal LoggerDbContext _dbContext;
-
-        private Window _owner;
+        private ILog _logger = LogManager.GetLogger("Logger");
+        internal LoggerDbContext? _dbContext = null;
 
         public MainWindowViewModel()
         {
@@ -47,11 +45,7 @@ namespace U2.Logger
             }
         }
 
-        public Window Owner
-        {
-            get => _owner;
-            set => _owner = value;
-        }
+        public Window? Owner { get; set; } = null;
 
         public string StatusText { get; set; } = default!;
         public string WindowTitle { get; set; } = default!;
@@ -79,7 +73,7 @@ namespace U2.Logger
         public void ViewLog()
         {
             var logWindow = new LogContentWindow();
-            logWindow.Show(_owner);
+            logWindow.Show(Owner);
         }
 
         public void ViewSettings()

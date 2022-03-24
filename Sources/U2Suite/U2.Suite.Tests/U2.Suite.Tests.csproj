@@ -16,4 +16,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\U2.Tests.Common\U2.Tests.Common.csproj" />
+  </ItemGroup>
+
 </Project>
