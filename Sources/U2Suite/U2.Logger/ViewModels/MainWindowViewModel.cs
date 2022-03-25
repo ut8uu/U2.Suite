@@ -19,7 +19,6 @@ namespace U2.Logger
     public class MainWindowViewModel : ViewModelBase
     {
         private ILog _logger = LogManager.GetLogger("Logger");
-        internal LoggerDbContext? _dbContext = null;
 
         public MainWindowViewModel()
         {
@@ -33,11 +32,10 @@ namespace U2.Logger
 
         private void OpenDatabase()
         {
-            _dbContext = new LoggerDbContext();
             WindowTitle = $"U2.Logger - {AppSettings.Default.LogName}";
             try
             {
-                _dbContext.Database.Migrate();
+                LoggerDbContext.Instance.Database.Migrate();
             }
             catch (Exception ex)
             {
@@ -91,7 +89,7 @@ namespace U2.Logger
                     _logger.Debug($"Accepted SaveQso(notNullObject) command. Value: \r\n{formData.ToString()}");
                     if (formData.CanBeSaved())
                     {
-                        _dbContext.SaveQso(formData);
+                        LoggerDbContext.Instance.SaveQso(formData);
                         Messenger.Default.Send(new ExecuteCommandMessage(CommandToExecute.ClearTextInputs, null));
                         Messenger.Default.Send(new ExecuteCommandMessage(CommandToExecute.InitQso, null));
                         Messenger.Default.Send(new ExecuteCommandMessage(CommandToExecute.RefreshLog));
@@ -102,7 +100,7 @@ namespace U2.Logger
             {
                 if (message.CommandParameters is Guid[] records)
                 {
-                    _dbContext.DeleteQso(records);
+                    LoggerDbContext.Instance.DeleteQso(records);
                     Messenger.Default.Send(new ExecuteCommandMessage(CommandToExecute.RefreshLog));
                 }
             }

@@ -199,8 +199,7 @@ namespace U2.Logger.Tests
         [Given("Log is empty")]
         public void GivenLogIsEmpty()
         {
-            var db = _loggerVM._dbContext;
-            //db.Records.RemoveRange(db.Records);
+            var db = LoggerDbContext.Instance;
             foreach (var record in db.Records)
             {
                 db.Records.Remove(record);
@@ -221,7 +220,7 @@ namespace U2.Logger.Tests
         [Then("Log contains (.*) records")]
         public void ThenLogContainsRecord(int expectedNumberOfRecords)
         {
-            Assert.AreEqual(expectedNumberOfRecords, _loggerVM._dbContext.Records.Count());
+            Assert.AreEqual(expectedNumberOfRecords, LoggerDbContext.Instance.Records.Count());
         }
 
         [Then("Exception with text '(.*)' was thrown")]
