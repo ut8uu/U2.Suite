@@ -12,12 +12,9 @@ namespace U2.Logger
 {
     public sealed class LogContentWindowViewModel : ViewModelBase
     {
-        private LoggerDbContext _dbContext;
-
         public LogContentWindowViewModel()
         {
-            this._dbContext = new LoggerDbContext();
-            FullList = new ObservableCollection<LogRecordDbo>(_dbContext.Records);
+            FullList = new ObservableCollection<LogRecordDbo>(LoggerDbContext.Instance.Records);
 
             Messenger.Default.Register<ExecuteCommandMessage>(this,
                 AcceptExecuteCommandMessage);
@@ -54,8 +51,8 @@ namespace U2.Logger
 
         public void RefreshLog()
         {
-            _dbContext = new LoggerDbContext();
-            FullList = new ObservableCollection<LogRecordDbo>(_dbContext.Records);
+            LoggerDbContext.Instance.Reset();
+            FullList = new ObservableCollection<LogRecordDbo>(LoggerDbContext.Instance.Records);
         }
 
         public void CloseButtonClick()

@@ -30,7 +30,7 @@ namespace U2.Logger.Tests
         public void SaveQso_HappyPass()
         {
             var model = GetFilledLoggerViewModel();
-            var mainVM = new LoggerMainWindowViewModel();
+            var mainVM = new MainWindowViewModel();
 
             Messenger.Default.Send(new ButtonClickedMessage(this, ApplicationButton.SaveButton));
 

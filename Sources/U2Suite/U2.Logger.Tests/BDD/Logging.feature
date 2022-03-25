@@ -1,4 +1,4 @@
-﻿Feature: Logging
+﻿ Feature:  Logging
 	This is to test how user can interact with the logger
 
 @button_clicking

@@ -7,15 +7,15 @@ namespace U2.Core
 {
     public static class FileSystemHelper
     {
-        public static string GetAppDataFolderPath()
+        public static string GetAppDataFolderPath(string applicationName)
         {
             var basePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-            return Path.Combine(basePath, "U2Suite", "ApplicationData");
+            return Path.Combine(basePath, "U2Suite", "ApplicationData", applicationName);
         }
 
-        public static string GetDatabaseFolderPath()
+        public static string GetDatabaseFolderPath(string applicationName)
         {
-            return Path.Combine(GetAppDataFolderPath(), "Database");
+            return Path.Combine(GetAppDataFolderPath(applicationName), "Database");
         }
 
         public static string GetFullPath(string fileName)

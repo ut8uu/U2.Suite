@@ -19,7 +19,7 @@ namespace U2.Logger {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -106,6 +106,15 @@ namespace U2.Logger {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Create new log.
+        /// </summary>
+        internal static string CreateNewLog {
+            get {
+                return ResourceManager.GetString("CreateNewLog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Delete.
         /// </summary>
         internal static string DeleteButtonTitle {
@@ -115,11 +124,38 @@ namespace U2.Logger {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Description.
+        /// </summary>
+        internal static string Description {
+            get {
+                return ResourceManager.GetString("Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A more or less informative description of the log..
+        /// </summary>
+        internal static string DescriptionToolTip {
+            get {
+                return ResourceManager.GetString("DescriptionToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Edit.
         /// </summary>
         internal static string EditButtonTitle {
             get {
                 return ResourceManager.GetString("EditButtonTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A log name cannot be empty..
+        /// </summary>
+        internal static string EmptyLogNameException {
+            get {
+                return ResourceManager.GetString("EmptyLogNameException", resourceCulture);
             }
         }
         
@@ -142,11 +178,38 @@ namespace U2.Logger {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Frequency not recognized as a valid one..
+        ///   Looks up a localized string similar to Frequency {0} not recognized as a valid one..
         /// </summary>
-        internal static string FrequencyNotResolved {
+        internal static string FrequencyNotResolvedFmt {
             get {
-                return ResourceManager.GetString("FrequencyNotResolved", resourceCulture);
+                return ResourceManager.GetString("FrequencyNotResolvedFmt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Log name.
+        /// </summary>
+        internal static string LogName {
+            get {
+                return ResourceManager.GetString("LogName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Log name {0} is already in use. Please use another one..
+        /// </summary>
+        internal static string LogNameIsInUseFmt {
+            get {
+                return ResourceManager.GetString("LogNameIsInUseFmt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A short yet descriptive name of the log..
+        /// </summary>
+        internal static string LogNameToolTip {
+            get {
+                return ResourceManager.GetString("LogNameToolTip", resourceCulture);
             }
         }
         
@@ -246,6 +309,15 @@ namespace U2.Logger {
         internal static string TimestampNotRecognized {
             get {
                 return ResourceManager.GetString("TimestampNotRecognized", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update existing log.
+        /// </summary>
+        internal static string UpdateLog {
+            get {
+                return ResourceManager.GetString("UpdateLog", resourceCulture);
             }
         }
         

@@ -1,54 +1,52 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using Avalonia.Controls;
 using GalaSoft.MvvmLight.Messaging;
 using log4net;
 using Microsoft.EntityFrameworkCore;
 using U2.Core;
 using U2.Logger.Models;
+using U2.Resources;
 
 [assembly: InternalsVisibleTo("U2.Logger.Tests")]
 namespace U2.Logger
 {
-    public class LoggerMainWindowViewModel : ViewModelBase
+    public class MainWindowViewModel : ViewModelBase
     {
-        ILog _logger = LogManager.GetLogger("Logger");
-        internal LoggerDbContext _dbContext;
+        private ILog _logger = LogManager.GetLogger("Logger");
 
-        private Window _owner;
-
-        public LoggerMainWindowViewModel()
+        public MainWindowViewModel()
         {
             Messenger.Default.Register<ButtonClickedMessage>(this,
                 AcceptButtonClickedMessage);
-            Messenger.Default.Register<ExecuteCommandMessage>(this, 
+            Messenger.Default.Register<ExecuteCommandMessage>(this,
                 AcceptExecuteCommandMessage);
 
+            OpenDatabase();
+        }
 
-            _dbContext = new LoggerDbContext();
+        private void OpenDatabase()
+        {
+            WindowTitle = $"U2.Logger - {AppSettings.Default.LogName}";
             try
             {
-                _dbContext.Database.Migrate();
+                LoggerDbContext.Instance.Database.Migrate();
             }
             catch (Exception ex)
-            { 
-                if (ex != null)
-                {
-
-                }
+            {
+                _logger.Error(ex);
             }
         }
 
-        public Window Owner
-        {
-            get => _owner;
-            set => _owner = value;
-        }
+        public Window? Owner { get; set; } = null;
 
         public string StatusText { get; set; } = default!;
+        public string WindowTitle { get; set; } = default!;
 
         private void AcceptButtonClickedMessage(ButtonClickedMessage message)
         {
@@ -73,7 +71,7 @@ namespace U2.Logger
         public void ViewLog()
         {
             var logWindow = new LogContentWindow();
-            logWindow.Show(_owner);
+            logWindow.Show(Owner);
         }
 
         public void ViewSettings()
@@ -91,7 +89,7 @@ namespace U2.Logger
                     _logger.Debug($"Accepted SaveQso(notNullObject) command. Value: \r\n{formData.ToString()}");
                     if (formData.CanBeSaved())
                     {
-                        _dbContext.SaveQso(formData);
+                        LoggerDbContext.Instance.SaveQso(formData);
                         Messenger.Default.Send(new ExecuteCommandMessage(CommandToExecute.ClearTextInputs, null));
                         Messenger.Default.Send(new ExecuteCommandMessage(CommandToExecute.InitQso, null));
                         Messenger.Default.Send(new ExecuteCommandMessage(CommandToExecute.RefreshLog));
@@ -102,10 +100,44 @@ namespace U2.Logger
             {
                 if (message.CommandParameters is Guid[] records)
                 {
-                    _dbContext.DeleteQso(records);
+                    LoggerDbContext.Instance.DeleteQso(records);
                     Messenger.Default.Send(new ExecuteCommandMessage(CommandToExecute.RefreshLog));
                 }
             }
+            else if (message.CommandToExecute == CommandToExecute.CreateLog)
+            {
+                // create a new log
+                if (!(message.CommandParameters is LogInfo logInfo))
+                {
+                    return;
+                }
+
+                var dbDirectory = FileSystemHelper.GetDatabaseFolderPath(ApplicationNames.LoggerLinux);
+                var dbPath = Path.Combine(dbDirectory, $"{logInfo}{CommonConstants.DatabaseExtension}");
+                if (File.Exists(dbPath))
+                {
+                    var msg = string.Format(Resources.LogNameIsInUseFmt, logInfo.LogName);
+                    var showMessageMsg = new ExecuteCommandMessage(CommandToExecute.ShowMessage, msg);
+                    Messenger.Default.Send(showMessageMsg);
+                    return;
+                }
+
+                AppSettings.Default.LogName = Path.GetFileNameWithoutExtension(logInfo.LogName);
+                AppSettings.Default.Save();
+
+                var switchLogMessage = new ExecuteCommandMessage(CommandToExecute.SwitchLog, null);
+                Messenger.Default.Send(switchLogMessage);
+            }
+            else if (message.CommandToExecute == CommandToExecute.SwitchLog)
+            {
+                OpenDatabase();
+            }
+        }
+
+        public async Task NewLog()
+        {
+            var form = new LogInfoWindow(CommandToExecute.CreateLog);
+            await form.ShowDialog(Owner);
         }
     }
 }

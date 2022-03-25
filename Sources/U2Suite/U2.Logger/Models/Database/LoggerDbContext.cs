@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SQLite;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -13,19 +14,37 @@ namespace U2.Logger
 {
     public sealed class LoggerDbContext : DbContext
     {
-        private const string DataBaseName = "logger.sqlite";
+        private readonly string _dataBaseName = "logger.sqlite";
         private readonly string _databasePath;
+        private static LoggerDbContext? _dbContext;
 
-        public LoggerDbContext()
+        private LoggerDbContext() : base()
         {
-            var appDataFolder = FileSystemHelper.GetDatabaseFolderPath();
-            var dbDirectory = Path.Combine(appDataFolder, "Logger");
+            var dbDirectory = FileSystemHelper.GetDatabaseFolderPath(U2.Resources.ApplicationNames.LoggerOsx);
             Directory.CreateDirectory(dbDirectory);
-            _databasePath = Path.Combine(dbDirectory, DataBaseName);
+            _dataBaseName = $"{AppSettings.Default.LogName}.sqlite";
+            _databasePath = Path.Combine(dbDirectory, _dataBaseName);
         }
 
-        public DbSet<LogRecordDbo> Records { get; set; }
-        public DbSet<SettingsDbo> Settings { get; set; }
+        public static LoggerDbContext Instance
+        {
+            get
+            {
+                if (_dbContext == null)
+                {
+                    _dbContext = new LoggerDbContext();
+                }
+                return _dbContext;
+            }
+        }
+
+        public DbSet<LogRecordDbo>? Records { get; set; }
+        public DbSet<SettingsDbo>? Settings { get; set; }
+
+        public void Reset()
+        {
+            _dbContext = null;
+        }
 
         private string GetConnectionString()
         {
@@ -40,6 +59,22 @@ namespace U2.Logger
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            try
+            {
+                using var db = new SQLiteConnection(GetConnectionString());
+                db.Open();
+                var cmd = new SQLiteCommand("PRAGMA integrity_check;", db);
+                var result = cmd.ExecuteScalar().ToString();
+                if (result != "ok")
+                {
+
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
 
         public void SaveQso(QsoData formData)

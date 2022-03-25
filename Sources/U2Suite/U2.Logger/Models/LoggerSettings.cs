@@ -10,8 +10,6 @@ namespace U2.Logger.Models
     {
         private const string ShowLogWindowField = nameof(ShowLogWindowField);
 
-        private readonly LoggerDbContext _dbContext;
-
         public static LoggerSettings Instance { get; }
 
         static LoggerSettings()
@@ -21,12 +19,11 @@ namespace U2.Logger.Models
 
         private LoggerSettings()
         {
-            _dbContext = new LoggerDbContext();
         }
 
         private string GetSettingValue(string settingId, [CanBeNull] string defaultValue = null)
         {
-            var setting = _dbContext.Settings.Find(settingId);
+            var setting = LoggerDbContext.Instance.Settings.Find(settingId);
             if (setting == null)
             {
                 setting = new SettingsDbo
@@ -34,8 +31,8 @@ namespace U2.Logger.Models
                     SettingId = settingId,
                     Value = defaultValue,
                 };
-                _dbContext.Settings.Add(setting);
-                _dbContext.SaveChanges(acceptAllChangesOnSuccess: true);
+                LoggerDbContext.Instance.Settings.Add(setting);
+                LoggerDbContext.Instance.SaveChanges(acceptAllChangesOnSuccess: true);
             }
 
             return setting.Value;
@@ -43,7 +40,7 @@ namespace U2.Logger.Models
 
         private void SetSettingValue(string settingId, string value)
         {
-            var setting = _dbContext.Settings.Find(settingId);
+            var setting = LoggerDbContext.Instance.Settings.Find(settingId);
             if (setting == null)
             {
                 setting = new SettingsDbo
@@ -51,15 +48,15 @@ namespace U2.Logger.Models
                     SettingId = settingId,
                     Value = value,
                 };
-                _dbContext.Settings.Add(setting);
+                LoggerDbContext.Instance.Settings.Add(setting);
             }
             else
             {
                 setting.Value = value;
-                _dbContext.Update(setting);
+                LoggerDbContext.Instance.Update(setting);
             }
 
-            _dbContext.SaveChanges(acceptAllChangesOnSuccess: true);
+            LoggerDbContext.Instance.SaveChanges(acceptAllChangesOnSuccess: true);
         }
 
         public bool ShowLogWindow

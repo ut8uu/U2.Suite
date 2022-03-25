@@ -149,7 +149,8 @@ namespace U2.Logger
                         else
                         {
                             Band = string.Empty;
-                            throw new Avalonia.Data.DataValidationException(Resources.FrequencyNotResolved);
+                            var message = string.Format(Resources.FrequencyNotResolvedFmt, Frequency);
+                            throw new Avalonia.Data.DataValidationException(message);
                         }
                     }
                     break;

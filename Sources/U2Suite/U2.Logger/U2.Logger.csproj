@@ -1,79 +1,93 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <OutputType>WinExe</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
-    <Nullable>enable</Nullable>
-    <ApplicationIcon>logger.ico</ApplicationIcon>
-    <Company>HamStudio</Company>
-    <Version>1.0.1</Version>
-    <AssemblyVersion>1.0.1.20204</AssemblyVersion>
-    <FileVersion>1.0.1.20204</FileVersion>
-    <Authors>Sergey Usmanov</Authors>
-    <PackageId>U2.Logger</PackageId>
-    <Product>U2.Suite</Product>
-    <Copyright>© 2022 Sergey Usmanov, UT8UU</Copyright>
-  </PropertyGroup>
-  <ItemGroup>
-    <AvaloniaResource Include="Assets\**" />
-    <None Remove=".gitignore" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Avalonia" Version="0.10.11" />
-    <PackageReference Include="Avalonia.Desktop" Version="0.10.11" />
-    <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
-    <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="0.10.11" />
-    <PackageReference Include="Avalonia.ReactiveUI" Version="0.10.11" />
-    <PackageReference Include="Citrus.Avalonia" Version="1.5.1" />
-    <PackageReference Include="log4net" Version="2.0.14" />
-    <PackageReference Include="Microsoft.Data.Sqlite" Version="6.0.1" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.22">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.22" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite.Design" Version="1.1.6" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.22">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="MvvmLightLibsStd10" Version="5.4.1.1" />
-    <PackageReference Include="PropertyChanged.Fody" Version="3.4.0" />
-    <PackageReference Include="SQLite" Version="3.13.0" />
-    <PackageReference Include="System.Data.SQLite" Version="1.0.115.5" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\U2.Core\U2.Core.csproj" />
-    <ProjectReference Include="..\U2.Resources\U2.Resources.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Update="Resources.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Update="Views\LoggerMainWindow.axaml.cs">
-      <DependentUpon>LoggerMainWindow.axaml</DependentUpon>
-    </Compile>
-    <Compile Update="Views\LoggerSettingsWindow.axaml.cs">
-      <DependentUpon>LoggerSettingsWindow.axaml</DependentUpon>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Converters\" />
-    <Folder Include="Views\Controls\" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Update="Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <None Update="log4net.logger.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="logger.ico">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net6.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ApplicationIcon>logger.ico</ApplicationIcon>
+		<Company>HamStudio</Company>
+		<Version>1.0.1</Version>
+		<AssemblyVersion>1.0.1.20204</AssemblyVersion>
+		<FileVersion>1.0.1.20204</FileVersion>
+		<Authors>Sergey Usmanov</Authors>
+		<PackageId>U2.Logger</PackageId>
+		<Product>U2.Suite</Product>
+		<Copyright>© 2022 Sergey Usmanov, UT8UU</Copyright>
+	</PropertyGroup>
+	<ItemGroup>
+		<AvaloniaResource Include="Assets\**" />
+		<AvaloniaXaml Remove="Converters\**" />
+		<Compile Remove="Converters\**" />
+		<EmbeddedResource Remove="Converters\**" />
+		<None Remove="Converters\**" />
+		<None Remove=".gitignore" />
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Avalonia" Version="0.10.11" />
+		<PackageReference Include="Avalonia.Desktop" Version="0.10.11" />
+		<!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
+		<PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="0.10.11" />
+		<PackageReference Include="Avalonia.ReactiveUI" Version="0.10.11" />
+		<PackageReference Include="Citrus.Avalonia" Version="1.5.1" />
+		<PackageReference Include="log4net" Version="2.0.14" />
+		<PackageReference Include="MessageBox.Avalonia" Version="1.7.1" />
+		<PackageReference Include="Microsoft.Data.Sqlite" Version="6.0.1" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.22">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.22" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite.Design" Version="1.1.6" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.22">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="MvvmLightLibsStd10" Version="5.4.1.1" />
+		<PackageReference Include="PropertyChanged.Fody" Version="3.4.0" />
+		<PackageReference Include="SQLite" Version="3.13.0" />
+		<PackageReference Include="System.Data.SQLite" Version="1.0.115.5" />
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\U2.Core\U2.Core.csproj" />
+		<ProjectReference Include="..\U2.Resources\U2.Resources.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+		<Compile Update="Resources.Designer.cs">
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>Resources.resx</DependentUpon>
+		</Compile>
+		<Compile Update="AppSettings.Designer.cs">
+			<DesignTimeSharedInput>True</DesignTimeSharedInput>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>AppSettings.settings</DependentUpon>
+		</Compile>
+		<Compile Update="Views\LoggerMainWindow.axaml.cs">
+			<DependentUpon>LoggerMainWindow.axaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\LoggerSettingsWindow.axaml.cs">
+			<DependentUpon>LoggerSettingsWindow.axaml</DependentUpon>
+		</Compile>
+	</ItemGroup>
+	<ItemGroup>
+		<Folder Include="Migrations\" />
+		<Folder Include="Views\Controls\" />
+	</ItemGroup>
+	<ItemGroup>
+		<EmbeddedResource Update="Resources.resx">
+			<Generator>ResXFileCodeGenerator</Generator>
+			<LastGenOutput>Resources.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+	</ItemGroup>
+	<ItemGroup>
+		<None Update="log4net.logger.config">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="logger.ico">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="AppSettings.settings">
+			<Generator>SettingsSingleFileGenerator</Generator>
+			<LastGenOutput>AppSettings.Designer.cs</LastGenOutput>
+		</None>
+	</ItemGroup>
 </Project>

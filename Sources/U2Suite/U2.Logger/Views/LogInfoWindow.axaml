@@ -1,0 +1,51 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:logger="clr-namespace:U2.Logger"
+        xmlns:core="clr-namespace:U2.Core;assembly=U2.Core"
+        mc:Ignorable="d" d:DesignWidth="500" d:DesignHeight="250"
+		Width="500" Height="250"
+        x:Class="U2.Logger.LogInfoWindow"
+		ShowInTaskbar="False"
+		CanResize="False"
+		WindowStartupLocation="CenterOwner"
+        Title="{Binding WindowTitle}">
+	
+	<Design.DataContext>
+		<logger:LogInfoWindowViewModel/>
+	</Design.DataContext>
+
+	<Border Padding="10">
+		<DockPanel>
+			<Grid DockPanel.Dock="Top"
+			  RowDefinitions="50,120"
+			  ColumnDefinitions="200,280">
+				<TextBlock Grid.Row="0" Grid.Column="0"
+						   Text="{Binding Path=LogNameTitle}"
+						   Margin="0 12"></TextBlock>
+				<TextBox Grid.Row="0" Grid.Column="1"
+						 Text="{Binding LogName}"
+						 ToolTip.Tip="{Binding LogNameToolTip}"></TextBox>
+
+				<TextBlock Grid.Row="1" Grid.Column="0"
+						   Text="{Binding DescriptionTitle}"
+						   Margin="0 12"></TextBlock>
+				<TextBox Grid.Row="1" Grid.Column="1"
+						 Text="{Binding Description}"
+						 ToolTip.Tip="{Binding DescriptionToolTip}"></TextBox>
+			</Grid>
+
+			<Border Padding="30 0 0 0" DockPanel.Dock="Bottom">
+				<StackPanel Orientation="Horizontal" Height="30">
+					<Button Name="OkButton" Margin="3 1"
+							Command="{Binding ExecuteOkAction}"
+							Content="{Binding OkButtonTitle}"></Button>
+					<Button Name="CancelButton" IsDefault="True" Margin="3 1"
+							Command="{Binding CloseWindow}"
+							Content="{Binding CancelButtonTitle}"></Button>
+				</StackPanel>
+			</Border>
+		</DockPanel>
+	</Border>
+</Window>
