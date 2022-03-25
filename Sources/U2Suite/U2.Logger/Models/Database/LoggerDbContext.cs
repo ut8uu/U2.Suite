@@ -8,6 +8,7 @@ using System.Text.Json;
 using GalaSoft.MvvmLight.Messaging;
 using Microsoft.EntityFrameworkCore;
 using U2.Core;
+using U2.Library.Models;
 using U2.Logger.Models.Database;
 
 namespace U2.Logger
@@ -48,7 +49,8 @@ namespace U2.Logger
 
         private string GetConnectionString()
         {
-            return $"Filename={_databasePath};";
+            var fileName = Path.GetFileName(_databasePath);
+            return $"Filename={_databasePath};DataSource={fileName};";
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -62,13 +64,15 @@ namespace U2.Logger
 
             try
             {
-                using var db = new SQLiteConnection(GetConnectionString());
+                var connectionString = GetConnectionString();
+                using var db = new SQLiteConnection(connectionString);
                 db.Open();
                 var cmd = new SQLiteCommand("PRAGMA integrity_check;", db);
                 var result = cmd.ExecuteScalar().ToString();
                 if (result != "ok")
                 {
-
+                    var message = new DatabaseCorruptedMessage();
+                    Messenger.Default.Send(message);
                 }
             }
             catch (Exception ex)
