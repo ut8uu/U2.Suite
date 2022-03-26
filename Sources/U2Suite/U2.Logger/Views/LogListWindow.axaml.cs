@@ -21,26 +21,12 @@ namespace U2.Logger.Views
 #endif
 
             var logsDirectory = FileSystemHelper.GetDatabaseFolderPath(U2.Resources.ApplicationNames.LibraryOsx);
-            
-            _model = new LogListViewModel(LoadLogs(logsDirectory));
+            _model = new LogListViewModel(logsDirectory);
         }
 
         private void InitializeComponent()
         {
             AvaloniaXamlLoader.Load(this);
-        }
-
-        internal static LogList LoadLogs(string logDirectory)
-        {
-            var result = new LogList();
-
-            var sqliteFiles = Directory.EnumerateFiles($"*{CommonConstants.DatabaseExtension}");
-            foreach (var file in sqliteFiles)
-            {
-                //var logInfoFile = 
-            }
-
-            return result;
         }
     }
 }
