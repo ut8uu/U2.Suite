@@ -40,6 +40,6 @@ public sealed class LogListTests
         Assert.AreEqual(3, Directory.EnumerateFiles(tempDirectory.TempPath).Count());
 
         var model = new LogListViewModel(tempDirectory.TempPath);
-        Assert.AreEqual(3, model.List.Logs.Count);
+        Assert.AreEqual(3, model.List.Count);
     }
 }

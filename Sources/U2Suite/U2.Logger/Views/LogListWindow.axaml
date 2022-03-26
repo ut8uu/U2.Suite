@@ -2,8 +2,48 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-        x:Class="U2.Logger.Views.LogListWindow"
-        Title="LogListWindow">
+        xmlns:logger="clr-namespace:U2.Logger"
+        mc:Ignorable="d" d:DesignWidth="450" d:DesignHeight="250"
+		Width="450" Height="250"
+        x:Class="U2.Logger.LogListWindow"
+        Title="{Binding WindowTitle}">
 
+	<Design.DataContext>
+		<logger:DemoLogListViewModel/>
+	</Design.DataContext>
+
+	<Border Padding="10">
+		<DockPanel>
+			<Border BorderThickness="1"
+					Margin="5" Padding="15"
+					CornerRadius="10"
+					BorderBrush="White"
+					DockPanel.Dock="Top">
+				<ListBox Name="ListBoxLogs" 
+						 Height="150" Width="410"
+						 HorizontalAlignment="Stretch"
+						 SelectionMode="Single"
+						 Items="{Binding List, Mode=OneWay}"
+						 SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
+					 >
+					<ListBox.ItemTemplate>
+						<DataTemplate>
+							<TextBlock Text="{Binding LogName}"></TextBlock>
+						</DataTemplate>
+					</ListBox.ItemTemplate>
+				</ListBox>
+			</Border>
+
+			<Border DockPanel.Dock="Bottom">
+				<StackPanel Orientation="Horizontal" Height="30">
+					<Button Name="OkButton" Margin="3 1"
+							Command="{Binding ExecuteOkAction}"
+							Content="{Binding OkButtonTitle}"></Button>
+					<Button Name="CancelButton" IsDefault="True" Margin="3 1"
+							Command="{Binding CloseWindow}"
+							Content="{Binding CancelButtonTitle}"></Button>
+				</StackPanel>
+			</Border>
+		</DockPanel>
+	</Border>
 </Window>

@@ -12,7 +12,6 @@ using log4net;
 using Microsoft.EntityFrameworkCore;
 using U2.Core;
 using U2.Core.Models;
-using U2.Logger.Models;
 using U2.Resources;
 
 [assembly: InternalsVisibleTo("U2.Logger.Tests")]
@@ -164,7 +163,8 @@ namespace U2.Logger
 
         public async Task OpenLog()
         {
-
+            var form = new LogListWindow();
+            await form.ShowDialog(Owner);
         }
     }
 }
