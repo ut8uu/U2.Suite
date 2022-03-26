@@ -4,6 +4,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Avalonia.Controls;
 using GalaSoft.MvvmLight.Messaging;
@@ -38,6 +39,7 @@ namespace U2.Logger
             WindowTitle = $"U2.Logger - {AppSettings.Default.LogName}";
             try
             {
+                LoggerDbContext.Reset();
                 LoggerDbContext.Instance.Database.Migrate();
             }
             catch (Exception ex)
@@ -125,7 +127,13 @@ namespace U2.Logger
                     return;
                 }
 
-                AppSettings.Default.LogName = Path.GetFileNameWithoutExtension(logInfo.LogName);
+                var logName = Path.GetFileNameWithoutExtension(logInfo.LogName);
+                var logInfoFileName = string.Format(CommonConstants.LogInfoFileFmt, logName);
+                var logInfoPath = Path.Combine(dbDirectory, logInfoFileName);
+                var logInfoJsonContent = JsonSerializer.Serialize(logInfo);
+                File.WriteAllText(logInfoPath, logInfoJsonContent);
+
+                AppSettings.Default.LogName = logName;
                 AppSettings.Default.Save();
 
                 var switchLogMessage = new ExecuteCommandMessage(CommandToExecute.SwitchLog, null);
@@ -134,6 +142,10 @@ namespace U2.Logger
             else if (message.CommandToExecute == CommandToExecute.SwitchLog)
             {
                 OpenDatabase();
+            }
+            else if (message.CommandToExecute == CommandToExecute.ShutDown)
+            {
+                LoggerDbContext.Instance.ShutDown();
             }
         }
 
@@ -148,6 +160,11 @@ namespace U2.Logger
         {
             var form = new LogInfoWindow(CommandToExecute.CreateLog);
             await form.ShowDialog(Owner);
+        }
+
+        public async Task OpenLog()
+        {
+
         }
     }
 }

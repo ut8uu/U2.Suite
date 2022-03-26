@@ -15,8 +15,14 @@ namespace U2.Core
 
         public static string GetDatabaseFolderPath(string applicationName)
         {
+            if (GetDatabaseFolderFunc != null)
+            {
+                return GetDatabaseFolderFunc(applicationName);
+            }
             return Path.Combine(GetAppDataFolderPath(applicationName), "Database");
         }
+
+        public static Func<string, string> GetDatabaseFolderFunc { get; set; } = null;
 
         public static string GetFullPath(string fileName)
         {

@@ -10,7 +10,6 @@ using GalaSoft.MvvmLight.Messaging;
 using Microsoft.EntityFrameworkCore;
 using U2.Core;
 using U2.Core.Models;
-using U2.Library.Models;
 using U2.Logger.Models.Database;
 
 namespace U2.Logger
@@ -20,12 +19,13 @@ namespace U2.Logger
         private readonly string _dataBaseName = "logger.sqlite";
         private readonly string _databasePath;
         private static LoggerDbContext? _dbContext;
+        private static bool _running = true;
 
         private LoggerDbContext() : base()
         {
             var dbDirectory = FileSystemHelper.GetDatabaseFolderPath(U2.Resources.ApplicationNames.LoggerOsx);
             Directory.CreateDirectory(dbDirectory);
-            _dataBaseName = $"{AppSettings.Default.LogName}.sqlite";
+            _dataBaseName = $"{AppSettings.Default.LogName}{CommonConstants.DatabaseExtension}";
             _databasePath = Path.Combine(dbDirectory, _dataBaseName);
 
             CheckIntegrity();
@@ -35,6 +35,11 @@ namespace U2.Logger
         {
             get
             {
+                if (!_running)
+                {
+                    return null;
+                }
+
                 if (_dbContext == null)
                 {
                     _dbContext = new LoggerDbContext();
@@ -46,15 +51,21 @@ namespace U2.Logger
         public DbSet<LogRecordDbo>? Records { get; set; }
         public DbSet<SettingsDbo>? Settings { get; set; }
 
-        public void Reset()
+        public static void Reset()
         {
+            _dbContext = null;
+        }
+
+        public void ShutDown()
+        {
+            _running = false;
+            _dbContext?.Database.CloseConnection();
             _dbContext = null;
         }
 
         private string GetConnectionString()
         {
-            var fileName = Path.GetFileName(_databasePath);
-            return $"Filename={_databasePath};DataSource={fileName};";
+            return $"Filename={_databasePath};DataSource={_databasePath};";
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -65,21 +76,24 @@ namespace U2.Logger
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-
         }
 
         private void CheckIntegrity()
-        { 
+        {
+            SQLiteConnection db = null;
             try
             {
                 var connectionString = GetConnectionString();
-                using var db = new SQLiteConnection(connectionString);
+                db = new SQLiteConnection(connectionString);
                 db.Open();
                 CheckTable(db, "Records");
                 CheckTable(db, "Settings");
+                db.Close();
             }
             catch (Exception ex)
             {
+                db?.Close();
+                db = null;
                 Console.WriteLine(ex.Message);
                 var message = new DatabaseCorruptedMessage(ex.Message);
                 Messenger.Default.Send(message);
@@ -100,6 +114,11 @@ namespace U2.Logger
 
         public void SaveQso(QsoData formData)
         {
+            if (!_running)
+            {
+                return;
+            }
+
             var record = Records.Find(formData.RecordId);
             var newRecord = record == null;
 
@@ -139,6 +158,11 @@ namespace U2.Logger
         /// <param name="recordIds"></param>
         public void DeleteQso(Guid[] recordIds)
         {
+            if (!_running)
+            {
+                return;
+            }
+
             var recordsToDelete = Records.Where(r => recordIds.Contains(r.RecordId)).ToList();
             Records.RemoveRange(recordsToDelete);
             this.SaveChanges();

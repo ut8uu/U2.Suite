@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace U2.Logger.Models
+namespace U2.Logger
 {
     public sealed class LogInfo
     {

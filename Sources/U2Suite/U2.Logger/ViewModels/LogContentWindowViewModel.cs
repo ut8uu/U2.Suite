@@ -51,7 +51,7 @@ namespace U2.Logger
 
         public void RefreshLog()
         {
-            LoggerDbContext.Instance.Reset();
+            LoggerDbContext.Reset();
             FullList = new ObservableCollection<LogRecordDbo>(LoggerDbContext.Instance.Records);
         }
 
