@@ -4,7 +4,7 @@ using System.Text;
 using JetBrains.Annotations;
 using U2.Logger.Models.Database;
 
-namespace U2.Logger.Models
+namespace U2.Logger
 {
     public sealed class LoggerSettings
     {

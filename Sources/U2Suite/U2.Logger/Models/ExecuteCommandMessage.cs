@@ -12,6 +12,7 @@
         OpenLog,
         SwitchLog,
         ShowMessage,
+        ShutDown,
     }
 
     public sealed class ExecuteCommandMessage
