@@ -5,9 +5,11 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
+using System.Xml.Linq;
 using GalaSoft.MvvmLight.Messaging;
 using Microsoft.EntityFrameworkCore;
 using U2.Core;
+using U2.Core.Models;
 using U2.Library.Models;
 using U2.Logger.Models.Database;
 
@@ -25,6 +27,8 @@ namespace U2.Logger
             Directory.CreateDirectory(dbDirectory);
             _dataBaseName = $"{AppSettings.Default.LogName}.sqlite";
             _databasePath = Path.Combine(dbDirectory, _dataBaseName);
+
+            CheckIntegrity();
         }
 
         public static LoggerDbContext Instance
@@ -62,22 +66,35 @@ namespace U2.Logger
         {
             base.OnModelCreating(modelBuilder);
 
+        }
+
+        private void CheckIntegrity()
+        { 
             try
             {
                 var connectionString = GetConnectionString();
                 using var db = new SQLiteConnection(connectionString);
                 db.Open();
-                var cmd = new SQLiteCommand("PRAGMA integrity_check;", db);
-                var result = cmd.ExecuteScalar().ToString();
-                if (result != "ok")
-                {
-                    var message = new DatabaseCorruptedMessage();
-                    Messenger.Default.Send(message);
-                }
+                CheckTable(db, "Records");
+                CheckTable(db, "Settings");
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                var message = new DatabaseCorruptedMessage(ex.Message);
+                Messenger.Default.Send(message);
+            }
+        }
+
+        private void CheckTable(SQLiteConnection connection, string tableName)
+        {
+            var cmd = new SQLiteCommand($"PRAGMA integrity_check({tableName});", connection);
+            var result = cmd.ExecuteScalar().ToString();
+            if (result != "ok")
+            {
+                var dbName = Path.GetFileNameWithoutExtension(_dataBaseName);
+                var message = new DatabaseCorruptedMessage(dbName);
+                Messenger.Default.Send(message);
             }
         }
 

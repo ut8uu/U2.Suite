@@ -10,6 +10,7 @@ using GalaSoft.MvvmLight.Messaging;
 using log4net;
 using Microsoft.EntityFrameworkCore;
 using U2.Core;
+using U2.Core.Models;
 using U2.Logger.Models;
 using U2.Resources;
 
@@ -26,6 +27,8 @@ namespace U2.Logger
                 AcceptButtonClickedMessage);
             Messenger.Default.Register<ExecuteCommandMessage>(this,
                 AcceptExecuteCommandMessage);
+            Messenger.Default.Register<DatabaseCorruptedMessage>(this,
+                AcceptDatabaseCorruptedMessage);
 
             OpenDatabase();
         }
@@ -132,6 +135,13 @@ namespace U2.Logger
             {
                 OpenDatabase();
             }
+        }
+
+        private void AcceptDatabaseCorruptedMessage(DatabaseCorruptedMessage message)
+        {
+            _logger.Debug($"Database {message.CorruptedDatabaseName} is corrupted.");
+
+
         }
 
         public async Task NewLog()
