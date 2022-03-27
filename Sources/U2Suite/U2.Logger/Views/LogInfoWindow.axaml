@@ -18,7 +18,7 @@
 
 	<Border Padding="10">
 		<StackPanel Orientation="Vertical">
-			<logger:LogInfoUserControl></logger:LogInfoUserControl>
+			<logger:LogInfoEditorUserControl></logger:LogInfoEditorUserControl>
 
 			<Border Padding="30 0 0 0" DockPanel.Dock="Bottom">
 				<StackPanel Orientation="Horizontal" Height="30">

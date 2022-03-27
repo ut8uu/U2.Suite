@@ -5,9 +5,9 @@ using Avalonia.Markup.Xaml;
 namespace U2.Logger
 {
     [PropertyChanged.DoNotNotify]
-    public partial class LogInfoUserControl : UserControl
+    public partial class LogInfoEditorUserControl : UserControl
     {
-        public LogInfoUserControl()
+        public LogInfoEditorUserControl()
         {
             InitializeComponent();
         }

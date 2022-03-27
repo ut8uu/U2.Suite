@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="500" d:DesignHeight="450"
 	         xmlns:logger="clr-namespace:U2.Logger"
-             x:Class="U2.Logger.LogInfoUserControl">
+             x:Class="U2.Logger.LogInfoEditorUserControl">
 
 	<Design.DataContext>
 		<logger:DemoLogInfoWindowViewModel/>

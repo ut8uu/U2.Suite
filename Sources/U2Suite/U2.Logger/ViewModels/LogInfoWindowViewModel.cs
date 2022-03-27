@@ -63,7 +63,8 @@ namespace U2.Logger
 
         protected override void OnPropertyChanged([CallerMemberName] string? propertyName = null)
         {
-            if (propertyName == nameof(LogName))
+            if (propertyName == nameof(LogName)
+                || propertyName == nameof(StationCallsign))
             {
                 CanExecute(throwException: true, out var _);
             }
@@ -168,6 +169,11 @@ namespace U2.Logger
             StationCallsign = nameof(StationCallsign);
             OperatorCallsign = nameof(OperatorCallsign);
             ActivatedReference = nameof(ActivatedReference);
+        }
+
+        protected override void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+        {
+
         }
     }
 }

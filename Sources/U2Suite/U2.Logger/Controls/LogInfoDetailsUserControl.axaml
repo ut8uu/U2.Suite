@@ -1,0 +1,34 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="350" d:DesignHeight="220"
+			 Width="350" Height="220"
+	         xmlns:logger="clr-namespace:U2.Logger"
+             x:Class="U2.Logger.LogInfoDetailsUserControl">
+	<Design.DataContext>
+		<logger:DemoLogInfoWindowViewModel/>
+	</Design.DataContext>
+
+	<StackPanel Orientation="Vertical">
+		<Grid RowDefinitions="20,20,20,20,100" ColumnDefinitions="150,200">
+			<TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding LogNameTitle}"></TextBlock>
+			<TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding LogName}"></TextBlock>
+
+			<TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding StationCallsignTitle}"></TextBlock>
+			<TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding StationCallsign}"></TextBlock>
+
+			<TextBlock Grid.Row="2" Grid.Column="0" Text="{Binding OperatorCallsignTitle}"></TextBlock>
+			<TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding OperatorCallsign}"></TextBlock>
+
+			<TextBlock Grid.Row="3" Grid.Column="0" Text="{Binding ActivatedReferenceTitle}"></TextBlock>
+			<TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding ActivatedReference}"></TextBlock>
+
+			<TextBlock Grid.Row="4" Grid.Column="0" Text="{Binding DescriptionTitle}"></TextBlock>
+			<TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding Description}"></TextBlock>
+
+		</Grid>
+
+		<logger:OkCancelButtonsUserControl></logger:OkCancelButtonsUserControl>
+	</StackPanel>	
+</UserControl>
