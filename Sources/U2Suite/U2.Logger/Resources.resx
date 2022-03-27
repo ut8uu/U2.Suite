@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ActivatedReference" xml:space="preserve">
+    <value>Activated reference</value>
+  </data>
+  <data name="ActivatedReferenceToolTip" xml:space="preserve">
+    <value>One or more comma separated references activated simultaneously, if applicable.</value>
+  </data>
   <data name="Band" xml:space="preserve">
     <value>Band</value>
   </data>
@@ -177,6 +183,12 @@
   <data name="Operator" xml:space="preserve">
     <value>Operator</value>
   </data>
+  <data name="OperatorCallsign" xml:space="preserve">
+    <value>Operator callsign</value>
+  </data>
+  <data name="OperatorCallsignToolTip" xml:space="preserve">
+    <value>One or more comma separated callsigns of the station's operator(s). </value>
+  </data>
   <data name="Rcv" xml:space="preserve">
     <value>Rcv</value>
   </data>
@@ -194,6 +206,12 @@
   </data>
   <data name="Snt" xml:space="preserve">
     <value>Snt</value>
+  </data>
+  <data name="StationCallsign" xml:space="preserve">
+    <value>Station callsign</value>
+  </data>
+  <data name="StationCallsignToolTip" xml:space="preserve">
+    <value>A callsign used during the operation.</value>
   </data>
   <data name="Timestamp" xml:space="preserve">
     <value>Timestamp</value>

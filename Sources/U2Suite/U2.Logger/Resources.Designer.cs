@@ -61,6 +61,24 @@ namespace U2.Logger {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Activated reference.
+        /// </summary>
+        internal static string ActivatedReference {
+            get {
+                return ResourceManager.GetString("ActivatedReference", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to One or more comma separated references activated simultaneously, if applicable..
+        /// </summary>
+        internal static string ActivatedReferenceToolTip {
+            get {
+                return ResourceManager.GetString("ActivatedReferenceToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Band.
         /// </summary>
         internal static string Band {
@@ -241,6 +259,24 @@ namespace U2.Logger {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Operator callsign.
+        /// </summary>
+        internal static string OperatorCallsign {
+            get {
+                return ResourceManager.GetString("OperatorCallsign", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to One or more comma separated callsigns of the station&apos;s operator(s). .
+        /// </summary>
+        internal static string OperatorCallsignToolTip {
+            get {
+                return ResourceManager.GetString("OperatorCallsignToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Rcv.
         /// </summary>
         internal static string Rcv {
@@ -291,6 +327,24 @@ namespace U2.Logger {
         internal static string Snt {
             get {
                 return ResourceManager.GetString("Snt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Station callsign.
+        /// </summary>
+        internal static string StationCallsign {
+            get {
+                return ResourceManager.GetString("StationCallsign", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A callsign used during the operation..
+        /// </summary>
+        internal static string StationCallsignToolTip {
+            get {
+                return ResourceManager.GetString("StationCallsignToolTip", resourceCulture);
             }
         }
         

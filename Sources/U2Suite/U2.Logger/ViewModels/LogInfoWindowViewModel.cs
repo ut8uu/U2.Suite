@@ -12,9 +12,9 @@ using U2.Resources;
 
 namespace U2.Logger
 {
-    public sealed class LogInfoWindowViewModel : ViewModelBase
+    public class LogInfoWindowViewModel : ViewModelBase
     {
-        private Window _owner;
+        private Window? _owner;
 
         public LogInfoWindowViewModel() 
         {
@@ -37,6 +37,12 @@ namespace U2.Logger
         public string WindowTitle { get; set; } = string.Empty;
         public string LogNameTitle { get; set; } = Resources.LogName;
         public string LogNameToolTip { get; set; } = Resources.LogNameToolTip;
+        public string OperatorCallsignTitle { get; set; } = Resources.OperatorCallsign;
+        public string OperatorCallsignToolTip { get; set; } = Resources.OperatorCallsignToolTip;
+        public string StationCallsignTitle { get; set; } = Resources.StationCallsign;
+        public string StationCallsignToolTip { get; set; } = Resources.StationCallsignToolTip;
+        public string ActivatedReferenceTitle { get; set; } = Resources.ActivatedReference;
+        public string ActivatedReferenceToolTip { get; set; } = Resources.ActivatedReferenceToolTip;
         public string DescriptionTitle { get; set; } = Resources.Description;
         public string DescriptionToolTip { get; set; } = Resources.DescriptionToolTip;
         public string CancelButtonTitle { get; set; } = Resources.Cancel;
@@ -51,6 +57,9 @@ namespace U2.Logger
 
         public string LogName { get; set; } = default!;
         public string Description { get; set; } = default!;
+        public string StationCallsign { get; set; } = default!;
+        public string OperatorCallsign { get; set; } = default!;
+        public string ActivatedReference { get; set; } = default!;
 
         protected override void OnPropertyChanged([CallerMemberName] string? propertyName = null)
         {
@@ -134,6 +143,18 @@ namespace U2.Logger
         public void CloseWindow()
         {
             Owner.Close();
+        }
+    }
+
+    public sealed class DemoLogInfoWindowViewModel : LogInfoWindowViewModel
+    {
+        public DemoLogInfoWindowViewModel()
+        {
+            LogName = nameof(LogName);
+            Description = nameof(Description);
+            StationCallsign = nameof(StationCallsign);
+            OperatorCallsign = nameof(OperatorCallsign);
+            ActivatedReference = nameof(ActivatedReference);
         }
     }
 }
