@@ -32,7 +32,7 @@ public class LogListViewModel : ViewModelBase
 
     public LogInfo? SelectedItem { get; set; }
 
-    internal static ObservableCollection<LogInfo> LoadLogs(string logDirectory)
+    private static ObservableCollection<LogInfo> LoadLogs(string logDirectory)
     {
         var result = new ObservableCollection<LogInfo>();
 
