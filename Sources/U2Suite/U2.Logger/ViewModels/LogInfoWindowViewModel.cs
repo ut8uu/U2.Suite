@@ -143,6 +143,9 @@ namespace U2.Logger
             {
                 LogName = this.LogName,
                 Description = this.Description,
+                StationCallsign = this.StationCallsign,
+                OperatorCallsign = this.OperatorCallsign,
+                ActivatedReference = this.ActivatedReference,
             };
             var message = new ExecuteCommandMessage(CommandToExecute, logInfo);
             Messenger.Default.Send(message);
