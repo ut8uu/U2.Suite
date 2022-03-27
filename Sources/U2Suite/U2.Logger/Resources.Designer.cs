@@ -178,6 +178,15 @@ namespace U2.Logger {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to A station callsign cannot be empty..
+        /// </summary>
+        internal static string EmptyStationCallsignException {
+            get {
+                return ResourceManager.GetString("EmptyStationCallsignException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Freq (MHz).
         /// </summary>
         internal static string FreqMhz {

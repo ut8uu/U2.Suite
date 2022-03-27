@@ -156,6 +156,9 @@
   <data name="EmptyLogNameException" xml:space="preserve">
     <value>A log name cannot be empty.</value>
   </data>
+  <data name="EmptyStationCallsignException" xml:space="preserve">
+    <value>A station callsign cannot be empty.</value>
+  </data>
   <data name="FreqMhz" xml:space="preserve">
     <value>Freq (MHz)</value>
   </data>

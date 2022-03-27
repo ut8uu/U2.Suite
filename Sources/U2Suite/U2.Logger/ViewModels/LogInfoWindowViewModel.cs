@@ -70,7 +70,7 @@ namespace U2.Logger
             base.OnPropertyChanged(propertyName);
         }
 
-        private bool CanExecute(bool throwException, out string message)
+        internal bool CanExecute(bool throwException, out string message)
         {
             if (string.IsNullOrEmpty(LogName))
             {
@@ -79,6 +79,16 @@ namespace U2.Logger
                     throw new Avalonia.Data.DataValidationException(Resources.EmptyLogNameException);
                 }
                 message = Resources.EmptyLogNameException;
+                return false;
+            }
+
+            if (string.IsNullOrEmpty(StationCallsign))
+            {
+                if (throwException)
+                {
+                    throw new Avalonia.Data.DataValidationException(Resources.EmptyStationCallsignException);
+                }
+                message = Resources.EmptyStationCallsignException;
                 return false;
             }
 
