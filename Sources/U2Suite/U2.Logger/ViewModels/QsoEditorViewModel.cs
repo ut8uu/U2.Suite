@@ -14,9 +14,9 @@ using U2.Core;
 
 namespace U2.Logger
 {
-    public sealed class QsoEditorViewModel : ViewModelBase
+    public class QsoEditorViewModel : ViewModelBase
     {
-        private LogRecordDbo _record = default!;
+        protected LogRecordDbo _record = default!;
         private bool _internalChange;
         ILog _logger = LogManager.GetLogger("Logger");
 
@@ -54,6 +54,7 @@ namespace U2.Logger
         public string ModeTitle { get; set; } = Resources.Mode;
         public string BandTitle { get; set; } = Resources.Band;
         public string TimestampTitle { get; set; } = Resources.Timestamp;
+        public string WindowTitle { get; set; } = Resources.QsoEditorWindowTitle;
 
         public string Callsign { get; set; } = default!;
         public string RstSent { get; set; } = default!;
@@ -76,7 +77,7 @@ namespace U2.Logger
                 ConversionHelper.AllBands.Select(b => b.Name)
                 .OrderBy(name => name));
 
-        public void OkButtonClick()
+        public void ExecuteOkAction()
         {
             if (string.IsNullOrWhiteSpace(this.Frequency))
             {
@@ -106,7 +107,7 @@ namespace U2.Logger
             Owner.Close();
         }
 
-        public void CancelButtonClick()
+        public void CloseWindow()
         {
             Owner.Close();
         }
@@ -131,6 +132,11 @@ namespace U2.Logger
                 case nameof(Frequency):
                     if (!string.IsNullOrEmpty(Frequency))
                     {
+                        if (Frequency == "0")
+                        {
+                            return;
+                        }
+
                         var bandName = string.Empty;
                         var freq = StringConverter.StringToDouble(Frequency);
                         if (freq > 0)
@@ -198,6 +204,30 @@ namespace U2.Logger
         {
             return IsCallsignValid()
                    && IsTimestampValid();
+        }
+    }
+
+    public sealed class DemoQsoEditorViewModel : QsoEditorViewModel
+    {
+        public DemoQsoEditorViewModel()
+        {
+            _record = new LogRecordDbo
+            {
+                Callsign = $"UT{DateTime.UtcNow.Millisecond}UU",
+                Band = "80m",
+                Mode = "CW",
+                Timestamp = DateTime.UtcNow,
+                Frequency = 3.5,
+                RecordId = Guid.NewGuid(),
+                Comments = "",
+                Operator = "UT8UU",
+                RstReceived = "599",
+                RstSent = "599",
+            };
+        }
+
+        protected override void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+        {
         }
     }
 }

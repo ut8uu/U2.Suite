@@ -10,14 +10,21 @@ using GalaSoft.MvvmLight.Messaging;
 
 namespace U2.Logger
 {
-    public sealed class LogContentWindowViewModel : ViewModelBase
+    public class LogContentViewModel : ViewModelBase
     {
-        public LogContentWindowViewModel()
+        public LogContentViewModel()
         {
-            FullList = new ObservableCollection<LogRecordDbo>(LoggerDbContext.Instance.Records);
+            try
+            {
+                FullList = new ObservableCollection<LogRecordDbo>(LoggerDbContext.Instance.Records);
 
-            Messenger.Default.Register<ExecuteCommandMessage>(this,
-                AcceptExecuteCommandMessage);
+                Messenger.Default.Register<ExecuteCommandMessage>(this,
+                    AcceptExecuteCommandMessage);
+            }
+            catch
+            {
+
+            }
         }
 
         public Window Owner { get; set; }
@@ -104,6 +111,36 @@ namespace U2.Logger
                 SelectedItems.Select(i => i.RecordId).ToArray());
             Messenger.Default.Send(message);
             SelectedItems = new List<LogRecordDbo>();
+        }
+    }
+
+    public sealed class DemoLogContentViewModel : LogContentViewModel
+    {
+        public DemoLogContentViewModel()
+        {
+            FullList = new ObservableCollection<LogRecordDbo>
+            {
+                GetRandomRecord(),
+                GetRandomRecord(),
+                GetRandomRecord(),
+            };
+        }
+
+        private LogRecordDbo GetRandomRecord()
+        {
+            return new LogRecordDbo
+            {
+                Callsign = $"UT{DateTime.UtcNow.Millisecond}UU",
+                Band = "80m",
+                Mode = "CW",
+                Timestamp = DateTime.UtcNow,
+                Frequency = 3.5,
+                RecordId = Guid.NewGuid(),
+                Comments = "",
+                Operator = "UT8UU",
+                RstReceived = "599",
+                RstSent = "599",
+            };
         }
     }
 }

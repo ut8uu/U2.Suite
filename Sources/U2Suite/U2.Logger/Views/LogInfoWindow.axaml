@@ -20,16 +20,7 @@
 		<StackPanel Orientation="Vertical">
 			<logger:LogInfoEditorUserControl></logger:LogInfoEditorUserControl>
 
-			<Border Padding="30 0 0 0" DockPanel.Dock="Bottom">
-				<StackPanel Orientation="Horizontal" Height="30">
-					<Button Name="OkButton" Margin="3 1"
-							Command="{Binding ExecuteOkAction}"
-							Content="{Binding OkButtonTitle}"></Button>
-					<Button Name="CancelButton" IsDefault="True" Margin="3 1"
-							Command="{Binding CloseWindow}"
-							Content="{Binding CancelButtonTitle}"></Button>
-				</StackPanel>
-			</Border>
+			<logger:OkCancelButtonsUserControl></logger:OkCancelButtonsUserControl>
 		</StackPanel>
 	</Border>
 </Window>
