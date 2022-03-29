@@ -13,6 +13,12 @@ namespace U2.Core
             return Path.Combine(basePath, "U2Suite", "ApplicationData", applicationName);
         }
 
+        /// <summary>
+        /// Calculates the path to the database folder.
+        /// Without a trailing slash.
+        /// </summary>
+        /// <param name="applicationName">A name of the application to get the folder for.</param>
+        /// <returns>Returns the path to the database folder for the given application.</returns>
         public static string GetDatabaseFolderPath(string applicationName)
         {
             if (GetDatabaseFolderFunc != null)
