@@ -134,6 +134,15 @@ namespace U2.Logger
                 var switchLogMessage = new ExecuteCommandMessage(CommandToExecute.SwitchLog, null);
                 Messenger.Default.Send(switchLogMessage);
             }
+            else if (message.CommandToExecute == CommandToExecute.UpdateLog)
+            {
+                if (message.CommandParameters is not LogInfo logInfo)
+                {
+                    return;
+                }
+
+                LogInfoHelper.SaveLogInfo(logInfo.LogName, logInfo);
+            }
             else if (message.CommandToExecute == CommandToExecute.SwitchLog)
             {
                 OpenDatabase();
