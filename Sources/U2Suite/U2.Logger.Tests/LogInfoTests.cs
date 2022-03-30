@@ -17,7 +17,7 @@ namespace U2.Logger.Tests
     public sealed class LogInfoTests
     {
         [TestMethod]
-        public void LoadFromGoodFile()
+        public void SaveLoadLogInfo()
         {
             using var tempDirectory = new TempDirectory();
             FileSystemHelper.GetDatabaseFolderFunc = (applicationName) => tempDirectory.TempPath;
@@ -33,13 +33,8 @@ namespace U2.Logger.Tests
                 OperatorCallsign = "4",
                 StationCallsign = "5",
             };
-            var logInfoFile = $"1.json";
-            var logInfoPath = Path.Combine(tempDirectory.TempPath, logInfoFile);
-            using (var stream = new FileStream(logInfoPath, FileMode.Create, FileAccess.Write, FileShare.Delete))
-            {
-                JsonSerializer.Serialize(stream, logInfo);
-            }
 
+            LogInfoHelper.SaveLogInfo("1", logInfo);
             var loadedObject = LogInfoHelper.LoadLogInfo("1");
 
             var compareLogic = new CompareLogic();
@@ -68,6 +63,5 @@ namespace U2.Logger.Tests
 
             Assert.ThrowsException<LogInfoNotFoundException>(() => LogInfoHelper.LoadLogInfo("NotExistingFile"));
         }
-
     }
 }

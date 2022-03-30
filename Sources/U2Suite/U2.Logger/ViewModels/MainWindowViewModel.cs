@@ -111,7 +111,7 @@ namespace U2.Logger
             else if (message.CommandToExecute == CommandToExecute.CreateLog)
             {
                 // create a new log
-                if (!(message.CommandParameters is LogInfo logInfo))
+                if (message.CommandParameters is not LogInfo logInfo)
                 {
                     return;
                 }
@@ -126,13 +126,9 @@ namespace U2.Logger
                     return;
                 }
 
-                var logName = Path.GetFileNameWithoutExtension(logInfo.LogName);
-                var logInfoFileName = string.Format(CommonConstants.LogInfoFileFmt, logName);
-                var logInfoPath = Path.Combine(dbDirectory, logInfoFileName);
-                var logInfoJsonContent = JsonSerializer.Serialize(logInfo);
-                File.WriteAllText(logInfoPath, logInfoJsonContent);
+                LogInfoHelper.SaveLogInfo(logInfo.LogName, logInfo);
 
-                AppSettings.Default.LogName = logName;
+                AppSettings.Default.LogName = logInfo.LogName;
                 AppSettings.Default.Save();
 
                 var switchLogMessage = new ExecuteCommandMessage(CommandToExecute.SwitchLog, null);
@@ -164,6 +160,12 @@ namespace U2.Logger
         public async Task OpenLog()
         {
             var form = new LogListWindow();
+            await form.ShowDialog(Owner);
+        }
+
+        public async Task UpdateLog()
+        {
+            var form = new LogInfoWindow(CommandToExecute.UpdateLog);
             await form.ShowDialog(Owner);
         }
     }

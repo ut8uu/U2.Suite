@@ -14,6 +14,7 @@ namespace U2.Logger
 {
     public class LogInfoWindowViewModel : ViewModelBase
     {
+        private bool _initiating = false;
         private Window? _owner;
 
         public LogInfoWindowViewModel() 
@@ -32,6 +33,18 @@ namespace U2.Logger
                 CommandToExecute.UpdateLog => Resources.UpdateLog,
                 _ => throw new ArgumentOutOfRangeException(nameof(commandToExecute)),
             };
+
+            if (commandToExecute == CommandToExecute.UpdateLog)
+            {
+                var currentLog = LogInfoHelper.LoadLogInfo(AppSettings.Default.LogName);
+                _initiating = true;
+                LogName = currentLog.LogName ?? String.Empty;
+                StationCallsign = currentLog.StationCallsign ?? String.Empty;
+                OperatorCallsign = currentLog.OperatorCallsign ?? String.Empty;
+                ActivatedReference = currentLog.ActivatedReference ?? String.Empty;
+                Description = currentLog.Description ?? String.Empty;
+                _initiating = false;
+            }
         }
 
         public string WindowTitle { get; set; } = string.Empty;
@@ -63,6 +76,11 @@ namespace U2.Logger
 
         protected override void OnPropertyChanged([CallerMemberName] string? propertyName = null)
         {
+            if (_initiating)
+            {
+                return;
+            }
+
             if (propertyName == nameof(LogName)
                 || propertyName == nameof(StationCallsign))
             {

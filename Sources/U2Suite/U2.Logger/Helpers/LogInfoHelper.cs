@@ -22,12 +22,32 @@ namespace U2.Logger
         public static LogInfo LoadLogInfo(string logName)
         {
             var databaseDirectory = FileSystemHelper.GetDatabaseFolderPath(ApplicationNames.LoggerOsx);
-            var logFileName = $"{logName}.json";
+            var logFileName = string.Format(CommonConstants.LogInfoFileFmt, logName);
             var logInfoPath = Path.Combine(databaseDirectory, logFileName);
             try
             {
                 using var stream = new FileStream(logInfoPath, FileMode.Open, FileAccess.Read, FileShare.Delete);
                 return JsonSerializer.Deserialize<LogInfo>(stream);
+            }
+            catch (FileNotFoundException)
+            {
+                throw new LogInfoNotFoundException(logName);
+            }
+            catch (JsonException)
+            {
+                throw new BadLogInfoException(logName);
+            }
+        }
+
+        public static void SaveLogInfo(string logName, LogInfo logInfo)
+        {
+            var databaseDirectory = FileSystemHelper.GetDatabaseFolderPath(ApplicationNames.LoggerOsx);
+            var logFileName = string.Format(CommonConstants.LogInfoFileFmt, logName);
+            var logInfoPath = Path.Combine(databaseDirectory, logFileName);
+            try
+            {
+                using var stream = new FileStream(logInfoPath, FileMode.Create, FileAccess.Write, FileShare.Delete);
+                JsonSerializer.Serialize(stream, logInfo);
             }
             catch (FileNotFoundException)
             {
