@@ -10,20 +10,13 @@ using U2.Core;
 using U2.Core.Models;
 using U2.Logger.Models;
 using U2.Resources;
+using U2.Tests.Common;
 
 namespace U2.Logger.Tests
 {
     [TestClass]
     public class MainWindowViewModelTests
     {
-        private static string GetLocalTempPath()
-        {
-            var localDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            var tempDirectory = Path.Combine(localDirectory, "Temp", Path.GetRandomFileName());
-            Directory.CreateDirectory(tempDirectory);
-            return tempDirectory;
-        }
-
         private static MainWindowViewModel GetViewModel()
         {
             var viewModel = new MainWindowViewModel();
@@ -45,7 +38,7 @@ namespace U2.Logger.Tests
             var model = GetViewModel();
             var parameters = GetLogInfo();
 
-            var tempPath = GetLocalTempPath();
+            var tempPath = TestHelpers.GetLocalTempPath();
             FileSystemHelper.GetDatabaseFolderFunc = (applicationName) => tempPath;
 
             var logDirectory = FileSystemHelper.GetDatabaseFolderPath(ApplicationNames.LoggerLinux);
@@ -68,7 +61,7 @@ namespace U2.Logger.Tests
         [TestMethod]
         public void SwitchToNotExistingLog()
         {
-            var tempPath = GetLocalTempPath();
+            var tempPath = TestHelpers.GetLocalTempPath();
             FileSystemHelper.GetDatabaseFolderFunc = (applicationName) => tempPath;
 
             var logName = "SwitchToNotExistingLog";

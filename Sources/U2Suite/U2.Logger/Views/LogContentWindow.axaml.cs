@@ -8,7 +8,7 @@ namespace U2.Logger
     [PropertyChanged.DoNotNotify]
     public partial class LogContentWindow : Window
     {
-        private LogContentWindowViewModel _viewModel = default!;
+        private LogContentViewModel _viewModel = default!;
 
         private DataGrid _mainGrid;
 
@@ -18,7 +18,7 @@ namespace U2.Logger
 #if DEBUG
             this.AttachDevTools();
 #endif
-            _viewModel = new LogContentWindowViewModel();
+            _viewModel = new LogContentViewModel();
             _viewModel.Owner = this;
             DataContext = _viewModel;
 

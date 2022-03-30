@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="Avalonia.Headless" Version="0.10.12" />
+    <PackageReference Include="CompareNETObjects" Version="4.76.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.0.0" />
     <PackageReference Include="MSTest.TestAdapter" Version="2.2.8" />
     <PackageReference Include="MSTest.TestFramework" Version="2.2.8" />

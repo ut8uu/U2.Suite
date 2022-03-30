@@ -286,6 +286,15 @@ namespace U2.Logger {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Edit QSO.
+        /// </summary>
+        internal static string QsoEditorWindowTitle {
+            get {
+                return ResourceManager.GetString("QsoEditorWindowTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Rcv.
         /// </summary>
         internal static string Rcv {

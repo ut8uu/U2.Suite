@@ -192,6 +192,9 @@
   <data name="OperatorCallsignToolTip" xml:space="preserve">
     <value>One or more comma separated callsigns of the station's operator(s). </value>
   </data>
+  <data name="QsoEditorWindowTitle" xml:space="preserve">
+    <value>Edit QSO</value>
+  </data>
   <data name="Rcv" xml:space="preserve">
     <value>Rcv</value>
   </data>

@@ -51,6 +51,9 @@
 		<ProjectReference Include="..\U2.Resources\U2.Resources.csproj" />
 	</ItemGroup>
 	<ItemGroup>
+		<Compile Update="Controls\LogInfoEditorUserControl.axaml.cs">
+		  <DependentUpon>LogInfoEditorUserControl.axaml</DependentUpon>
+		</Compile>
 		<Compile Update="Resources.Designer.cs">
 			<DesignTime>True</DesignTime>
 			<AutoGen>True</AutoGen>
