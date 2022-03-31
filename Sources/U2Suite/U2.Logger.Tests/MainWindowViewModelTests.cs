@@ -32,6 +32,13 @@ namespace U2.Logger.Tests
             };
         }
 
+        [TestCleanup]
+        public void CleanupTest()
+        {
+            var tempPath = TestHelpers.GetLocalTempPath();
+            Directory.Delete(tempPath, recursive: true);
+        }
+
         [TestMethod]
         public void CreateNewLogSuccess()
         {
@@ -54,6 +61,8 @@ namespace U2.Logger.Tests
                 $"Database file {expectedDatabaseFile} does not exist.");
             Assert.IsTrue(File.Exists(expectedLogInfoFile),
                 $"LogInfo file {expectedLogInfoFile} does not exist.");
+
+            Assert.IsTrue(model.WindowTitle.Contains(parameters.LogName));
 
             Messenger.Default.Send(new ExecuteCommandMessage(CommandToExecute.ShutDown));
         }
@@ -106,6 +115,18 @@ namespace U2.Logger.Tests
 
             // settings should point to the current log
             Assert.AreEqual(parameters.LogName, AppSettings.Default.LogName);
+        }
+
+        [TestMethod]
+        public void UpdateLog()
+        {
+            var model = GetViewModel();
+            var parameters = GetLogInfo();
+
+            var message = new ExecuteCommandMessage(CommandToExecute.UpdateLog, parameters);
+            Messenger.Default.Send(message);
+
+            Assert.IsTrue(model.WindowTitle.Contains(parameters.LogName));
         }
     }
 }

@@ -35,7 +35,7 @@ namespace U2.Logger
 
         private void OpenDatabase()
         {
-            WindowTitle = $"U2.Logger - {AppSettings.Default.LogName}";
+            SetWindowTitle();
             try
             {
                 LoggerDbContext.Reset();
@@ -45,6 +45,11 @@ namespace U2.Logger
             {
                 _logger.Error(ex);
             }
+        }
+
+        private void SetWindowTitle()
+        {
+            WindowTitle = $"U2.Logger - {AppSettings.Default.LogName}";
         }
 
         public Window? Owner { get; set; } = null;
@@ -142,6 +147,7 @@ namespace U2.Logger
                 }
 
                 LogInfoHelper.SaveLogInfo(logInfo.LogName, logInfo);
+                SetWindowTitle();
             }
             else if (message.CommandToExecute == CommandToExecute.SwitchLog)
             {

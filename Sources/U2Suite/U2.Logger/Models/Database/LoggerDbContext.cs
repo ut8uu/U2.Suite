@@ -93,7 +93,6 @@ namespace U2.Logger
             catch (Exception ex)
             {
                 db?.Close();
-                db = null;
                 Console.WriteLine(ex.Message);
                 var message = new DatabaseCorruptedMessage(ex.Message);
                 Messenger.Default.Send(message);
