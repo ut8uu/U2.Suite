@@ -37,8 +37,9 @@ Scenario: Save button clicked on correct data
 
 Scenario: Can handle bad frequency
 	Given All fields are not empty
+	And Realtime is turned 'off'
 	And Frequency is 8
-	Then Exception with text 'Frequency not recognized as a valid one.' was thrown
+	Then Exception with text 'Frequency 8 not recognized as a valid one.' was thrown
 
 Scenario Outline: Can convert good frequency
 	Given All fields are not empty

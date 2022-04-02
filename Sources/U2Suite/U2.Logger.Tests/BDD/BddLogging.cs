@@ -209,6 +209,23 @@ namespace U2.Logger.Tests
             Assert.AreEqual(0, db.Records.Count());
         }
 
+        [Given(@"Realtime is turned '([^']*)'")]
+        public void GivenRealtimeIsTurned(string onOffValue)
+        {
+            switch (onOffValue)
+            {
+                case "on":
+                    _textInputVM.Realtime = true;
+                    break;
+                case "off":
+                    _textInputVM.Realtime = false;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException($"A value expected to be 'on' or 'off'. Actual value is '{onOffValue}'");
+            }
+        }
+
+
         [Then("All fields are empty")]
         public void ThenAllFieldsAreEmpty()
         {
