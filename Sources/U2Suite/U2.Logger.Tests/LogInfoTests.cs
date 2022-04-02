@@ -16,17 +16,31 @@ namespace U2.Logger.Tests
     [TestClass]
     public sealed class LogInfoTests
     {
+        private string _tempDirectory = TestHelpers.GetLocalTempPath();
+
+        [TestInitialize]
+        public void InitTest()
+        {
+            FileSystemHelper.GetDatabaseFolderFunc = (applicationName) => _tempDirectory;
+
+            Directory.Delete(_tempDirectory, true);
+            Directory.CreateDirectory(_tempDirectory);
+        }
+
+        [TestCleanup]
+        public void CleanupTest()
+        {
+            Directory.Delete(_tempDirectory, recursive: true);
+        }
+
         [TestMethod]
         public void SaveLoadLogInfo()
         {
-            using var tempDirectory = new TempDirectory();
-            FileSystemHelper.GetDatabaseFolderFunc = (applicationName) => tempDirectory.TempPath;
-
-            var logInfo = new LogInfo
+            var expectedLogInfo = new LogInfo
             {
                 ActivatedReference = "1",
                 Description = "2",
-                LogName = "3",
+                LogName = "LogName",
                 MaxDate = DateTime.MaxValue,
                 MinDate = DateTime.MinValue,
                 NumberOfRecords = 1,
@@ -34,33 +48,26 @@ namespace U2.Logger.Tests
                 StationCallsign = "5",
             };
 
-            LogInfoHelper.SaveLogInfo("1", logInfo);
-            var loadedObject = LogInfoHelper.LoadLogInfo("1");
+            LogInfoHelper.SaveLogInfo(expectedLogInfo);
+            var currentLogInfo = LogInfoHelper.LoadLogInfo(expectedLogInfo.LogName);
 
-            var compareLogic = new CompareLogic();
-            var comparisonResult = compareLogic.Compare(logInfo, loadedObject);
-            Assert.IsTrue(comparisonResult.AreEqual, comparisonResult.DifferencesString);
+            TestHelpers.AssertAreEqual(expectedLogInfo, currentLogInfo);
         }
 
         [TestMethod]
         public void LoadFromBadFile()
         {
-            using var tempDirectory = new TempDirectory();
-            FileSystemHelper.GetDatabaseFolderFunc = (applicationName) => tempDirectory.TempPath;
-
-            var logInfoFile = $"1.json";
-            var logInfoPath = Path.Combine(tempDirectory.TempPath, logInfoFile);
+            var logName = "1";
+            var logInfoFile = LogInfoHelper.FormatLogInfoFileName(logName);
+            var logInfoPath = Path.Combine(_tempDirectory, logInfoFile);
             File.WriteAllText(logInfoPath, "123");
 
-            Assert.ThrowsException<BadLogInfoException>(() => LogInfoHelper.LoadLogInfo("1"));
+            Assert.ThrowsException<BadLogInfoException>(() => LogInfoHelper.LoadLogInfo(logName));
         }
 
         [TestMethod]
         public void LoadFromNotExistingFile()
         {
-            using var tempDirectory = new TempDirectory();
-            FileSystemHelper.GetDatabaseFolderFunc = (applicationName) => tempDirectory.TempPath;
-
             Assert.ThrowsException<LogInfoNotFoundException>(() => LogInfoHelper.LoadLogInfo("NotExistingFile"));
         }
     }

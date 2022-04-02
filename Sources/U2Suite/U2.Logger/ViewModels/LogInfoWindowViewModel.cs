@@ -36,15 +36,19 @@ namespace U2.Logger
 
             if (commandToExecute == CommandToExecute.UpdateLog)
             {
-                var currentLog = LogInfoHelper.LoadLogInfo(AppSettings.Default.LogName);
-                _initiating = true;
-                LogName = currentLog.LogName ?? String.Empty;
-                StationCallsign = currentLog.StationCallsign ?? String.Empty;
-                OperatorCallsign = currentLog.OperatorCallsign ?? String.Empty;
-                ActivatedReference = currentLog.ActivatedReference ?? String.Empty;
-                Description = currentLog.Description ?? String.Empty;
-                _initiating = false;
+                SetLogInfo(LogInfoHelper.LoadLogInfo(AppSettings.Default.LogName));
             }
+        }
+
+        public void SetLogInfo(LogInfo logInfo)
+        {
+            _initiating = true;
+            LogName = logInfo.LogName ?? String.Empty;
+            StationCallsign = logInfo.StationCallsign ?? String.Empty;
+            OperatorCallsign = logInfo.OperatorCallsign ?? String.Empty;
+            ActivatedReference = logInfo.ActivatedReference ?? String.Empty;
+            Description = logInfo.Description ?? String.Empty;
+            _initiating = false;
         }
 
         public string WindowTitle { get; set; } = string.Empty;

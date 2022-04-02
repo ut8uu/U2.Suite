@@ -4,6 +4,8 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using KellermanSoftware.CompareNetObjects;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace U2.Tests.Common
 {
@@ -15,6 +17,13 @@ namespace U2.Tests.Common
             var tempDirectory = Path.Combine(localDirectory, "Temp", Path.GetRandomFileName());
             Directory.CreateDirectory(tempDirectory);
             return tempDirectory;
+        }
+
+        public static void AssertAreEqual<T>(T expectedObject, T actualObject)
+        {
+            var compareLogic = new CompareLogic();
+            var comparisonResult = compareLogic.Compare(expectedObject, actualObject);
+            Assert.IsTrue(comparisonResult.AreEqual, comparisonResult.DifferencesString);
         }
     }
 }

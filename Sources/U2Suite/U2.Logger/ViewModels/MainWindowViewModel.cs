@@ -131,7 +131,7 @@ namespace U2.Logger
                     return;
                 }
 
-                LogInfoHelper.SaveLogInfo(logInfo.LogName, logInfo);
+                LogInfoHelper.SaveLogInfo(logInfo);
 
                 AppSettings.Default.LogName = logInfo.LogName;
                 AppSettings.Default.Save();
@@ -146,7 +146,7 @@ namespace U2.Logger
                     return;
                 }
 
-                LogInfoHelper.SaveLogInfo(logInfo.LogName, logInfo);
+                LogInfoHelper.SaveLogInfo(logInfo);
                 SetWindowTitle();
             }
             else if (message.CommandToExecute == CommandToExecute.SwitchLog)
@@ -155,7 +155,7 @@ namespace U2.Logger
             }
             else if (message.CommandToExecute == CommandToExecute.ShutDown)
             {
-                LoggerDbContext.Instance.ShutDown();
+                LoggerDbContext.Instance?.ShutDown();
             }
         }
 

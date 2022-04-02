@@ -39,10 +39,10 @@ namespace U2.Logger
             }
         }
 
-        public static void SaveLogInfo(string logName, LogInfo logInfo)
+        public static void SaveLogInfo(LogInfo logInfo)
         {
             var databaseDirectory = FileSystemHelper.GetDatabaseFolderPath(ApplicationNames.LoggerOsx);
-            var logFileName = string.Format(CommonConstants.LogInfoFileFmt, logName);
+            var logFileName = FormatLogInfoFileName(logInfo.LogName);
             var logInfoPath = Path.Combine(databaseDirectory, logFileName);
             try
             {
@@ -51,13 +51,17 @@ namespace U2.Logger
             }
             catch (FileNotFoundException)
             {
-                throw new LogInfoNotFoundException(logName);
+                throw new LogInfoNotFoundException(logInfo.LogName);
             }
             catch (JsonException)
             {
-                throw new BadLogInfoException(logName);
+                throw new BadLogInfoException(logInfo.LogName);
             }
         }
 
+        public static string FormatLogInfoFileName(string logName)
+        {
+            return string.Format(CommonConstants.LogInfoFileFmt, logName);
+        }
     }
 }

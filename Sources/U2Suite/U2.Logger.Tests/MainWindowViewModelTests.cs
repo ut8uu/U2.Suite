@@ -23,13 +23,14 @@ namespace U2.Logger.Tests
             return viewModel;
         }
 
-        private static LogInfo GetLogInfo()
+        [TestInitialize]
+        public void InitTest()
         {
-            return new LogInfo
-            {
-                Description = String.Empty,
-                LogName = DateTime.UtcNow.ToString("yyyy-MM-dd-HH-mm-ss") + DateTime.UtcNow.Millisecond
-            };
+            var tempPath = TestHelpers.GetLocalTempPath();
+            FileSystemHelper.GetDatabaseFolderFunc = (applicationName) => tempPath;
+
+            Directory.Delete(tempPath, true);
+            Directory.CreateDirectory(tempPath);
         }
 
         [TestCleanup]
@@ -43,7 +44,7 @@ namespace U2.Logger.Tests
         public void CreateNewLogSuccess()
         {
             var model = GetViewModel();
-            var parameters = GetLogInfo();
+            var parameters = LogInfoTestHelper.GetLogInfo();
 
             var tempPath = TestHelpers.GetLocalTempPath();
             FileSystemHelper.GetDatabaseFolderFunc = (applicationName) => tempPath;
@@ -70,9 +71,6 @@ namespace U2.Logger.Tests
         [TestMethod]
         public void SwitchToNotExistingLog()
         {
-            var tempPath = TestHelpers.GetLocalTempPath();
-            FileSystemHelper.GetDatabaseFolderFunc = (applicationName) => tempPath;
-
             var logName = "SwitchToNotExistingLog";
             var logFileName = $"{logName}{CommonConstants.DatabaseExtension}";
             var logDirectory = FileSystemHelper.GetDatabaseFolderPath(ApplicationNames.LoggerLinux);
@@ -95,7 +93,7 @@ namespace U2.Logger.Tests
 
             var expectedLogName = AppSettings.Default.LogName;
 
-            var parameters = GetLogInfo();
+            var parameters = LogInfoTestHelper.GetLogInfo();
 
             var logDirectory = FileSystemHelper.GetDatabaseFolderPath(ApplicationNames.LoggerLinux);
             var logFileName = $"{parameters.LogName}{CommonConstants.DatabaseExtension}";
@@ -121,12 +119,19 @@ namespace U2.Logger.Tests
         public void UpdateLog()
         {
             var model = GetViewModel();
-            var parameters = GetLogInfo();
+            var expectedLogInfo = LogInfoTestHelper.GetLogInfo();
+            LogInfoHelper.SaveLogInfo(expectedLogInfo);
 
-            var message = new ExecuteCommandMessage(CommandToExecute.UpdateLog, parameters);
+            expectedLogInfo.OperatorCallsign = "UT3UBR";
+            expectedLogInfo.StationCallsign = "UT3UBR/P";
+            expectedLogInfo.ActivatedReference = "URFF-0001";
+            expectedLogInfo.Description = "updated description";
+
+            var message = new ExecuteCommandMessage(CommandToExecute.UpdateLog, expectedLogInfo);
             Messenger.Default.Send(message);
 
-            Assert.IsTrue(model.WindowTitle.Contains(parameters.LogName));
+            var currentLogInfo = LogInfoHelper.LoadLogInfo(AppSettings.Default.LogName);
+            TestHelpers.AssertAreEqual(expectedLogInfo, currentLogInfo);
         }
     }
 }
