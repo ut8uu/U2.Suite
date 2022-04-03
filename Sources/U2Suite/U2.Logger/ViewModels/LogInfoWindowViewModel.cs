@@ -31,6 +31,7 @@ namespace U2.Logger
             {
                 CommandToExecute.CreateLog => Resources.CreateNewLog,
                 CommandToExecute.UpdateLog => Resources.UpdateLog,
+                CommandToExecute.OpenLog => Resources.OpenLog,
                 _ => throw new ArgumentOutOfRangeException(nameof(commandToExecute)),
             };
 

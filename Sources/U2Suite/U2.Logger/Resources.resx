@@ -168,6 +168,9 @@
   <data name="FrequencyNotResolvedFmt" xml:space="preserve">
     <value>Frequency {0} not recognized as a valid one.</value>
   </data>
+  <data name="LogInfoDetailsHeader" xml:space="preserve">
+    <value>Log details</value>
+  </data>
   <data name="LogName" xml:space="preserve">
     <value>Log name</value>
   </data>
@@ -182,6 +185,9 @@
   </data>
   <data name="OK" xml:space="preserve">
     <value>OK</value>
+  </data>
+  <data name="OpenLog" xml:space="preserve">
+    <value>Open existing log</value>
   </data>
   <data name="Operator" xml:space="preserve">
     <value>Operator</value>

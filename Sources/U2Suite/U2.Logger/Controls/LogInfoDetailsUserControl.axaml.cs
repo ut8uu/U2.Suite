@@ -13,7 +13,10 @@ namespace U2.Logger
         {
             InitializeComponent();
 
-            _model = new LogInfoWindowViewModel();
+            _model = new LogInfoWindowViewModel(CommandToExecute.OpenLog)
+            {
+                WindowTitle = U2.Logger.Resources.LogInfoDetailsHeader
+            };
             this.DataContext = _model;
         }
 
@@ -26,5 +29,7 @@ namespace U2.Logger
         {
             _model.SetLogInfo(logInfo);
         }
+
+        public string HeaderText { get; set; } = "aa";
     }
 }

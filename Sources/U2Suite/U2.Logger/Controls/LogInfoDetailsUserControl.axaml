@@ -11,7 +11,8 @@
 	</Design.DataContext>
 
 	<StackPanel Orientation="Vertical">
-		<Grid RowDefinitions="20,20,20,20,100" ColumnDefinitions="150,200">
+		<TextBlock Classes="Heading Accent" Text="{Binding WindowTitle}"></TextBlock>
+		<Grid RowDefinitions="20,20,20,20,120" ColumnDefinitions="150,200">
 			<TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding LogNameTitle}"></TextBlock>
 			<TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding LogName}"></TextBlock>
 

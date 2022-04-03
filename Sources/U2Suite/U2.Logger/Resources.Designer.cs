@@ -214,6 +214,15 @@ namespace U2.Logger {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Log details.
+        /// </summary>
+        internal static string LogInfoDetailsHeader {
+            get {
+                return ResourceManager.GetString("LogInfoDetailsHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Log name.
         /// </summary>
         internal static string LogName {
@@ -255,6 +264,15 @@ namespace U2.Logger {
         internal static string OK {
             get {
                 return ResourceManager.GetString("OK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open existing log.
+        /// </summary>
+        internal static string OpenLog {
+            get {
+                return ResourceManager.GetString("OpenLog", resourceCulture);
             }
         }
         
