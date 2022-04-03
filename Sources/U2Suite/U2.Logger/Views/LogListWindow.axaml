@@ -3,8 +3,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:logger="clr-namespace:U2.Logger"
-        mc:Ignorable="d" d:DesignWidth="450" d:DesignHeight="250"
-		Width="450" Height="250"
+        mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="360"
+		Width="600" Height="360"
         x:Class="U2.Logger.LogListWindow"
         Title="{Binding WindowTitle}">
 
@@ -19,19 +19,28 @@
 					CornerRadius="10"
 					BorderBrush="White"
 					DockPanel.Dock="Top">
-				<ListBox Name="ListBoxLogs" 
-						 Height="150" Width="410"
+				<StackPanel Orientation="Horizontal">
+					<ListBox Name="ListBoxLogs"
+						 Height="240" Width="150"
 						 HorizontalAlignment="Stretch"
 						 SelectionMode="Single"
 						 Items="{Binding List, Mode=OneWay}"
 						 SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
 					 >
-					<ListBox.ItemTemplate>
-						<DataTemplate>
-							<TextBlock Text="{Binding LogName}"></TextBlock>
-						</DataTemplate>
-					</ListBox.ItemTemplate>
-				</ListBox>
+						<ListBox.ItemTemplate>
+							<DataTemplate>
+								<TextBlock Text="{Binding LogName}"></TextBlock>
+							</DataTemplate>
+						</ListBox.ItemTemplate>
+					</ListBox>
+					<Border BorderThickness="1"
+					Margin="5" Padding="15"
+					CornerRadius="10"
+					BorderBrush="White"
+					DockPanel.Dock="Top">
+						<logger:LogInfoDetailsUserControl Name="LogInfoDetailsViewer"></logger:LogInfoDetailsUserControl>
+					</Border>
+				</StackPanel>
 			</Border>
 
 			<logger:OkCancelButtonsUserControl></logger:OkCancelButtonsUserControl>

@@ -28,7 +28,5 @@
 			<TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding Description}"></TextBlock>
 
 		</Grid>
-
-		<logger:OkCancelButtonsUserControl></logger:OkCancelButtonsUserControl>
 	</StackPanel>	
 </UserControl>

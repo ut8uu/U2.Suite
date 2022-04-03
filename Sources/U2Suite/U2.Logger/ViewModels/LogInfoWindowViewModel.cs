@@ -14,7 +14,7 @@ namespace U2.Logger
 {
     public class LogInfoWindowViewModel : ViewModelBase
     {
-        private bool _initiating = false;
+        protected bool _initiating = false;
         private Window? _owner;
 
         public LogInfoWindowViewModel() 
@@ -43,12 +43,23 @@ namespace U2.Logger
         public void SetLogInfo(LogInfo logInfo)
         {
             _initiating = true;
-            LogName = logInfo.LogName ?? String.Empty;
-            StationCallsign = logInfo.StationCallsign ?? String.Empty;
-            OperatorCallsign = logInfo.OperatorCallsign ?? String.Empty;
-            ActivatedReference = logInfo.ActivatedReference ?? String.Empty;
-            Description = logInfo.Description ?? String.Empty;
+            LogName = logInfo?.LogName ?? String.Empty;
+            StationCallsign = logInfo?.StationCallsign ?? String.Empty;
+            OperatorCallsign = logInfo?.OperatorCallsign ?? String.Empty;
+            ActivatedReference = logInfo?.ActivatedReference ?? String.Empty;
+            Description = logInfo?.Description ?? String.Empty;
             _initiating = false;
+
+            if (logInfo == null)
+            {
+                return;
+            }
+
+            OnPropertyChanged(nameof(LogName));
+            OnPropertyChanged(nameof(StationCallsign));
+            OnPropertyChanged(nameof(OperatorCallsign));
+            OnPropertyChanged(nameof(ActivatedReference));
+            OnPropertyChanged(nameof(Description));
         }
 
         public string WindowTitle { get; set; } = string.Empty;
@@ -72,7 +83,7 @@ namespace U2.Logger
         }
         public CommandToExecute CommandToExecute { get; set; }
 
-        public string LogName { get; set; } = default!;
+        public string LogName { get; set; }
         public string Description { get; set; } = default!;
         public string StationCallsign { get; set; } = default!;
         public string OperatorCallsign { get; set; } = default!;
@@ -186,16 +197,17 @@ namespace U2.Logger
     {
         public DemoLogInfoWindowViewModel()
         {
+            _initiating = true;
             LogName = nameof(LogName);
             Description = nameof(Description);
             StationCallsign = nameof(StationCallsign);
             OperatorCallsign = nameof(OperatorCallsign);
             ActivatedReference = nameof(ActivatedReference);
+            _initiating = false;
         }
 
         protected override void OnPropertyChanged([CallerMemberName] string? propertyName = null)
         {
-
         }
     }
 }

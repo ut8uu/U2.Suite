@@ -14,6 +14,8 @@ namespace U2.Logger;
 public class LogListViewModel : ViewModelBase
 {
     private Window? _owner;
+    private LogInfo? selectedItem;
+    private LogInfoDetailsUserControl? _detailsViewer;
 
     public LogListViewModel(string directory)
     {
@@ -26,18 +28,29 @@ public class LogListViewModel : ViewModelBase
     public Window? Owner
     {
         get => _owner;
-        set => _owner = value;
+        set
+        {
+            _owner = value;
+            _detailsViewer = _owner.FindControl<LogInfoDetailsUserControl>("LogInfoDetailsViewer");
+        }
     }
     public ObservableCollection<LogInfo> List { get; init; }
 
-    public LogInfo? SelectedItem { get; set; }
+    public LogInfo? SelectedItem {
+        get => selectedItem;
+        set 
+        {
+            selectedItem = value;
+            _detailsViewer?.ShowLogInfo(value);
+        }
+    }
 
     private static ObservableCollection<LogInfo> LoadLogs(string logDirectory)
     {
         var result = new ObservableCollection<LogInfo>();
 
         Directory.CreateDirectory(logDirectory);
-        
+
         var sqliteFiles = Directory.EnumerateFiles(logDirectory, $"*.json");
         foreach (var file in sqliteFiles)
         {
