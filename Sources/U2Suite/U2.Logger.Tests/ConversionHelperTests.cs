@@ -34,7 +34,7 @@ namespace U2.Logger.Tests
         [DataRow(70.001, RadioBandName.B4m)]
         [DataRow(144.001, RadioBandName.B2m)]
         [DataRow(432.001, RadioBandName.B70cm)]
-        public void FreqToBand_Success(double freqMhz, string expectedBand)
+        public void FreqToBand_Success(decimal freqMhz, string expectedBand)
         {
             var band = ConversionHelper.FrequencyToBandName(freqMhz);
             Assert.AreEqual(expectedBand, band);
@@ -49,10 +49,10 @@ namespace U2.Logger.Tests
         [DataRow(RadioBandName.B160m, RadioMode.FM, 1.840)]
         [DataRow(RadioBandName.B160m, "unknown", 1.81)]
 #warning TODO Add the rest cases for all bands
-        public void BandAndModeToFreq(string bandName, string modeName, double expectedFrequency)
+        public void BandAndModeToFreq(string bandName, string modeName, decimal expectedFrequency)
         {
             var frequency = ConversionHelper.BandNameAndModeToFrequency(bandName, modeName);
-            Assert.AreEqual(expectedFrequency, frequency, 0.0000001);
+            Assert.AreEqual(expectedFrequency, frequency);
         }
     }
 }

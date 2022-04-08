@@ -24,4 +24,10 @@
     <ProjectReference Include="..\U2.Tests.Common\U2.Tests.Common.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="TestData\URFF0206.adi">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
