@@ -163,7 +163,7 @@ namespace U2.Logger
                         new MessageBox.Avalonia.Models.ButtonDefinition
                         {
                             Name = "OK",
-                            Type = MessageBox.Avalonia.Enums.ButtonType.Default,
+                            IsCancel = false,
                             IsDefault = true,
                         }
                     }
