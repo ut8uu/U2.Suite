@@ -123,8 +123,23 @@
   <data name="ActivatedReferenceToolTip" xml:space="preserve">
     <value>One or more comma separated references activated simultaneously, if applicable.</value>
   </data>
+  <data name="AdifFileDuplicatesTitle" xml:space="preserve">
+    <value>Duplicates</value>
+  </data>
+  <data name="AdifFileErrorsTitle" xml:space="preserve">
+    <value>Errors</value>
+  </data>
+  <data name="AdifFileLinesTitle" xml:space="preserve">
+    <value>Lines</value>
+  </data>
   <data name="AdifFilenameTitle" xml:space="preserve">
     <value>ADIF filename</value>
+  </data>
+  <data name="AdifFileRecordsTitle" xml:space="preserve">
+    <value>Records</value>
+  </data>
+  <data name="AdifFileWarningsTitle" xml:space="preserve">
+    <value>Warnings</value>
   </data>
   <data name="Band" xml:space="preserve">
     <value>Band</value>
@@ -171,6 +186,9 @@
   <data name="FrequencyNotResolvedFmt" xml:space="preserve">
     <value>Frequency {0} not recognized as a valid one.</value>
   </data>
+  <data name="ImportButtonTitle" xml:space="preserve">
+    <value>Import</value>
+  </data>
   <data name="ImportFromAdifFileOptionsDuplicates" xml:space="preserve">
     <value>Duplicates:</value>
   </data>
@@ -188,6 +206,9 @@
   </data>
   <data name="ImportFromAdifWindowTitle" xml:space="preserve">
     <value>Import from ADIF</value>
+  </data>
+  <data name="ImportProgressFormat" xml:space="preserve">
+    <value>Imported {0} records out of {1} ({2}%).</value>
   </data>
   <data name="LogInfoDetailsHeader" xml:space="preserve">
     <value>Log details</value>

@@ -79,11 +79,56 @@ namespace U2.Logger {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Duplicates.
+        /// </summary>
+        internal static string AdifFileDuplicatesTitle {
+            get {
+                return ResourceManager.GetString("AdifFileDuplicatesTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Errors.
+        /// </summary>
+        internal static string AdifFileErrorsTitle {
+            get {
+                return ResourceManager.GetString("AdifFileErrorsTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lines.
+        /// </summary>
+        internal static string AdifFileLinesTitle {
+            get {
+                return ResourceManager.GetString("AdifFileLinesTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ADIF filename.
         /// </summary>
         internal static string AdifFilenameTitle {
             get {
                 return ResourceManager.GetString("AdifFilenameTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Records.
+        /// </summary>
+        internal static string AdifFileRecordsTitle {
+            get {
+                return ResourceManager.GetString("AdifFileRecordsTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Warnings.
+        /// </summary>
+        internal static string AdifFileWarningsTitle {
+            get {
+                return ResourceManager.GetString("AdifFileWarningsTitle", resourceCulture);
             }
         }
         
@@ -223,6 +268,15 @@ namespace U2.Logger {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Import.
+        /// </summary>
+        internal static string ImportButtonTitle {
+            get {
+                return ResourceManager.GetString("ImportButtonTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Duplicates:.
         /// </summary>
         internal static string ImportFromAdifFileOptionsDuplicates {
@@ -273,6 +327,15 @@ namespace U2.Logger {
         internal static string ImportFromAdifWindowTitle {
             get {
                 return ResourceManager.GetString("ImportFromAdifWindowTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Imported {0} records out of {1} ({2}%)..
+        /// </summary>
+        internal static string ImportProgressFormat {
+            get {
+                return ResourceManager.GetString("ImportProgressFormat", resourceCulture);
             }
         }
         
