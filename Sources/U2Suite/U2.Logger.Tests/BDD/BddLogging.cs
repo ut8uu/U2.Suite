@@ -212,17 +212,12 @@ namespace U2.Logger.Tests
         [Given(@"Realtime is turned '([^']*)'")]
         public void GivenRealtimeIsTurned(string onOffValue)
         {
-            switch (onOffValue)
+            _textInputVM.Realtime = onOffValue switch
             {
-                case "on":
-                    _textInputVM.Realtime = true;
-                    break;
-                case "off":
-                    _textInputVM.Realtime = false;
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException($"A value expected to be 'on' or 'off'. Actual value is '{onOffValue}'");
-            }
+                "on" => true,
+                "off" => false,
+                _ => throw new ArgumentOutOfRangeException($"A value expected to be 'on' or 'off'. Actual value is '{onOffValue}'"),
+            };
         }
 
 

@@ -127,7 +127,7 @@ public class AdifTests
         var testData = PrepareTestData();
         var expectedRow = testData.First();
         var adif = AdifHelper.GenerateAdif(PrepareLogInfo(), testData);
-        var collection = AdifHelper.ParseAdif(adif);
+        var collection = AdifHelper.ParseAdif(adif, out var _);
 
         var actualRow = collection.First();
         Assert.AreEqual(expectedRow.Callsign, actualRow.Callsign);
@@ -195,8 +195,9 @@ public class AdifTests
     [DataRow(190, "UR7ET")]
     public void CanParseUrff0206(int rowIndex, string callsign)
     {
-        var adif = ReadAdif("URFF0206.adi");
-        var records = AdifHelper.ParseAdif(adif);
+        var thisDirectory = Path.GetDirectoryName(this.GetType().Assembly.Location);
+        var path = Path.Combine(thisDirectory, "TestData", "URFF0206.adi");
+        var records = AdifHelper.LoadAdif(path, out var _);
 
         Assert.AreEqual(190, records.Count());
 

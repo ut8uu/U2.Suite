@@ -83,7 +83,7 @@ namespace U2.Logger
 
         #region Log
 
-        public ObservableCollection<LogEntry> LogContent { get; set; } = new ObservableCollection<LogItem>();
+        public ObservableCollection<LogEntry> LogContent { get; set; } = new ObservableCollection<LogEntry>();
 
         #endregion
 
@@ -153,6 +153,8 @@ namespace U2.Logger
                 {
                     return;
                 }
+
+
             }
             catch (OperationCanceledException)
             {
@@ -194,22 +196,10 @@ namespace U2.Logger
         public ImportAdifFromFileViewModelDemo()
         {
             ImportProgressVisible = true;
-            LogContent = new ObservableCollection<LogItem> {
-                new LogItem
-                {
-                    Type = "Info",
-                    Message = "Data loaded",
-                },
-                new LogItem
-                {
-                    Type = "Warning",
-                    Message = "Entry not found",
-                },
-                new LogItem
-                {
-                    Type = "Error",
-                    Message = "Parsing error",
-                },
+            LogContent = new ObservableCollection<LogEntry> {
+                new LogEntry(LogEntryType.Info, "Data loaded"),
+                new LogEntry(LogEntryType.Warning, "Record found too early"),
+                new LogEntry(LogEntryType.Error, "Parsing error"),
             };
         }
     }
