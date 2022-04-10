@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia.Extensions;
+using U2.Contracts;
 using U2.Logger.ViewModels;
 
 namespace U2.Logger
@@ -81,7 +83,7 @@ namespace U2.Logger
 
         #region Log
 
-        public ObservableCollection<LogItem> LogContent { get; set; } = new ObservableCollection<LogItem>();
+        public ObservableCollection<LogEntry> LogContent { get; set; } = new ObservableCollection<LogItem>();
 
         #endregion
 
@@ -110,9 +112,9 @@ namespace U2.Logger
 
         }
 
-        public async Task SelectAdifFile()
+        public async Task ExecuteSelectAdifFileAction()
         {
-            var dialog = new SaveFileDialog
+            var dialog = new OpenFileDialog
             {
                 Filters = new List<FileDialogFilter>
                 {
@@ -127,18 +129,40 @@ namespace U2.Logger
                         Name = "All files"
                     },
                 },
-                DefaultExtension = "adi",
                 Title = Resources.AdifFilenameTitle,
+                AllowMultiple = false,
             };
 
             try
             {
-                AdifFileName = await dialog.ShowAsync(Owner) ?? string.Empty;
+                LogContent.Clear();
+
+                var files = await dialog.ShowAsync(Owner) ?? Array.Empty<string>();
+                if (files.Any() && !File.Exists(files[0]))
+                {
+                    AddLogItem(LogEntryType.Error, $"File {AdifFileName} not found.");
+                    return;
+                }
+
+                var records = AdifHelper.ParseAdif(files[0], out var errors);
+                foreach (var error in errors)
+                {
+                    LogContent.Add(error);
+                }
+                if (errors.Any(e => e.Type == LogEntryType.Error))
+                {
+                    return;
+                }
             }
             catch (OperationCanceledException)
             {
 
             }
+        }
+
+        private void AddLogItem(LogEntryType type, string message)
+        {
+            LogContent.Add(new LogEntry(type, message));
         }
 
         private void UpdateAdifFileInfoGrid()
@@ -163,12 +187,6 @@ namespace U2.Logger
             }
             AdifFileInfoItems.Add(new GroupViewItem(stringValue, check: true));
         }
-    }
-
-    public sealed class LogItem
-    {
-        public string Type { get; set; } = default!;
-        public string Message { get; set; } = default!;
     }
 
     internal class ImportAdifFromFileViewModelDemo : ImportAdifFromFileViewModel

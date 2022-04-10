@@ -16,25 +16,25 @@
 	</Design.DataContext>
 
 	<DockPanel>
-		<Border Classes="Card" DockPanel.Dock="Bottom">
+		<Border x:Name="Buttons" Classes="Card" DockPanel.Dock="Bottom">
 			<StackPanel Orientation="Horizontal">
 				<Button Content="{Binding ImportButtonTitle}" Command="{Binding ExecuteImportAction}"></Button>
 				<Button Margin="10 0" Content="{Binding CloseButtonTitle}" Command="{Binding ExecuteCloseAction}"></Button>
 			</StackPanel>
 		</Border>
 
-		<Border Classes="Card" DockPanel.Dock="Bottom" IsVisible="{Binding ImportProgressVisible}">
+		<Border x:Name="Progress" Classes="Card" DockPanel.Dock="Bottom" IsVisible="{Binding ImportProgressVisible}">
 			<TextBlock Text="{Binding ImportProgressText}"></TextBlock>
 		</Border>
 
-		<StackPanel Orientation="Vertical" DockPanel.Dock="Top">
+		<StackPanel x:Name="FileSelector" Orientation="Vertical" DockPanel.Dock="Top">
 			<Border Classes="Card" x:Name="AdifFileSelector">
 				<StackPanel Orientation="Vertical">
 					<DockPanel>
 						<TextBlock DockPanel.Dock="Left" Padding="5 15 10 0" Text="{Binding AdifFilenameTitle}"></TextBlock>
 						<Button DockPanel.Dock="Right" x:Name="AdifFilenameButton"
 								Content="..." Margin="6" Padding="15 0"
-								Command="{Binding SelectAdifFile}"></Button>
+								Command="{Binding ExecuteSelectAdifFileAction}"></Button>
 						<TextBox x:Name="AdifFilename" Text="{Binding AdifFileName, Mode=TwoWay}"></TextBox>
 					</DockPanel>
 				</StackPanel>

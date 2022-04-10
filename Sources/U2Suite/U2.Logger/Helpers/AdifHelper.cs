@@ -3,19 +3,33 @@ using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using U2.Contracts;
 using U2.Core;
 
 namespace U2.Logger;
 
 internal static class AdifHelper
 {
-    public static IEnumerable<LogRecordDbo> ParseAdif(string adif)
+    /// <summary>
+    /// Loads and parses ADIF from given file and 
+    /// </summary>
+    /// <param name="fileName"></param>
+    /// <returns></returns>
+    public static IEnumerable<LogRecordDbo> LoadAdif(string fileName, out IEnumerable<LogEntry> errors)
     {
+        var content = File.ReadAllText(fileName);
+        return ParseAdif(content, out errors);
+    }
+
+    public static IEnumerable<LogRecordDbo> ParseAdif(string adif, out IEnumerable<LogEntry> errors)
+    {
+        errors = new List<LogEntry>();
         var result = new List<LogRecordDbo>();
 
         var splitSeparator = new[] { '|' };
