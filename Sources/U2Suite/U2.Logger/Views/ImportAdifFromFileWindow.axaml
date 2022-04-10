@@ -60,8 +60,11 @@
 		</StackPanel>
 
 		<DockPanel x:Name="AdifFileImportDetails">
-			<Border Classes="Card" x:Name="AdifFileDetails" DockPanel.Dock="Left" IsVisible="False">
-				<Grid Width="200" RowDefinitions="20,20,20,20,20" ColumnDefinitions="100,100">
+			<Border Classes="Card" x:Name="AdifFileDetails" DockPanel.Dock="Left"
+					IsVisible="False">
+				<Grid Width="200"
+					  RowDefinitions="20,20,20,20,20"
+					  ColumnDefinitions="150,50">
 
 					<TextBlock Grid.Column="0" Grid.Row="0" x:Name="AdifFileLines" Text="{Binding AdifFileLinesTitle}"></TextBlock>
 					<TextBlock Grid.Column="0" Grid.Row="1" x:Name="AdifFileRecords" Text="{Binding AdifFileRecordsTitle}"></TextBlock>
@@ -76,13 +79,14 @@
 					<TextBlock Grid.Column="1" Grid.Row="4" x:Name="AdifFileErrorsValue" Text="{Binding AdifFileErrors}"></TextBlock>
 				</Grid>
 			</Border>
-			
+
 			<Border Classes="Card" DockPanel.Dock="Left">
-				<Grid Width="200" x:Name="AdifFileInfoGrid">
+				<Grid Width="200" x:Name="AdifFileInfoGrid"
+					  ColumnDefinitions="350,50">
 					<Grid.RowDefinitions>
 						<RowDefinition Height="*" />
 					</Grid.RowDefinitions>
-					<GridView Name="AdifFileInfoGridView" 
+					<GridView Name="AdifFileInfoGridView"
 							  Grid.Row="1" ColumnNum="2"
 							  Items="{Binding AdifFileInfoItems}">
 						<GridView.ItemTemplate>
@@ -95,7 +99,16 @@
 			</Border>
 
 			<Border Classes="Card" x:Name="AdifFileProcessingLog">
-
+				<DataGrid x:Name="LogGrid" HeadersVisibility="Column"
+						  ScrollViewer.VerticalScrollBarVisibility="Auto"
+						  Items="{Binding LogContent, Mode=OneWay}"
+						  AutoGenerateColumns="False"
+						  SelectionMode="Single">
+					<DataGrid.Columns>
+						<DataGridTextColumn Header="Type" Binding="{Binding Type}" Width="100"></DataGridTextColumn>
+						<DataGridTextColumn Header="Message" Binding="{Binding Message}" Width="*"></DataGridTextColumn>
+					</DataGrid.Columns>
+				</DataGrid>
 			</Border>
 		</DockPanel>
 	</DockPanel>

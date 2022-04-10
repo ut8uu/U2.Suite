@@ -79,6 +79,12 @@ namespace U2.Logger
 
         #endregion
 
+        #region Log
+
+        public ObservableCollection<LogItem> LogContent { get; set; } = new ObservableCollection<LogItem>();
+
+        #endregion
+
         public void ExecuteCloseAction()
         {
             Owner.Close();
@@ -159,11 +165,34 @@ namespace U2.Logger
         }
     }
 
+    public sealed class LogItem
+    {
+        public string Type { get; set; } = default!;
+        public string Message { get; set; } = default!;
+    }
+
     internal class ImportAdifFromFileViewModelDemo : ImportAdifFromFileViewModel
     {
         public ImportAdifFromFileViewModelDemo()
         {
             ImportProgressVisible = true;
+            LogContent = new ObservableCollection<LogItem> {
+                new LogItem
+                {
+                    Type = "Info",
+                    Message = "Data loaded",
+                },
+                new LogItem
+                {
+                    Type = "Warning",
+                    Message = "Entry not found",
+                },
+                new LogItem
+                {
+                    Type = "Error",
+                    Message = "Parsing error",
+                },
+            };
         }
     }
 }
