@@ -57,6 +57,9 @@ namespace U2.Logger
         public string StatusText { get; set; } = default!;
         public string WindowTitle { get; set; } = default!;
 
+        public string ImportFromAdifTitle { get; set; } = "Import ADIF from file";
+        public string ExportToAdifTitle { get; set; } = "Export to ADIF file";
+
         private void AcceptButtonClickedMessage(ButtonClickedMessage message)
         {
             switch (message.Button)
@@ -182,6 +185,17 @@ namespace U2.Logger
         {
             var form = new LogInfoWindow(CommandToExecute.UpdateLog);
             await form.ShowDialog(Owner);
+        }
+
+        public async Task ImportFromAdif()  
+        {
+            var form = new ImportAdifFromFileWindow();
+            await form.ShowDialog(Owner);
+        }
+
+        public async Task ExportToAdif()
+        {
+
         }
     }
 }

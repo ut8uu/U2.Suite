@@ -2,9 +2,20 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <Design.PreviewWith>
     <Border Padding="20">
-      <Border Classes="Card2">
-        <Button>123</Button>
-      </Border>
+		<StackPanel Orientation="Vertical">
+			<Border Classes="Card">
+				<Button>Card</Button>
+			</Border>
+			<Border Classes="Card">
+				<TextBlock>Card</TextBlock>
+			</Border>
+			<Border Classes="Card2">
+				<Button>Card2</Button>
+			</Border>
+			<Border Classes="Card2">
+				<TextBlock>Card2</TextBlock>
+			</Border>
+		</StackPanel>
     </Border>
   </Design.PreviewWith>
   <Style Selector="Border.Card">

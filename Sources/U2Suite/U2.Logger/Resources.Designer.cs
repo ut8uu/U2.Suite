@@ -79,6 +79,15 @@ namespace U2.Logger {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ADIF filename.
+        /// </summary>
+        internal static string AdifFilenameTitle {
+            get {
+                return ResourceManager.GetString("AdifFilenameTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Band.
         /// </summary>
         internal static string Band {
@@ -210,6 +219,60 @@ namespace U2.Logger {
         internal static string FrequencyNotResolvedFmt {
             get {
                 return ResourceManager.GetString("FrequencyNotResolvedFmt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Duplicates:.
+        /// </summary>
+        internal static string ImportFromAdifFileOptionsDuplicates {
+            get {
+                return ResourceManager.GetString("ImportFromAdifFileOptionsDuplicates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add.
+        /// </summary>
+        internal static string ImportFromAdifFileOptionsDuplicatesAdd {
+            get {
+                return ResourceManager.GetString("ImportFromAdifFileOptionsDuplicatesAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ignore.
+        /// </summary>
+        internal static string ImportFromAdifFileOptionsDuplicatesIgnore {
+            get {
+                return ResourceManager.GetString("ImportFromAdifFileOptionsDuplicatesIgnore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Overwrite.
+        /// </summary>
+        internal static string ImportFromAdifFileOptionsDuplicatesOverwrite {
+            get {
+                return ResourceManager.GetString("ImportFromAdifFileOptionsDuplicatesOverwrite", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Options.
+        /// </summary>
+        internal static string ImportFromAdifFileOptionsTitle {
+            get {
+                return ResourceManager.GetString("ImportFromAdifFileOptionsTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Import from ADIF.
+        /// </summary>
+        internal static string ImportFromAdifWindowTitle {
+            get {
+                return ResourceManager.GetString("ImportFromAdifWindowTitle", resourceCulture);
             }
         }
         

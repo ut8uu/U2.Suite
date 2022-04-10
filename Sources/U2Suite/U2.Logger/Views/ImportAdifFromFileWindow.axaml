@@ -1,0 +1,57 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="350"
+        x:Class="U2.Logger.ImportAdifFromFileWindow"
+        xmlns:logger="clr-namespace:U2.Logger"
+        Title="{Binding WindowTitle}"
+		MinWidth="250" MinHeight="200"
+		Width="600" Height="350"
+		>
+
+	<Design.DataContext>
+		<logger:ImportAdifFromFileViewModelDemo/>
+	</Design.DataContext>
+
+	<DockPanel>
+		<logger:OkCancelButtonsUserControl
+			DockPanel.Dock="Bottom"></logger:OkCancelButtonsUserControl>
+
+		<StackPanel Orientation="Vertical">
+			<Border Classes="Card">
+				<StackPanel Orientation="Vertical">
+					<TextBlock Text="{Binding AdifFilenameTitle}"></TextBlock>
+					<DockPanel>
+						<Button DockPanel.Dock="Right" x:Name="AdifFilenameButton" 
+								Content="..." Margin="6" Padding="15 0"
+								Command="{Binding SelectAdifFile}"></Button>
+						<TextBox x:Name="AdifFilename" Text="{Binding AdifFileName, Mode=TwoWay}"></TextBox>
+					</DockPanel>
+				</StackPanel>
+			</Border>
+			<Border Classes="Card">
+				<StackPanel Orientation="Vertical">
+					<TextBlock Classes="Heading" Text="{Binding OptionsTitle}"></TextBlock>
+					<StackPanel Orientation="Horizontal">
+						<TextBlock Text="{Binding DuplicatesTitle}"></TextBlock>
+						<RadioButton Content="{Binding DuplicatesOverwriteTitle}"
+									 GroupName="{Binding DuplicatesOptionsGroupTitle}"
+									 Command="{Binding ExecuteOverwriteSelectedAction}"
+									 Margin="20 0 0 0"
+									 IsChecked="true"></RadioButton>
+						<RadioButton Content="{Binding DuplicatesIgnoreTitle}"
+									 GroupName="{Binding DuplicatesOptionsGroupTitle}"
+									 Command="{Binding ExecuteIgnoreSelectedAction}"
+									 Margin="20 0 0 0"></RadioButton>
+						<RadioButton Content="{Binding DuplicatesAddTitle}"
+									 GroupName="{Binding DuplicatesOptionsGroupTitle}"
+									 Command="{Binding ExecuteAddSelectedAction}"
+									 Margin="20 0 0 0"></RadioButton>
+					</StackPanel>
+				</StackPanel>
+			</Border>
+		</StackPanel>
+	</DockPanel>
+
+</Window>

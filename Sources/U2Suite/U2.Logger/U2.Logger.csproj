@@ -64,6 +64,9 @@
 			<AutoGen>True</AutoGen>
 			<DependentUpon>AppSettings.settings</DependentUpon>
 		</Compile>
+		<Compile Update="Views\ImportAdifFromFileWindow.axaml.cs">
+		  <DependentUpon>ImportAdifFromFileWindow.axaml</DependentUpon>
+		</Compile>
 		<Compile Update="Views\LoggerMainWindow.axaml.cs">
 			<DependentUpon>LoggerMainWindow.axaml</DependentUpon>
 		</Compile>

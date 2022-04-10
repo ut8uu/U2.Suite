@@ -188,7 +188,7 @@ namespace U2.Logger
             Owner.Close();
         }
 
-        public void CloseWindow()
+        public void ExecuteCancelAction()
         {
             Owner.Close();
         }

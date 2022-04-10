@@ -123,6 +123,9 @@
   <data name="ActivatedReferenceToolTip" xml:space="preserve">
     <value>One or more comma separated references activated simultaneously, if applicable.</value>
   </data>
+  <data name="AdifFilenameTitle" xml:space="preserve">
+    <value>ADIF filename</value>
+  </data>
   <data name="Band" xml:space="preserve">
     <value>Band</value>
   </data>
@@ -167,6 +170,24 @@
   </data>
   <data name="FrequencyNotResolvedFmt" xml:space="preserve">
     <value>Frequency {0} not recognized as a valid one.</value>
+  </data>
+  <data name="ImportFromAdifFileOptionsDuplicates" xml:space="preserve">
+    <value>Duplicates:</value>
+  </data>
+  <data name="ImportFromAdifFileOptionsDuplicatesAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="ImportFromAdifFileOptionsDuplicatesIgnore" xml:space="preserve">
+    <value>Ignore</value>
+  </data>
+  <data name="ImportFromAdifFileOptionsDuplicatesOverwrite" xml:space="preserve">
+    <value>Overwrite</value>
+  </data>
+  <data name="ImportFromAdifFileOptionsTitle" xml:space="preserve">
+    <value>Options</value>
+  </data>
+  <data name="ImportFromAdifWindowTitle" xml:space="preserve">
+    <value>Import from ADIF</value>
   </data>
   <data name="LogInfoDetailsHeader" xml:space="preserve">
     <value>Log details</value>
