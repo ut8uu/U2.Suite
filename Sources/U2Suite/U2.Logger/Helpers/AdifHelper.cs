@@ -8,6 +8,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using U2.Contracts;
 using U2.Core;
@@ -21,15 +22,30 @@ internal static class AdifHelper
     /// </summary>
     /// <param name="fileName"></param>
     /// <returns></returns>
-    public static IEnumerable<LogRecordDbo> LoadAdif(string fileName, out IEnumerable<LogEntry> errors)
+    public static async Task<IEnumerable<LogRecordDbo>> LoadAdifAsync(string fileName,
+        CancellationToken cancellationToken, List<LogEntry> errors)
     {
         var content = File.ReadAllText(fileName);
-        return ParseAdif(content, out errors);
+        return await ParseAdifAsync(content, cancellationToken, errors);
     }
 
-    public static IEnumerable<LogRecordDbo> ParseAdif(string adif, out IEnumerable<LogEntry> errors)
+    public static async Task<IEnumerable<LogRecordDbo>> LoadAdifAsync(string fileName,
+        CancellationToken cancellationToken, IProgress<string> progress, List<LogEntry> errors)
     {
-        errors = new List<LogEntry>();
+        var content = File.ReadAllText(fileName);
+        return await ParseAdifAsync(content, cancellationToken, progress, errors);
+    }
+
+    public static async Task<IEnumerable<LogRecordDbo>> ParseAdifAsync(string adif,
+    CancellationToken cancellationToken, List<LogEntry> errors)
+    {
+        var progress = new Progress<string>();
+        return await ParseAdifAsync(adif, cancellationToken, progress, errors);
+    }
+
+    public static async Task<IEnumerable<LogRecordDbo>> ParseAdifAsync(string adif, 
+        CancellationToken cancellationToken, IProgress<string> progress, List<LogEntry> errors)
+    {
         var result = new List<LogRecordDbo>();
 
         var splitSeparator = new[] { '|' };
@@ -39,8 +55,22 @@ internal static class AdifHelper
         str = RegularExpressionHelper.ReplaceRegExpr("^.+<eoh>", string.Empty, str, RegexOptions.IgnoreCase);
 
         var records = str.Split(splitSeparator, StringSplitOptions.RemoveEmptyEntries);
+        var currentRecord = 1;
+        var totalRecords = records.Length;
         foreach (var @record in records)
         {
+            if (cancellationToken.IsCancellationRequested)
+            {
+                result.Clear();
+                errors.Add(new LogEntry(LogEntryType.Error, Resources.OperationCancelledMessage));
+                return result;
+            }
+
+            if (currentRecord++ % 10 == 1)
+            {
+                progress.Report(string.Format(Resources.ReadingAdifRecordsFormat, currentRecord, totalRecords, Math.Round(100m * currentRecord / totalRecords)));
+            }
+
             var newRecord = new LogRecordDbo();
 
             var qsoDate = string.Empty;
@@ -241,5 +271,13 @@ internal static class AdifHelper
         }
     }
 
-
+    public static bool HasDuplicates(IEnumerable<string> mainLogHashes, 
+        IEnumerable<LogRecordDbo> logToSearch, 
+        List<LogRecordDbo> duplicates)
+    {
+        var newLogHashes = logToSearch.Select(x => x.Hash);
+        var duplicateHashes = mainLogHashes.Intersect(newLogHashes);
+        duplicates = logToSearch.Where(r => duplicateHashes.Contains(r.Hash)).ToList();
+        return duplicates.Count > 0;
+    }
 }

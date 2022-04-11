@@ -4,6 +4,7 @@ using System.Data;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -122,12 +123,13 @@ public class AdifTests
     }
 
     [TestMethod]
-    public void ParseAdif()
+    public async Task ParseAdif()
     {
         var testData = PrepareTestData();
         var expectedRow = testData.First();
         var adif = AdifHelper.GenerateAdif(PrepareLogInfo(), testData);
-        var collection = AdifHelper.ParseAdif(adif, out var _);
+        var errors = new List<LogEntry>();
+        var collection = await AdifHelper.ParseAdifAsync(adif, CancellationToken.None, errors);
 
         var actualRow = collection.First();
         Assert.AreEqual(expectedRow.Callsign, actualRow.Callsign);
@@ -193,11 +195,12 @@ public class AdifTests
     [DataRow(170, "RK1AQ")]
     [DataRow(180, "DH8WC")]
     [DataRow(190, "UR7ET")]
-    public void CanParseUrff0206(int rowIndex, string callsign)
+    public async Task CanParseUrff0206(int rowIndex, string callsign)
     {
         var thisDirectory = Path.GetDirectoryName(this.GetType().Assembly.Location);
         var path = Path.Combine(thisDirectory, "TestData", "URFF0206.adi");
-        var records = AdifHelper.LoadAdif(path, out var _);
+        var errors = new List<LogEntry>();
+        var records = await AdifHelper.LoadAdifAsync(path, CancellationToken.None, errors);
 
         Assert.AreEqual(190, records.Count());
 
@@ -206,11 +209,20 @@ public class AdifTests
         Assert.AreEqual(record.Callsign, callsign);
     }
 
-    private string ReadAdif(string adifFileName)
+    [TestMethod]
+    public async Task CanCancelLoadingFromAdifFile()
     {
         var thisDirectory = Path.GetDirectoryName(this.GetType().Assembly.Location);
-        var path = Path.Combine(thisDirectory, "TestData", adifFileName);
-        Assert.IsTrue(File.Exists(path), $"File {path} does not exist.");
-        return File.ReadAllText(path);
+        var path = Path.Combine(thisDirectory, "TestData", "URFF0206.adi");
+
+        var cancellationTokenSource = new CancellationTokenSource();
+        cancellationTokenSource.Cancel();
+
+        var errors = new List<LogEntry>();
+        var records = await AdifHelper.LoadAdifAsync(path, cancellationTokenSource.Token, errors);
+
+        Assert.AreEqual(0, records.Count());
+        Assert.AreEqual(1, errors.Count());
+        var error = errors.Single(e => e.Type == LogEntryType.Error && e.Message == Resources.OperationCancelledMessage);
     }
 }

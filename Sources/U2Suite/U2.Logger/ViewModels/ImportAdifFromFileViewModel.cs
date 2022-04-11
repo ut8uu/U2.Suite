@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia.Extensions;
@@ -22,6 +23,7 @@ namespace U2.Logger
     internal class ImportAdifFromFileViewModel : WindowViewModelBase
     {
         internal DuplicateRecordSaveOption _duplicateRecordSaveOption = DuplicateRecordSaveOption.Overwrite;
+        internal CancellationTokenSource _cancellationTokenSource;
 
         public ImportAdifFromFileViewModel()
         {
@@ -46,8 +48,8 @@ namespace U2.Logger
 
         #region Import progress
 
-        public string ImportProgressText { get; set; } = String.Format(Resources.ImportProgressFormat, 0, 0, 0);
-        public bool ImportProgressVisible { get; set; } = false;
+        public string ProgressText { get; set; }
+        public bool ProgressPanelVisible { get; set; } = false;
 
         #endregion
 
@@ -56,6 +58,7 @@ namespace U2.Logger
         public string ImportButtonTitle { get; set; } = Resources.ImportButtonTitle;
         public string CloseButtonTitle { get; set; } = Resources.CloseButtonTitle;
 
+        public string CancelOperationButtonTitle { get; set; } = Resources.CancelOperationButtonTitle;
         #endregion
 
         #region Duplicate records options
@@ -112,6 +115,12 @@ namespace U2.Logger
 
         }
 
+        public void ExecuteCancelOperationAction()
+        {
+            _cancellationTokenSource.Cancel();
+            HideProgressPanel();
+        }
+
         public async Task ExecuteSelectAdifFileAction()
         {
             var dialog = new OpenFileDialog
@@ -135,7 +144,8 @@ namespace U2.Logger
 
             try
             {
-                LogContent.Clear();
+                ClearLog();
+                ResetAdifFileInfoGrid();
 
                 var files = await dialog.ShowAsync(Owner) ?? Array.Empty<string>();
                 if (files.Any() && !File.Exists(files[0]))
@@ -144,17 +154,60 @@ namespace U2.Logger
                     return;
                 }
 
-                var records = AdifHelper.ParseAdif(files[0], out var errors);
-                foreach (var error in errors)
+                var filePath = files[0];
+                AdifFileName = filePath;
+                OnPropertyChanged(nameof(AdifFileName));
+
+                ShowProgressPanel(string.Empty);
+
+                _cancellationTokenSource = new CancellationTokenSource();
+
+                var progressFormat = string.Empty;
+                var progress = new Progress<string>(text =>
                 {
-                    LogContent.Add(error);
+                    DisplayProgressText(text);
+                });
+
+                var errors = new List<LogEntry>();
+                var records = await AdifHelper.ParseAdifAsync(filePath, _cancellationTokenSource.Token, progress, errors);
+                
+                if (_cancellationTokenSource.IsCancellationRequested)
+                {
+                    ResetAdifFileInfoGrid();
+                    AddLogItem(LogEntryType.Info, Resources.OperationCancelledMessage);
+                    return;
                 }
+
+                if (errors.Any())
+                {
+                    foreach (var error in errors)
+                    {
+                        LogContent.Add(error);
+                    }
+                    OnPropertyChanged(nameof(LogContent));
+                }
+
+                AdifFileErrors = errors.Count(e => e.Type == LogEntryType.Error);
+                AdifFileWarnings = errors.Count(e => e.Type == LogEntryType.Warning);
+                AdifFileRecords = records.Count();
+                UpdateAdifFileInfoGrid();
+
                 if (errors.Any(e => e.Type == LogEntryType.Error))
                 {
                     return;
                 }
 
+                if (!records.Any())
+                {
+                    return;
+                }
 
+                var mainLog = LoggerDbContext.Instance.Records.Select(r => r.Hash).AsEnumerable();
+                if (AdifHelper.HasDuplicates(mainLog, records, out var duplicates))
+                {
+                    AdifFileDuplicates = duplicates.Count();
+                    UpdateAdifFileInfoGrid();
+                }
             }
             catch (OperationCanceledException)
             {
@@ -162,9 +215,27 @@ namespace U2.Logger
             }
         }
 
+        private void ClearLog()
+        {
+            LogContent.Clear();
+            OnPropertyChanged(nameof(LogContent));
+        }
+
         private void AddLogItem(LogEntryType type, string message)
         {
             LogContent.Add(new LogEntry(type, message));
+            OnPropertyChanged(nameof(LogContent));
+        }
+
+        private void ResetAdifFileInfoGrid()
+        {
+            AdifFileLines = 0;
+            AdifFileRecords = 0;
+            AdifFileDuplicates = 0;
+            AdifFileWarnings = 0;
+            AdifFileErrors = 0;
+
+            UpdateAdifFileInfoGrid();
         }
 
         private void UpdateAdifFileInfoGrid()
@@ -182,12 +253,29 @@ namespace U2.Logger
         private void AddAdifFileInfoGridRow(string key, int value)
         {
             AdifFileInfoItems.Add(new GroupViewItem(key));
-            var stringValue = value.ToString();
-            if (value == 0)
+            AdifFileInfoItems.Add(new GroupViewItem(value.ToString(), check: true));
+        }
+
+        private void ShowProgressPanel(string? initialText = null)
+        {
+            if (initialText != null)
             {
-                stringValue = string.Empty;
+                DisplayProgressText(initialText);
             }
-            AdifFileInfoItems.Add(new GroupViewItem(stringValue, check: true));
+            ProgressPanelVisible = true;
+            OnPropertyChanged(nameof(ProgressPanelVisible));
+        }
+
+        private void HideProgressPanel()
+        {
+            ProgressPanelVisible = false;
+            OnPropertyChanged(nameof(ProgressPanelVisible));
+        }
+
+        private void DisplayProgressText(string text)
+        {
+            ProgressText = text;
+            OnPropertyChanged(nameof(ProgressText));
         }
     }
 
@@ -195,7 +283,7 @@ namespace U2.Logger
     {
         public ImportAdifFromFileViewModelDemo()
         {
-            ImportProgressVisible = true;
+            ProgressPanelVisible = true;
             LogContent = new ObservableCollection<LogEntry> {
                 new LogEntry(LogEntryType.Info, "Data loaded"),
                 new LogEntry(LogEntryType.Warning, "Record found too early"),

@@ -6,6 +6,13 @@ namespace U2.Logger;
 
 public class LogRecordDbo
 {
+    private string _hash;
+
+    public LogRecordDbo()
+    {
+        RecordId = Guid.NewGuid();
+    }
+
     [Key]
     [StringLength(36)]
     public Guid RecordId { get; set; }
@@ -25,4 +32,16 @@ public class LogRecordDbo
     public string Operator { get; set; } = default!;
     [StringLength(128)]
     public string Comments { get; set; } = default!;
+
+    public string Hash
+    {
+        get
+        {
+            if (_hash == null)
+            {
+                _hash = $"{Callsign}{Timestamp}{Band}{Mode}";
+            }
+            return _hash;
+        }
+    } 
 }

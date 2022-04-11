@@ -160,6 +160,15 @@ namespace U2.Logger {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        internal static string CancelOperationButtonTitle {
+            get {
+                return ResourceManager.GetString("CancelOperationButtonTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Close.
         /// </summary>
         internal static string CloseButtonTitle {
@@ -403,6 +412,15 @@ namespace U2.Logger {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Operation cancelled..
+        /// </summary>
+        internal static string OperationCancelledMessage {
+            get {
+                return ResourceManager.GetString("OperationCancelledMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Operator.
         /// </summary>
         internal static string Operator {
@@ -444,6 +462,15 @@ namespace U2.Logger {
         internal static string Rcv {
             get {
                 return ResourceManager.GetString("Rcv", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reading records from ADIF: {0} out of {1} ({2}%)..
+        /// </summary>
+        internal static string ReadingAdifRecordsFormat {
+            get {
+                return ResourceManager.GetString("ReadingAdifRecordsFormat", resourceCulture);
             }
         }
         

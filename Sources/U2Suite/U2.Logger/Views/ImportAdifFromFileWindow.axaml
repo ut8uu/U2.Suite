@@ -17,14 +17,18 @@
 
 	<DockPanel>
 		<Border x:Name="Buttons" Classes="Card" DockPanel.Dock="Bottom">
-			<StackPanel Orientation="Horizontal">
-				<Button Content="{Binding ImportButtonTitle}" Command="{Binding ExecuteImportAction}"></Button>
-				<Button Margin="10 0" Content="{Binding CloseButtonTitle}" Command="{Binding ExecuteCloseAction}"></Button>
-			</StackPanel>
-		</Border>
-
-		<Border x:Name="Progress" Classes="Card" DockPanel.Dock="Bottom" IsVisible="{Binding ImportProgressVisible}">
-			<TextBlock Text="{Binding ImportProgressText}"></TextBlock>
+			<DockPanel>
+				<StackPanel x:Name="ProgressPanel" IsVisible="{Binding ProgressPanelVisible}"
+							Orientation="Horizontal" DockPanel.Dock="Right">
+					<TextBlock Margin="4" Text="{Binding ProgressText}"></TextBlock>
+					<Button Content="{Binding CancelOperationButtonTitle}"
+							Command="{Binding ExecuteCancelOperationAction}"></Button>
+				</StackPanel>
+				<StackPanel Orientation="Horizontal">
+					<Button Content="{Binding ImportButtonTitle}" Command="{Binding ExecuteImportAction}"></Button>
+					<Button Margin="10 0" Content="{Binding CloseButtonTitle}" Command="{Binding ExecuteCloseAction}"></Button>
+				</StackPanel>
+			</DockPanel>
 		</Border>
 
 		<StackPanel x:Name="FileSelector" Orientation="Vertical" DockPanel.Dock="Top">

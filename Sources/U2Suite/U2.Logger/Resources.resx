@@ -150,6 +150,9 @@
   <data name="Cancel" xml:space="preserve">
     <value>Cancel</value>
   </data>
+  <data name="CancelOperationButtonTitle" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
   <data name="CloseButtonTitle" xml:space="preserve">
     <value>Close</value>
   </data>
@@ -231,6 +234,9 @@
   <data name="OpenLog" xml:space="preserve">
     <value>Open existing log</value>
   </data>
+  <data name="OperationCancelledMessage" xml:space="preserve">
+    <value>Operation cancelled.</value>
+  </data>
   <data name="Operator" xml:space="preserve">
     <value>Operator</value>
   </data>
@@ -245,6 +251,9 @@
   </data>
   <data name="Rcv" xml:space="preserve">
     <value>Rcv</value>
+  </data>
+  <data name="ReadingAdifRecordsFormat" xml:space="preserve">
+    <value>Reading records from ADIF: {0} out of {1} ({2}%).</value>
   </data>
   <data name="realtime" xml:space="preserve">
     <value>real-time</value>
