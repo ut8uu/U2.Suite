@@ -37,8 +37,8 @@ public class QsoEditorViewModel : ViewModelBase
         Frequency = record.Frequency.ToString(CultureInfo.DefaultThreadCurrentUICulture);
         Band = record.Band;
         Mode = record.Mode;
-        Timestamp = record.Timestamp;
-        TimestampString = record.Timestamp.ToString("g");
+        Timestamp = record.QsoEndTimestamp;
+        TimestampString = record.QsoEndTimestamp.ToString("g");
     }
 
     public Window Owner { get; set; }
@@ -216,7 +216,8 @@ public sealed class DemoQsoEditorViewModel : QsoEditorViewModel
             Callsign = $"UT{DateTime.UtcNow.Millisecond}UU",
             Band = "80m",
             Mode = "CW",
-            Timestamp = DateTime.UtcNow,
+            QsoBeginTimestamp = DateTime.UtcNow,
+            QsoEndTimestamp = DateTime.UtcNow,
             Frequency = 3.5m,
             RecordId = Guid.NewGuid(),
             Comments = "",

@@ -131,7 +131,8 @@ public sealed class LoggerDbContext : DbContext
         record.RecordId = formData.RecordId;
         record.Callsign = formData.Callsign;
         record.Comments = formData.Comments ?? string.Empty;
-        record.Timestamp = formData.Timestamp;
+        record.QsoEndTimestamp = formData.Timestamp;
+        record.QsoBeginTimestamp = formData.Timestamp;
         record.RstReceived = formData.RstRcvd;
         record.RstSent = formData.RstSent;
         record.Operator = formData.Operator ?? string.Empty;

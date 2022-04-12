@@ -1,18 +1,52 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using U2.Core;
+using U2.Tests.Common;
 
 namespace U2.Logger.Tests
 {
     [TestClass]
     public class ImportAdifViewModelTests
     {
+        private string _tempDirectory = TestHelpers.GetLocalTempPath();
         private ImportAdifFromFileViewModel GetViewModel()
         {
             return new ImportAdifFromFileViewModel();
+        }
+
+        [TestInitialize]
+        public void InitTest()
+        {
+            FileSystemHelper.GetDatabaseFolderFunc = (applicationName) => _tempDirectory;
+
+            LoggerDbContext.Instance.Database.EnsureDeleted();
+
+            Directory.Delete(_tempDirectory, true);
+            Directory.CreateDirectory(_tempDirectory);
+
+            var dbDirectory = FileSystemHelper.GetDatabaseFolderPath(U2.Resources.ApplicationNames.LoggerOsx);
+
+            var dbName = "ImportAdifViewModelTests";
+            AppSettings.Default.LogName = dbName;
+            var databasePath = Path.Combine(dbDirectory, dbName);
+            File.WriteAllText(databasePath, dbName);
+
+            LoggerDbContext.Reset();
+            LoggerDbContext.Instance.Database.Migrate();
+        }
+
+        [TestCleanup]
+        public void CleanupTest()
+        {
+            LoggerDbContext.Instance.Database.EnsureDeleted();
+            Directory.Delete(_tempDirectory, recursive: true);
         }
 
         [TestMethod]
@@ -28,6 +62,58 @@ namespace U2.Logger.Tests
 
             model.ExecuteIgnoreSelectedAction();
             Assert.AreEqual(DuplicateRecordSaveOption.Ignore, model._duplicateRecordSaveOption);
+        }
+
+        [TestMethod]
+        public async Task CanProcessGoodFile()
+        {
+            var model = GetViewModel();
+
+            var testData = TestData.GetLogRecords();
+            var adifFilePath = Path.Combine(_tempDirectory, "CanProcessGoodFile.adi");
+            await AdifHelper.ExportAsync(adifFilePath, LogInfoTestHelper.GetLogInfo(), testData);
+
+            var duplicate = testData.First();
+            LoggerDbContext.Instance.Records.Add(duplicate);
+            LoggerDbContext.Instance.SaveChanges();
+
+            Assert.AreEqual(1, LoggerDbContext.Instance.Records.Count());
+
+            await model.ProcessAdifFileAsync(adifFilePath, CancellationToken.None);
+            Assert.AreEqual(testData.Count(), model.AdifFileRecords);
+            Assert.AreEqual(1, model.AdifFileDuplicates);
+        }
+
+        [TestMethod]
+        public async Task CanImportRecords()
+        {
+            var model = GetViewModel();
+
+            var testData = TestData.GetLogRecords();
+            
+            // add one record to simulate a duplicate record
+            var duplicate = testData.First();
+            LoggerDbContext.Instance.Records.Add(duplicate);
+            LoggerDbContext.Instance.SaveChanges();
+
+            var adifFilePath = Path.Combine(_tempDirectory, "CanProcessGoodFile.adi");
+            await AdifHelper.ExportAsync(adifFilePath, LogInfoTestHelper.GetLogInfo(), testData);
+
+            model._loadedRecords.Clear();
+            model._loadedRecords.AddRange(testData);
+
+            model._duplicates.Clear();
+            model._duplicates.Add(duplicate);
+
+            // duplicate record should be ignored
+            model._duplicateRecordSaveOption = DuplicateRecordSaveOption.Ignore;
+            model.ExecuteImportAction();
+            Assert.IsTrue(LoggerDbContext.Instance.Records.Any(r => r.RecordId == duplicate.RecordId));
+
+            // duplicate record should be ignored
+            model._duplicateRecordSaveOption = DuplicateRecordSaveOption.Overwrite;
+            model.ExecuteImportAction();
+            Assert.IsFalse(LoggerDbContext.Instance.Records.Any(r => r.RecordId == duplicate.RecordId));
         }
     }
 }

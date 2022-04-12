@@ -28,6 +28,11 @@ namespace U2.Logger.Migrations
                         .HasColumnType("TEXT")
                         .HasMaxLength(16);
 
+                    b.Property<string>("Hash")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(256);
+
                     b.Property<string>("Callsign")
                         .IsRequired()
                         .HasColumnType("TEXT")
@@ -61,7 +66,10 @@ namespace U2.Logger.Migrations
                         .HasColumnType("TEXT")
                         .HasMaxLength(8);
 
-                    b.Property<DateTime>("Timestamp")
+                    b.Property<DateTime>("QsoBeginTimestamp")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("QsoEndTimestamp")
                         .HasColumnType("TEXT");
 
                     b.HasKey("RecordId");

@@ -20,51 +20,6 @@ public class AdifTests
     private string _pathToBakFile;
     private DateTime _expectedDate = DateTime.UtcNow;
 
-    private IEnumerable<LogRecordDbo> PrepareTestData()
-    {
-        _expectedDate = DateTime.UtcNow;
-
-        return new List<LogRecordDbo>
-        {
-            new LogRecordDbo
-            {
-                Band = RadioBandName.B40m,
-                Callsign = "UT2AB",
-                Frequency = 7.023m,
-                Mode = RadioMode.CW,
-                Operator = "UT8UU",
-                RecordId = Guid.NewGuid(),
-                RstReceived = "599",
-                RstSent = "589",
-                Timestamp = _expectedDate,
-            },
-            new LogRecordDbo
-            {
-                Band = RadioBandName.B20m,
-                Callsign = "ON4ON",
-                Frequency = 14.223m,
-                Mode = RadioMode.SSB,
-                Operator = "UT8UU",
-                RecordId = Guid.NewGuid(),
-                RstReceived = "579",
-                RstSent = "569",
-                Timestamp = _expectedDate.AddMinutes(1),
-            },
-            new LogRecordDbo
-            {
-                Band = RadioBandName.B17m,
-                Callsign = "N1MM",
-                Frequency = 18.160m,
-                Mode = RadioMode.RTTY,
-                Operator = "UT8UU",
-                RecordId = Guid.NewGuid(),
-                RstReceived = "559",
-                RstSent = "549",
-                Timestamp = _expectedDate.AddMinutes(2),
-            },
-        };
-    }
-
     [TestInitialize]
     public void InitTest()
     {
@@ -88,7 +43,7 @@ public class AdifTests
     [TestMethod]
     public void CanGenerateAdif()
     { 
-        var storage = PrepareTestData();
+        var storage = TestData.GetLogRecords();
         var logInfo = PrepareLogInfo();
         var expectedDate = _expectedDate.ToString("yyyyMMdd");
         var expectedTime = _expectedDate.ToString("HHmmss");
@@ -125,7 +80,7 @@ public class AdifTests
     [TestMethod]
     public async Task ParseAdif()
     {
-        var testData = PrepareTestData();
+        var testData = TestData.GetLogRecords();
         var expectedRow = testData.First();
         var adif = AdifHelper.GenerateAdif(PrepareLogInfo(), testData);
         var errors = new List<LogEntry>();
@@ -140,7 +95,7 @@ public class AdifTests
         Assert.AreEqual(expectedRow.RstReceived, actualRow.RstReceived);
         Assert.AreEqual(expectedRow.RstSent, actualRow.RstSent);
         var timestampFormat = "yyyy MM dd HH mm ss";
-        Assert.AreEqual(expectedRow.Timestamp.ToString(timestampFormat), actualRow.Timestamp.ToString(timestampFormat));
+        Assert.AreEqual(expectedRow.QsoEndTimestamp.ToString(timestampFormat), actualRow.QsoEndTimestamp.ToString(timestampFormat));
     }
 
     [TestMethod]
@@ -234,7 +189,7 @@ public class AdifTests
             Band = RadioBandName.B10m,
             Mode = RadioMode.RTTY,
             Callsign = "UT8UU",
-            Timestamp = DateTime.UtcNow,
+            QsoEndTimestamp = DateTime.UtcNow,
         };
 
         var mainLog = new List<LogRecordDbo>

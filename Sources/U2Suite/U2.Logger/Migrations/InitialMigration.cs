@@ -12,8 +12,10 @@ namespace U2.Logger.Migrations
                 columns: table => new
                 {
                     RecordId = table.Column<Guid>(maxLength: 36, nullable: false),
+                    Hash = table.Column<string>(maxLength: 256, nullable: false),
                     Callsign = table.Column<string>(maxLength: 50, nullable: false),
-                    Timestamp = table.Column<DateTime>(nullable: false),
+                    QsoBeginTimestamp = table.Column<DateTime>(nullable: false),
+                    QsoEndTimestamp = table.Column<DateTime>(nullable: false),
                     Frequency = table.Column<double>(nullable: false),
                     RstSent = table.Column<string>(maxLength: 8, nullable: false),
                     Mode = table.Column<string>(maxLength: 8, nullable: false),

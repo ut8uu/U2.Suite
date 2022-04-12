@@ -167,7 +167,7 @@ public class QsoData
         Callsign = data.Callsign;
         RstSent = data.RstSent;
         RstRcvd = data.RstReceived;
-        Timestamp = data.Timestamp;
+        Timestamp = data.QsoEndTimestamp;
         Comments = data.Comments;
         Mode = data.Mode;
         FreqMhz = data.Frequency;

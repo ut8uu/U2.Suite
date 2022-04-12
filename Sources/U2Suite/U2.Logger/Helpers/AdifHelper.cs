@@ -138,7 +138,8 @@ internal static class AdifHelper
                     var date = qsoDate + qsoTime;
                     var dateValue = DateTime.ParseExact(date, "yyyyMMddHHmmss",
                         CultureInfo.InvariantCulture, DateTimeStyles.AssumeLocal);
-                    newRecord.Timestamp = dateValue;
+                    newRecord.QsoEndTimestamp = dateValue;
+                    newRecord.QsoBeginTimestamp = dateValue;
                 }
                 catch (Exception)
                 {
@@ -196,8 +197,8 @@ internal static class AdifHelper
             AddTag(KnownAdifTags.TagMySigInfo, logInfo.ActivatedReference, builder);
             AddTag(KnownAdifTags.TagBand, row.Band, builder);
             AddTag(KnownAdifTags.TagMode, row.Mode, builder);
-            AddTag(KnownAdifTags.TagQsoDate, row.Timestamp.ToString("yyyyMMdd"), builder);
-            AddTag(KnownAdifTags.TagTimeOn, row.Timestamp.ToString("HHmmss"), builder);
+            AddTag(KnownAdifTags.TagQsoDate, row.QsoEndTimestamp.ToString("yyyyMMdd"), builder);
+            AddTag(KnownAdifTags.TagTimeOn, row.QsoEndTimestamp.ToString("HHmmss"), builder);
 
             var comments = row.Comments;
             if (!string.IsNullOrEmpty(comments))

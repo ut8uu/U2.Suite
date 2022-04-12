@@ -25,6 +25,9 @@ namespace U2.Logger
         internal DuplicateRecordSaveOption _duplicateRecordSaveOption = DuplicateRecordSaveOption.Overwrite;
         internal CancellationTokenSource _cancellationTokenSource;
 
+        internal readonly List<LogRecordDbo> _duplicates = new List<LogRecordDbo>();
+        internal readonly List<LogRecordDbo> _loadedRecords = new List<LogRecordDbo>();
+
         public ImportAdifFromFileViewModel()
         {
             WindowTitle = Resources.ImportFromAdifWindowTitle;
@@ -90,38 +93,65 @@ namespace U2.Logger
 
         #endregion
 
-        public void ExecuteCloseAction()
+        internal void ExecuteCloseAction()
         {
             Owner.Close();
         }
 
-        public void ExecuteOverwriteSelectedAction()
+        internal void ExecuteOverwriteSelectedAction()
         {
             _duplicateRecordSaveOption = DuplicateRecordSaveOption.Overwrite;
         }
 
-        public void ExecuteIgnoreSelectedAction()
+        internal void ExecuteIgnoreSelectedAction()
         {
             _duplicateRecordSaveOption = DuplicateRecordSaveOption.Ignore;
         }
 
-        public void ExecuteAddSelectedAction()
+        internal void ExecuteAddSelectedAction()
         {
             _duplicateRecordSaveOption = DuplicateRecordSaveOption.Add;
         }
 
-        public void ExecuteImportAction()
+        internal void ExecuteImportAction()
         {
+            if (_loadedRecords == null || !_loadedRecords.Any())
+            {
+                return;
+            }
 
+            var records = LoggerDbContext.Instance.Records;
+
+            foreach (var record in _loadedRecords)
+            {
+                if (_duplicates.Any(d => d.Hash == record.Hash))
+                {
+                    if (_duplicateRecordSaveOption == DuplicateRecordSaveOption.Overwrite)
+                    {
+                        var existingRecord = records.FirstOrDefault(d => d.Hash == record.Hash);
+                        if (existingRecord != null) 
+                        {
+                            records.Remove(existingRecord);
+                        }
+                    }
+                    else if (_duplicateRecordSaveOption == DuplicateRecordSaveOption.Ignore)
+                    {
+                        continue;
+                    }
+                }
+                records.Add(record);
+            }
+
+            LoggerDbContext.Instance.SaveChanges();
         }
 
-        public void ExecuteCancelOperationAction()
+        internal void ExecuteCancelOperationAction()
         {
             _cancellationTokenSource.Cancel();
             HideProgressPanel();
         }
 
-        public async Task ExecuteSelectAdifFileAction()
+        internal async Task ExecuteSelectAdifFileAction()
         {
             var dialog = new OpenFileDialog
             {
@@ -144,6 +174,8 @@ namespace U2.Logger
 
             try
             {
+                _duplicates.Clear();
+                _loadedRecords.Clear();
                 ClearLog();
                 ResetAdifFileInfoGrid();
 
@@ -158,61 +190,70 @@ namespace U2.Logger
                 AdifFileName = filePath;
                 OnPropertyChanged(nameof(AdifFileName));
 
-                ShowProgressPanel(string.Empty);
-
                 _cancellationTokenSource = new CancellationTokenSource();
 
-                var progressFormat = string.Empty;
-                var progress = new Progress<string>(text =>
-                {
-                    DisplayProgressText(text);
-                });
-
-                var errors = new List<LogEntry>();
-                var records = await AdifHelper.ParseAdifAsync(filePath, _cancellationTokenSource.Token, progress, errors);
-                
-                if (_cancellationTokenSource.IsCancellationRequested)
-                {
-                    ResetAdifFileInfoGrid();
-                    AddLogItem(LogEntryType.Info, Resources.OperationCancelledMessage);
-                    return;
-                }
-
-                if (errors.Any())
-                {
-                    foreach (var error in errors)
-                    {
-                        LogContent.Add(error);
-                    }
-                    OnPropertyChanged(nameof(LogContent));
-                }
-
-                AdifFileErrors = errors.Count(e => e.Type == LogEntryType.Error);
-                AdifFileWarnings = errors.Count(e => e.Type == LogEntryType.Warning);
-                AdifFileRecords = records.Count();
-                UpdateAdifFileInfoGrid();
-
-                if (errors.Any(e => e.Type == LogEntryType.Error))
-                {
-                    return;
-                }
-
-                if (!records.Any())
-                {
-                    return;
-                }
-
-                var mainLog = LoggerDbContext.Instance.Records.Select(r => r.Hash).AsEnumerable();
-                if (AdifHelper.HasDuplicates(mainLog, records, out var duplicates))
-                {
-                    AdifFileDuplicates = duplicates.Count();
-                    UpdateAdifFileInfoGrid();
-                }
+                await ProcessAdifFileAsync(filePath, _cancellationTokenSource.Token);
             }
             catch (OperationCanceledException)
             {
 
             }
+        }
+
+        internal async Task ProcessAdifFileAsync(string filePath, CancellationToken cancellationToken)
+        {
+            ShowProgressPanel(string.Empty);
+
+            var progressFormat = string.Empty;
+            var progress = new Progress<string>(text =>
+            {
+                DisplayProgressText(text);
+            });
+
+            var errors = new List<LogEntry>();
+            _loadedRecords.AddRange(await AdifHelper.LoadAdifAsync(filePath, cancellationToken, progress, errors));
+            AddLogItem(LogEntryType.Info, "ADIF file loaded.");
+
+            if (cancellationToken.IsCancellationRequested)
+            {
+                ResetAdifFileInfoGrid();
+                AddLogItem(LogEntryType.Info, Resources.OperationCancelledMessage);
+                return;
+            }
+
+            if (errors.Any())
+            {
+                foreach (var error in errors)
+                {
+                    LogContent.Add(error);
+                }
+                OnPropertyChanged(nameof(LogContent));
+            }
+
+            AdifFileErrors = errors.Count(e => e.Type == LogEntryType.Error);
+            AdifFileWarnings = errors.Count(e => e.Type == LogEntryType.Warning);
+            AdifFileRecords = _loadedRecords.Count();
+            UpdateAdifFileInfoGrid();
+
+            if (errors.Any(e => e.Type == LogEntryType.Error))
+            {
+                return;
+            }
+
+            if (!_loadedRecords.Any())
+            {
+                return;
+            }
+
+            var mainLogHashes = LoggerDbContext.Instance.Records.Select(r => r.Hash).AsEnumerable();
+            AddLogItem(LogEntryType.Info, "Looking for duplicates.");
+            if (AdifHelper.HasDuplicates(mainLogHashes, _loadedRecords, out var duplicates))
+            {
+                AdifFileDuplicates = duplicates.Count();
+                _duplicates.AddRange(duplicates);
+                UpdateAdifFileInfoGrid();
+            }
+            AddLogItem(LogEntryType.Info, "Lookup finished.");
         }
 
         private void ClearLog()

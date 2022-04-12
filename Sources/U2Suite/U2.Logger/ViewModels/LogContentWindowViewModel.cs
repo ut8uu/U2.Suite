@@ -133,7 +133,7 @@ public sealed class DemoLogContentViewModel : LogContentViewModel
             Callsign = $"UT{DateTime.UtcNow.Millisecond}UU",
             Band = "80m",
             Mode = "CW",
-            Timestamp = DateTime.UtcNow,
+            QsoEndTimestamp = DateTime.UtcNow,
             Frequency = 3.5m,
             RecordId = Guid.NewGuid(),
             Comments = "",
