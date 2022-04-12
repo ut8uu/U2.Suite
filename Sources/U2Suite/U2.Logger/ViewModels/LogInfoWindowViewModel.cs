@@ -6,6 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using Avalonia.Controls;
 using GalaSoft.MvvmLight.Messaging;
+using U2.CommonControls;
 using U2.Core;
 using U2.Logger.Models;
 using U2.Resources;
@@ -149,28 +150,7 @@ namespace U2.Logger
         {
             if (!CanExecute(throwException: false, out string errorMessage))
             {
-                MessageBox.Avalonia.DTO.MessageBoxCustomParams @params = new MessageBox.Avalonia.DTO.MessageBoxCustomParams
-                {
-                    CanResize = false,
-                    ShowInCenter = true,
-                    Topmost = true,
-                    WindowStartupLocation = WindowStartupLocation.CenterOwner,
-                    ContentTitle = "Error",
-                    ContentMessage = errorMessage,
-                    SizeToContent = SizeToContent.WidthAndHeight,
-                    ButtonDefinitions = new[]
-                    {
-                        new MessageBox.Avalonia.Models.ButtonDefinition
-                        {
-                            Name = "OK",
-                            IsCancel = false,
-                            IsDefault = true,
-                        }
-                    }
-                };
-
-                var messageBox = MessageBox.Avalonia.MessageBoxManager.GetMessageBoxCustomWindow(@params);
-                messageBox.Show();
+                MessageBoxHelper.ShowMessageBox("Error", errorMessage);
                 return;
             }
 

@@ -259,6 +259,15 @@ namespace U2.Logger {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Export to ADIF failed..
+        /// </summary>
+        internal static string ExportToAdifFailedMessage {
+            get {
+                return ResourceManager.GetString("ExportToAdifFailedMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Freq (MHz).
         /// </summary>
         internal static string FreqMhz {
