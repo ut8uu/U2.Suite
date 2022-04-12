@@ -186,6 +186,9 @@
   <data name="ExportToAdifFailedMessage" xml:space="preserve">
     <value>Export to ADIF failed.</value>
   </data>
+  <data name="ExportToAdifSuccessfulMessage" xml:space="preserve">
+    <value>Export to ADIF successful.</value>
+  </data>
   <data name="FreqMhz" xml:space="preserve">
     <value>Freq (MHz)</value>
   </data>

@@ -14,7 +14,17 @@ namespace U2.Logger
     {
         public static LogInfo GetCurrentLogInfo()
         {
-            return LoadLogInfo(AppSettings.Default.LogName);
+            try
+            {
+                return LoadLogInfo(AppSettings.Default.LogName);
+            }
+            catch (LogInfoNotFoundException)
+            {
+                return new LogInfo
+                {
+                    LogName = AppSettings.Default.LogName,
+                };
+            }
         }
 
         /// <summary>

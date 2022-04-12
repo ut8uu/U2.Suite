@@ -43,7 +43,7 @@
 						<MenuItem Header="{Binding ImportFromAdifTitle}" Command="{Binding ImportFromAdif}"></MenuItem>
 					</MenuItem>
 					<MenuItem Header="Export">
-						<MenuItem Header="{Binding ExportToAdifTitle}" Command="{Binding ExportToAdifFile}"></MenuItem>
+						<MenuItem Header="{Binding ExportToAdifTitle}" Command="{Binding ExecuteExportToAdifAction}"></MenuItem>
 					</MenuItem>
 				</MenuItem>
 				<MenuItem Header="View">
