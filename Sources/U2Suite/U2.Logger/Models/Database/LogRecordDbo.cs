@@ -74,6 +74,7 @@ public class LogRecordDbo
     public string Hash
     {
         get => _hash;
+        set => _hash = value;
     }
 
     public void ResetHash()

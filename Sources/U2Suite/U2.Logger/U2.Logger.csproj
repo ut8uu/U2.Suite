@@ -73,7 +73,6 @@
 		</Compile>
 	</ItemGroup>
 	<ItemGroup>
-		<Folder Include="Migrations\" />
 		<Folder Include="Views\Controls\" />
 	</ItemGroup>
 	<ItemGroup>

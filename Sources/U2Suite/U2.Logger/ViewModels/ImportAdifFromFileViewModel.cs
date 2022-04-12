@@ -132,6 +132,7 @@ namespace U2.Logger
                         if (existingRecord != null) 
                         {
                             records.Remove(existingRecord);
+                            LoggerDbContext.Instance.SaveChanges();
                         }
                     }
                     else if (_duplicateRecordSaveOption == DuplicateRecordSaveOption.Ignore)

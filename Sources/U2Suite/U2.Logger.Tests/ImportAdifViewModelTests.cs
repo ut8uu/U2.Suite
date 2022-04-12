@@ -84,36 +84,68 @@ namespace U2.Logger.Tests
             Assert.AreEqual(1, model.AdifFileDuplicates);
         }
 
-        [TestMethod]
-        public async Task CanImportRecords()
+        private async Task CanImportRecords_Prepare(
+            ImportAdifFromFileViewModel model,
+            Guid duplicateId)
         {
-            var model = GetViewModel();
-
-            var testData = TestData.GetLogRecords();
-            
             // add one record to simulate a duplicate record
-            var duplicate = testData.First();
+            var duplicate = TestData.GetLogRecords().First();
+            duplicate.RecordId = duplicateId;
             LoggerDbContext.Instance.Records.Add(duplicate);
             LoggerDbContext.Instance.SaveChanges();
 
-            var adifFilePath = Path.Combine(_tempDirectory, "CanProcessGoodFile.adi");
-            await AdifHelper.ExportAsync(adifFilePath, LogInfoTestHelper.GetLogInfo(), testData);
-
             model._loadedRecords.Clear();
-            model._loadedRecords.AddRange(testData);
+            model._loadedRecords.AddRange(TestData.GetLogRecords());
 
             model._duplicates.Clear();
             model._duplicates.Add(duplicate);
+        }
 
-            // duplicate record should be ignored
-            model._duplicateRecordSaveOption = DuplicateRecordSaveOption.Ignore;
-            model.ExecuteImportAction();
-            Assert.IsTrue(LoggerDbContext.Instance.Records.Any(r => r.RecordId == duplicate.RecordId));
+        [TestMethod]
+        public async Task CanImportRecords_OverwriteDuplicates()
+        {
+            var duplicateId = Guid.NewGuid();
+            var model = GetViewModel();
+            await CanImportRecords_Prepare(model, duplicateId);
 
-            // duplicate record should be ignored
+            // duplicate record should be overwritten
             model._duplicateRecordSaveOption = DuplicateRecordSaveOption.Overwrite;
             model.ExecuteImportAction();
-            Assert.IsFalse(LoggerDbContext.Instance.Records.Any(r => r.RecordId == duplicate.RecordId));
+
+            Assert.IsFalse(LoggerDbContext.Instance.Records.Any(r => r.RecordId == duplicateId));
+            Assert.AreEqual(TestData.GetLogRecords().Count(), LoggerDbContext.Instance.Records.Count());
+        }
+
+        [TestMethod]
+        public async Task CanImportRecords_IgnoreDuplicates()
+        {
+            var duplicateId = Guid.NewGuid();
+            var model = GetViewModel();
+            await CanImportRecords_Prepare(model, duplicateId);
+
+            // duplicate record should be overwritten
+            model._duplicateRecordSaveOption = DuplicateRecordSaveOption.Ignore;
+            model.ExecuteImportAction();
+
+            Assert.IsTrue(LoggerDbContext.Instance.Records.Any(r => r.RecordId == duplicateId));
+            Assert.AreEqual(TestData.GetLogRecords().Count(), LoggerDbContext.Instance.Records.Count());
+        }
+
+        [TestMethod]
+        public async Task CanImportRecords_AddDuplicates()
+        {
+            var expectedCount = TestData.GetLogRecords().Count() + 1;
+
+            var duplicateId = Guid.NewGuid();
+            var model = GetViewModel();
+            await CanImportRecords_Prepare(model, duplicateId);
+
+            // duplicate record should be overwritten
+            model._duplicateRecordSaveOption = DuplicateRecordSaveOption.Add;
+            model.ExecuteImportAction();
+
+            Assert.IsTrue(LoggerDbContext.Instance.Records.Any(r => r.RecordId == duplicateId));
+            Assert.AreEqual(expectedCount, LoggerDbContext.Instance.Records.Count());
         }
     }
 }

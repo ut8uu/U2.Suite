@@ -1,6 +1,8 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
+#nullable disable
+
 namespace U2.Logger.Migrations
 {
     public partial class InitialMigration : Migration
@@ -11,18 +13,18 @@ namespace U2.Logger.Migrations
                 name: "Records",
                 columns: table => new
                 {
-                    RecordId = table.Column<Guid>(maxLength: 36, nullable: false),
-                    Hash = table.Column<string>(maxLength: 256, nullable: false),
-                    Callsign = table.Column<string>(maxLength: 50, nullable: false),
-                    QsoBeginTimestamp = table.Column<DateTime>(nullable: false),
-                    QsoEndTimestamp = table.Column<DateTime>(nullable: false),
-                    Frequency = table.Column<double>(nullable: false),
-                    RstSent = table.Column<string>(maxLength: 8, nullable: false),
-                    Mode = table.Column<string>(maxLength: 8, nullable: false),
-                    Band = table.Column<string>(maxLength: 16, nullable: false),
-                    RstReceived = table.Column<string>(maxLength: 8, nullable: false),
-                    Operator = table.Column<string>(maxLength: 64, nullable: false),
-                    Comments = table.Column<string>(maxLength: 128, nullable: false)
+                    RecordId = table.Column<Guid>(type: "TEXT", maxLength: 36, nullable: false),
+                    Callsign = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
+                    QsoBeginTimestamp = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    QsoEndTimestamp = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    Frequency = table.Column<decimal>(type: "TEXT", nullable: false),
+                    RstSent = table.Column<string>(type: "TEXT", maxLength: 8, nullable: false),
+                    Mode = table.Column<string>(type: "TEXT", maxLength: 8, nullable: false),
+                    Band = table.Column<string>(type: "TEXT", maxLength: 16, nullable: false),
+                    RstReceived = table.Column<string>(type: "TEXT", maxLength: 8, nullable: false),
+                    Operator = table.Column<string>(type: "TEXT", maxLength: 64, nullable: false),
+                    Comments = table.Column<string>(type: "TEXT", maxLength: 128, nullable: false),
+                    Hash = table.Column<string>(type: "TEXT", maxLength: 256, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -33,8 +35,8 @@ namespace U2.Logger.Migrations
                 name: "Settings",
                 columns: table => new
                 {
-                    SettingId = table.Column<string>(maxLength: 36, nullable: false),
-                    Value = table.Column<string>(maxLength: 36, nullable: false)
+                    SettingId = table.Column<string>(type: "TEXT", maxLength: 36, nullable: false),
+                    Value = table.Column<string>(type: "TEXT", maxLength: 36, nullable: false)
                 },
                 constraints: table =>
                 {
