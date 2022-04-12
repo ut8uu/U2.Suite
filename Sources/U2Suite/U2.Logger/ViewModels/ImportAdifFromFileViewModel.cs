@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia.Extensions;
+using Avalonia.Threading;
 using U2.Contracts;
 using U2.Logger.ViewModels;
 
@@ -25,8 +26,8 @@ namespace U2.Logger
         internal DuplicateRecordSaveOption _duplicateRecordSaveOption = DuplicateRecordSaveOption.Overwrite;
         internal CancellationTokenSource _cancellationTokenSource;
 
-        internal readonly List<LogRecordDbo> _duplicates = new List<LogRecordDbo>();
-        internal readonly List<LogRecordDbo> _loadedRecords = new List<LogRecordDbo>();
+        internal readonly List<LogRecordDbo> _duplicates = new();
+        internal readonly List<LogRecordDbo> _loadedRecords = new();
 
         public ImportAdifFromFileViewModel()
         {
@@ -93,6 +94,11 @@ namespace U2.Logger
 
         #endregion
 
+        protected override void SetOwner(Window owner)
+        {
+            base.SetOwner(owner);
+        }
+
         internal void ExecuteCloseAction()
         {
             Owner.Close();
@@ -117,10 +123,18 @@ namespace U2.Logger
         {
             if (_loadedRecords == null || !_loadedRecords.Any())
             {
+                AddLogItem(LogEntryType.Warning, "No records to import.");
                 return;
             }
 
+            AddLogItem(LogEntryType.Info, "Import started.");
+
             var records = LoggerDbContext.Instance.Records;
+
+            ShowProgressPanel();
+
+            var totalRecords = _loadedRecords.Count;
+            var currentRecord = 1.0m;
 
             foreach (var record in _loadedRecords)
             {
@@ -140,10 +154,20 @@ namespace U2.Logger
                         continue;
                     }
                 }
+
+                if (currentRecord++ % 10 == 1)
+                {
+                    var percentage = 100m * Math.Round(currentRecord / totalRecords);
+                    DisplayProgressText(string.Format(Resources.ImportProgressFormat, currentRecord, totalRecords, percentage));
+                }
+
                 records.Add(record);
             }
 
+            HideProgressPanel();
+
             LoggerDbContext.Instance.SaveChanges();
+            AddLogItem(LogEntryType.Info, "Import finished.");
         }
 
         internal void ExecuteCancelOperationAction()
@@ -316,8 +340,11 @@ namespace U2.Logger
 
         private void DisplayProgressText(string text)
         {
-            ProgressText = text;
-            OnPropertyChanged(nameof(ProgressText));
+            Dispatcher.UIThread.InvokeAsync(() =>
+            {
+                ProgressText = text;
+                OnPropertyChanged(nameof(ProgressText));
+            });
         }
     }
 

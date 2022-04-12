@@ -27,7 +27,7 @@ public class LogContentViewModel : ViewModelBase
         }
     }
 
-    public Window Owner { get; set; }
+    public Window? Owner { get; set; }
 
     public string CloseButtonText { get; set; } = Resources.CloseButtonTitle;
     public string EditButtonText { get; set; } = Resources.EditButtonTitle;
@@ -35,7 +35,7 @@ public class LogContentViewModel : ViewModelBase
 
     public string CallsignColumnHeader { get; set; } = Resources.Callsign;
     public string TimestampColumnHeader { get; set; } = Resources.Timestamp;
-    public string FrequencyColumnHeader { get; set; } = Resources.FreqMhz;
+    public string BandColumnHeader { get; set; } = Resources.BandColumnHeader;
     public string ModeColumnHeader { get; set; } = Resources.Mode;
     public string RstSentColumnHeader { get; set; } = Resources.Snt;
     public string RstReceivedColumnHeader { get; set; } = Resources.Rcv;

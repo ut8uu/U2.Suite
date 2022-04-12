@@ -142,6 +142,15 @@ namespace U2.Logger {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Band.
+        /// </summary>
+        internal static string BandColumnHeader {
+            get {
+                return ResourceManager.GetString("BandColumnHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Callsign.
         /// </summary>
         internal static string Callsign {

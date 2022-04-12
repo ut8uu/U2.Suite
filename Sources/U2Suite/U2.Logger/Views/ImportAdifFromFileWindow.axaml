@@ -20,7 +20,7 @@
 			<DockPanel>
 				<StackPanel x:Name="ProgressPanel" IsVisible="{Binding ProgressPanelVisible}"
 							Orientation="Horizontal" DockPanel.Dock="Right">
-					<TextBlock Margin="4" Text="{Binding ProgressText}"></TextBlock>
+					<TextBlock x:Name="ProgressPanelTextBlock" Margin="4" Text="{Binding ProgressText}"></TextBlock>
 					<Button Content="{Binding CancelOperationButtonTitle}"
 							Command="{Binding ExecuteCancelOperationAction}"></Button>
 				</StackPanel>

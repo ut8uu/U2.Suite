@@ -9,12 +9,26 @@ namespace U2.Logger.ViewModels
 {
     internal class WindowViewModelBase : ViewModelBase
     {
+        private Window _owner = default!;
+
         public string WindowTitle { get; set; } = default!;
 
         public string CancelButtonTitle { get; set; } = Resources.Cancel;
         public string OkButtonTitle { get; set; } = Resources.OK;
 
-        public Window Owner { get; set; } = default!;
+        public Window Owner
+        {
+            get => _owner; 
+            set
+            {
+                SetOwner(value);
+            }
+        }
+
+        protected virtual void SetOwner(Window owner)
+        {
+            _owner = owner;
+        }
 
         public virtual void ExecuteOkAction()
         {

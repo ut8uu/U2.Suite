@@ -23,13 +23,13 @@
                 >
 			  <DataGrid.Columns>
 				  <DataGridTextColumn Header="{Binding Path=TimestampColumnHeader}"
-									  Binding="{Binding Timestamp}"
+									  Binding="{Binding QsoEndTimestamp}"
 									  Width="150"/>
 				  <DataGridTextColumn Header="{Binding Path=CallsignColumnHeader}"
 									  Binding="{Binding Callsign}"
 									  Width="150"/>
-				  <DataGridTextColumn Header="{Binding Path=FrequencyColumnHeader}"
-									  Binding="{Binding Frequency}"
+				  <DataGridTextColumn Header="{Binding Path=BandColumnHeader}"
+									  Binding="{Binding Band}"
 									  Width="100"/>
 				  <DataGridTextColumn Header="{Binding Path=ModeColumnHeader}"
 									  Binding="{Binding Mode}"

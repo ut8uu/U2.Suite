@@ -144,6 +144,9 @@
   <data name="Band" xml:space="preserve">
     <value>Band</value>
   </data>
+  <data name="BandColumnHeader" xml:space="preserve">
+    <value>Band</value>
+  </data>
   <data name="Callsign" xml:space="preserve">
     <value>Callsign</value>
   </data>
