@@ -225,4 +225,29 @@ public class AdifTests
         Assert.AreEqual(1, errors.Count());
         var error = errors.Single(e => e.Type == LogEntryType.Error && e.Message == Resources.OperationCancelledMessage);
     }
+
+    [TestMethod]
+    public async Task CanFindDuplicates()
+    {
+        var logRecord = new LogRecordDbo
+        {
+            Band = RadioBandName.B10m,
+            Mode = RadioMode.RTTY,
+            Callsign = "UT8UU",
+            Timestamp = DateTime.UtcNow,
+        };
+
+        var mainLog = new List<LogRecordDbo>
+        {
+            logRecord,
+        };
+        var hashes = mainLog.Select(l => l.Hash);
+        var newLog = new List<LogRecordDbo>
+        {
+            logRecord,
+        };
+
+        Assert.IsTrue(AdifHelper.HasDuplicates(hashes, newLog, out var duplicates));
+        Assert.IsTrue(duplicates.Any());
+    }
 }

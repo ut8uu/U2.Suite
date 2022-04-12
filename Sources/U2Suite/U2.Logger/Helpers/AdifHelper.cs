@@ -273,7 +273,7 @@ internal static class AdifHelper
 
     public static bool HasDuplicates(IEnumerable<string> mainLogHashes, 
         IEnumerable<LogRecordDbo> logToSearch, 
-        List<LogRecordDbo> duplicates)
+        out List<LogRecordDbo> duplicates)
     {
         var newLogHashes = logToSearch.Select(x => x.Hash);
         var duplicateHashes = mainLogHashes.Intersect(newLogHashes);
