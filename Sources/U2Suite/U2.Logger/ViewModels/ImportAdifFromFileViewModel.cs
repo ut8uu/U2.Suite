@@ -229,56 +229,63 @@ namespace U2.Logger
         {
             ShowProgressPanel(string.Empty);
 
-            var progressFormat = string.Empty;
-            var progress = new Progress<string>(text =>
+            try
             {
-                DisplayProgressText(text);
-            });
-
-            var errors = new List<LogEntry>();
-            _loadedRecords.AddRange(await AdifHelper.LoadAdifAsync(filePath, cancellationToken, progress, errors));
-            AddLogItem(LogEntryType.Info, "ADIF file loaded.");
-
-            if (cancellationToken.IsCancellationRequested)
-            {
-                ResetAdifFileInfoGrid();
-                AddLogItem(LogEntryType.Info, Resources.OperationCancelledMessage);
-                return;
-            }
-
-            if (errors.Any())
-            {
-                foreach (var error in errors)
+                var progressFormat = string.Empty;
+                var progress = new Progress<string>(text =>
                 {
-                    LogContent.Add(error);
+                    DisplayProgressText(text);
+                });
+
+                var errors = new List<LogEntry>();
+                _loadedRecords.AddRange(await AdifHelper.LoadAdifAsync(filePath, cancellationToken, progress, errors));
+                AddLogItem(LogEntryType.Info, "ADIF file loaded.");
+
+                if (cancellationToken.IsCancellationRequested)
+                {
+                    ResetAdifFileInfoGrid();
+                    AddLogItem(LogEntryType.Info, Resources.OperationCancelledMessage);
+                    return;
                 }
-                OnPropertyChanged(nameof(LogContent));
-            }
 
-            AdifFileErrors = errors.Count(e => e.Type == LogEntryType.Error);
-            AdifFileWarnings = errors.Count(e => e.Type == LogEntryType.Warning);
-            AdifFileRecords = _loadedRecords.Count();
-            UpdateAdifFileInfoGrid();
+                if (errors.Any())
+                {
+                    foreach (var error in errors)
+                    {
+                        LogContent.Add(error);
+                    }
+                    OnPropertyChanged(nameof(LogContent));
+                }
 
-            if (errors.Any(e => e.Type == LogEntryType.Error))
-            {
-                return;
-            }
-
-            if (!_loadedRecords.Any())
-            {
-                return;
-            }
-
-            var mainLogHashes = LoggerDbContext.Instance.Records.Select(r => r.Hash).AsEnumerable();
-            AddLogItem(LogEntryType.Info, "Looking for duplicates.");
-            if (AdifHelper.HasDuplicates(mainLogHashes, _loadedRecords, out var duplicates))
-            {
-                AdifFileDuplicates = duplicates.Count();
-                _duplicates.AddRange(duplicates);
+                AdifFileErrors = errors.Count(e => e.Type == LogEntryType.Error);
+                AdifFileWarnings = errors.Count(e => e.Type == LogEntryType.Warning);
+                AdifFileRecords = _loadedRecords.Count();
                 UpdateAdifFileInfoGrid();
+
+                if (errors.Any(e => e.Type == LogEntryType.Error))
+                {
+                    return;
+                }
+
+                if (!_loadedRecords.Any())
+                {
+                    return;
+                }
+
+                var mainLogHashes = LoggerDbContext.Instance.Records.Select(r => r.Hash).AsEnumerable();
+                AddLogItem(LogEntryType.Info, "Looking for duplicates.");
+                if (AdifHelper.HasDuplicates(mainLogHashes, _loadedRecords, out var duplicates))
+                {
+                    AdifFileDuplicates = duplicates.Count();
+                    _duplicates.AddRange(duplicates);
+                    UpdateAdifFileInfoGrid();
+                }
+                AddLogItem(LogEntryType.Info, "Lookup finished.");
             }
-            AddLogItem(LogEntryType.Info, "Lookup finished.");
+            finally
+            {
+                HideProgressPanel();
+            }
         }
 
         private void ClearLog()
