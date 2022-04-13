@@ -12,222 +12,222 @@ using GalaSoft.MvvmLight.Messaging;
 using log4net;
 using U2.Core;
 
-namespace U2.Logger
+namespace U2.Logger;
+
+public class QsoEditorViewModel : ViewModelBase
 {
-    public class QsoEditorViewModel : ViewModelBase
+    protected LogRecordDbo _record = default!;
+    private bool _internalChange;
+    ILog _logger = LogManager.GetLogger("Logger");
+
+    public QsoEditorViewModel()
     {
-        protected LogRecordDbo _record = default!;
-        private bool _internalChange;
-        ILog _logger = LogManager.GetLogger("Logger");
+        _record = new LogRecordDbo();
+    }
 
-        public QsoEditorViewModel()
+    public QsoEditorViewModel(LogRecordDbo record)
+    {
+        _record = record;
+
+        Callsign = record.Callsign;
+        Operator = record.Operator;
+        RstReceived = record.RstReceived;
+        RstSent = record.RstSent;
+        Comments = record.Comments;
+        Frequency = record.Frequency.ToString(CultureInfo.DefaultThreadCurrentUICulture);
+        Band = record.Band;
+        Mode = record.Mode;
+        Timestamp = record.QsoEndTimestamp;
+        TimestampString = record.QsoEndTimestamp.ToString("g");
+    }
+
+    public Window Owner { get; set; }
+
+    public string OkButtonTitle { get; set; } = Resources.OK;
+    public string CancelButtonTitle { get; set; } = Resources.Cancel;
+    public string CallsignTitle { get; set; } = Resources.Callsign;
+    public string RstSentTitle { get; set; } = Resources.RstSent;
+    public string RstReceivedTitle { get; set; } = Resources.RstReceived;
+    public string OperatorTitle { get; set; } = Resources.Operator;
+    public string CommentsTitle { get; set; } = Resources.Comments;
+    public string FrequencyTitle { get; set; } = Resources.Frequency;
+    public string ModeTitle { get; set; } = Resources.Mode;
+    public string BandTitle { get; set; } = Resources.Band;
+    public string TimestampTitle { get; set; } = Resources.Timestamp;
+    public string WindowTitle { get; set; } = Resources.QsoEditorWindowTitle;
+
+    public string Callsign { get; set; } = default!;
+    public string RstSent { get; set; } = default!;
+    public string RstReceived { get; set; } = default!;
+    public string Operator { get; set; } = default!;
+    public string Comments { get; set; } = default!;
+    public string Frequency { get; set; } = default!;
+    public string Mode { get; set; } = default!;
+    public string Band { get; set; } = default!;
+    public DateTime Timestamp { get; set; } = DateTime.UtcNow;
+    public string TimestampString { get; set; }
+
+    public ObservableCollection<string> AllModes =>
+        new ObservableCollection<string>(
+            ConversionHelper.AllModes.Select(m=>m.Name)
+            .OrderBy(mode => mode));
+
+    public ObservableCollection<string> AllBands =>
+        new ObservableCollection<string>(
+            ConversionHelper.AllBands.Select(b => b.Name)
+            .OrderBy(name => name));
+
+    public void ExecuteOkAction()
+    {
+        if (string.IsNullOrWhiteSpace(this.Frequency))
         {
-            _record = new LogRecordDbo();
+            this.Frequency = ConversionHelper.BandNameToFrequency(this.Band).ToString(CultureInfo.InvariantCulture);
         }
 
-        public QsoEditorViewModel(LogRecordDbo record)
+        var freq = StringConverter.StringToDecimal(this.Frequency);
+        if (freq < 1)
         {
-            _record = record;
+            freq = ConversionHelper.BandNameAndModeToFrequency(Band, Mode);
+        }
+        var formData = new QsoData(_record.RecordId)
+        {
+            Callsign = this.Callsign,
+            FreqMhz = freq,
+            Band = ConversionHelper.FrequencyToBandName(freq),
+            Mode = this.Mode,
+            Comments = this.Comments,
+            Timestamp = this.Timestamp,
+            Operator = this.Operator,
+            RstRcvd = this.RstReceived,
+            RstSent = this.RstSent,
+            Modified = true,
 
-            Callsign = record.Callsign;
-            Operator = record.Operator;
-            RstReceived = record.RstReceived;
-            RstSent = record.RstSent;
-            Comments = record.Comments;
-            Frequency = record.Frequency.ToString(CultureInfo.DefaultThreadCurrentUICulture);
-            Band = record.Band;
-            Mode = record.Mode;
-            Timestamp = record.Timestamp;
-            TimestampString = record.Timestamp.ToString("g");
+        };
+        Messenger.Default.Send(new ExecuteCommandMessage(CommandToExecute.SaveQso, formData));
+        Owner.Close();
+    }
+
+    public void CloseWindow()
+    {
+        Owner.Close();
+    }
+
+    protected override void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+    {
+        base.OnPropertyChanged(propertyName);
+
+        if (_internalChange)
+        {
+            return;
         }
 
-        public Window Owner { get; set; }
-
-        public string OkButtonTitle { get; set; } = Resources.OK;
-        public string CancelButtonTitle { get; set; } = Resources.Cancel;
-        public string CallsignTitle { get; set; } = Resources.Callsign;
-        public string RstSentTitle { get; set; } = Resources.RstSent;
-        public string RstReceivedTitle { get; set; } = Resources.RstReceived;
-        public string OperatorTitle { get; set; } = Resources.Operator;
-        public string CommentsTitle { get; set; } = Resources.Comments;
-        public string FrequencyTitle { get; set; } = Resources.Frequency;
-        public string ModeTitle { get; set; } = Resources.Mode;
-        public string BandTitle { get; set; } = Resources.Band;
-        public string TimestampTitle { get; set; } = Resources.Timestamp;
-        public string WindowTitle { get; set; } = Resources.QsoEditorWindowTitle;
-
-        public string Callsign { get; set; } = default!;
-        public string RstSent { get; set; } = default!;
-        public string RstReceived { get; set; } = default!;
-        public string Operator { get; set; } = default!;
-        public string Comments { get; set; } = default!;
-        public string Frequency { get; set; } = default!;
-        public string Mode { get; set; } = default!;
-        public string Band { get; set; } = default!;
-        public DateTime Timestamp { get; set; } = DateTime.UtcNow;
-        public string TimestampString { get; set; }
-
-        public ObservableCollection<string> AllModes =>
-            new ObservableCollection<string>(
-                ConversionHelper.AllModes.Select(m=>m.Name)
-                .OrderBy(mode => mode));
-
-        public ObservableCollection<string> AllBands =>
-            new ObservableCollection<string>(
-                ConversionHelper.AllBands.Select(b => b.Name)
-                .OrderBy(name => name));
-
-        public void ExecuteOkAction()
+        switch (propertyName)
         {
-            if (string.IsNullOrWhiteSpace(this.Frequency))
-            {
-                this.Frequency = ConversionHelper.BandNameToFrequency(this.Band).ToString(CultureInfo.InvariantCulture);
-            }
+            case nameof(Callsign):
+                _internalChange = true;
+                Callsign = Callsign.ToUpper();
+                _internalChange = false;
+                _logger.Debug($"New {propertyName} value: {Callsign}");
+                break;
+            case nameof(Frequency):
+                if (!string.IsNullOrEmpty(Frequency))
+                {
+                    if (Frequency == "0")
+                    {
+                        return;
+                    }
 
-            var freq = StringConverter.StringToDouble(this.Frequency);
-            if (freq < 1)
-            {
-                freq = ConversionHelper.BandNameAndModeToFrequency(Band, Mode);
-            }
-            var formData = new QsoData(_record.RecordId)
-            {
-                Callsign = this.Callsign,
-                FreqMhz = freq,
-                Band = ConversionHelper.FrequencyToBandName(freq),
-                Mode = this.Mode,
-                Comments = this.Comments,
-                Timestamp = this.Timestamp,
-                Operator = this.Operator,
-                RstRcvd = this.RstReceived,
-                RstSent = this.RstSent,
-                Modified = true,
+                    var bandName = string.Empty;
+                    var freq = StringConverter.StringToDecimal(Frequency);
+                    if (freq > 0)
+                    {
+                        bandName = ConversionHelper.FrequencyToBandName(freq);
+                    }
 
-            };
-            Messenger.Default.Send(new ExecuteCommandMessage(CommandToExecute.SaveQso, formData));
-            Owner.Close();
-        }
-
-        public void CloseWindow()
-        {
-            Owner.Close();
-        }
-
-        protected override void OnPropertyChanged([CallerMemberName] string? propertyName = null)
-        {
-            base.OnPropertyChanged(propertyName);
-
-            if (_internalChange)
-            {
+                    if (!string.IsNullOrEmpty(bandName))
+                    {
+                        if (Band != bandName)
+                        {
+                            Band = bandName;
+                            _logger.Debug($"Frequency is {Frequency}. Mode changed to {Mode}.");
+                        }
+                    }
+                    else
+                    {
+                        Band = string.Empty;
+                        var message = string.Format(Resources.FrequencyNotResolvedFmt, Frequency);
+                        throw new Avalonia.Data.DataValidationException(message);
+                    }
+                }
+                break;
+            case nameof(Band):
+                {
+                    if (!string.IsNullOrEmpty(Mode) && !string.IsNullOrEmpty(Band))
+                    {
+                        var frequency = StringConverter.StringToDecimal(Frequency);
+                        var bandByFreq = ConversionHelper.FrequencyToBandName(frequency);
+                        if (bandByFreq != Band)
+                        {
+                            _internalChange = true;
+                            Frequency = ConversionHelper.BandNameAndModeToFrequency(Band, Mode).ToString();
+                            _internalChange = false;
+                        }
+                    }
+                    _logger.Debug($"New {propertyName} value: {Band}");
+                }
+                break;
+            case nameof(TimestampString):
+                if (!IsTimestampValid())
+                {
+                    throw new Avalonia.Data.DataValidationException(Resources.TimestampNotRecognized);
+                }
+                break;
+            default:
                 return;
-            }
-
-            switch (propertyName)
-            {
-                case nameof(Callsign):
-                    _internalChange = true;
-                    Callsign = Callsign.ToUpper();
-                    _internalChange = false;
-                    _logger.Debug($"New {propertyName} value: {Callsign}");
-                    break;
-                case nameof(Frequency):
-                    if (!string.IsNullOrEmpty(Frequency))
-                    {
-                        if (Frequency == "0")
-                        {
-                            return;
-                        }
-
-                        var bandName = string.Empty;
-                        var freq = StringConverter.StringToDouble(Frequency);
-                        if (freq > 0)
-                        {
-                            bandName = ConversionHelper.FrequencyToBandName(freq);
-                        }
-
-                        if (!string.IsNullOrEmpty(bandName))
-                        {
-                            if (Band != bandName)
-                            {
-                                Band = bandName;
-                                _logger.Debug($"Frequency is {Frequency}. Mode changed to {Mode}.");
-                            }
-                        }
-                        else
-                        {
-                            Band = string.Empty;
-                            var message = string.Format(Resources.FrequencyNotResolvedFmt, Frequency);
-                            throw new Avalonia.Data.DataValidationException(message);
-                        }
-                    }
-                    break;
-                case nameof(Band):
-                    {
-                        if (!string.IsNullOrEmpty(Mode) && !string.IsNullOrEmpty(Band))
-                        {
-                            var frequency = StringConverter.StringToDouble(Frequency);
-                            var bandByFreq = ConversionHelper.FrequencyToBandName(frequency);
-                            if (bandByFreq != Band)
-                            {
-                                _internalChange = true;
-                                Frequency = ConversionHelper.BandNameAndModeToFrequency(Band, Mode).ToString();
-                                _internalChange = false;
-                            }
-                        }
-                        _logger.Debug($"New {propertyName} value: {Band}");
-                    }
-                    break;
-                case nameof(TimestampString):
-                    if (!IsTimestampValid())
-                    {
-                        throw new Avalonia.Data.DataValidationException(Resources.TimestampNotRecognized);
-                    }
-                    break;
-                default:
-                    return;
-            }
-        }
-
-        private bool IsTimestampValid()
-        {
-            return (DateTime.TryParse(TimestampString, out var _)
-                    || DateTime.TryParse(TimestampString,
-                        CultureInfo.InvariantCulture, 
-                        DateTimeStyles.AssumeUniversal, out _));
-        }
-
-        private bool IsCallsignValid()
-        {
-            return !string.IsNullOrEmpty(Callsign);
-        }
-
-        internal bool CanSave()
-        {
-            return IsCallsignValid()
-                   && IsTimestampValid();
         }
     }
 
-    public sealed class DemoQsoEditorViewModel : QsoEditorViewModel
+    private bool IsTimestampValid()
     {
-        public DemoQsoEditorViewModel()
-        {
-            _record = new LogRecordDbo
-            {
-                Callsign = $"UT{DateTime.UtcNow.Millisecond}UU",
-                Band = "80m",
-                Mode = "CW",
-                Timestamp = DateTime.UtcNow,
-                Frequency = 3.5,
-                RecordId = Guid.NewGuid(),
-                Comments = "",
-                Operator = "UT8UU",
-                RstReceived = "599",
-                RstSent = "599",
-            };
-        }
+        return (DateTime.TryParse(TimestampString, out var _)
+                || DateTime.TryParse(TimestampString,
+                    CultureInfo.InvariantCulture, 
+                    DateTimeStyles.AssumeUniversal, out _));
+    }
 
-        protected override void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+    private bool IsCallsignValid()
+    {
+        return !string.IsNullOrEmpty(Callsign);
+    }
+
+    internal bool CanSave()
+    {
+        return IsCallsignValid()
+               && IsTimestampValid();
+    }
+}
+
+public sealed class DemoQsoEditorViewModel : QsoEditorViewModel
+{
+    public DemoQsoEditorViewModel()
+    {
+        _record = new LogRecordDbo
         {
-        }
+            Callsign = $"UT{DateTime.UtcNow.Millisecond}UU",
+            Band = "80m",
+            Mode = "CW",
+            QsoBeginTimestamp = DateTime.UtcNow,
+            QsoEndTimestamp = DateTime.UtcNow,
+            Frequency = 3.5m,
+            RecordId = Guid.NewGuid(),
+            Comments = "",
+            Operator = "UT8UU",
+            RstReceived = "599",
+            RstSent = "599",
+        };
+    }
+
+    protected override void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+    {
     }
 }

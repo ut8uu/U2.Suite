@@ -79,11 +79,74 @@ namespace U2.Logger {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Duplicates.
+        /// </summary>
+        internal static string AdifFileDuplicatesTitle {
+            get {
+                return ResourceManager.GetString("AdifFileDuplicatesTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Errors.
+        /// </summary>
+        internal static string AdifFileErrorsTitle {
+            get {
+                return ResourceManager.GetString("AdifFileErrorsTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lines.
+        /// </summary>
+        internal static string AdifFileLinesTitle {
+            get {
+                return ResourceManager.GetString("AdifFileLinesTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ADIF filename.
+        /// </summary>
+        internal static string AdifFilenameTitle {
+            get {
+                return ResourceManager.GetString("AdifFilenameTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Records.
+        /// </summary>
+        internal static string AdifFileRecordsTitle {
+            get {
+                return ResourceManager.GetString("AdifFileRecordsTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Warnings.
+        /// </summary>
+        internal static string AdifFileWarningsTitle {
+            get {
+                return ResourceManager.GetString("AdifFileWarningsTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Band.
         /// </summary>
         internal static string Band {
             get {
                 return ResourceManager.GetString("Band", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Band.
+        /// </summary>
+        internal static string BandColumnHeader {
+            get {
+                return ResourceManager.GetString("BandColumnHeader", resourceCulture);
             }
         }
         
@@ -102,6 +165,15 @@ namespace U2.Logger {
         internal static string Cancel {
             get {
                 return ResourceManager.GetString("Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        internal static string CancelOperationButtonTitle {
+            get {
+                return ResourceManager.GetString("CancelOperationButtonTitle", resourceCulture);
             }
         }
         
@@ -187,6 +259,24 @@ namespace U2.Logger {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Export to ADIF failed..
+        /// </summary>
+        internal static string ExportToAdifFailedMessage {
+            get {
+                return ResourceManager.GetString("ExportToAdifFailedMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Export to ADIF successful..
+        /// </summary>
+        internal static string ExportToAdifSuccessfulMessage {
+            get {
+                return ResourceManager.GetString("ExportToAdifSuccessfulMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Freq (MHz).
         /// </summary>
         internal static string FreqMhz {
@@ -210,6 +300,78 @@ namespace U2.Logger {
         internal static string FrequencyNotResolvedFmt {
             get {
                 return ResourceManager.GetString("FrequencyNotResolvedFmt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Import.
+        /// </summary>
+        internal static string ImportButtonTitle {
+            get {
+                return ResourceManager.GetString("ImportButtonTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Duplicates:.
+        /// </summary>
+        internal static string ImportFromAdifFileOptionsDuplicates {
+            get {
+                return ResourceManager.GetString("ImportFromAdifFileOptionsDuplicates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add.
+        /// </summary>
+        internal static string ImportFromAdifFileOptionsDuplicatesAdd {
+            get {
+                return ResourceManager.GetString("ImportFromAdifFileOptionsDuplicatesAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ignore.
+        /// </summary>
+        internal static string ImportFromAdifFileOptionsDuplicatesIgnore {
+            get {
+                return ResourceManager.GetString("ImportFromAdifFileOptionsDuplicatesIgnore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Overwrite.
+        /// </summary>
+        internal static string ImportFromAdifFileOptionsDuplicatesOverwrite {
+            get {
+                return ResourceManager.GetString("ImportFromAdifFileOptionsDuplicatesOverwrite", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Options.
+        /// </summary>
+        internal static string ImportFromAdifFileOptionsTitle {
+            get {
+                return ResourceManager.GetString("ImportFromAdifFileOptionsTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Import from ADIF.
+        /// </summary>
+        internal static string ImportFromAdifWindowTitle {
+            get {
+                return ResourceManager.GetString("ImportFromAdifWindowTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Imported {0} records out of {1} ({2}%)..
+        /// </summary>
+        internal static string ImportProgressFormat {
+            get {
+                return ResourceManager.GetString("ImportProgressFormat", resourceCulture);
             }
         }
         
@@ -277,6 +439,15 @@ namespace U2.Logger {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Operation cancelled..
+        /// </summary>
+        internal static string OperationCancelledMessage {
+            get {
+                return ResourceManager.GetString("OperationCancelledMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Operator.
         /// </summary>
         internal static string Operator {
@@ -318,6 +489,15 @@ namespace U2.Logger {
         internal static string Rcv {
             get {
                 return ResourceManager.GetString("Rcv", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reading records from ADIF: {0} out of {1} ({2}%)..
+        /// </summary>
+        internal static string ReadingAdifRecordsFormat {
+            get {
+                return ResourceManager.GetString("ReadingAdifRecordsFormat", resourceCulture);
             }
         }
         

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -10,6 +11,7 @@ using Avalonia.Controls;
 using GalaSoft.MvvmLight.Messaging;
 using log4net;
 using Microsoft.EntityFrameworkCore;
+using U2.CommonControls;
 using U2.Core;
 using U2.Core.Models;
 using U2.Resources;
@@ -56,6 +58,9 @@ namespace U2.Logger
 
         public string StatusText { get; set; } = default!;
         public string WindowTitle { get; set; } = default!;
+
+        public string ImportFromAdifTitle { get; set; } = "Import ADIF from file";
+        public string ExportToAdifTitle { get; set; } = "Export to ADIF file";
 
         private void AcceptButtonClickedMessage(ButtonClickedMessage message)
         {
@@ -182,6 +187,39 @@ namespace U2.Logger
         {
             var form = new LogInfoWindow(CommandToExecute.UpdateLog);
             await form.ShowDialog(Owner);
+        }
+
+        public async Task ImportFromAdif()  
+        {
+            var form = new ImportAdifFromFileWindow();
+            await form.ShowDialog(Owner);
+        }
+
+        public async Task ExecuteExportToAdifAction()
+        {
+            var saveDialog = new SaveFileDialog();
+            Debug.Assert(Owner != null, "Owner not set.");
+            var fileName = await saveDialog.ShowAsync(Owner);
+            if (string.IsNullOrEmpty(fileName))
+            {
+                return;
+            }
+
+            var extension = Path.GetExtension(fileName);
+            if (string.IsNullOrEmpty(extension))
+            {
+                fileName += ".adi";
+            }
+
+            var logInfo = LogInfoHelper.GetCurrentLogInfo();
+            if (await AdifHelper.ExportAsync(fileName, logInfo, LoggerDbContext.Instance.Records))
+            {
+                MessageBoxHelper.ShowMessageBox("Success", Resources.ExportToAdifSuccessfulMessage);
+            }
+            else
+            {
+                MessageBoxHelper.ShowMessageBox("Error", Resources.ExportToAdifFailedMessage);
+            }
         }
     }
 }

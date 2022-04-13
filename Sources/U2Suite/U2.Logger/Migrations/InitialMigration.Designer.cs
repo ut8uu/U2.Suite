@@ -6,6 +6,8 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using U2.Logger;
 
+#nullable disable
+
 namespace U2.Logger.Migrations
 {
     [DbContext(typeof(LoggerDbContext))]
@@ -15,55 +17,62 @@ namespace U2.Logger.Migrations
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.22");
+            modelBuilder.HasAnnotation("ProductVersion", "6.0.3");
 
             modelBuilder.Entity("U2.Logger.LogRecordDbo", b =>
                 {
                     b.Property<Guid>("RecordId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT")
-                        .HasMaxLength(36);
+                        .HasMaxLength(36)
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Band")
                         .IsRequired()
-                        .HasColumnType("TEXT")
-                        .HasMaxLength(16);
+                        .HasMaxLength(16)
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Callsign")
                         .IsRequired()
-                        .HasColumnType("TEXT")
-                        .HasMaxLength(50);
+                        .HasMaxLength(50)
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Comments")
                         .IsRequired()
-                        .HasColumnType("TEXT")
-                        .HasMaxLength(128);
+                        .HasMaxLength(128)
+                        .HasColumnType("TEXT");
 
-                    b.Property<double>("Frequency")
-                        .HasColumnType("REAL");
+                    b.Property<decimal>("Frequency")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Hash")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Mode")
                         .IsRequired()
-                        .HasColumnType("TEXT")
-                        .HasMaxLength(8);
+                        .HasMaxLength(8)
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Operator")
                         .IsRequired()
-                        .HasColumnType("TEXT")
-                        .HasMaxLength(64);
+                        .HasMaxLength(64)
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("QsoBeginTimestamp")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("QsoEndTimestamp")
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("RstReceived")
                         .IsRequired()
-                        .HasColumnType("TEXT")
-                        .HasMaxLength(8);
+                        .HasMaxLength(8)
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("RstSent")
                         .IsRequired()
-                        .HasColumnType("TEXT")
-                        .HasMaxLength(8);
-
-                    b.Property<DateTime>("Timestamp")
+                        .HasMaxLength(8)
                         .HasColumnType("TEXT");
 
                     b.HasKey("RecordId");
@@ -74,13 +83,13 @@ namespace U2.Logger.Migrations
             modelBuilder.Entity("U2.Logger.Models.Database.SettingsDbo", b =>
                 {
                     b.Property<string>("SettingId")
-                        .HasColumnType("TEXT")
-                        .HasMaxLength(36);
+                        .HasMaxLength(36)
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Value")
                         .IsRequired()
-                        .HasColumnType("TEXT")
-                        .HasMaxLength(36);
+                        .HasMaxLength(36)
+                        .HasColumnType("TEXT");
 
                     b.HasKey("SettingId");
 

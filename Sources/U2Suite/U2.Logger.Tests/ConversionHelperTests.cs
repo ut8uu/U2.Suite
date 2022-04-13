@@ -10,49 +10,79 @@ namespace U2.Logger.Tests
     [TestClass]
     public class ConversionHelperTests
     {
+        public static IEnumerable<object[]> BandToFreqData =>
+            new[]
+            {
+                new object[] { RadioBandName.B160m, 1.810m },
+                new object[] { RadioBandName.B80m, 3.500m },
+                new object[] { RadioBandName.B60m, 5.3515m },
+                new object[] { RadioBandName.B40m, 7.000m },
+                new object[] { RadioBandName.B30m, 10.100m },
+                new object[] { RadioBandName.B20m, 14.000m },
+                new object[] { RadioBandName.B17m, 18.068m },
+                new object[] { RadioBandName.B15m, 21.000m },
+                new object[] { RadioBandName.B12m, 24.890m },
+                new object[] { RadioBandName.B10m, 28.000m },
+                new object[] { RadioBandName.B6m, 50.000m },
+                new object[] { RadioBandName.B4m, 70.000m },
+                new object[] { RadioBandName.B2m, 144.000m },
+            };
+
         [TestMethod]
-        [DataRow(RadioBandName.B160m, 1.810)]
-        public void BandToFreq(string bandName, double expectedFreqMhz)
+        [DynamicData(nameof(BandToFreqData))]
+        public void BandToFreq(string bandName, decimal expectedFreqMhz)
         {
             var freq = ConversionHelper.BandNameToFrequency(bandName);
             Assert.AreEqual(expectedFreqMhz, freq);
         }
 
+        public static IEnumerable<object[]> FreqToBandData =>
+            new[]
+            {
+                new object[] { 1.810m, RadioBandName.B160m },
+                new object[] { 1.999m, RadioBandName.B160m },
+                new object[] { 3.501m, RadioBandName.B80m },
+                new object[] { 5.353m, RadioBandName.B60m },
+                new object[] { 7.001m, RadioBandName.B40m },
+                new object[] { 10.101m, RadioBandName.B30m },
+                new object[] { 14.001m, RadioBandName.B20m },
+                new object[] { 18.101m, RadioBandName.B17m },
+                new object[] { 21.001m, RadioBandName.B15m },
+                new object[] { 24.891m, RadioBandName.B12m },
+                new object[] { 28.101m, RadioBandName.B10m },
+                new object[] { 50.001m, RadioBandName.B6m },
+                new object[] { 70.001m, RadioBandName.B4m },
+                new object[] { 144.001m, RadioBandName.B2m },
+                new object[] { 432.001m, RadioBandName.B70cm },
+            };
+
         [TestMethod]
-        [DataRow(1.810, RadioBandName.B160m)]
-        [DataRow(1.999, RadioBandName.B160m)]
-        [DataRow(3.501, RadioBandName.B80m)]
-        [DataRow(5.352, RadioBandName.B60m)]
-        [DataRow(7.001, RadioBandName.B40m)]
-        [DataRow(10.101, RadioBandName.B30m)]
-        [DataRow(14.001, RadioBandName.B20m)]
-        [DataRow(18.101, RadioBandName.B17m)]
-        [DataRow(21.001, RadioBandName.B15m)]
-        [DataRow(24.891, RadioBandName.B12m)]
-        [DataRow(28.001, RadioBandName.B10m)]
-        [DataRow(50.001, RadioBandName.B6m)]
-        [DataRow(70.001, RadioBandName.B4m)]
-        [DataRow(144.001, RadioBandName.B2m)]
-        [DataRow(432.001, RadioBandName.B70cm)]
-        public void FreqToBand_Success(double freqMhz, string expectedBand)
+        [DynamicData(nameof(FreqToBandData))]
+        public void FreqToBand_Success(decimal freqMhz, string expectedBand)
         {
             var band = ConversionHelper.FrequencyToBandName(freqMhz);
             Assert.AreEqual(expectedBand, band);
         }
 
+        public static IEnumerable<object[]> BandAndModeToFreqData =>
+            new[]
+            {
+                new object[] { RadioBandName.B160m, RadioMode.CW, 1.810m },
+                new object[] { RadioBandName.B160m, RadioMode.PSK, 1.838m },
+                new object[] { RadioBandName.B160m, RadioMode.RTTY, 1.838m },
+                new object[] { RadioBandName.B160m, RadioMode.DIGITALVOICE, 1.840m },
+                new object[] { RadioBandName.B160m, RadioMode.SSB, 1.840m },
+                new object[] { RadioBandName.B160m, RadioMode.FM, 1.840m },
+                new object[] { RadioBandName.B160m, "unknown", 1.810m },
+            };
+
         [TestMethod]
-        [DataRow(RadioBandName.B160m, RadioMode.CW, 1.81)]
-        [DataRow(RadioBandName.B160m, RadioMode.PSK, 1.838)]
-        [DataRow(RadioBandName.B160m, RadioMode.RTTY, 1.838)]
-        [DataRow(RadioBandName.B160m, RadioMode.DIGITALVOICE, 1.840)]
-        [DataRow(RadioBandName.B160m, RadioMode.SSB, 1.840)]
-        [DataRow(RadioBandName.B160m, RadioMode.FM, 1.840)]
-        [DataRow(RadioBandName.B160m, "unknown", 1.81)]
+        [DynamicData(nameof(BandAndModeToFreqData))]
 #warning TODO Add the rest cases for all bands
-        public void BandAndModeToFreq(string bandName, string modeName, double expectedFrequency)
+        public void BandAndModeToFreq(string bandName, string modeName, decimal expectedFrequency)
         {
             var frequency = ConversionHelper.BandNameAndModeToFrequency(bandName, modeName);
-            Assert.AreEqual(expectedFrequency, frequency, 0.0000001);
+            Assert.AreEqual(expectedFrequency, frequency);
         }
     }
 }

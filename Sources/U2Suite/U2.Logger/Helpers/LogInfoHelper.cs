@@ -12,6 +12,21 @@ namespace U2.Logger
 {
     public static class LogInfoHelper
     {
+        public static LogInfo GetCurrentLogInfo()
+        {
+            try
+            {
+                return LoadLogInfo(AppSettings.Default.LogName);
+            }
+            catch (LogInfoNotFoundException)
+            {
+                return new LogInfo
+                {
+                    LogName = AppSettings.Default.LogName,
+                };
+            }
+        }
+
         /// <summary>
         /// Loads a log info file from the database directory.
         /// </summary>

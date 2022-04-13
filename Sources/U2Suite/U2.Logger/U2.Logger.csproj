@@ -15,29 +15,26 @@
 	</PropertyGroup>
 	<ItemGroup>
 		<AvaloniaResource Include="Assets\**" />
-		<AvaloniaXaml Remove="Converters\**" />
-		<Compile Remove="Converters\**" />
-		<EmbeddedResource Remove="Converters\**" />
-		<None Remove="Converters\**" />
 		<None Remove=".gitignore" />
 	</ItemGroup>
 	<ItemGroup>
-		<PackageReference Include="Avalonia" Version="0.10.11" />
-		<PackageReference Include="Avalonia.Desktop" Version="0.10.11" />
+		<PackageReference Include="Avalonia" Version="0.10.13" />
+		<PackageReference Include="Avalonia.Desktop" Version="0.10.13" />
 		<!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
-		<PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="0.10.11" />
-		<PackageReference Include="Avalonia.ReactiveUI" Version="0.10.11" />
-		<PackageReference Include="Citrus.Avalonia" Version="1.5.1" />
+		<PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="0.10.13" />
+		<PackageReference Include="Avalonia.ReactiveUI" Version="0.10.13" />
+		<PackageReference Include="Citrus.Avalonia" Version="1.6.1" />
+		<PackageReference Include="Dove.Avalonia.Controls.Extensions" Version="1.6.8" />
 		<PackageReference Include="log4net" Version="2.0.14" />
-		<PackageReference Include="MessageBox.Avalonia" Version="1.7.1" />
-		<PackageReference Include="Microsoft.Data.Sqlite" Version="6.0.1" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.22">
+		<PackageReference Include="MessageBox.Avalonia" Version="2.0.0" />
+		<PackageReference Include="Microsoft.Data.Sqlite" Version="6.0.3" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.3">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.22" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="6.0.3" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite.Design" Version="1.1.6" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.22">
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.3">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
@@ -47,6 +44,7 @@
 		<PackageReference Include="System.Data.SQLite" Version="1.0.115.5" />
 	</ItemGroup>
 	<ItemGroup>
+		<ProjectReference Include="..\U2.CommonControls\U2.CommonControls.csproj" />
 		<ProjectReference Include="..\U2.Core\U2.Core.csproj" />
 		<ProjectReference Include="..\U2.Resources\U2.Resources.csproj" />
 	</ItemGroup>
@@ -64,6 +62,9 @@
 			<AutoGen>True</AutoGen>
 			<DependentUpon>AppSettings.settings</DependentUpon>
 		</Compile>
+		<Compile Update="Views\ImportAdifFromFileWindow.axaml.cs">
+		  <DependentUpon>ImportAdifFromFileWindow.axaml</DependentUpon>
+		</Compile>
 		<Compile Update="Views\LoggerMainWindow.axaml.cs">
 			<DependentUpon>LoggerMainWindow.axaml</DependentUpon>
 		</Compile>
@@ -72,7 +73,6 @@
 		</Compile>
 	</ItemGroup>
 	<ItemGroup>
-		<Folder Include="Migrations\" />
 		<Folder Include="Views\Controls\" />
 	</ItemGroup>
 	<ItemGroup>
