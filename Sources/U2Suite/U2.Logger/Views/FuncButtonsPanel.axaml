@@ -11,7 +11,7 @@
   </Design.DataContext>
 
   <Border Padding="5 0">
-    <Border Classes="Card2">
+    <Border Classes="Card1">
       <StackPanel Orientation="Horizontal">
         <Button Name="WipeButton" Margin="3 1" Command="{Binding Wipe}" Content="{Binding WipeButtonTitle}"></Button>
         <Button Name="SaveButton" IsDefault="True" Margin="3 1" Command="{Binding Save}" Content="{Binding SaveButtonTitle}"></Button>
