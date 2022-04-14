@@ -3,6 +3,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:logger="clr-namespace:U2.Logger"
+        xmlns:commonControls="clr-namespace:U2.CommonControls;assembly=U2.CommonControls"
         mc:Ignorable="d" d:DesignWidth="580" d:DesignHeight="315"
 		Width="580" Height="315"
         x:Class="U2.Logger.LogListWindow"
@@ -14,7 +15,7 @@
 
 	<Border Padding="2">
 		<DockPanel>
-			<logger:OkCancelButtonsUserControl DockPanel.Dock="Bottom"></logger:OkCancelButtonsUserControl>
+			<commonControls:OkCancelButtonsUserControl DockPanel.Dock="Bottom"></commonControls:OkCancelButtonsUserControl>
 
 			<DockPanel>
 				<Border Classes="Card" DockPanel.Dock="Left">
