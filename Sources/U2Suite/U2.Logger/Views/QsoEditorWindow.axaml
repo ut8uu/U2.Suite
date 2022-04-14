@@ -5,8 +5,8 @@
         xmlns:logger="clr-namespace:U2.Logger"
         xmlns:core="clr-namespace:U2.Core;assembly=U2.Core"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="400"
-        Width="800" Height="400"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="350"
+        Width="800" Height="350"
         x:Class="U2.Logger.QsoEditorWindow"
         Title="{Binding QsoEditorWindowTitle}">
 
@@ -19,60 +19,60 @@
 	</Design.DataContext>
 
 	<Border Classes="Card">
-		<Grid ColumnDefinitions="*,10,*" RowDefinitions="*,*,*,*,60">
-			<StackPanel Grid.Row="0" Grid.Column="0" Orientation="Vertical">
-				<TextBlock Text="{Binding CallsignTitle}"></TextBlock>
-				<TextBox Text="{Binding Path=Callsign, Converter={StaticResource UpperCaseConverter}}"></TextBox>
-			</StackPanel>
-			<StackPanel Grid.Row="0" Grid.Column="2" Orientation="Vertical">
-				<TextBlock Text="{Binding TimestampTitle}"></TextBlock>
-				<TextBox Text="{Binding TimestampString, }"></TextBox>
-			</StackPanel>
-
-			<StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal">
-				<StackPanel Width="175">
-					<TextBlock Text="{Binding RstSentTitle}"></TextBlock>
-					<TextBox Text="{Binding RstSent}"></TextBox>
-				</StackPanel>
-				<Border Padding="10 0 0 0">
-					<StackPanel Width="180">
-						<TextBlock Text="{Binding RstReceivedTitle}"></TextBlock>
-						<TextBox Text="{Binding RstReceived}"></TextBox>
-					</StackPanel>
-
-				</Border>
-			</StackPanel>
-			<StackPanel Grid.Row="1" Grid.Column="2" Orientation="Vertical">
-				<TextBlock Text="{Binding ModeTitle}"></TextBlock>
-				<Border Padding="0 5 0 0">
-					<ComboBox Height="40" Items="{Binding AllModes}" SelectedItem="{Binding Mode}"></ComboBox>
-				</Border>
-			</StackPanel>
-
-			<StackPanel Grid.Row="2" Grid.Column="0" Orientation="Vertical">
-				<TextBlock Text="{Binding FrequencyTitle}"></TextBlock>
-				<TextBox Text="{Binding Frequency}"></TextBox>
-			</StackPanel>
-			<StackPanel Grid.Row="2" Grid.Column="2" Orientation="Vertical">
-				<TextBlock Text="{Binding BandTitle}"></TextBlock>
-				<Border Padding="0 5 0 0">
-					<ComboBox Height="40" Items="{Binding AllBands}" SelectedItem="{Binding Band}"></ComboBox>
-				</Border>
-
-			</StackPanel>
-
-			<StackPanel Grid.Row="3" Grid.Column="0" Orientation="Vertical">
-				<TextBlock Text="{Binding OperatorTitle}"></TextBlock>
-				<TextBox Text="{Binding Operator}"></TextBox>
-			</StackPanel>
-			<StackPanel Grid.Row="3" Grid.Column="2" Orientation="Vertical">
-				<TextBlock Text="{Binding CommentsTitle}"></TextBlock>
-				<TextBox Text="{Binding Comments}"></TextBox>
-			</StackPanel>
+		<DockPanel>
+			<logger:OkCancelButtonsUserControl DockPanel.Dock="Bottom"></logger:OkCancelButtonsUserControl>
 			
-			<StackPanel Orientation="Horizontal" Grid.Row="4" Grid.Column="0">
-				<logger:OkCancelButtonsUserControl></logger:OkCancelButtonsUserControl>
-			</StackPanel>
-		</Grid>
+            <Grid ColumnDefinitions="*,10,*" RowDefinitions="*,*,*,*">
+				<StackPanel Grid.Row="0" Grid.Column="0" Orientation="Vertical">
+					<TextBlock Text="{Binding CallsignTitle}"></TextBlock>
+					<TextBox Text="{Binding Path=Callsign, Converter={StaticResource UpperCaseConverter}}"></TextBox>
+				</StackPanel>
+				<StackPanel Grid.Row="0" Grid.Column="2" Orientation="Vertical">
+					<TextBlock Text="{Binding TimestampTitle}"></TextBlock>
+					<TextBox Text="{Binding TimestampString, }"></TextBox>
+				</StackPanel>
+
+				<StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal">
+					<StackPanel Width="175">
+						<TextBlock Text="{Binding RstSentTitle}"></TextBlock>
+						<TextBox Text="{Binding RstSent}"></TextBox>
+					</StackPanel>
+					<Border Padding="10 0 0 0">
+						<StackPanel Width="180">
+							<TextBlock Text="{Binding RstReceivedTitle}"></TextBlock>
+							<TextBox Text="{Binding RstReceived}"></TextBox>
+						</StackPanel>
+
+					</Border>
+				</StackPanel>
+				<StackPanel Grid.Row="1" Grid.Column="2" Orientation="Vertical">
+					<TextBlock Text="{Binding ModeTitle}"></TextBlock>
+					<Border Padding="0 5 0 0">
+						<ComboBox Height="40" Items="{Binding AllModes}" SelectedItem="{Binding Mode}"></ComboBox>
+					</Border>
+				</StackPanel>
+
+				<StackPanel Grid.Row="2" Grid.Column="0" Orientation="Vertical">
+					<TextBlock Text="{Binding FrequencyTitle}"></TextBlock>
+					<TextBox Text="{Binding Frequency}"></TextBox>
+				</StackPanel>
+				<StackPanel Grid.Row="2" Grid.Column="2" Orientation="Vertical">
+					<TextBlock Text="{Binding BandTitle}"></TextBlock>
+					<Border Padding="0 5 0 0">
+						<ComboBox Height="40" Items="{Binding AllBands}" SelectedItem="{Binding Band}"></ComboBox>
+					</Border>
+
+				</StackPanel>
+
+				<StackPanel Grid.Row="3" Grid.Column="0" Orientation="Vertical">
+					<TextBlock Text="{Binding OperatorTitle}"></TextBlock>
+					<TextBox Text="{Binding Operator}"></TextBox>
+				</StackPanel>
+				<StackPanel Grid.Row="3" Grid.Column="2" Orientation="Vertical">
+					<TextBlock Text="{Binding CommentsTitle}"></TextBlock>
+					<TextBox Text="{Binding Comments}"></TextBox>
+				</StackPanel>
+			</Grid>
+		</DockPanel>
 	</Border>
 </Window>

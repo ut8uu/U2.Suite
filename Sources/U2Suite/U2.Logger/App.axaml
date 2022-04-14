@@ -13,6 +13,6 @@
     <!-- <StyleInclude Source="avares://Citrus.Avalonia/Candy.xaml"/> -->
     <!-- <StyleInclude Source="avares://Citrus.Avalonia/Magma.xaml"/> -->
     <StyleInclude Source="avares://Avalonia.Controls.DataGrid/Themes/Default.xaml"/>
-    <StyleInclude Source="avares://U2.Resources/Styles/Citrus/Rust.xaml"/>
+    <StyleInclude Source="avares://U2.Resources/Styles/Citrus/Sea.xaml"/>
   </Application.Styles>
 </Application>
