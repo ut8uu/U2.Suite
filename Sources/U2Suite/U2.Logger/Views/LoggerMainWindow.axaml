@@ -20,15 +20,13 @@
 		<logger:MainWindowViewModel/>
 	</Design.DataContext>
 
-	<Border Padding="2">
+	<Border>
 		<DockPanel>
 
-			<Border Padding="4 0" DockPanel.Dock="Bottom">
-				<Border Classes="Card">
-					<StackPanel>
-						<TextBlock Text="{Binding StatusText}"></TextBlock>
-					</StackPanel>
-				</Border>
+			<Border Classes="Card" DockPanel.Dock="Bottom">
+				<StackPanel Height="15" Orientation="Horizontal">
+					<TextBlock Text="{Binding StatusText}"></TextBlock>
+				</StackPanel>
 			</Border>
 
 			<Menu DockPanel.Dock="Top">
@@ -56,7 +54,6 @@
 				<views:TextInputPanel Name="TextInputs"></views:TextInputPanel>
 				<views:FuncButtonsPanel Name="FuncButtons" Width="600"></views:FuncButtonsPanel>
 			</StackPanel>
-
 		</DockPanel>
 	</Border>
 </Window>

@@ -13,46 +13,47 @@
   </Design.DataContext>
 
   <Border Padding="2">
-	  <StackPanel Orientation="Vertical">
-		  <DataGrid Name="MainGrid" DockPanel.Dock="Top" Height="300"
-					ScrollViewer.VerticalScrollBarVisibility="Auto"
-					Items="{Binding FullList, Mode=OneWay}"
-					AutoGenerateColumns="False"
-					SelectionMode="Extended"
-					SelectedItem="{Binding SelectedRecord}"
-                >
-			  <DataGrid.Columns>
-				  <DataGridTextColumn Header="{Binding Path=TimestampColumnHeader}"
-									  Binding="{Binding QsoEndTimestamp}"
-									  Width="150"/>
-				  <DataGridTextColumn Header="{Binding Path=CallsignColumnHeader}"
-									  Binding="{Binding Callsign}"
-									  Width="150"/>
-				  <DataGridTextColumn Header="{Binding Path=BandColumnHeader}"
-									  Binding="{Binding Band}"
-									  Width="100"/>
-				  <DataGridTextColumn Header="{Binding Path=ModeColumnHeader}"
-									  Binding="{Binding Mode}"
-									  Width="70"/>
-				  <DataGridTextColumn Header="{Binding Path=RstSentColumnHeader}"
-									  Binding="{Binding RstSent}"
-									  Width="70"/>
-				  <DataGridTextColumn Header="{Binding Path=RstReceivedColumnHeader}"
-									  Binding="{Binding RstReceived}"
-									  Width="70"/>
-				  <DataGridTextColumn Header="{Binding Path=NameColumnHeader}"
-									  Binding="{Binding Operator}"
-									  Width="100"/>
-				  <DataGridTextColumn Header="{Binding Path=CommentsColumnHeader}"
-									  Binding="{Binding Comments}"
-									  Width="100"/>
-			  </DataGrid.Columns>
-		  </DataGrid>
-		  <StackPanel Height="40" DockPanel.Dock="Bottom" Orientation="Horizontal">
-			  <Button Margin="5 0 40 0" Height="30" Name="CloseButton" Command="{Binding CloseButtonClick}" Content="{Binding CloseButtonText}"></Button>
-			  <Button Margin="5" Height="30" Name="EditButton" Command="{Binding EditButtonClick}" Content="{Binding EditButtonText}"></Button>
-			  <Button Margin="5" Height="30" Name="DeleteButton" Command="{Binding DeleteButtonClick}" Content="{Binding DeleteButtonText}"></Button>
-		  </StackPanel>
-	  </StackPanel>
+	  <DockPanel>
+          <StackPanel x:Name="ButtonsPanel" Height="40" DockPanel.Dock="Bottom" Orientation="Horizontal">
+              <Button Margin="5 0 40 0" Height="30" Name="CloseButton" Command="{Binding CloseButtonClick}" Content="{Binding CloseButtonText}"></Button>
+              <Button Margin="5" Height="30" Name="EditButton" Command="{Binding EditButtonClick}" Content="{Binding EditButtonText}"></Button>
+              <Button Margin="5" Height="30" Name="DeleteButton" Command="{Binding DeleteButtonClick}" Content="{Binding DeleteButtonText}"></Button>
+          </StackPanel>
+
+          <DataGrid Name="MainGrid" DockPanel.Dock="Top" Height="300"
+                    ScrollViewer.VerticalScrollBarVisibility="Auto"
+                    Items="{Binding FullList, Mode=OneWay}"
+                    AutoGenerateColumns="False"
+                    SelectionMode="Extended"
+                    SelectedItem="{Binding SelectedRecord}"
+          >
+              <DataGrid.Columns>
+                  <DataGridTextColumn Header="{Binding Path=TimestampColumnHeader}"
+                                      Binding="{Binding QsoEndTimestamp}"
+                                      Width="150"/>
+                  <DataGridTextColumn Header="{Binding Path=CallsignColumnHeader}"
+                                      Binding="{Binding Callsign}"
+                                      Width="150"/>
+                  <DataGridTextColumn Header="{Binding Path=BandColumnHeader}"
+                                      Binding="{Binding Band}"
+                                      Width="100"/>
+                  <DataGridTextColumn Header="{Binding Path=ModeColumnHeader}"
+                                      Binding="{Binding Mode}"
+                                      Width="70"/>
+                  <DataGridTextColumn Header="{Binding Path=RstSentColumnHeader}"
+                                      Binding="{Binding RstSent}"
+                                      Width="70"/>
+                  <DataGridTextColumn Header="{Binding Path=RstReceivedColumnHeader}"
+                                      Binding="{Binding RstReceived}"
+                                      Width="70"/>
+                  <DataGridTextColumn Header="{Binding Path=NameColumnHeader}"
+                                      Binding="{Binding Operator}"
+                                      Width="100"/>
+                  <DataGridTextColumn Header="{Binding Path=CommentsColumnHeader}"
+                                      Binding="{Binding Comments}"
+                                      Width="100"/>
+              </DataGrid.Columns>
+          </DataGrid>
+	  </DockPanel>
   </Border>
 </Window>

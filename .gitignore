@@ -9,3 +9,4 @@
 **/*.user
 bin
 obj
+/Sources/.sonarqube/

@@ -26,7 +26,8 @@
 				</StackPanel>
 				<StackPanel Orientation="Horizontal">
 					<Button Content="{Binding ImportButtonTitle}" Command="{Binding ExecuteImportAction}"></Button>
-					<Button Margin="10 0" Content="{Binding CloseButtonTitle}" Command="{Binding ExecuteCloseAction}"></Button>
+					<Panel Width="10"></Panel>
+					<Button Content="{Binding CloseButtonTitle}" Command="{Binding ExecuteCloseAction}"></Button>
 				</StackPanel>
 			</DockPanel>
 		</Border>

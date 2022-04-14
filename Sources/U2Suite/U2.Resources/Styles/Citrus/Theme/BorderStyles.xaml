@@ -1,37 +1,11 @@
 <Styles xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-  <Design.PreviewWith>
-    <Border Padding="20">
-		<StackPanel Orientation="Vertical">
-			<Border Classes="Card">
-				<Button>Card</Button>
-			</Border>
-			<Border Classes="Card">
-				<TextBlock>Card</TextBlock>
-			</Border>
-			<Border Classes="Card2">
-				<Button>Card2</Button>
-			</Border>
-			<Border Classes="Card2">
-				<TextBlock>Card2</TextBlock>
-			</Border>
-		</StackPanel>
-    </Border>
-  </Design.PreviewWith>
-  <Style Selector="Border.Card">
-    <Setter Property="Padding" Value="10" />
-    <Setter Property="CornerRadius" Value="5" />
-    <Setter Property="BorderThickness" Value="2" />
-    <Setter Property="BorderBrush" Value="{DynamicResource ThemeCardBrush}" />
-    <Setter Property="Background" Value="{DynamicResource ThemeCardBrush}" />
-    <Setter Property="Margin" Value="1" />
-  </Style>
-  <Style Selector="Border.Card2">
-    <Setter Property="Padding" Value="2" />
-    <Setter Property="CornerRadius" Value="5" />
-    <Setter Property="BorderThickness" Value="2" />
-    <Setter Property="BorderBrush" Value="{DynamicResource ThemeCardBrush}" />
-    <Setter Property="Background" Value="{DynamicResource ThemeCardBrush}" />
-    <Setter Property="Margin" Value="1" />
-  </Style>
+    <Style Selector="Border.Card">
+        <Setter Property="Padding" Value="2" />
+        <Setter Property="CornerRadius" Value="5" />
+        <Setter Property="BorderThickness" Value="2" />
+        <Setter Property="BorderBrush" Value="{DynamicResource ThemeCardBrush}" />
+        <Setter Property="Background" Value="{DynamicResource ThemeCardBrush}" />
+        <Setter Property="Margin" Value="3" />
+    </Style>
 </Styles>

@@ -13,7 +13,7 @@
         <Setter Property="Margin" Value="0 10 0 5" />
         <Setter Property="FontWeight" Value="SemiBold" />
         <Setter Property="Foreground" Value="{DynamicResource ThemeForegroundBrush}" />
-        <Setter Property="FontSize" Value="20" />
+        <Setter Property="FontSize" Value="15" />
     </Style>
     <Style Selector="TextBlock.Caption">
         <Setter Property="Foreground" Value="{DynamicResource ThemeControlHighBrush}" />

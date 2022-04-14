@@ -12,32 +12,31 @@
 		<logger:DemoLogListViewModel/>
 	</Design.DataContext>
 
-	<Border Padding="10">
-		<StackPanel Orientation="Vertical">
-				<StackPanel Orientation="Horizontal">
-			<Border Classes="Card" Margin="0 0 0 5">
+	<Border Padding="2">
+		<DockPanel>
+			<logger:OkCancelButtonsUserControl DockPanel.Dock="Bottom"></logger:OkCancelButtonsUserControl>
+
+			<DockPanel>
+				<Border Classes="Card" DockPanel.Dock="Left">
 					<ListBox Name="ListBoxLogs"
-						 Height="240" Width="150"
-						 HorizontalAlignment="Stretch"
-						 SelectionMode="Single"
-						 Items="{Binding List, Mode=OneWay}"
-						 SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
-					 >
+                             Width="150"
+                             HorizontalAlignment="Stretch"
+                             SelectionMode="Single"
+                             Items="{Binding List, Mode=OneWay}"
+                             SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
+                    >
 						<ListBox.ItemTemplate>
 							<DataTemplate>
 								<TextBlock Text="{Binding LogName}"></TextBlock>
 							</DataTemplate>
 						</ListBox.ItemTemplate>
 					</ListBox>
-			</Border>
-					<Border Classes="Card" Margin="10 0 0 5" Padding="10 -30 10 0">
-						<logger:LogInfoDetailsUserControl 
-						Height="240"
-						Name="LogInfoDetailsViewer"></logger:LogInfoDetailsUserControl>
-					</Border>
-				</StackPanel>
-
-			<logger:OkCancelButtonsUserControl></logger:OkCancelButtonsUserControl>
-		</StackPanel>
+				</Border>
+				<Border Classes="Card">
+					<logger:LogInfoDetailsUserControl
+                        Name="LogInfoDetailsViewer"></logger:LogInfoDetailsUserControl>
+				</Border>
+			</DockPanel>
+		</DockPanel>
 	</Border>
 </Window>

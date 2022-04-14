@@ -16,7 +16,6 @@
     <logger:TextInputPanelViewModel/>
   </Design.DataContext>
 
-  <Border Padding="5 0">
   <Border Classes="Card">
     <StackPanel>
       <StackPanel Orientation="Horizontal">
@@ -84,6 +83,5 @@
 
       </StackPanel>
     </StackPanel>
-  </Border>
   </Border>
 </UserControl>
