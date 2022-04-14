@@ -3,11 +3,12 @@ using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using Avalonia.Data;
 using Avalonia.Markup.Xaml;
+using Avalonia.Metadata;
 
 namespace U2.CommonControls
 {
     [PropertyChanged.DoNotNotify]
-    public partial class TextBoxWithTitle : TemplatedControl
+    public partial class TextBoxWithTitle : UserControl
     {
         public TextBoxWithTitle()
         {
