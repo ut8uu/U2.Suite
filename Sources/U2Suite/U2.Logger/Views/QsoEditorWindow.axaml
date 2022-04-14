@@ -5,6 +5,7 @@
         xmlns:logger="clr-namespace:U2.Logger"
         xmlns:core="clr-namespace:U2.Core;assembly=U2.Core"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        xmlns:commonControls="clr-namespace:U2.CommonControls;assembly=U2.CommonControls"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="350"
         Width="800" Height="350"
         x:Class="U2.Logger.QsoEditorWindow"
@@ -20,7 +21,7 @@
 
 	<Border Classes="Card">
 		<DockPanel>
-			<logger:OkCancelButtonsUserControl DockPanel.Dock="Bottom"></logger:OkCancelButtonsUserControl>
+			<commonControls:OkCancelButtonsUserControl DockPanel.Dock="Bottom"></commonControls:OkCancelButtonsUserControl>
 			
             <Grid ColumnDefinitions="*,10,*" RowDefinitions="*,*,*,*">
 				<StackPanel Grid.Row="0" Grid.Column="0" Orientation="Vertical">

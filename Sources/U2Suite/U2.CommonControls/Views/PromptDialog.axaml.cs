@@ -14,6 +14,7 @@ namespace U2.CommonControls
         No
     }
 
+    [PropertyChanged.DoNotNotify]
     public class PromptDialog : Window
     {
         private TextBlock _title = default!;

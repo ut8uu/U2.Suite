@@ -5,8 +5,8 @@
 		<Nullable>enable</Nullable>
 		<ApplicationIcon />
 		<StartupObject />
-		<AssemblyVersion>1.0.0.20109</AssemblyVersion>
-		<FileVersion>1.0.0.20109</FileVersion>
+		<AssemblyVersion>1.1.0.20414</AssemblyVersion>
+		<FileVersion>1.1.0.20414</FileVersion>
 	</PropertyGroup>
 	<ItemGroup>
 		<None Remove=".gitignore" />
@@ -18,5 +18,11 @@
 		<PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="0.10.13" />
 		<PackageReference Include="Avalonia.ReactiveUI" Version="0.10.13" />
 		<PackageReference Include="MessageBox.Avalonia" Version="2.0.0" />
+		<PackageReference Include="PropertyChanged.Fody" Version="3.4.0" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Compile Update="Views\OkCancelButtonsUserControl.axaml.cs">
+	    <DependentUpon>%(Filename)</DependentUpon>
+	  </Compile>
 	</ItemGroup>
 </Project>

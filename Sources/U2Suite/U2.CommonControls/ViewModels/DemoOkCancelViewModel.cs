@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace U2.Logger
+namespace U2.CommonControls
 {
     public sealed class DemoOkCancelViewModel
     {
-        public string CancelButtonTitle { get; set; } = Resources.Cancel;
-        public string OkButtonTitle { get; set; } = Resources.OK;
+        public string CancelButtonTitle { get; set; } = "Cancel";
+        public string OkButtonTitle { get; set; } = "OK";
     }
 }

@@ -4,6 +4,7 @@ using Avalonia.Markup.Xaml;
 
 namespace U2.CommonControls.Views
 {
+    [PropertyChanged.DoNotNotify]
     public partial class DialogWindowBase : Window
     {
         public DialogWindowBase()
