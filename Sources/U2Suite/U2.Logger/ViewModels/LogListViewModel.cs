@@ -80,7 +80,7 @@ public class LogListViewModel : ViewModelBase
         Owner?.Close();
     }
 
-    public void CloseWindow()
+    public void ExecuteCancelAction()
     {
         SelectedItem = null;
         Owner?.Close();

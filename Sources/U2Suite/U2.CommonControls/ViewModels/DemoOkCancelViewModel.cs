@@ -13,12 +13,12 @@ namespace U2.CommonControls
 
         public void ExecuteOkAction()
         {
-
+            throw new NotImplementedException();
         }
 
         public void ExecuteCancelAction()
         {
-
+            throw new NotImplementedException();
         }
     }
 }

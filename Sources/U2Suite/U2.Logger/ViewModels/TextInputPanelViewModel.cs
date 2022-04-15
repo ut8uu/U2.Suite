@@ -16,9 +16,9 @@ namespace U2.Logger;
 
 public sealed class TextInputPanelViewModel : ViewModelBase
 {
-    bool _internalChange = false;
-    private Timer _timer;
-    ILog _logger = LogManager.GetLogger("Logger");
+    private bool _internalChange = false;
+    private readonly Timer _timer;
+    private readonly ILog _logger = LogManager.GetLogger("Logger");
 
     public const string CallsignTextBox = nameof(CallsignTextBox);
     public const string RstSentTextBox = nameof(RstSentTextBox);
@@ -45,6 +45,8 @@ public sealed class TextInputPanelViewModel : ViewModelBase
             Timestamp = DateTime.UtcNow;
         }
     }
+
+    #region Properties
 
     public string CallsignInputTitle { get; set; } = Resources.Callsign;
     public string RstSentInputTitle { get; set; } = Resources.RstSent;
@@ -74,6 +76,8 @@ public sealed class TextInputPanelViewModel : ViewModelBase
 
     public static ObservableCollection<string> AllModes => new(ConversionHelper.AllModes.Select(m => m.Name));
     public static ObservableCollection<string> AllBands => new(ConversionHelper.AllBands.Select(m => m.Name));
+
+    #endregion
 
     private void AcceptExecuteCommandMessage(ExecuteCommandMessage message)
     {
@@ -155,6 +159,8 @@ public sealed class TextInputPanelViewModel : ViewModelBase
         Comments = string.Empty;
         Timestamp = DateTime.UtcNow;
 
+        _timer.Change(TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(1));
+
         _internalChange = false;
     }
 
@@ -234,12 +240,14 @@ public sealed class TextInputPanelViewModel : ViewModelBase
 
     private void UpdateFrequencyFromModeAndBand()
     {
-        if (!string.IsNullOrEmpty(Mode) && !string.IsNullOrEmpty(Band))
+        if (string.IsNullOrEmpty(Mode) || string.IsNullOrEmpty(Band))
         {
-            _internalChange = true;
-            Frequency = ConversionHelper.BandNameAndModeToFrequency(Band, Mode).ToString("F3");
-            _internalChange = false;
+            return;
         }
+
+        _internalChange = true;
+        Frequency = ConversionHelper.BandNameAndModeToFrequency(Band, Mode).ToString("F3");
+        _internalChange = false;
     }
 
     private void SetDefaultValues()
