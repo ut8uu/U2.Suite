@@ -75,61 +75,8 @@ internal static class AdifHelper
 
             var qsoDate = string.Empty;
             var qsoTime = string.Empty;
-            var fields = new Dictionary<string, object>();
             var tags = @record.Replace("<", "|<").Split(splitSeparator, StringSplitOptions.RemoveEmptyEntries);
-            foreach (var tag in tags)
-            {
-                if (RegularExpressionHelper.Match("<([^:]+):(\\d+)>(.+)", tag, out var matches, RegexOptions.IgnoreCase))
-                {
-                    var len = int.Parse(matches[2]);
-                    var adifTag = matches[1].ToUpper().Trim();
-
-                    var value = matches[3].PadRight(len, ' ')[..len].Trim();
-                    switch (adifTag)
-                    {
-                        case KnownAdifTags.TagBand:
-                            newRecord.Band = value;
-                            break;
-                        case KnownAdifTags.TagCall:
-                            newRecord.Callsign = value;
-                            break;
-                        case KnownAdifTags.TagComment:
-                            newRecord.Comments = value;
-                            break;
-                        case KnownAdifTags.TagFreq:
-                            var freqValue = value.Replace(",", ".");
-                            newRecord.Frequency = decimal.Parse(freqValue,
-                                NumberStyles.AllowDecimalPoint,
-                                CultureInfo.InvariantCulture);
-                            break;
-                        case KnownAdifTags.TagMode:
-                            newRecord.Mode = value;
-                            break;
-                        case KnownAdifTags.TagQsoDate:
-                            qsoDate = value;
-                            break;
-                        case KnownAdifTags.TagTimeOn:
-                            qsoTime = value;
-                            break;
-                        case KnownAdifTags.TagRstRcvd:
-                            newRecord.RstReceived = value;
-                            break;
-                        case KnownAdifTags.TagRstSent:
-                            newRecord.RstSent = value;
-                            break;
-                        case KnownAdifTags.TagSigInfo:
-                            newRecord.Comments += " " + value;
-                            break;
-                        case KnownAdifTags.TagSotaRef:
-                            newRecord.Comments += " " + value;
-                            break;
-                        case KnownAdifTags.TagGridSquare:
-                            break;
-                        default:
-                            continue;
-                    }
-                }
-            }
+            ProcessTags(tags, newRecord, ref qsoDate, ref qsoTime);
 
             if (!string.IsNullOrEmpty(qsoDate) && !string.IsNullOrEmpty(qsoTime))
             {
@@ -151,6 +98,63 @@ internal static class AdifHelper
         }
 
         return result;
+    }
+
+    private static void ProcessTags(string[] tags, LogRecordDbo newRecord, ref string qsoDate, ref string qsoTime)
+    {
+        foreach (var tag in tags)
+        {
+            if (RegularExpressionHelper.Match("<([^:]+):(\\d+)>(.+)", tag, out var matches, RegexOptions.IgnoreCase))
+            {
+                var len = int.Parse(matches[2]);
+                var adifTag = matches[1].ToUpper().Trim();
+
+                var value = matches[3].PadRight(len, ' ')[..len].Trim();
+                switch (adifTag)
+                {
+                    case KnownAdifTags.TagBand:
+                        newRecord.Band = value;
+                        break;
+                    case KnownAdifTags.TagCall:
+                        newRecord.Callsign = value;
+                        break;
+                    case KnownAdifTags.TagComment:
+                        newRecord.Comments = value;
+                        break;
+                    case KnownAdifTags.TagFreq:
+                        var freqValue = value.Replace(",", ".");
+                        newRecord.Frequency = decimal.Parse(freqValue,
+                            NumberStyles.AllowDecimalPoint,
+                            CultureInfo.InvariantCulture);
+                        break;
+                    case KnownAdifTags.TagMode:
+                        newRecord.Mode = value;
+                        break;
+                    case KnownAdifTags.TagQsoDate:
+                        qsoDate = value;
+                        break;
+                    case KnownAdifTags.TagTimeOn:
+                        qsoTime = value;
+                        break;
+                    case KnownAdifTags.TagRstRcvd:
+                        newRecord.RstReceived = value;
+                        break;
+                    case KnownAdifTags.TagRstSent:
+                        newRecord.RstSent = value;
+                        break;
+                    case KnownAdifTags.TagSigInfo:
+                        newRecord.Comments += " " + value;
+                        break;
+                    case KnownAdifTags.TagSotaRef:
+                        newRecord.Comments += " " + value;
+                        break;
+                    case KnownAdifTags.TagGridSquare:
+                        break;
+                    default:
+                        continue;
+                }
+            }
+        }
     }
 
     public static string GenerateAdif(LogInfo logInfo, IEnumerable<LogRecordDbo> records)

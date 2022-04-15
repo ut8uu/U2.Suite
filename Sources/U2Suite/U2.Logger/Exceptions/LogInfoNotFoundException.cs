@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 namespace U2.Logger
 {
     [Serializable]
-    internal class LogInfoNotFoundException : Exception
+    public class LogInfoNotFoundException : Exception
     {
         public LogInfoNotFoundException()
         {

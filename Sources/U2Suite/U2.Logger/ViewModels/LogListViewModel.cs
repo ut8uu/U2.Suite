@@ -66,11 +66,6 @@ public class LogListViewModel : ViewModelBase
         return result;
     }
 
-    public void SelectionChanged(object sender, SelectionChangedEventArgs e)
-    {
-
-    }
-
     public void ExecuteOkAction()
     {
         if (SelectedItem == null)
@@ -85,7 +80,7 @@ public class LogListViewModel : ViewModelBase
         Owner?.Close();
     }
 
-    public void CloseWindow()
+    public void ExecuteCancelAction()
     {
         SelectedItem = null;
         Owner?.Close();

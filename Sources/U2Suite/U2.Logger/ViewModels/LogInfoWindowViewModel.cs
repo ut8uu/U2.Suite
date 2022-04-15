@@ -186,9 +186,5 @@ namespace U2.Logger
             ActivatedReference = nameof(ActivatedReference);
             _initiating = false;
         }
-
-        protected override void OnPropertyChanged([CallerMemberName] string? propertyName = null)
-        {
-        }
     }
 }

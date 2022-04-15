@@ -56,7 +56,7 @@ public sealed class LoggerDbContext : DbContext
         _dbContext = null;
     }
 
-    public void ShutDown()
+    public static void ShutDown()
     {
         _running = false;
         _dbContext?.Database.CloseConnection();

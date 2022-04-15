@@ -23,7 +23,7 @@ namespace AvaloniaEdit.TextMate
             return new Installation(editor, theme, grammar);
         }
 
-        public class Installation
+        public class Installation : IDisposable
         {
             public RegistryOptions RegistryOptions { get { return _textMateRegistryOptions; } }
 

@@ -9,7 +9,7 @@ namespace U2.Core;
 
 public static class ConversionHelper
 {
-    public static List<RadioBand> AllBands = new List<RadioBand>
+    public static readonly IReadOnlyCollection<RadioBand> AllBands = new List<RadioBand>
     {
         new Band160M(),
         new Band80M(),
@@ -27,7 +27,7 @@ public static class ConversionHelper
         new Band70CM(),
     };
 
-    public static List<RadioMode> AllModes = new List<RadioMode>
+    public static readonly IReadOnlyCollection<RadioMode> AllModes = new List<RadioMode>
     {
         new RadioModeCW(),
         new RadioModeDigitalVoice(),
@@ -42,7 +42,7 @@ public static class ConversionHelper
     /// Digital modes are not covered - no default report is there.
     /// </summary>
     /// <param name="modeName">A name of the mode to be processed.</param>
-    /// <returns>Returns default report for mode or emmpty string if not applicable.</returns>
+    /// <returns>Returns default report for mode or empty string if not applicable.</returns>
     public static string ModeToDefaultReport(string modeName)
     {
         if (modeName.Equals(RadioMode.CW, StringComparison.InvariantCultureIgnoreCase))
@@ -63,7 +63,7 @@ public static class ConversionHelper
     /// <summary>
     /// Converts given band to its most lower frequency.
     /// </summary>
-    /// <param name="bandType">A band type to process.</param>
+    /// <param name="bandName">A band name to process.</param>
     /// <returns>Returns the most lower frequency of the given band.</returns>
     /// <exception cref="ArgumentException">Thrown when Unspecified is passed.</exception>
     /// <exception cref="ArgumentOutOfRangeException">Thrown when unknown band is passed.</exception>
@@ -116,17 +116,15 @@ public static class ConversionHelper
             return band.BeginMhz;
         }
 
-        if (band.SubBands.Any())
+        if (!band.SubBands.Any())
         {
-            var subBand = band.SubBands.FirstOrDefault(sb => 
-                sb.Modes.Any(m => m.Equals(mode.Type)));
-            if (subBand != null)
-            {
-                return subBand.BeginMhz;
-            }
+            return band.BeginMhz;
         }
 
-        return band.BeginMhz;
+        var subBand = band.SubBands.FirstOrDefault(sb =>
+            sb.Modes.Any(m => m.Equals(mode.Type)));
+
+        return subBand?.BeginMhz ?? band.BeginMhz;
     }
 
     /// <summary>
@@ -155,17 +153,14 @@ public static class ConversionHelper
     #warning TODO Implement this
     public static string FixRst(string modeName, string rst)
     {
-        if (modeName == RadioMode.CW)
+        switch (modeName)
         {
-
-        }
-        else if (modeName == RadioMode.SSB)
-        {
-
-        }
-        else if (modeName == RadioMode.FM)
-        {
-
+            case RadioMode.CW:
+                break;
+            case RadioMode.SSB:
+                break;
+            case RadioMode.FM:
+                break;
         }
 
         return rst;

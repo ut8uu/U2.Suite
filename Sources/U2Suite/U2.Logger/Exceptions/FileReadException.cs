@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 namespace U2.Logger
 {
     [Serializable]
-    internal class FileReadException : Exception
+    public class FileReadException : Exception
     {
         public FileReadException()
         {
