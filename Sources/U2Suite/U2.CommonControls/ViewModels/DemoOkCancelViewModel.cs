@@ -10,5 +10,15 @@ namespace U2.CommonControls
     {
         public string CancelButtonTitle { get; set; } = "Cancel";
         public string OkButtonTitle { get; set; } = "OK";
+
+        public void ExecuteOkAction()
+        {
+
+        }
+
+        public void ExecuteCancelAction()
+        {
+
+        }
     }
 }

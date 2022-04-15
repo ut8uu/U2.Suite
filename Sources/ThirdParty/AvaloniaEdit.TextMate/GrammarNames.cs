@@ -2,7 +2,7 @@
 {
     internal class GrammarNames
     {
-        internal static string[] SupportedGrammars = new string[] {
+        internal static readonly string[] SupportedGrammars = new string[] {
             "Bat",
             "Clojure",
             "CoffeeScript",

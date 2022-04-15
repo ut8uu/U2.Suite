@@ -66,11 +66,6 @@ public class LogListViewModel : ViewModelBase
         return result;
     }
 
-    public void SelectionChanged(object sender, SelectionChangedEventArgs e)
-    {
-
-    }
-
     public void ExecuteOkAction()
     {
         if (SelectedItem == null)

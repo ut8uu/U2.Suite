@@ -16,9 +16,9 @@ namespace U2.Logger;
 
 public class QsoEditorViewModel : ViewModelBase
 {
-    protected LogRecordDbo _record = default!;
+    protected LogRecordDbo _record;
     private bool _internalChange;
-    ILog _logger = LogManager.GetLogger("Logger");
+    readonly ILog _logger = LogManager.GetLogger("Logger");
 
     public QsoEditorViewModel()
     {
@@ -41,7 +41,7 @@ public class QsoEditorViewModel : ViewModelBase
         TimestampString = record.QsoEndTimestamp.ToString("g");
     }
 
-    public Window Owner { get; set; }
+    public Window? Owner { get; set; }
 
     public string OkButtonTitle { get; set; } = Resources.OK;
     public string CancelButtonTitle { get; set; } = Resources.Cancel;
@@ -65,15 +65,15 @@ public class QsoEditorViewModel : ViewModelBase
     public string Mode { get; set; } = default!;
     public string Band { get; set; } = default!;
     public DateTime Timestamp { get; set; } = DateTime.UtcNow;
-    public string TimestampString { get; set; }
+    public string? TimestampString { get; set; }
 
     public ObservableCollection<string> AllModes =>
-        new ObservableCollection<string>(
+        new(
             ConversionHelper.AllModes.Select(m=>m.Name)
             .OrderBy(mode => mode));
 
     public ObservableCollection<string> AllBands =>
-        new ObservableCollection<string>(
+        new(
             ConversionHelper.AllBands.Select(b => b.Name)
             .OrderBy(name => name));
 
@@ -130,51 +130,10 @@ public class QsoEditorViewModel : ViewModelBase
                 _logger.Debug($"New {propertyName} value: {Callsign}");
                 break;
             case nameof(Frequency):
-                if (!string.IsNullOrEmpty(Frequency))
-                {
-                    if (Frequency == "0")
-                    {
-                        return;
-                    }
-
-                    var bandName = string.Empty;
-                    var freq = StringConverter.StringToDecimal(Frequency);
-                    if (freq > 0)
-                    {
-                        bandName = ConversionHelper.FrequencyToBandName(freq);
-                    }
-
-                    if (!string.IsNullOrEmpty(bandName))
-                    {
-                        if (Band != bandName)
-                        {
-                            Band = bandName;
-                            _logger.Debug($"Frequency is {Frequency}. Mode changed to {Mode}.");
-                        }
-                    }
-                    else
-                    {
-                        Band = string.Empty;
-                        var message = string.Format(Resources.FrequencyNotResolvedFmt, Frequency);
-                        throw new Avalonia.Data.DataValidationException(message);
-                    }
-                }
+                OnFrequencyChanged();
                 break;
             case nameof(Band):
-                {
-                    if (!string.IsNullOrEmpty(Mode) && !string.IsNullOrEmpty(Band))
-                    {
-                        var frequency = StringConverter.StringToDecimal(Frequency);
-                        var bandByFreq = ConversionHelper.FrequencyToBandName(frequency);
-                        if (bandByFreq != Band)
-                        {
-                            _internalChange = true;
-                            Frequency = ConversionHelper.BandNameAndModeToFrequency(Band, Mode).ToString();
-                            _internalChange = false;
-                        }
-                    }
-                    _logger.Debug($"New {propertyName} value: {Band}");
-                }
+                OnBandChanged();
                 break;
             case nameof(TimestampString):
                 if (!IsTimestampValid())
@@ -184,6 +143,57 @@ public class QsoEditorViewModel : ViewModelBase
                 break;
             default:
                 return;
+        }
+    }
+
+    private void OnBandChanged()
+    {
+        if (string.IsNullOrEmpty(Mode) || string.IsNullOrEmpty(Band))
+        {
+            return;
+        }
+        
+        var frequency = StringConverter.StringToDecimal(Frequency);
+        var bandByFreq = ConversionHelper.FrequencyToBandName(frequency);
+
+        if (bandByFreq == Band)
+        {
+            return;
+        }
+        
+        _internalChange = true;
+        Frequency = ConversionHelper.BandNameAndModeToFrequency(Band, Mode).ToString();
+        _internalChange = false;
+    }
+
+    private void OnFrequencyChanged()
+    {
+        if (string.IsNullOrEmpty(Frequency) || Frequency == "0")
+        {
+            return;
+        }
+
+        var bandName = string.Empty;
+        var freq = StringConverter.StringToDecimal(Frequency);
+        if (freq > 0)
+        {
+            bandName = ConversionHelper.FrequencyToBandName(freq);
+        }
+
+        if (!string.IsNullOrEmpty(bandName))
+        {
+            if (Band == bandName)
+            {
+                return;
+            }
+            Band = bandName;
+            _logger.Debug($"Frequency is {Frequency}. Mode changed to {Mode}.");
+        }
+        else
+        {
+            Band = string.Empty;
+            var message = string.Format(Resources.FrequencyNotResolvedFmt, Frequency);
+            throw new Avalonia.Data.DataValidationException(message);
         }
     }
 
@@ -225,9 +235,5 @@ public sealed class DemoQsoEditorViewModel : QsoEditorViewModel
             RstReceived = "599",
             RstSent = "599",
         };
-    }
-
-    protected override void OnPropertyChanged([CallerMemberName] string? propertyName = null)
-    {
     }
 }

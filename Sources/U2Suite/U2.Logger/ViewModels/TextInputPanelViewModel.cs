@@ -72,54 +72,75 @@ public sealed class TextInputPanelViewModel : ViewModelBase
 
     public ApplicationTextBox FocusedTextBox { get; set; } = ApplicationTextBox.Callsign;
 
-    public ObservableCollection<string> AllModes => new ObservableCollection<string>(ConversionHelper.AllModes.Select(m => m.Name));
-    public ObservableCollection<string> AllBands => new ObservableCollection<string>(ConversionHelper.AllBands.Select(m => m.Name));
+    public static ObservableCollection<string> AllModes => new(ConversionHelper.AllModes.Select(m => m.Name));
+    public static ObservableCollection<string> AllBands => new(ConversionHelper.AllBands.Select(m => m.Name));
 
     private void AcceptExecuteCommandMessage(ExecuteCommandMessage message)
     {
-        if (message.CommandToExecute == CommandToExecute.ClearTextInputs)
+        switch (message.CommandToExecute)
         {
-            _logger.Debug("Accepted ClearTextInputs command.");
-            ClearAll();
-        }
-        else if (message.CommandToExecute == CommandToExecute.InitQso)
-        {
-            _logger.Debug("Accepted InitQso command.");
-            SetDefaultValues();
-        }
-        else if (message.CommandToExecute == CommandToExecute.SaveQso)
-        {
-            if (message.CommandParameters == null)
+            case CommandToExecute.ClearTextInputs:
+                _logger.Debug("Accepted ClearTextInputs command.");
+                ClearAll();
+                break;
+            case CommandToExecute.InitQso:
+                _logger.Debug("Accepted InitQso command.");
+                SetDefaultValues();
+                break;
+            case CommandToExecute.SaveQso:
             {
-                _logger.Debug("Accepted SaveQso(null) command.");
-                // empty parameters are being sent when this is 
-                // an initial command
-                if (!decimal.TryParse(this.Frequency, NumberStyles.Number,
-                    CultureInfo.DefaultThreadCurrentUICulture, out decimal frequency))
+                if (message.CommandParameters == null)
                 {
-                    if (!decimal.TryParse(Frequency, NumberStyles.Number, CultureInfo.InvariantCulture,
-                        out frequency))
+                    _logger.Debug("Accepted SaveQso(null) command.");
+                    // empty parameters are being sent when this is 
+                    // an initial command
+                    if (!decimal.TryParse(this.Frequency, NumberStyles.Number,
+                            CultureInfo.DefaultThreadCurrentUICulture, out decimal frequency))
                     {
-                        _logger.Error($"Cannot parse given double value: {Frequency}.");
-                        frequency = ConversionHelper.BandNameAndModeToFrequency(Band, Mode);
-                        _logger.Info($"Frequency {frequency} calculated based on mode {Mode} and band {Band}.");
+                        if (!decimal.TryParse(Frequency, NumberStyles.Number, CultureInfo.InvariantCulture,
+                                out frequency))
+                        {
+                            _logger.Error($"Cannot parse given double value: {Frequency}.");
+                            frequency = ConversionHelper.BandNameAndModeToFrequency(Band, Mode);
+                            _logger.Info($"Frequency {frequency} calculated based on mode {Mode} and band {Band}.");
+                        }
                     }
+                    var formData = new QsoData
+                    {
+                        Band = this.Band,
+                        Callsign = this.Callsign,
+                        Comments = this.Comments,
+                        FreqMhz = frequency,
+                        Mode = this.Mode,
+                        Operator = this.Operator,
+                        RstRcvd = this.RstRcvd,
+                        RstSent = this.RstSent,
+                        Timestamp = this.Timestamp,
+                    };
+                    var saveQsoMessage = new ExecuteCommandMessage(CommandToExecute.SaveQso, formData);
+                    Messenger.Default.Send(saveQsoMessage);
                 }
-                var formData = new QsoData
-                {
-                    Band = this.Band,
-                    Callsign = this.Callsign,
-                    Comments = this.Comments,
-                    FreqMhz = frequency,
-                    Mode = this.Mode,
-                    Operator = this.Operator,
-                    RstRcvd = this.RstRcvd,
-                    RstSent = this.RstSent,
-                    Timestamp = this.Timestamp,
-                };
-                var saveQsoMessage = new ExecuteCommandMessage(CommandToExecute.SaveQso, formData);
-                Messenger.Default.Send(saveQsoMessage);
+
+                break;
             }
+            case CommandToExecute.DeleteQso:
+                break;
+            case CommandToExecute.RefreshLog:
+                break;
+            case CommandToExecute.CreateLog:
+                break;
+            case CommandToExecute.UpdateLog:
+                break;
+            case CommandToExecute.OpenLog:
+                break;
+            case CommandToExecute.SwitchLog:
+                break;
+            case CommandToExecute.ShowMessage:
+                break;
+            case CommandToExecute.ShutDown:
+                break;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(message.CommandToExecute));
         }
     }
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using AvaloniaEdit.TextMate.Resources;
 using Newtonsoft.Json;
 using TextMateSharp.Internal.Themes.Reader;
@@ -63,25 +64,12 @@ namespace AvaloniaEdit.TextMate
 
         public string GetScopeByExtension(string extension)
         {
-            foreach (GrammarDefinition definition in _availableGrammars.Values)
-            {
-                foreach (var language in definition.Contributes.Languages)
-                {
-                    foreach (var languageExtension in language.Extensions)
-                    {
-                        if (extension.Equals(languageExtension,
-                            StringComparison.OrdinalIgnoreCase))
-                        {
-                            foreach (var grammar in definition.Contributes.Grammars)
-                            {
-                                return grammar.ScopeName;
-                            }
-                        }
-                    }
-                }
-            }
-
-            return null;
+            return (from definition in _availableGrammars.Values 
+                from language in definition.Contributes.Languages 
+                from languageExtension 
+                    in language.Extensions 
+                where extension.Equals(languageExtension, StringComparison.OrdinalIgnoreCase) 
+                select definition.Contributes.Grammars.FirstOrDefault()?.ScopeName).FirstOrDefault();
         }
 
         public string GetScopeByLanguageId(string languageId)

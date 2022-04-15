@@ -21,7 +21,7 @@ namespace U2.Logger
 {
     public class MainWindowViewModel : ViewModelBase
     {
-        private ILog _logger = LogManager.GetLogger("Logger");
+        private readonly ILog _logger = LogManager.GetLogger("Logger");
 
         public MainWindowViewModel()
         {
@@ -96,71 +96,90 @@ namespace U2.Logger
 
         private void AcceptExecuteCommandMessage(ExecuteCommandMessage message)
         {
-            if (message.CommandToExecute == CommandToExecute.SaveQso)
+            switch (message.CommandToExecute)
             {
-                if (message.CommandParameters is QsoData formData)
+                case CommandToExecute.SaveQso:
                 {
-                    _logger.Debug($"Accepted SaveQso(notNullObject) command. Value: \r\n{formData.ToString()}");
-                    if (formData.CanBeSaved())
+                    if (message.CommandParameters is QsoData formData)
                     {
-                        LoggerDbContext.Instance.SaveQso(formData);
-                        Messenger.Default.Send(new ExecuteCommandMessage(CommandToExecute.ClearTextInputs, null));
-                        Messenger.Default.Send(new ExecuteCommandMessage(CommandToExecute.InitQso, null));
+                        _logger.Debug($"Accepted SaveQso(notNullObject) command. Value: \r\n{formData.ToString()}");
+                        if (formData.CanBeSaved())
+                        {
+                            LoggerDbContext.Instance.SaveQso(formData);
+                            Messenger.Default.Send(new ExecuteCommandMessage(CommandToExecute.ClearTextInputs, null));
+                            Messenger.Default.Send(new ExecuteCommandMessage(CommandToExecute.InitQso, null));
+                            Messenger.Default.Send(new ExecuteCommandMessage(CommandToExecute.RefreshLog));
+                        }
+                    }
+
+                    break;
+                }
+                case CommandToExecute.DeleteQso:
+                {
+                    if (message.CommandParameters is Guid[] records)
+                    {
+                        LoggerDbContext.Instance.DeleteQso(records);
                         Messenger.Default.Send(new ExecuteCommandMessage(CommandToExecute.RefreshLog));
                     }
+
+                    break;
                 }
-            }
-            else if (message.CommandToExecute == CommandToExecute.DeleteQso)
-            {
-                if (message.CommandParameters is Guid[] records)
+                case CommandToExecute.CreateLog:
                 {
-                    LoggerDbContext.Instance.DeleteQso(records);
-                    Messenger.Default.Send(new ExecuteCommandMessage(CommandToExecute.RefreshLog));
+                    // create a new log
+                    if (message.CommandParameters is not LogInfo logInfo)
+                    {
+                        return;
+                    }
+
+                    var dbDirectory = FileSystemHelper.GetDatabaseFolderPath(ApplicationNames.LoggerLinux);
+                    var dbPath = Path.Combine(dbDirectory, $"{logInfo}{CommonConstants.DatabaseExtension}");
+                    if (File.Exists(dbPath))
+                    {
+                        var msg = string.Format(Resources.LogNameIsInUseFmt, logInfo.LogName);
+                        var showMessageMsg = new ExecuteCommandMessage(CommandToExecute.ShowMessage, msg);
+                        Messenger.Default.Send(showMessageMsg);
+                        return;
+                    }
+
+                    LogInfoHelper.SaveLogInfo(logInfo);
+
+                    AppSettings.Default.LogName = logInfo.LogName;
+                    AppSettings.Default.Save();
+
+                    var switchLogMessage = new ExecuteCommandMessage(CommandToExecute.SwitchLog, null);
+                    Messenger.Default.Send(switchLogMessage);
+                    break;
                 }
-            }
-            else if (message.CommandToExecute == CommandToExecute.CreateLog)
-            {
-                // create a new log
-                if (message.CommandParameters is not LogInfo logInfo)
+                case CommandToExecute.UpdateLog:
                 {
-                    return;
+                    if (message.CommandParameters is not LogInfo logInfo)
+                    {
+                        return;
+                    }
+
+                    LogInfoHelper.SaveLogInfo(logInfo);
+                    SetWindowTitle();
+                    break;
                 }
-
-                var dbDirectory = FileSystemHelper.GetDatabaseFolderPath(ApplicationNames.LoggerLinux);
-                var dbPath = Path.Combine(dbDirectory, $"{logInfo}{CommonConstants.DatabaseExtension}");
-                if (File.Exists(dbPath))
-                {
-                    var msg = string.Format(Resources.LogNameIsInUseFmt, logInfo.LogName);
-                    var showMessageMsg = new ExecuteCommandMessage(CommandToExecute.ShowMessage, msg);
-                    Messenger.Default.Send(showMessageMsg);
-                    return;
-                }
-
-                LogInfoHelper.SaveLogInfo(logInfo);
-
-                AppSettings.Default.LogName = logInfo.LogName;
-                AppSettings.Default.Save();
-
-                var switchLogMessage = new ExecuteCommandMessage(CommandToExecute.SwitchLog, null);
-                Messenger.Default.Send(switchLogMessage);
-            }
-            else if (message.CommandToExecute == CommandToExecute.UpdateLog)
-            {
-                if (message.CommandParameters is not LogInfo logInfo)
-                {
-                    return;
-                }
-
-                LogInfoHelper.SaveLogInfo(logInfo);
-                SetWindowTitle();
-            }
-            else if (message.CommandToExecute == CommandToExecute.SwitchLog)
-            {
-                OpenDatabase();
-            }
-            else if (message.CommandToExecute == CommandToExecute.ShutDown)
-            {
-                LoggerDbContext.Instance?.ShutDown();
+                case CommandToExecute.SwitchLog:
+                    OpenDatabase();
+                    break;
+                case CommandToExecute.ShutDown:
+                    LoggerDbContext.ShutDown();
+                    break;
+                case CommandToExecute.ClearTextInputs:
+                    break;
+                case CommandToExecute.InitQso:
+                    break;
+                case CommandToExecute.RefreshLog:
+                    break;
+                case CommandToExecute.OpenLog:
+                    break;
+                case CommandToExecute.ShowMessage:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
         }
 

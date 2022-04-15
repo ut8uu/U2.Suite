@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 namespace U2.Logger
 {
     [Serializable]
-    internal class BadLogInfoException : Exception
+    public class BadLogInfoException : Exception
     {
         private const string ExceptionMessageFmt = "A log info file for log {0} not found.";
 
