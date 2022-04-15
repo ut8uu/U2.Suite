@@ -4,8 +4,8 @@
     <TargetFramework>net6.0</TargetFramework>
     <RuntimeIdentifiers>win-x64;osx-x64;linux-x64</RuntimeIdentifiers>
     <Nullable>enable</Nullable>
-    <AssemblyVersion>1.4.1.20109</AssemblyVersion>
-    <FileVersion>1.4.1.20109</FileVersion>
+    <AssemblyVersion>1.4.2.20416</AssemblyVersion>
+    <FileVersion>1.4.2.20416</FileVersion>
     <NeutralLanguage>en</NeutralLanguage>
     <RepositoryUrl>https://github.com/ut8uu/U2.Suite</RepositoryUrl>
     <RepositoryType>github</RepositoryType>
@@ -15,7 +15,7 @@
     <Company>HamStudio</Company>
     <Authors>Sergey Usmanov, UT8UU</Authors>
     <ApplicationIcon>qslmanager.ico</ApplicationIcon>
-    <Version>1.4.1</Version>
+    <Version>1.4.2</Version>
   </PropertyGroup>
   <ItemGroup>
     <AvaloniaResource Include="Assets\**" />
@@ -43,6 +43,7 @@
     <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
     <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="0.10.13" />
     <PackageReference Include="Avalonia.ReactiveUI" Version="0.10.13" />
+    <PackageReference Include="Citrus.Avalonia" Version="1.6.1" />
     <PackageReference Include="DeepCopy.Expression" Version="1.3.0" />
     <PackageReference Include="JorgeSerrano.Json.JsonSnakeCaseNamingPolicy" Version="0.9.0" />
     <PackageReference Include="MessageBox.Avalonia" Version="2.0.0" />
@@ -70,5 +71,8 @@
     <None Update="Images\kyiv.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
   </ItemGroup>
 </Project>

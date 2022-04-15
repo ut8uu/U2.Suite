@@ -6,97 +6,95 @@
              x:Class="U2.QslManager.QslDesignerControls"
              xmlns:views="using:U2.QslManager"
              Width="900" Height="550">
-  <DockPanel>
-    <Border DockPanel.Dock="Top" Padding="10">
-      <StackPanel>
-        <StackPanel Orientation="Horizontal">
-          <Button Command="{Binding LoadData}" Name="LoadButton">Load</Button>
-          <Button Command="{Binding SaveData}" Name="SaveButton">Save</Button>
-          <Button Command="{Binding ClearFields}">Clear fields</Button>
+	<DockPanel>
+        <Menu DockPanel.Dock="Top">
+			<MenuItem Command="{Binding LoadData}" Name="MenuLoad" Header="Load"></MenuItem>
+			<MenuItem Command="{Binding SaveData}" Name="MenuSave" Header="Save"></MenuItem>
+			<MenuItem Command="{Binding ClearFields}" Name="MenuClear" Header="Clear fields"></MenuItem>
+			<MenuItem Command="{Binding PreviewCard}" Name="MenuPreview" Header="Preview QSL"></MenuItem>
+			<MenuItem Command="{Binding ExportCardAsync}" Name="MenuExport" Header="Export QSL"></MenuItem>
+        </Menu>
+		<Border x:Name="LeftPanel" DockPanel.Dock="Top" Padding="10">
+			<DockPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Design template" Padding="10"></TextBlock>
+                    <StackPanel Margin="10 0" Orientation="Horizontal">
+                        <ComboBox Items="{Binding Path=Designs, Mode=TwoWay}"
+                                  SelectedIndex="{Binding SelectedDesignIndex, Mode=TwoWay}">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding DesignName}" Margin="5 0"></TextBlock>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+						<Panel Width="10"></Panel>
+                        <Button Command="{Binding RefreshTemplates}" Margin="0 0 0 0">
+                            <Image Source="../Images/refresh.png" Width="16" Height="16"></Image>
+                        </Button>
+                        <Panel Width="10"></Panel>
+                        <Button Command="{Binding EditTemplate}" Margin="0 0 0 0">
+                            <Image Source="../Images/edit.png" Width="16" Height="16"></Image>
+                        </Button>
+						<Panel Width="10"></Panel>
+                        <Button Command="{Binding CloneTemplate}" Margin="0 0 0 0">
+                            <Image Source="../Images/copy.png" Width="16" Height="16"></Image>
+                        </Button>
+                    </StackPanel>
+                </StackPanel>
+            </DockPanel>
+		</Border>
+		<Border Margin="10">
+			<DockPanel>
+				<Border x:Name="InputDataPanel" Padding="10" Width="400" DockPanel.Dock="Left">
+					<Grid ColumnDefinitions="180,20,*"
+						  RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto">
+						<TextBlock Grid.Column="0" Grid.Row="0" Text="Callsign" Padding="10"></TextBlock>
+						<TextBox Grid.Column="2" Grid.Row="0" Text="{Binding Callsign, Mode=TwoWay}" Height="30"></TextBox>
 
-          <Button Command="{Binding PreviewCard}">Preview QSL</Button>
-          <Button Command="{Binding ExportCardAsync}">Export QSL</Button>
-        </StackPanel>
-        <StackPanel Orientation="Horizontal">
-          <TextBlock Text="Design template" Classes="font20"></TextBlock>
-          <StackPanel Margin="10 0" Orientation="Horizontal">
-            <ComboBox Items="{Binding Path=Designs, Mode=TwoWay}"
-                      SelectedIndex="{Binding SelectedDesignIndex, Mode=TwoWay}">
-              <ComboBox.ItemTemplate>
-                <DataTemplate>
-                  <TextBlock Text="{Binding DesignName}" Margin="5 0"></TextBlock>
-                </DataTemplate>
-              </ComboBox.ItemTemplate>
-            </ComboBox>
-            <Button Command="{Binding RefreshTemplates}" Margin="0 0 0 0">
-              <Image Source="../Images/refresh.png" Width="16" Height="16"></Image>
-            </Button>
-            <Button Command="{Binding EditTemplate}" Margin="0 0 0 0">
-              <Image Source="../Images/edit.png" Width="16" Height="16"></Image>
-            </Button>
-            <Button Command="{Binding CloneTemplate}" Margin="0 0 0 0">
-              <Image Source="../Images/copy.png" Width="16" Height="16"></Image>
-            </Button>
-          </StackPanel>
-        </StackPanel>
-      </StackPanel>
-    </Border>
-    <Border Margin="10">
-      <StackPanel Orientation="Horizontal">
-        <Border Padding="10" Width="400">
-          <Grid ColumnDefinitions="180,20,*"
-                RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto">
-            <TextBlock Grid.Column="0" Grid.Row="0" Text="Callsign" Classes="font20"></TextBlock>
-            <TextBox Grid.Column="2" Grid.Row="0" Text="{Binding Callsign, Mode=TwoWay}" Height="30"></TextBox>
+						<TextBlock Grid.Column="0" Grid.Row="1" Text="Operator Name" Padding="10"></TextBlock>
+						<TextBox Grid.Column="2" Grid.Row="1" Text="{Binding OperatorName, Mode=TwoWay}" Height="30"></TextBox>
 
-            <TextBlock Grid.Column="0" Grid.Row="1" Text="Operator Name" Classes="font20"></TextBlock>
-            <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding OperatorName, Mode=TwoWay}" Height="30"></TextBox>
+						<TextBlock Grid.Column="0" Grid.Row="2" Text="Grid" Padding="10"></TextBlock>
+						<TextBox Grid.Column="2" Grid.Row="2" Text="{Binding Grid, Mode=TwoWay}" Height="30"></TextBox>
 
-            <TextBlock Grid.Column="0" Grid.Row="2" Text="Grid" Classes="font20"></TextBlock>
-            <TextBox Grid.Column="2" Grid.Row="2" Text="{Binding Grid, Mode=TwoWay}" Height="30"></TextBox>
+						<TextBlock Grid.Column="0" Grid.Row="3" Text="QTH" Padding="10"></TextBlock>
+						<TextBox Grid.Column="2" Grid.Row="3" Text="{Binding Qth, Mode=TwoWay}" Height="30"></TextBox>
 
-            <TextBlock Grid.Column="0" Grid.Row="3" Text="QTH" Classes="font20"></TextBlock>
-            <TextBox Grid.Column="2" Grid.Row="3" Text="{Binding Qth, Mode=TwoWay}" Height="30"></TextBox>
+						<TextBlock Grid.Column="0" Grid.Row="4" Text="CQ zone" Padding="10"></TextBlock>
+						<TextBox Grid.Column="2" Grid.Row="4" Text="{Binding CqZone, Mode=TwoWay}" Height="30"></TextBox>
 
-            <TextBlock Grid.Column="0" Grid.Row="4" Text="CQ zone" Classes="font20"></TextBlock>
-            <TextBox Grid.Column="2" Grid.Row="4" Text="{Binding CqZone, Mode=TwoWay}" Height="30"></TextBox>
+						<TextBlock Grid.Column="0" Grid.Row="5" Text="ITU zone" Padding="10"></TextBlock>
+						<TextBox Grid.Column="2" Grid.Row="5" Text="{Binding ItuZone, Mode=TwoWay}" Height="30"></TextBox>
 
-            <TextBlock Grid.Column="0" Grid.Row="5" Text="ITU zone" Classes="font20"></TextBlock>
-            <TextBox Grid.Column="2" Grid.Row="5" Text="{Binding ItuZone, Mode=TwoWay}" Height="30"></TextBox>
+						<TextBlock Grid.Column="0" Grid.Row="6" Text="Text line 1" Padding="10"></TextBlock>
+						<TextBox Grid.Column="2" Grid.Row="6" Text="{Binding Text1, Mode=TwoWay}" Height="30"></TextBox>
 
-            <TextBlock Grid.Column="0" Grid.Row="6" Text="Text line 1" Classes="font20"></TextBlock>
-            <TextBox Grid.Column="2" Grid.Row="6" Text="{Binding Text1, Mode=TwoWay}" Height="30"></TextBox>
+						<TextBlock Grid.Column="0" Grid.Row="7" Text="Text line 2" Padding="10"></TextBlock>
+						<TextBox Grid.Column="2" Grid.Row="7" Text="{Binding Text2, Mode=TwoWay}" Height="30"></TextBox>
 
-            <TextBlock Grid.Column="0" Grid.Row="7" Text="Text line 2" Classes="font20"></TextBlock>
-            <TextBox Grid.Column="2" Grid.Row="7" Text="{Binding Text2, Mode=TwoWay}" Height="30"></TextBox>
+						<TextBlock Grid.Column="0" Grid.Row="8" Text="Background image" Padding="10"></TextBlock>
+						<StackPanel Grid.Column="2" Grid.Row="8" Orientation="Horizontal">
+							<TextBox Width="100" Text="{Binding BackgroundImage, Mode=TwoWay}" Height="30"></TextBox>
+							<Button Content="..." Command="{Binding SelectBackgroundImageAsync}"></Button>
+						</StackPanel>
 
-            <TextBlock Grid.Column="0" Grid.Row="8" Text="Background image" Classes="font20"></TextBlock>
-            <StackPanel Grid.Column="2" Grid.Row="8" Orientation="Horizontal">
-              <TextBox Width="100" Text="{Binding BackgroundImage, Mode=TwoWay}" Height="30"></TextBox>
-              <Button Content="..." Command="{Binding SelectBackgroundImageAsync}"></Button>
-            </StackPanel>
+						<TextBlock Grid.Column="0" Grid.Row="9" Text="Image 1" Padding="10"></TextBlock>
+						<StackPanel Grid.Column="2" Grid.Row="9" Orientation="Horizontal">
+							<TextBox Width="100" Text="{Binding Image1, Mode=TwoWay}" Height="30"></TextBox>
+							<Button Content="..." Command="{Binding SelectImage1Async}"></Button>
+						</StackPanel>
 
-            <TextBlock Grid.Column="0" Grid.Row="9" Text="Image 1" Classes="font20"></TextBlock>
-            <StackPanel Grid.Column="2" Grid.Row="9" Orientation="Horizontal">
-              <TextBox Width="100" Text="{Binding Image1, Mode=TwoWay}" Height="30"></TextBox>
-              <Button Content="..." Command="{Binding SelectImage1Async}"></Button>
-            </StackPanel>
-
-            <TextBlock Grid.Column="0" Grid.Row="10" Text="Image 2" Classes="font20"></TextBlock>
-            <StackPanel Grid.Column="2" Grid.Row="10" Orientation="Horizontal">
-              <TextBox Width="100" Text="{Binding Image2, Mode=TwoWay}" Height="30"></TextBox>
-              <Button Content="..." Command="{Binding SelectImage2Async}"></Button>
-            </StackPanel>
-          </Grid>
-        </Border>
-        <Border Padding="20" Width="400">
-          <StackPanel>
-            <StackPanel Width="450">
-              <views:QslDesignerPreview Width="400" Height="450"></views:QslDesignerPreview>
-            </StackPanel>
-          </StackPanel>
-        </Border>
-      </StackPanel>
-    </Border>
-  </DockPanel>
+						<TextBlock Grid.Column="0" Grid.Row="10" Text="Image 2" Padding="10"></TextBlock>
+						<StackPanel Grid.Column="2" Grid.Row="10" Orientation="Horizontal">
+							<TextBox Width="100" Text="{Binding Image2, Mode=TwoWay}" Height="30"></TextBox>
+							<Button Content="..." Command="{Binding SelectImage2Async}"></Button>
+						</StackPanel>
+					</Grid>
+				</Border>
+				<Border x:Name="PreviewPanel" Padding="20">
+					<views:QslDesignerPreview Width="400" Height="450"></views:QslDesignerPreview>
+				</Border>
+			</DockPanel>
+		</Border>
+	</DockPanel>
 </UserControl>
