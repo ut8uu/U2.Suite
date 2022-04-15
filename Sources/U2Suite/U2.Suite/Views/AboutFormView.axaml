@@ -2,41 +2,46 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        mc:Ignorable="d" d:DesignWidth="700" d:DesignHeight="450"
+        Width="700" Height="450"
         x:Class="U2.Suite.AboutFormView"
-        Title="About U2.Suite">
-  <Border Margin="20">
-    <StackPanel>
-      <Panel Classes="HeaderPanel">
-        <TextBlock Classes="font60 red bold">About U2.Suite</TextBlock>
-      </Panel>
-      <Panel>
-        <StackPanel>
-          <TextBlock Classes="font20 margin5">© 2022 Sergey Usmanov, UT8UU</TextBlock>
-          <StackPanel Orientation="Horizontal">
-            <TextBlock Classes="font20 margin5">License: GPLv3.</TextBlock>
-            <Button Command="{Binding ShowLicense}" Margin="0">Show license</Button>
-          </StackPanel>
-        </StackPanel>
-      </Panel>
-      <Panel Margin="0 40">
-        <TextBlock Classes="font30" Grid.Column="0" Grid.Row="0">Components</TextBlock>
-        <Grid ColumnDefinitions="200,*" RowDefinitions="50,30,30,30,30,30,30,30">
+        Title="About U2.Suite"
+        CanResize="False"
+        ShowInTaskbar="False"
+        SystemDecorations="Full"
+        Icon="/Assets/u2suite.ico"
+        >
+	<Border Margin="20">
+		<DockPanel>
+			<Panel DockPanel.Dock="Top">
+				<TextBlock Classes="font60 red bold" Padding="0 20">About U2.Suite</TextBlock>
+			</Panel>
+			<StackPanel DockPanel.Dock="Top">
+				<TextBlock Classes="font20 margin5">© 2022 Sergey Usmanov, UT8UU</TextBlock>
+				<StackPanel Orientation="Horizontal">
+					<TextBlock Classes="font20 margin5">License: GPLv3.</TextBlock>
+					<Panel Width="10"></Panel>
+					<Button Command="{Binding ShowLicense}" Margin="0">Show license</Button>
+				</StackPanel>
+			</StackPanel>
+			<Panel Margin="0 40">
+				<TextBlock Classes="font30" Grid.Column="0" Grid.Row="0">Components</TextBlock>
+				<Grid ColumnDefinitions="200,*" RowDefinitions="50,30,30,30,30,30,30,30">
 
-          <TextBlock Classes="font20 yellow" Grid.Column="0" Grid.Row="1">Avalonia Editor</TextBlock>
-          <TextBlock Classes="font20" Grid.Column="1" Grid.Row="1" Text="A third-party application for template editing."></TextBlock>
+					<TextBlock Classes="font20 yellow" Grid.Column="0" Grid.Row="1">Avalonia Editor</TextBlock>
+					<TextBlock Classes="font20" Grid.Column="1" Grid.Row="1" Text="A third-party application for template editing."></TextBlock>
 
-          <TextBlock Classes="font20 yellow" Grid.Column="0" Grid.Row="2">U2.Suite</TextBlock>
-          <TextBlock Classes="font20" Grid.Column="1" Grid.Row="2" Text="The application launcher."></TextBlock>
+					<TextBlock Classes="font20 yellow" Grid.Column="0" Grid.Row="2">U2.Suite</TextBlock>
+					<TextBlock Classes="font20" Grid.Column="1" Grid.Row="2" Text="The application launcher."></TextBlock>
 
-          <TextBlock Classes="font20 yellow" Grid.Column="0" Grid.Row="3">U2.QslManager</TextBlock>
-          <TextBlock Classes="font20" Grid.Column="1" Grid.Row="3" Text="A tool for QSL card authoring."></TextBlock>
+					<TextBlock Classes="font20 yellow" Grid.Column="0" Grid.Row="3">U2.QslManager</TextBlock>
+					<TextBlock Classes="font20" Grid.Column="1" Grid.Row="3" Text="A tool for QSL card authoring."></TextBlock>
 
-          <TextBlock Classes="font20 yellow" Grid.Column="0" Grid.Row="4">U2.Logger</TextBlock>
-          <TextBlock Classes="font20" Grid.Column="1" Grid.Row="4" Text="A simple logger."></TextBlock>
+					<TextBlock Classes="font20 yellow" Grid.Column="0" Grid.Row="4">U2.Logger</TextBlock>
+					<TextBlock Classes="font20" Grid.Column="1" Grid.Row="4" Text="A simple logger."></TextBlock>
 
-        </Grid>
-      </Panel>
-    </StackPanel>
-  </Border>
+				</Grid>
+			</Panel>
+		</DockPanel>
+	</Border>
 </Window>

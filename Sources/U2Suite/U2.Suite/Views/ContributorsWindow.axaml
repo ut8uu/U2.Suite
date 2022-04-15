@@ -5,11 +5,16 @@
         mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="250"
         Width="600" Height="250"
         x:Class="U2.Suite.ContributorsWindow"
-        Title="Contributors">
+        Title="Contributors" 
+        CanResize="False"
+        ShowInTaskbar="False"
+        SystemDecorations="Full"
+        Icon="/Assets/u2suite.ico"
+        >
 
   <Border Padding="20">
-    <StackPanel>
-      <Panel Classes="HeaderPanel">
+    <DockPanel>
+      <Panel DockPanel.Dock="Top">
         <TextBlock Classes="font60 red bold">Contributors</TextBlock>
       </Panel>
       <DataGrid Name="MyDataGrid" Items="{Binding ContributorsCollection, Mode=OneWay}"
@@ -23,6 +28,6 @@
                               Width="200"/>
         </DataGrid.Columns>
       </DataGrid>
-    </StackPanel>
+    </DockPanel>
   </Border>
 </Window>

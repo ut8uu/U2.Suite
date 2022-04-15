@@ -5,8 +5,13 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="U2.Suite.LicenseFormView"
         Width="800" Height="450"
-        Title="LicenseForm">
-  <Border Margin="20">
+        Title="U2.Suite License"
+        CanResize="False"
+        ShowInTaskbar="False"
+        SystemDecorations="Full"
+        Icon="/Assets/u2suite.ico"
+        >
+	<Border Margin="20">
     <StackPanel>
       <Panel Classes="HeaderPanel">
         <TextBlock Classes="font60 red bold" Padding="45 0 0 0">U2.Suite License</TextBlock>

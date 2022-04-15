@@ -7,12 +7,8 @@
   </Application.DataTemplates>
 
   <Application.Styles>
-	  <!--<StyleInclude Source="avares://Citrus.Avalonia/Citrus.xaml"/>-->
-	  <!--<StyleInclude Source="avares://Citrus.Avalonia/Sea.xaml"/>-->
-	  <!-- <StyleInclude Source="avares://Citrus.Avalonia/Rust.xaml"/> -->
-	  <!-- <StyleInclude Source="avares://Citrus.Avalonia/Candy.xaml"/> -->
-	  <!-- <StyleInclude Source="avares://Citrus.Avalonia/Magma.xaml"/> -->
 	  <StyleInclude Source="avares://Avalonia.Controls.DataGrid/Themes/Default.xaml"/>
 	  <StyleInclude Source="avares://U2.Resources/Styles/Citrus/Rust.xaml"/>
+      <StyleInclude Source="avares://U2.Suite/Styles/TextStyles.axaml"></StyleInclude>
   </Application.Styles>
 </Application>

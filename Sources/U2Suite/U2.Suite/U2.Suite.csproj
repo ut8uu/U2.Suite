@@ -1,61 +1,61 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <OutputType>WinExe</OutputType>
-    <TargetFramework>net6.0</TargetFramework>
-    <RuntimeIdentifiers>win-x64;osx-x64;linux-x64</RuntimeIdentifiers>
-    <Nullable>enable</Nullable>
-    <AssemblyVersion>1.3.1.20204</AssemblyVersion>
-    <FileVersion>1.3.1.20204</FileVersion>
-    <RepositoryUrl>https://github.com/ut8uu/U2.Suite</RepositoryUrl>
-    <RepositoryType>github</RepositoryType>
-    <PackageProjectUrl>https://github.com/ut8uu/U2.Suite</PackageProjectUrl>
-    <Company>HamStudio</Company>
-    <Copyright>© 2022 Sergey Usmanov, UT8UU</Copyright>
-    <ApplicationIcon>u2suite.ico</ApplicationIcon>
-    <EnableNETAnalyzers>true</EnableNETAnalyzers>
-    <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>u2suite.snk</AssemblyOriginatorKeyFile>
-    <Version>1.3.1</Version>
-    <Authors>Sergey Usmanov</Authors>
-  </PropertyGroup>
-  <ItemGroup>
-    <AvaloniaResource Include="Assets\**" />
-    <AvaloniaXaml Remove="Models\**" />
-    <Compile Remove="Models\**" />
-    <EmbeddedResource Remove="Models\**" />
-    <None Remove="Models\**" />
-    <None Remove=".gitignore" />
-    <None Remove="Images\library.png" />
-    <None Remove="Images\logger.png" />
-    <None Remove="Images\qslmanager.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AvaloniaResource Include="Images\library.png" />
-    <AvaloniaResource Include="Images\logger.png" />
-    <AvaloniaResource Include="Images\qslmanager.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Avalonia" Version="0.10.13" />
-    <PackageReference Include="Avalonia.Desktop" Version="0.10.13" />
-    <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
-    <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="0.10.13" />
-    <PackageReference Include="Avalonia.ReactiveUI" Version="0.10.13" />
-    <PackageReference Include="Citrus.Avalonia" Version="1.6.1" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\U2.Contracts\U2.Contracts.csproj" />
-    <ProjectReference Include="..\U2.Core\U2.Core.csproj" />
-    <ProjectReference Include="..\U2.Resources\U2.Resources.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Update="Views\AboutFormView.axaml.cs">
-      <DependentUpon>AboutFormView.axaml</DependentUpon>
-    </Compile>
-    <Compile Update="Views\ContributorsWindow.axaml.cs">
-      <DependentUpon>ContributorsWindow.axaml</DependentUpon>
-    </Compile>
-    <Compile Update="Views\LicenseFormView.axaml.cs">
-      <DependentUpon>LicenseFormView.axaml</DependentUpon>
-    </Compile>
-  </ItemGroup>
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net6.0</TargetFramework>
+		<RuntimeIdentifiers>win-x64;osx-x64;linux-x64</RuntimeIdentifiers>
+		<Nullable>enable</Nullable>
+		<Version>1.3.2</Version>
+		<AssemblyVersion>1.3.2.20416</AssemblyVersion>
+		<FileVersion>1.3.2.20416</FileVersion>
+		<RepositoryUrl>https://github.com/ut8uu/U2.Suite</RepositoryUrl>
+		<RepositoryType>github</RepositoryType>
+		<PackageProjectUrl>https://github.com/ut8uu/U2.Suite</PackageProjectUrl>
+		<Company>HamStudio</Company>
+		<Copyright>© 2022 Sergey Usmanov, UT8UU</Copyright>
+		<ApplicationIcon>u2suite.ico</ApplicationIcon>
+		<EnableNETAnalyzers>true</EnableNETAnalyzers>
+		<SignAssembly>true</SignAssembly>
+		<AssemblyOriginatorKeyFile>u2suite.snk</AssemblyOriginatorKeyFile>
+		<Authors>Sergey Usmanov</Authors>
+	</PropertyGroup>
+	<ItemGroup>
+		<AvaloniaXaml Remove="Models\**" />
+		<Compile Remove="Models\**" />
+		<EmbeddedResource Remove="Models\**" />
+		<None Remove="Models\**" />
+		<AvaloniaXaml Remove="Styles\TextStyles.axaml" />
+		<None Remove=".gitignore" />
+		<None Remove="Images\library.png" />
+		<None Remove="Images\logger.png" />
+		<None Remove="Images\qslmanager.png" />
+	</ItemGroup>
+	<ItemGroup>
+		<AvaloniaResource Include="Assets\*" />
+		<AvaloniaResource Include="Images\*" />
+		<AvaloniaResource Include="Styles\*" />
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Avalonia" Version="0.10.13" />
+		<PackageReference Include="Avalonia.Desktop" Version="0.10.13" />
+		<!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
+		<PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="0.10.13" />
+		<PackageReference Include="Avalonia.ReactiveUI" Version="0.10.13" />
+		<PackageReference Include="Citrus.Avalonia" Version="1.6.1" />
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\U2.Contracts\U2.Contracts.csproj" />
+		<ProjectReference Include="..\U2.Core\U2.Core.csproj" />
+		<ProjectReference Include="..\U2.Resources\U2.Resources.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+		<Compile Update="Views\AboutFormView.axaml.cs">
+			<DependentUpon>AboutFormView.axaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\ContributorsWindow.axaml.cs">
+			<DependentUpon>ContributorsWindow.axaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\LicenseFormView.axaml.cs">
+			<DependentUpon>LicenseFormView.axaml</DependentUpon>
+		</Compile>
+	</ItemGroup>
 </Project>
