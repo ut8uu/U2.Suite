@@ -115,14 +115,13 @@ namespace AvaloniaEdit.TextMate
 
                 var lineOffset = _document.GetLineByNumber(lineNumber).Offset;
 
-                var rules = _theme.Match(token.Scopes).Where(themeRule =>
-                    themeRule.foreground > 0 && _brushes.ContainsKey(themeRule.foreground));
-                foreach (var themeRule in rules)
+                var rule = _theme.Match(token.Scopes)
+                    .FirstOrDefault(themeRule => themeRule.foreground > 0 
+                                        && _brushes.ContainsKey(themeRule.foreground));
+                if (rule != null)
                 {
                     _transformations.Add(new ForegroundTextTransformation(this, lineOffset + startIndex,
-                        lineOffset + endIndex, themeRule.foreground));
-
-                    break;
+                        lineOffset + endIndex, rule.foreground));
                 }
             }
         }
