@@ -3,12 +3,12 @@
         xmlns:vm="using:U2.QslManager"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="900" d:DesignHeight="550"
+        mc:Ignorable="d" d:DesignWidth="900" d:DesignHeight="600"
         x:Class="U2.QslManager.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
         Title="U2.QslManager"
         xmlns:views="using:U2.QslManager"
-        Width="900" Height="550">
+        Width="900" Height="600">
 
   <views:QslDesignerControls Name="DesignerControls"></views:QslDesignerControls>
 

@@ -2,10 +2,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d" d:DesignWidth="900" d:DesignHeight="550"
+             mc:Ignorable="d" d:DesignWidth="900" d:DesignHeight="600"
              x:Class="U2.QslManager.QslDesignerControls"
              xmlns:views="using:U2.QslManager"
-             Width="900" Height="550">
+             Width="900" Height="600">
 	<DockPanel>
         <Menu DockPanel.Dock="Top">
 			<MenuItem Command="{Binding LoadData}" Name="MenuLoad" Header="Load"></MenuItem>
@@ -49,44 +49,44 @@
 					<Grid ColumnDefinitions="180,20,*"
 						  RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto">
 						<TextBlock Grid.Column="0" Grid.Row="0" Text="Callsign" Padding="10"></TextBlock>
-						<TextBox Grid.Column="2" Grid.Row="0" Text="{Binding Callsign, Mode=TwoWay}" Height="30"></TextBox>
+						<TextBox Grid.Column="2" Grid.Row="0" Text="{Binding Callsign, Mode=TwoWay}"></TextBox>
 
 						<TextBlock Grid.Column="0" Grid.Row="1" Text="Operator Name" Padding="10"></TextBlock>
-						<TextBox Grid.Column="2" Grid.Row="1" Text="{Binding OperatorName, Mode=TwoWay}" Height="30"></TextBox>
+						<TextBox Grid.Column="2" Grid.Row="1" Text="{Binding OperatorName, Mode=TwoWay}"></TextBox>
 
 						<TextBlock Grid.Column="0" Grid.Row="2" Text="Grid" Padding="10"></TextBlock>
-						<TextBox Grid.Column="2" Grid.Row="2" Text="{Binding Grid, Mode=TwoWay}" Height="30"></TextBox>
+						<TextBox Grid.Column="2" Grid.Row="2" Text="{Binding Grid, Mode=TwoWay}"></TextBox>
 
 						<TextBlock Grid.Column="0" Grid.Row="3" Text="QTH" Padding="10"></TextBlock>
-						<TextBox Grid.Column="2" Grid.Row="3" Text="{Binding Qth, Mode=TwoWay}" Height="30"></TextBox>
+						<TextBox Grid.Column="2" Grid.Row="3" Text="{Binding Qth, Mode=TwoWay}"></TextBox>
 
 						<TextBlock Grid.Column="0" Grid.Row="4" Text="CQ zone" Padding="10"></TextBlock>
-						<TextBox Grid.Column="2" Grid.Row="4" Text="{Binding CqZone, Mode=TwoWay}" Height="30"></TextBox>
+						<TextBox Grid.Column="2" Grid.Row="4" Text="{Binding CqZone, Mode=TwoWay}"></TextBox>
 
 						<TextBlock Grid.Column="0" Grid.Row="5" Text="ITU zone" Padding="10"></TextBlock>
-						<TextBox Grid.Column="2" Grid.Row="5" Text="{Binding ItuZone, Mode=TwoWay}" Height="30"></TextBox>
+						<TextBox Grid.Column="2" Grid.Row="5" Text="{Binding ItuZone, Mode=TwoWay}"></TextBox>
 
 						<TextBlock Grid.Column="0" Grid.Row="6" Text="Text line 1" Padding="10"></TextBlock>
-						<TextBox Grid.Column="2" Grid.Row="6" Text="{Binding Text1, Mode=TwoWay}" Height="30"></TextBox>
+						<TextBox Grid.Column="2" Grid.Row="6" Text="{Binding Text1, Mode=TwoWay}"></TextBox>
 
 						<TextBlock Grid.Column="0" Grid.Row="7" Text="Text line 2" Padding="10"></TextBlock>
-						<TextBox Grid.Column="2" Grid.Row="7" Text="{Binding Text2, Mode=TwoWay}" Height="30"></TextBox>
+						<TextBox Grid.Column="2" Grid.Row="7" Text="{Binding Text2, Mode=TwoWay}"></TextBox>
 
 						<TextBlock Grid.Column="0" Grid.Row="8" Text="Background image" Padding="10"></TextBlock>
 						<StackPanel Grid.Column="2" Grid.Row="8" Orientation="Horizontal">
-							<TextBox Width="100" Text="{Binding BackgroundImage, Mode=TwoWay}" Height="30"></TextBox>
+							<TextBox Width="100" Text="{Binding BackgroundImage, Mode=TwoWay}"></TextBox>
 							<Button Content="..." Command="{Binding SelectBackgroundImageAsync}"></Button>
 						</StackPanel>
 
 						<TextBlock Grid.Column="0" Grid.Row="9" Text="Image 1" Padding="10"></TextBlock>
 						<StackPanel Grid.Column="2" Grid.Row="9" Orientation="Horizontal">
-							<TextBox Width="100" Text="{Binding Image1, Mode=TwoWay}" Height="30"></TextBox>
+							<TextBox Width="100" Text="{Binding Image1, Mode=TwoWay}"></TextBox>
 							<Button Content="..." Command="{Binding SelectImage1Async}"></Button>
 						</StackPanel>
 
 						<TextBlock Grid.Column="0" Grid.Row="10" Text="Image 2" Padding="10"></TextBlock>
 						<StackPanel Grid.Column="2" Grid.Row="10" Orientation="Horizontal">
-							<TextBox Width="100" Text="{Binding Image2, Mode=TwoWay}" Height="30"></TextBox>
+							<TextBox Width="100" Text="{Binding Image2, Mode=TwoWay}"></TextBox>
 							<Button Content="..." Command="{Binding SelectImage2Async}"></Button>
 						</StackPanel>
 					</Grid>

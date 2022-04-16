@@ -82,6 +82,9 @@
 		</EmbeddedResource>
 	</ItemGroup>
 	<ItemGroup>
+		<AvaloniaResource Update="Assets\logger.ico">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</AvaloniaResource>
 		<None Update="log4net.logger.config">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>

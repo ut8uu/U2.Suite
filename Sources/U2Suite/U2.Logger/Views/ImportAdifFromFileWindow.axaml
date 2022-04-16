@@ -9,6 +9,7 @@
         Title="{Binding WindowTitle}"
 		MinWidth="250" MinHeight="200"
 		Width="600" Height="350"
+        Icon="/Assets/logger.ico"
 		>
 
 	<Design.DataContext>

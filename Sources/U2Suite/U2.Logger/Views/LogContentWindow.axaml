@@ -6,6 +6,7 @@
         mc:Ignorable="d" d:DesignWidth="850" d:DesignHeight="345"
         Width="850" Height="375"
         x:Class="U2.Logger.LogContentWindow"
+        Icon="/Assets/logger.ico"
         Title="{Binding WindowTitle}">
 
   <Design.DataContext>
