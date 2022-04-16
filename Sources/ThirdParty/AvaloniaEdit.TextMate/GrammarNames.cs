@@ -1,6 +1,6 @@
 ﻿namespace AvaloniaEdit.TextMate
 {
-    internal class GrammarNames
+    internal static class GrammarNames
     {
         internal static readonly string[] SupportedGrammars = new string[] {
             "Bat",
