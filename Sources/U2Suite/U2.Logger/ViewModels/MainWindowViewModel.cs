@@ -61,6 +61,8 @@ namespace U2.Logger
 
         public string ImportFromAdifTitle { get; set; } = "Import ADIF from file";
         public string ExportToAdifTitle { get; set; } = "Export to ADIF file";
+        public string ConfigMenuTitle { get; set; } = Resources.ConfigMenuTitle;
+        public string ConfigCatMenuTitle { get; set; } = Resources.ConfigCatMenuTitle;
 
         private void AcceptButtonClickedMessage(ButtonClickedMessage message)
         {
@@ -190,6 +192,8 @@ namespace U2.Logger
 
         }
 
+        #region Action handlers
+
         public async Task NewLog()
         {
             var form = new LogInfoWindow(CommandToExecute.CreateLog);
@@ -240,5 +244,17 @@ namespace U2.Logger
                 MessageBoxHelper.ShowMessageBox("Error", Resources.ExportToAdifFailedMessage);
             }
         }
+
+        public void ExecuteCatControlConfig()
+        {
+
+        }
+
+        #endregion
+    }
+
+    public sealed class DesignMainWindowViewModel : MainWindowViewModel
+    {
+
     }
 }

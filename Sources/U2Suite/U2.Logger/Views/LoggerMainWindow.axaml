@@ -17,7 +17,7 @@
 	</Window.Resources>
 
 	<Design.DataContext>
-		<logger:MainWindowViewModel/>
+		<logger:DesignMainWindowViewModel/>
 	</Design.DataContext>
 
 	<Border>
@@ -48,6 +48,10 @@
 					<MenuItem Header="Log" Command="{Binding ViewLog}" HotKey="Ctrl+L"></MenuItem>
 					<MenuItem Header="Settings" Command="{Binding ViewSettings}" HotKey="F9"></MenuItem>
 				</MenuItem>
+				<MenuItem Header="{Binding ConfigMenuTitle}">
+					<MenuItem Header="{Binding ConfigCatMenuTitle}" 
+                              Command="{Binding ExecuteCatControlConfig}"></MenuItem>
+                </MenuItem>
 			</Menu>
 
 			<StackPanel>

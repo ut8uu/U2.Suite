@@ -162,6 +162,12 @@
   <data name="Comments" xml:space="preserve">
     <value>Comments</value>
   </data>
+  <data name="ConfigCatMenuTitle" xml:space="preserve">
+    <value>CAT control</value>
+  </data>
+  <data name="ConfigMenuTitle" xml:space="preserve">
+    <value>Config</value>
+  </data>
   <data name="CreateNewLog" xml:space="preserve">
     <value>Create new log</value>
   </data>
