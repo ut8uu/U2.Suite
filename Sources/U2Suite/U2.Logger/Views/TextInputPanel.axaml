@@ -2,8 +2,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="160"
-             Width="600" Height="160"
+             mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="140"
+             Width="600" Height="140"
              x:Class="U2.Logger.TextInputPanel"
              xmlns:logger="clr-namespace:U2.Logger"
              xmlns:core="clr-namespace:U2.Core;assembly=U2.Core">
@@ -63,7 +63,7 @@
         <Border Padding="5 0 0 0">
           <StackPanel Width="120">
             <TextBlock Text="{Binding ModeInputTitle}" Classes="Caption"></TextBlock>
-            <ComboBox Margin="0 5 0 0" Height="39" Items="{Binding AllModes}"
+            <ComboBox Margin="0 2 0 0" Height="39" Items="{Binding AllModes}"
                       SelectedItem="{Binding Mode}"></ComboBox>
           </StackPanel>
         </Border>
@@ -76,7 +76,7 @@
         <Border Padding="5 0 0 0">
           <StackPanel Width="120">
             <TextBlock Text="{Binding BandInputTitle}" Classes="Caption"></TextBlock>
-            <ComboBox Margin="0 5 0 0" Height="39" Items="{Binding AllBands}"
+            <ComboBox Margin="0 2 0 0" Items="{Binding AllBands}"
                       SelectedItem="{Binding Band}"></ComboBox>
           </StackPanel>
         </Border>

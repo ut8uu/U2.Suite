@@ -1,5 +1,13 @@
 <Styles xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Design.PreviewWith>
+        <Border Padding="20">
+            <ComboBox>
+                <ComboBoxItem>123</ComboBoxItem>
+            </ComboBox>
+        </Border>
+    </Design.PreviewWith>
+    
     <Style Selector="ComboBox">
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="Background" Value="{DynamicResource ThemeBorderLowBrush}" />
@@ -16,7 +24,8 @@
     </Style>
     
     <Style Selector="ComboBoxItem">
-        <Setter Property="Padding" Value="5" />
+		<Setter Property="Padding" Value="2" />
+		<Setter Property="Margin" Value="2" />
     </Style>
     <Style Selector="ComboBoxItem:selected > TextBlock">
         <Setter Property="Foreground" Value="{DynamicResource HighlightForegroundBrush}" />
