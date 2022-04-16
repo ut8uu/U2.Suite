@@ -23,7 +23,7 @@ namespace AvaloniaEdit.TextMate
             return new Installation(editor, theme, grammar);
         }
 
-        public class Installation : IDisposable
+        public sealed class Installation : IDisposable
         {
             public RegistryOptions RegistryOptions { get { return _textMateRegistryOptions; } }
 
@@ -110,15 +110,12 @@ namespace AvaloniaEdit.TextMate
 
             static void DisposeTMModel(TMModel tmModel)
             {
-                if (tmModel == null)
-                    return;
-
-                tmModel.Dispose();
+                tmModel?.Dispose();
             }
 
-            RegistryOptions _textMateRegistryOptions;
-            Registry _textMateRegistry;
-            TextEditor _editor;
+            readonly RegistryOptions _textMateRegistryOptions;
+            readonly Registry _textMateRegistry;
+            readonly TextEditor _editor;
             TextEditorModel _editorModel;
             IGrammar _grammar;
             TMModel _tmModel;

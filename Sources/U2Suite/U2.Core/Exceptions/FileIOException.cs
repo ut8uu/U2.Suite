@@ -2,6 +2,7 @@
 
 namespace U2.Core.Exceptions
 {
+    [Serializable]
     public sealed class FileIOException : Exception
     {
         public FileIOException(string message) : base(message) { }

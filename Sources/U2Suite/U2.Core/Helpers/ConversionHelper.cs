@@ -33,7 +33,7 @@ public static class ConversionHelper
         new RadioModeDigitalVoice(),
         new RadioModeFM(),
         new RadioModeRtty(),
-        new RadioModeSSB(),
+        new RadioModeSsb(),
         new RadioModePsk(),            
     };
 

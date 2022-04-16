@@ -3,7 +3,7 @@ using System.Reflection;
 
 namespace AvaloniaEdit.TextMate.Resources
 {
-    internal class ResourceLoader
+    internal static class ResourceLoader
     {
         const string GrammarPrefix = "AvaloniaEdit.TextMate.Resources.Grammars.";
         const string ThemesPrefix = "AvaloniaEdit.TextMate.Resources.Themes.";

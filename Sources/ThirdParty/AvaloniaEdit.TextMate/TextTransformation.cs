@@ -7,7 +7,7 @@ namespace AvaloniaEdit.TextMate
 {
     public abstract class TextTransformation : TextSegment
     {
-        public TextTransformation(int startOffset, int endOffset)
+        protected TextTransformation(int startOffset, int endOffset)
         {
             StartOffset = startOffset;
             EndOffset = endOffset;
@@ -18,6 +18,8 @@ namespace AvaloniaEdit.TextMate
 
     public class ForegroundTextTransformation : TextTransformation
     {
+        readonly IColorMap _colorMap;
+
         public interface IColorMap
         {
             bool Contains(int foregroundColor);
@@ -59,7 +61,5 @@ namespace AvaloniaEdit.TextMate
 
             transformer.SetTextStyle(line, formattedOffset, endOffset - line.Offset - formattedOffset, _colorMap.GetForegroundBrush(Foreground));
         }
-
-        IColorMap _colorMap;
     }
 }

@@ -12,8 +12,8 @@ namespace AvaloniaEdit.TextMate
 {
     public class RegistryOptions : IRegistryOptions
     {
-        ThemeName _defaultTheme;
-        Dictionary<string, GrammarDefinition> _availableGrammars = new Dictionary<string, GrammarDefinition>();
+        readonly ThemeName _defaultTheme;
+        readonly Dictionary<string, GrammarDefinition> _availableGrammars = new Dictionary<string, GrammarDefinition>();
 
         public RegistryOptions(ThemeName defaultTheme)
         {
@@ -41,25 +41,12 @@ namespace AvaloniaEdit.TextMate
 
         public Language GetLanguageByExtension(string extension)
         {
-            foreach (GrammarDefinition definition in _availableGrammars.Values)
-            {
-                foreach (var language in definition.Contributes.Languages)
-                {
-                    if (language.Extensions == null)
-                        continue;
-
-                    foreach (var languageExtension in language.Extensions)
-                    {
-                        if (extension.Equals(languageExtension,
-                            StringComparison.OrdinalIgnoreCase))
-                        {
-                            return language;
-                        }
-                    }
-                }
-            }
-
-            return null;
+            return _availableGrammars.Values.SelectMany(definition => 
+                definition.Contributes.Languages.Where(language => 
+                    language.Extensions != null).Where(language => 
+                    language.Extensions.Any(languageExtension => 
+                        extension.Equals(languageExtension, StringComparison.OrdinalIgnoreCase))))
+                .FirstOrDefault();
         }
 
         public string GetScopeByExtension(string extension)
@@ -77,7 +64,7 @@ namespace AvaloniaEdit.TextMate
             if (string.IsNullOrEmpty(languageId))
                 return null;
 
-            foreach (GrammarDefinition definition in _availableGrammars.Values)
+            foreach (var definition in _availableGrammars.Values)
             {
                 foreach (var grammar in definition.Contributes.Grammars)
                 {
@@ -91,88 +78,71 @@ namespace AvaloniaEdit.TextMate
 
         public IRawTheme LoadTheme(ThemeName name)
         {
-            string themeFile = GetThemeFile(name);
+            var themeFile = GetThemeFile(name);
 
             if (themeFile == null)
                 return null;
 
-            using (Stream s = ResourceLoader.TryOpenThemeStream(GetThemeFile(name)))
-            using (StreamReader reader = new StreamReader(s))
-            {
-                return ThemeReader.ReadThemeSync(reader);
-            }
+            using var s = ResourceLoader.TryOpenThemeStream(GetThemeFile(name));
+            using var reader = new StreamReader(s);
+            return ThemeReader.ReadThemeSync(reader);
         }
 
-        string GetThemeFile(ThemeName name)
+        static string GetThemeFile(ThemeName name)
         {
-            switch (name)
+            return name switch
             {
-                case ThemeName.Abbys:
-                    return "abyss-color-theme.json";
-                case ThemeName.Dark:
-                    return "dark_vs.json";
-                case ThemeName.DarkPlus:
-                    return "dark_plus.json";
-                case ThemeName.DimmedMonokai:
-                    return "dimmed-monokai-color-theme.json";
-                case ThemeName.KimbieDark:
-                    return "kimbie-dark-color-theme.json";
-                case ThemeName.Light:
-                    return "light_vs.json";
-                case ThemeName.LightPlus:
-                    return "light_plus.json";
-                case ThemeName.Monokai:
-                    return "monokai-color-theme.json";
-                case ThemeName.QuietLight:
-                    return "quietlight-color-theme.json";
-                case ThemeName.Red:
-                    return "Red-color-theme.json";
-                case ThemeName.SolarizedDark:
-                    return "solarized-dark-color-theme.json";
-                case ThemeName.SolarizedLight:
-                    return "solarized-light-color-theme.json";
-                case ThemeName.TomorrowNightBlue:
-                    return "tomorrow-night-blue-color-theme.json";
-            }
-
-            return null;
+                ThemeName.Abbys => "abyss-color-theme.json",
+                ThemeName.Dark => "dark_vs.json",
+                ThemeName.DarkPlus => "dark_plus.json",
+                ThemeName.DimmedMonokai => "dimmed-monokai-color-theme.json",
+                ThemeName.KimbieDark => "kimbie-dark-color-theme.json",
+                ThemeName.Light => "light_vs.json",
+                ThemeName.LightPlus => "light_plus.json",
+                ThemeName.Monokai => "monokai-color-theme.json",
+                ThemeName.QuietLight => "quietlight-color-theme.json",
+                ThemeName.Red => "Red-color-theme.json",
+                ThemeName.SolarizedDark => "solarized-dark-color-theme.json",
+                ThemeName.SolarizedLight => "solarized-light-color-theme.json",
+                ThemeName.TomorrowNightBlue => "tomorrow-night-blue-color-theme.json",
+                _ => null
+            };
         }
 
-        void InitializeGrammars()
+        private void InitializeGrammars()
         {
             var serializer = new JsonSerializer();
 
-            foreach (string grammar in GrammarNames.SupportedGrammars)
+            foreach (var grammar in GrammarNames.SupportedGrammars)
             {
-                using (Stream stream = ResourceLoader.OpenGrammarPackage(grammar))
-                using (StreamReader reader = new StreamReader(stream))
-                using (JsonTextReader jsonTextReader = new JsonTextReader(reader))
-                {
-                    GrammarDefinition definition = serializer.Deserialize<GrammarDefinition>(jsonTextReader);
-                    _availableGrammars.Add(grammar, definition);
-                }
+                using var stream = ResourceLoader.OpenGrammarPackage(grammar);
+                using var reader = new StreamReader(stream);
+                using var jsonTextReader = new JsonTextReader(reader);
+                var definition = serializer.Deserialize<GrammarDefinition>(jsonTextReader);
+                _availableGrammars.Add(grammar, definition);
             }
         }
 
         string IRegistryOptions.GetFilePath(string scopeName)
         {
-            foreach (string grammarName in _availableGrammars.Keys)
+            foreach (var grammarName in _availableGrammars.Keys)
             {
-                GrammarDefinition definition = _availableGrammars[grammarName];
+                var definition = _availableGrammars[grammarName];
 
-                foreach (Grammar grammar in definition.Contributes.Grammars)
+                foreach (var grammar in definition.Contributes.Grammars)
                 {
-                    if (scopeName.Equals(grammar.ScopeName))
+                    if (!scopeName.Equals(grammar.ScopeName))
                     {
-                        string grammarPath = grammar.Path;
-
-                        if (grammarPath.StartsWith("./"))
-                            grammarPath = grammarPath.Substring(2);
-
-                        grammarPath = grammarPath.Replace("/", ".");
-
-                        return grammarName.ToLower() + "." + grammarPath;
+                        continue;
                     }
+                    var grammarPath = grammar.Path;
+
+                    if (grammarPath.StartsWith("./"))
+                        grammarPath = grammarPath[2..];
+
+                    grammarPath = grammarPath.Replace("/", ".");
+
+                    return grammarName.ToLower() + "." + grammarPath;
                 }
             }
 
@@ -181,17 +151,14 @@ namespace AvaloniaEdit.TextMate
 
         ICollection<string> IRegistryOptions.GetInjections(string scopeName)
         {
-            return null;
+            return Array.Empty<string>();
         }
 
         Stream IRegistryOptions.GetInputStream(string scopeName)
         {
-            Stream themeStream = ResourceLoader.TryOpenThemeStream(scopeName.Replace("./", string.Empty));
+            var themeStream = ResourceLoader.TryOpenThemeStream(scopeName.Replace("./", string.Empty));
 
-            if (themeStream != null)
-                return themeStream;
-
-            return ResourceLoader.TryOpenGrammarStream(((IRegistryOptions)this).GetFilePath(scopeName));
+            return themeStream ?? ResourceLoader.TryOpenGrammarStream(((IRegistryOptions)this).GetFilePath(scopeName));
         }
 
         IRawTheme IRegistryOptions.GetTheme()

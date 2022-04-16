@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Avalonia.Media;
 using Avalonia.Threading;
 using AvaloniaEdit.Document;
@@ -97,7 +98,7 @@ namespace AvaloniaEdit.TextMate
             }
         }
 
-        private void ProcessTokens(int lineNumber, List<TMToken> tokens)
+        private void ProcessTokens(int lineNumber, IReadOnlyList<TMToken> tokens)
         {
             for (int i = 0; i < tokens.Count; i++)
             {
@@ -114,15 +115,14 @@ namespace AvaloniaEdit.TextMate
 
                 var lineOffset = _document.GetLineByNumber(lineNumber).Offset;
 
-                foreach (var themeRule in _theme.Match(token.Scopes))
+                var rules = _theme.Match(token.Scopes).Where(themeRule =>
+                    themeRule.foreground > 0 && _brushes.ContainsKey(themeRule.foreground));
+                foreach (var themeRule in rules)
                 {
-                    if (themeRule.foreground > 0 && _brushes.ContainsKey(themeRule.foreground))
-                    {
-                        _transformations.Add(new ForegroundTextTransformation(this, lineOffset + startIndex,
-                            lineOffset + endIndex, themeRule.foreground));
+                    _transformations.Add(new ForegroundTextTransformation(this, lineOffset + startIndex,
+                        lineOffset + endIndex, themeRule.foreground));
 
-                        break;
-                    }
+                    break;
                 }
             }
         }

@@ -5,12 +5,13 @@ using TextMateSharp.Model;
 
 namespace AvaloniaEdit.TextMate
 {
-    class TextEditorModel : AbstractLineList
+    internal class TextEditorModel : AbstractLineList
     {
-        private object _lock = new object();
+        private readonly object _lock = new object();
         private readonly TextDocument _document;
         private readonly TextEditor _editor;
         private int _lineCount;
+        private readonly Action<Exception> _exceptionHandler;
 
         public TextEditorModel(TextEditor editor, TextDocument document, Action<Exception> exceptionHandler)
         {
@@ -47,7 +48,7 @@ namespace AvaloniaEdit.TextMate
 
                 ForceTokenization(
                     _editor.TextArea.TextView.VisualLines[0].FirstDocumentLine.LineNumber - 1,
-                    _editor.TextArea.TextView.VisualLines[_editor.TextArea.TextView.VisualLines.Count - 1].LastDocumentLine.LineNumber - 1);
+                    _editor.TextArea.TextView.VisualLines[^1].LastDocumentLine.LineNumber - 1);
             }, DispatcherPriority.MinValue);
         }
 
@@ -163,6 +164,5 @@ namespace AvaloniaEdit.TextMate
             }).GetAwaiter().GetResult();
         }
 
-        Action<Exception> _exceptionHandler;
     }
 }
