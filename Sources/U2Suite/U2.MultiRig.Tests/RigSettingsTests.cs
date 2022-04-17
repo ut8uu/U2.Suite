@@ -89,4 +89,34 @@ public sealed class RigSettingsTests : IDisposable
             savedSettings.ShouldDeepEqual(settings);
         }
     }
+
+    [Fact]
+    public void LoadEmptySettings_ShouldCreateOneDefaultSetting()
+    {
+        var pathToFile = AllRigsSettings._pathToSettings;
+        File.WriteAllText(pathToFile, string.Empty);
+        AllRigsSettings.LoadSettings();
+        Assert.Single(AllRigsSettings.AllRigs);
+    }
+
+    [Fact]
+    public void LoadFromNonExistentFile_ShouldCreateOneDefaultSetting()
+    {
+        var pathToFile = AllRigsSettings._pathToSettings;
+        AllRigsSettings.LoadSettings();
+        Assert.Single(AllRigsSettings.AllRigs);
+    }
+
+    [Fact]
+    public void ShouldDeleteExistingSettings()
+    {
+        const string oldName = nameof(oldName);
+        var pathToFile = AllRigsSettings._pathToSettings;
+        AllRigsSettings.AllRigs.Add(new()
+        {
+            RigId = oldName,
+        });
+        AllRigsSettings.LoadSettings();
+        Assert.DoesNotContain(AllRigsSettings.AllRigs, r => r.RigId == oldName);
+    }
 }

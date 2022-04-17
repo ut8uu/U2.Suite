@@ -6,15 +6,16 @@ using PropertyChanged;
 namespace U2.MultiRig.Views
 {
     [DoNotNotify]
-    public partial class RigSettingsView : UserControl
+    public class RigSettingsView : UserControl
     {
-        private RigSettingsViewModel _model;
+        private readonly RigSettingsViewModel _model;
 
         public RigSettingsView()
         {
             InitializeComponent();
 
             _model = new RigSettingsViewModel();
+            DataContext = _model;
         }
 
         private void InitializeComponent()

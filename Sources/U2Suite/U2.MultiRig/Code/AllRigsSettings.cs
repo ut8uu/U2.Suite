@@ -11,6 +11,14 @@ namespace U2.MultiRig
     public static class AllRigsSettings
     {
         private const string SettingsFileName = "RigSettings.json";
+        private static readonly List<RigSettings> _defaultRigSettings = new()
+        {
+            new RigSettings
+            {
+                RigId = "RIG1",
+            }
+        };
+
         internal static readonly string _pathToSettings = Path.Combine(
             FileSystemHelper.GetAppDataFolderPath(nameof(AllRigsSettings)), SettingsFileName);
         private static readonly JsonSerializerOptions _serializationOptions =
@@ -25,19 +33,30 @@ namespace U2.MultiRig
 
         internal static void LoadSettings()
         {
+            AllRigs.Clear();
+
             if (!File.Exists(_pathToSettings))
             {
+                AllRigs.AddRange(_defaultRigSettings);
                 return;
             }
 
             using var fs = File.OpenRead(_pathToSettings);
-            var settings = JsonSerializer.Deserialize<List<RigSettings>>(fs);
-            if (settings == null || !settings.Any())
+            List<RigSettings> settings;
+            try
             {
-                return;
+                settings = JsonSerializer.Deserialize<List<RigSettings>>(fs);
+                if (settings == null || !settings.Any())
+                {
+                    AllRigs.AddRange(_defaultRigSettings);
+                    return;
+                }
+            }
+            catch (JsonException)
+            {
+                settings = _defaultRigSettings;
             }
 
-            AllRigs.Clear();
             AllRigs.AddRange(settings);
         }
 
