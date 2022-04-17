@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AssemblyVersion>1.0.0</AssemblyVersion>
+    <FileVersion>1.0.0</FileVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <AvaloniaXaml Remove="Libraries\**" />
+    <Compile Remove="Libraries\**" />
+    <EmbeddedResource Remove="Libraries\**" />
+    <None Remove="Libraries\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\U2.CommonControls\U2.CommonControls.csproj" />
+    <ProjectReference Include="..\U2.Core\U2.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="PropertyChanged.Fody" Version="3.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ViewModels\" />
+    <Folder Include="Views\" />
+  </ItemGroup>
+
+</Project>
