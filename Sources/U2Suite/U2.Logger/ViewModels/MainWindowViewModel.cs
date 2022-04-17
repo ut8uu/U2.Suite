@@ -11,6 +11,7 @@ using Avalonia.Controls;
 using GalaSoft.MvvmLight.Messaging;
 using log4net;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 using U2.CommonControls;
 using U2.Core;
 using U2.Core.Models;
@@ -247,7 +248,8 @@ namespace U2.Logger
 
         public void ExecuteCatControlConfig()
         {
-
+            var form = new ConfigureCatControlWindow();
+            form.ShowDialog(this.Owner);
         }
 
         #endregion

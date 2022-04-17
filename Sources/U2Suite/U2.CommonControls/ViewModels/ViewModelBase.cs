@@ -1,7 +1,7 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace U2.Logger
+namespace U2.CommonControls
 {
     public class ViewModelBase : INotifyPropertyChanged
     {

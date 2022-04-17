@@ -8,6 +8,7 @@ using System.Text;
 using System.Text.Json;
 using Avalonia.Controls;
 using GalaSoft.MvvmLight.Messaging;
+using U2.CommonControls;
 
 namespace U2.Logger;
 

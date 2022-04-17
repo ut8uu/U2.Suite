@@ -5,16 +5,16 @@ using System.Text;
 using System.Threading.Tasks;
 using Avalonia.Controls;
 
-namespace U2.Logger.ViewModels
+namespace U2.CommonControls
 {
-    internal class WindowViewModelBase : ViewModelBase
+    public class WindowViewModelBase : ViewModelBase
     {
         private Window _owner = default!;
 
         public string WindowTitle { get; set; } = default!;
 
-        public string CancelButtonTitle { get; set; } = Resources.Cancel;
-        public string OkButtonTitle { get; set; } = Resources.OK;
+        public string CancelButtonTitle { get; set; } = "Cancel";
+        public string OkButtonTitle { get; set; } = "OK";
 
         public Window Owner
         {

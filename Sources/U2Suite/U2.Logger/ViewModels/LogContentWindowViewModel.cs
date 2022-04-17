@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using Avalonia.Controls;
 using GalaSoft.MvvmLight.Messaging;
+using U2.CommonControls;
 
 namespace U2.Logger;
 
