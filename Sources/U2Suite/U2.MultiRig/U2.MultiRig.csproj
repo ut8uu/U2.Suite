@@ -7,6 +7,7 @@
     <AssemblyVersion>1.0.0</AssemblyVersion>
     <FileVersion>1.0.0</FileVersion>
     <OutputType>WinExe</OutputType>
+    <ApplicationIcon>Assets\multirig.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -14,6 +15,10 @@
     <Compile Remove="Libraries\**" />
     <EmbeddedResource Remove="Libraries\**" />
     <None Remove="Libraries\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AvaloniaResource Include="Assets\multirig.ico" />
   </ItemGroup>
 
   <ItemGroup>

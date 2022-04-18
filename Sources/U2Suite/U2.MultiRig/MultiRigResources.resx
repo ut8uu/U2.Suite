@@ -126,6 +126,9 @@
   <data name="DtrModeTitle" xml:space="preserve">
     <value>DTR</value>
   </data>
+  <data name="EnabledTitle" xml:space="preserve">
+    <value>Enabled</value>
+  </data>
   <data name="ParityTitle" xml:space="preserve">
     <value>Parity</value>
   </data>

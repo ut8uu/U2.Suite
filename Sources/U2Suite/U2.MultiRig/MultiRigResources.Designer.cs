@@ -88,6 +88,15 @@ namespace U2.MultiRig {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enabled.
+        /// </summary>
+        internal static string EnabledTitle {
+            get {
+                return ResourceManager.GetString("EnabledTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Parity.
         /// </summary>
         internal static string ParityTitle {

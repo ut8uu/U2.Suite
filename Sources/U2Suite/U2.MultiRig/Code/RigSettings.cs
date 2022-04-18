@@ -13,8 +13,9 @@ public class RigSettings
     }
 
     public string RigId { get; set; } = string.Empty;
-    public int RigType { get; set; } = -1;
-    public int Port { get; set; } = -1;
+    public bool Enabled { get; set; } = false;
+    public int RigType { get; set; } = 0;
+    public int Port { get; set; } = 0;
     public int BaudRate { get; set; }
     public int DataBits { get; set; }
     public int Parity { get; set; } = 0;

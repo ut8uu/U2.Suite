@@ -8,6 +8,10 @@
         mc:Ignorable="d" d:DesignWidth="320" d:DesignHeight="600"
         MinWidth="300" Width="320" Height="600"
         x:Class="U2.MultiRig.MultiRigWindow"
+        CanResize="False"
+        ShowInTaskbar="True"
+        SystemDecorations="Full"
+        Icon="/Assets/multirig.ico"
         Title="MultiRigWindow">
 
     <Design.DataContext>
@@ -33,11 +37,12 @@
             </StackPanel>
         </Border>
         <Border Classes="Card">
-            <Grid ColumnDefinitions="Auto,Auto" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto">
-				<TextBlock Grid.Column="0" Grid.Row="0" Margin="12" Text="{Binding RigIdTitle}"></TextBlock>
-				<TextBlock Grid.Column="1" Grid.Row="0" Margin="12" Text="{Binding SelectedRig.RigId}"></TextBlock>
+            <Grid ColumnDefinitions="Auto,Auto" RowDefinitions="*,*,*,*,*,*,*,*,*,*,*">
+                <CheckBox Grid.Column="1" Grid.Row="0" x:Name="RigEnabled" 
+                          IsChecked="{Binding SelectedRig.Enabled}"
+                          Content="{Binding EnabledTitle}"></CheckBox>
 
-				<TextBlock Grid.Column="0" Grid.Row="1" Margin="12" 
+                <TextBlock Grid.Column="0" Grid.Row="1" Margin="12" 
                            Text="{Binding RigTypeTitle}"></TextBlock>
                 <ComboBox Grid.Column="1" Grid.Row="1" Name="RigTypeSelector"
                           Items="{Binding Path=AllCommands, Mode=TwoWay}"

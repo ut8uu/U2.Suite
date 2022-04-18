@@ -20,6 +20,8 @@ namespace U2.MultiRig.ViewModels
             SelectedRigIndex = 0;
         }
 
+        #region Properties
+
         public string SelectRigTitle { get; set; } = "Select rig";
 
         public ObservableCollection<RigSettings> AllRigs { get; }
@@ -51,9 +53,12 @@ namespace U2.MultiRig.ViewModels
         public int SelectedRigIndex { get; set; }
         public RigSettings? SelectedRig { get; set; }
 
+        #endregion
+
         #region Titles
 
         public string RigIdTitle { get; set; } = MultiRigResources.RigIdTitle;
+        public string EnabledTitle { get; set; } = MultiRigResources.EnabledTitle;
         public string RigTypeTitle { get; set; } = MultiRigResources.RigTypeTitle;
         public string PortTitle { get; set; } = MultiRigResources.PortTitle;
         public string BaudRateTitle { get; set; } = MultiRigResources.BaudRateTitle;
@@ -64,6 +69,21 @@ namespace U2.MultiRig.ViewModels
         public string DtrModeTitle { get; set; } = MultiRigResources.DtrModeTitle;
         public string PollMsTitle { get; set; } = MultiRigResources.PollMsTitle;
         public string TimeoutMsTitle { get; set; } = MultiRigResources.TimeoutMsTitle;
+
+        #endregion
+
+        #region Methods
+
+        public override void ExecuteOkAction()
+        {
+            //var rig = AllRigsSettings.AllRigs.FirstOrDefault(rs => rs.RigId == SelectedRig.RigId);
+            AllRigsSettings.SaveSettings();
+        }
+
+        public override void ExecuteCancelAction()
+        {
+            Owner.Close(DialogResult.Cancel);
+        }
 
         #endregion
     }
