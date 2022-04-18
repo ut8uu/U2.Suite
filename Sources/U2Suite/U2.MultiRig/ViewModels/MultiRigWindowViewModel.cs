@@ -12,9 +12,17 @@ namespace U2.MultiRig.ViewModels
 {
     public class MultiRigWindowViewModel : WindowViewModelBase
     {
+        public MultiRigWindowViewModel()
+        {
+            AllRigsSettings.LoadSettings();
+            AllRigs = new ObservableCollection<RigSettings>(AllRigsSettings.AllRigs);
+            SelectedRig = AllRigs.First();
+            SelectedRigIndex = 0;
+        }
+
         public string SelectRigTitle { get; set; } = "Select rig";
 
-        public ObservableCollection<RigSettings> AllRigs { get; } = new();
+        public ObservableCollection<RigSettings> AllRigs { get; }
         public ObservableCollection<RigCommand> AllCommands { get; } = new();
         public ObservableCollection<string> AllPorts { get; } = new();
         public ObservableCollection<int> AllBaudRates { get; } = new(Data.BaudRates);
@@ -40,7 +48,7 @@ namespace U2.MultiRig.ViewModels
             Data.DtrMode.High, Data.DtrMode.Low,
         });
 
-        public int SelectedRigIndex { get; set; } = -1;
+        public int SelectedRigIndex { get; set; }
         public RigSettings? SelectedRig { get; set; }
 
         #region Titles

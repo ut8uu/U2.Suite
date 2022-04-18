@@ -6,7 +6,7 @@
         xmlns:commonControls="clr-namespace:U2.CommonControls;assembly=U2.CommonControls"
         xmlns:viewModels="clr-namespace:U2.MultiRig.ViewModels"
         mc:Ignorable="d" d:DesignWidth="320" d:DesignHeight="600"
-        MinWidth="300" Height="600"
+        MinWidth="300" Width="320" Height="600"
         x:Class="U2.MultiRig.MultiRigWindow"
         Title="MultiRigWindow">
 
