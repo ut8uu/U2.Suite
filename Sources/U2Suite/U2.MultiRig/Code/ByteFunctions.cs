@@ -13,36 +13,27 @@ namespace U2.MultiRig.Code
             return arr1.SequenceEqual(arr2);
 		}
 
-		public static byte[] BytesAnd(byte[] Arr1, byte[] Arr2)
+		public static byte[] BytesAnd(byte[] arr1, byte[] arr2)
 		{
 			byte[] bytesAnd_result = new byte[] { };
 			int i = 0;
-			Array.Resize(ref bytesAnd_result, Math.Min(Arr1.Length, Arr2.Length));
+			Array.Resize(ref bytesAnd_result, Math.Min(arr1.Length, arr2.Length));
 
-			for (i = 0; i <= Arr1.Length - 1; i++)
+			for (i = 0; i <= arr1.Length - 1; i++)
 			{
-				bytesAnd_result[i] = (byte)(Arr1[i] & Arr2[i]);
+				bytesAnd_result[i] = (byte)(arr1[i] & arr2[i]);
 			}
 
 			return bytesAnd_result;
 		}
 
-        public static void BytesReverse(byte[] Arr)
-		{
-			byte B = 0;
-			int i = 0;
-
-			if (Arr.Length < 2)
-			{
-				return;
-			}
-
-			for (i = 0; i <= (Arr.Length / 2) - 1; i++)
-			{
-				B = Arr[i];
-				Arr[i] = Arr[Arr.Length - 1 - i];
-				Arr[Arr.Length - 1 - i] = B;
-			}
+        public static void BytesReverse(byte[] arr)
+        {
+            var arrReversed = arr.Reverse().ToArray();
+            for (var index = 0; index < arrReversed.Length; index++)
+            {
+				arr[index] = arrReversed[index];
+            }
 		}
 
         public static string BytesToStr(byte[] bytes)
@@ -65,9 +56,9 @@ namespace U2.MultiRig.Code
 			return stringBuilder.ToString();
 		}
 
-        public static string StrToHex(string S)
+        public static string StrToHex(string s)
 		{
-			return BytesToHex(StrToBytes(S));
+			return BytesToHex(StrToBytes(s));
 		}
 	}
 }
