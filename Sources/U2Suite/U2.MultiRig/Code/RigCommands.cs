@@ -9,32 +9,32 @@ namespace U2.MultiRig;
 
 public partial class RigCommands
 {
-    internal IniFile FIni = new(StringComparer.CurrentCultureIgnoreCase);
-    internal string FSection = string.Empty;
-    internal string FEntry = string.Empty;
-    internal List<string> FList = new();
-    internal bool WasError = false;
-    private  readonly char[] FDelimiter = {'|'};
+    private readonly IniFile _iniFile = new(StringComparer.CurrentCultureIgnoreCase);
+    private string _section = string.Empty;
+    private string _entry = string.Empty;
+    private List<string> _fList = new();
+    private bool _wasError = false;
+    private readonly char[] _delimiter = {'|'};
 
-    internal List<string> FLog = new();
+    private readonly List<string> _log = new();
 
     public string RigType = string.Empty;
     public List<RigCommand> InitCmd = new();
     public List<RigCommand> WriteCmd = new();
     public List<RigCommand> StatusCmd = new();
-    public List<TRigParam> ReadableParams = new();
-    public List<TRigParam> WriteableParams = new();
+    public List<RigParameter> ReadableParams = new();
+    public List<RigParameter> WriteableParams = new();
 
     public string? Title { get; set; }
 
     public bool Read(Stream inputStream)
     {
         using var streamReader = new StreamReader(inputStream);
-        FIni.Load(streamReader);
+        _iniFile.Load(streamReader);
 
-        foreach (var section in FIni.GetSections())
+        foreach (var section in _iniFile.GetSections())
         {
-            FSection = section;
+            _section = section;
             if (StartsWith(section, "init"))
             {
                 LoadInitCmd();

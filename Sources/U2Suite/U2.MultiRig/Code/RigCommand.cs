@@ -10,36 +10,46 @@ public sealed class RigCommand
 {
     public byte[] Code;
 
-    public TParamValue Value;
+    public ParameterValue Value;
 
     //what to wait for
     public int ReplyLength;
     public byte[] ReplyEnd;
 
-    public TBitMask Validation;
+    public BitMask Validation;
 
     //what to extract
-    public List<TParamValue> Values = new();
-    public List<TBitMask> Flags = new();
+    public List<ParameterValue> Values = new();
+    public List<BitMask> Flags = new();
 }
 
-public struct TParamValue
+public struct ParameterValue
 {
     public int Start;
     public int Len;  //insert or extract bytes, Start is a 0-based index
-    public TValueFormat Format; //encode or decode according to this format
+    public ValueFormat Format; //encode or decode according to this format
     public double Mult;
     public double Add;    //linear transformation before encoding or after decoding
     public RigParameter Param;     //param to insert or to report
 }
 
-public enum TValueFormat
+public enum ValueFormat
 {
-    vfNone, vfText, vfBinL, vfBinB, vfBcdLU, vfBcdLS, vfBcdBU, vfBcdBS, vfYaesu, vfDPIcom,
-    vfTextUD, vfFloat
+    None,
+    Text,
+    BinL,
+    BinB,
+    BcdLU,
+    BcdLS,
+    BcdBU,
+    BcdBS,
+    Yaesu,
+    DPIcom,
+    TextUD,
+    Float,
 }
 
-public struct TBitMask
+public struct BitMask
 {
     public byte[] Mask;   //do bitwise AND with this mask
     public byte[] Flags;  //compare result to these bits
@@ -48,8 +58,35 @@ public struct TBitMask
 
 public enum RigParameter
 {
-    pmNone, pmFreq, pmFreqA, pmFreqB, pmPitch, pmRitOffset, pmRit0, pmVfoAA, pmVfoAB,
-    pmVfoBA, pmVfoBB, pmVfoA, pmVfoB, pmVfoEqual, pmVfoSwap, pmSplitOn, pmSplitOff,
-    pmRitOn, pmRitOff, pmXitOn, pmXitOff, pmRx, pmTx, pmCW_U, pmCW_L, pmSSB_U,
-    pmSSB_L, pmDIG_U, pmDIG_L, pmAM, pmFM
+    None,
+    Freq,
+    FreqA,
+    FreqB,
+    Pitch,
+    RitOffset,
+    Rit0,
+    VfoAA,
+    VfoAB,
+    VfoBA,
+    VfoBB,
+    VfoA,
+    VfoB,
+    VfoEqual,
+    VfoSwap,
+    SplitOn,
+    SplitOff,
+    RitOn,
+    RitOff,
+    XitOn,
+    XitOff,
+    Rx,
+    Tx,
+    CW_U,
+    CW_L,
+    SSB_U,
+    SSB_L,
+    DIG_U,
+    DIG_L,
+    AM,
+    FM,
 }

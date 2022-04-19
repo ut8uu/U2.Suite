@@ -1,15 +1,7 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using DynamicData;
-using log4net;
 using SoftCircuits.IniFileParser;
-using static System.Collections.Specialized.BitVector32;
-using U2.MultiRig;
 using U2.MultiRig.Code;
 
 namespace U2.MultiRig;
@@ -21,21 +13,21 @@ public partial class RigCommands
     {
         ValidateEntryNames(new[] { "COMMAND", "REPLYLENGTH", "REPLYEND", "VALIDATE" });
 
-        if (FList.Count == 0)
+        if (_fList.Count == 0)
         {
             return;
         }
 
         var cmd = LoadCommon();
-        FEntry = "Value";
+        _entry = "Value";
 
-        if (cmd.Value.Format != TValueFormat.vfNone)
+        if (cmd.Value.Format != ValueFormat.None)
         {
             Log("value is not allowed in INIT");
             return;
         }
 
-        if (WasError)
+        if (_wasError)
         {
             return;
         }
@@ -52,14 +44,14 @@ public partial class RigCommands
             "FLAG1", "FLAG2", "FLAG3", "FLAG4", "FLAG5", "FLAG6",
         });
 
-        if (FList.Count == 0)
+        if (_fList.Count == 0)
         {
             return;
         }
 
         //common fields
         var cmd = LoadCommon();
-        FEntry = string.Empty;
+        _entry = string.Empty;
 
         if (cmd.ReplyLength == 0 && cmd.ReplyEnd.Length == 0)
         {
@@ -70,38 +62,17 @@ public partial class RigCommands
         cmd.Values.Clear();
         cmd.Flags.Clear();
 
-        var settings = FIni.GetSectionSettings(FSection);
+        var settings = _iniFile.GetSectionSettings(_section);
 
-        foreach (var iniSetting in settings)
+        foreach (var iniSetting in settings.Where(s => !string.IsNullOrEmpty(s.Name)))
         {
-            if (string.IsNullOrEmpty(iniSetting.Name))
+            if (CanReadStatusEntryValue(cmd, iniSetting, out var value))
             {
-                continue;
+                cmd.Values.Add(value.Value);
             }
-
-            if (iniSetting.Name.StartsWith("value", StringComparison.CurrentCultureIgnoreCase))
+            else if (CanReadStatusEntryFlag(cmd, iniSetting, out var flag))
             {
-                FEntry = iniSetting.Name;
-                var value = LoadValue();
-                ValidateValue(value, Math.Max(cmd.ReplyLength, cmd.Validation.Mask.Length));
-
-                if (value.Param == TRigParam.pmNone)
-                {
-                    Log("parameter name is missing");
-                }
-                else if (!(RigCmdsUnit.NumericParams.Contains(value.Param)))
-                {
-                    Log("parameter must be of numeric type");
-                }
-
-                cmd.Values.Add(value);
-            }
-            else if (iniSetting.Name.StartsWith("flag", StringComparison.CurrentCultureIgnoreCase))
-            {
-                FEntry = $"{iniSetting.Name}={iniSetting.Value}";
-                var flag = StrToMask(ReadStringFromIni(string.Empty));
-                ValidateMask(flag, cmd.ReplyLength, cmd.ReplyEnd);
-                cmd.Flags.Add(flag);
+                cmd.Flags.Add(flag.Value);
             }
         }
 
@@ -110,7 +81,7 @@ public partial class RigCommands
             Log("at least one ValueNN or FlagNN must be defined");
         }
 
-        if (WasError)
+        if (_wasError)
         {
             return;
         }
@@ -118,46 +89,88 @@ public partial class RigCommands
         StatusCmd.Add(cmd);
     }
 
+    private bool CanReadStatusEntryFlag(RigCommand cmd, IniSetting iniSetting,
+        out BitMask? mask)
+    {
+        mask = null;
+        if (!iniSetting.Name.StartsWith("flag", StringComparison.CurrentCultureIgnoreCase))
+        {
+            return false;
+        }
+
+        _entry = $"{iniSetting.Name}={iniSetting.Value}";
+        var flag = StrToMask(ReadStringFromIni(string.Empty));
+        ValidateMask(flag, cmd.ReplyLength, cmd.ReplyEnd);
+
+        return !_wasError;
+    }
+
+    private bool CanReadStatusEntryValue(RigCommand cmd, IniSetting iniSetting, out ParameterValue? result)
+    {
+        result = null;
+        if (!iniSetting.Name.StartsWith("value", StringComparison.CurrentCultureIgnoreCase))
+        {
+            return false;
+        }
+
+        _entry = iniSetting.Name;
+        var value = LoadValue();
+        ValidateValue(value, Math.Max(cmd.ReplyLength, cmd.Validation.Mask.Length));
+
+        if (value.Param == RigParameter.None)
+        {
+            Log("parameter name is missing");
+        }
+        else if (!(RigCmdsUnit.NumericParameters.Contains(value.Param)))
+        {
+            Log("parameter must be of numeric type");
+        }
+
+        result = value;
+
+        return !_wasError;
+    }
+
     private void LoadWriteCmd()
     {
         try
         {
-            FEntry = string.Empty;
-            var param = StrToParam(FSection);
+            _entry = string.Empty;
+            var param = StrToParam(_section);
 
-            if (WasError)
+            if (_wasError)
             {
                 return;
             }
 
             ValidateEntryNames(new string[] { "COMMAND", "REPLYLENGTH", "REPLYEND", "VALIDATE", "VALUE" });
 
-            if (FList.Count == 0 || FList.All(string.IsNullOrEmpty))
+            if (_fList.Count == 0 || _fList.All(string.IsNullOrEmpty))
             {
                 return;
             }
 
             var cmd = LoadCommon();
-            FEntry = "Value";
+            _entry = "Value";
             cmd.Value = LoadValue();
             ValidateValue(cmd.Value, cmd.Code.Length);
 
-            if (cmd.Value.Param != TRigParam.pmNone)
+            if (cmd.Value.Param != RigParameter.None)
             {
                 Log("parameter name is not allowed");
             }
 
-            if (RigCmdsUnit.NumericParams.Contains(param) && cmd.Value.Len == 0)
+            if (RigCmdsUnit.NumericParameters.Contains(param) && cmd.Value.Len == 0)
             {
                 Log("Value is missing");
             }
 
-            if (!RigCmdsUnit.NumericParams.Contains(param) && cmd.Value.Len > 0)
+            if (!RigCmdsUnit.NumericParameters.Contains(param) && cmd.Value.Len > 0)
             {
                 Log("parameter does not require a value", false);
             }
 
-            if (!WasError)
+            if (!_wasError)
             {
                 WriteCmd.Add(cmd);
             }
@@ -171,8 +184,8 @@ public partial class RigCommands
 
     private void ValidateEntryNames(string[] entryNames)
     {
-        var iniValues = FIni.GetSectionSettings(FSection);
-        FList = iniValues.Select(v => $"{v.Name}={v.Value}").ToList();
+        var iniValues = _iniFile.GetSectionSettings(_section);
+        _fList = iniValues.Select(v => $"{v.Name}={v.Value}").ToList();
 
         var iniNames = iniValues.Select(v => v.Name).Distinct();
         if (iniNames.Any(n => !entryNames.Contains(n, StringComparer.CurrentCultureIgnoreCase)))
@@ -184,11 +197,11 @@ public partial class RigCommands
     ////////////////////////////////////////////////////////////////////////////////
     //                             validation
     ////////////////////////////////////////////////////////////////////////////////
-    private void ValidateMask(TBitMask mask, int len, byte[] end)
+    private void ValidateMask(BitMask mask, int len, byte[] end)
     {
-        if (mask.Mask.Length == 0 
-            && mask.Flags.Length == 0 
-            && (mask.Param == TRigParam.pmNone))
+        if (mask.Mask.Length == 0
+            && mask.Flags.Length == 0
+            && (mask.Param == RigParameter.None))
         {
             return;
         }
@@ -209,9 +222,9 @@ public partial class RigCommands
         {
             Log("mask hides valid bits");
         }
-        else if (FEntry.ToUpper() == "VALIDATE")
+        else if (_entry.ToUpper() == "VALIDATE")
         {
-            if (mask.Param != TRigParam.pmNone)
+            if (mask.Param != RigParameter.None)
             {
                 Log("parameter name is not allowed");
             }
@@ -226,7 +239,7 @@ public partial class RigCommands
         }
         else
         {
-            if (mask.Param == TRigParam.pmNone)
+            if (mask.Param == RigParameter.None)
             {
                 Log("parameter name is missing");
             }
@@ -238,11 +251,11 @@ public partial class RigCommands
         }
     }
 
-    private void ValidateValue(TParamValue value, int len)
+    private void ValidateValue(ParameterValue value, int len)
     {
         try
         {
-            if (value.Param == TRigParam.pmNone)
+            if (value.Param == RigParameter.None)
             {
                 return;
             }
@@ -282,18 +295,18 @@ public partial class RigCommands
     {
         var value = string.Empty;
 
-        if (showValue && !string.IsNullOrEmpty(FEntry))
+        if (showValue && !string.IsNullOrEmpty(_entry))
         {
-            var iniSetting = FIni.GetSectionSettings(FSection)
-                .FirstOrDefault(s => s.Name.Equals(FEntry, StringComparison.CurrentCultureIgnoreCase));
+            var iniSetting = _iniFile.GetSectionSettings(_section)
+                .FirstOrDefault(s => s.Name.Equals(_entry, StringComparison.CurrentCultureIgnoreCase));
             if (iniSetting != null)
             {
                 value = $"in '{iniSetting.Value}'";
             }
         }
 
-        FLog.Add($"[{FSection}].{FEntry}:  {message} {value}");
-        WasError = true;
+        _log.Add($"[{_section}].{_entry}:  {message} {value}");
+        _wasError = true;
     }
 
     private RigCommand LoadCommon()
@@ -305,8 +318,8 @@ public partial class RigCommands
 
             try
             {
-                FEntry = "Command";
-                loadCommonResult.Code = StrToBytes(ReadStringFromIni(string.Empty));
+                _entry = "Command";
+                loadCommonResult.Code = Encoding.UTF8.GetBytes(ReadStringFromIni(string.Empty));
             }
             catch (Exception)
             {
@@ -320,7 +333,7 @@ public partial class RigCommands
 
             try
             {
-                FEntry = "ReplyLength";
+                _entry = "ReplyLength";
                 loadCommonResult.ReplyLength = ReadIntFromIni();
 
                 if (loadCommonResult.ReplyLength < 0)
@@ -335,7 +348,7 @@ public partial class RigCommands
 
             try
             {
-                FEntry = "ReplyEnd";
+                _entry = "ReplyEnd";
                 loadCommonResult.ReplyEnd = Encoding.UTF8.GetBytes(ReadStringFromIni(string.Empty));
             }
             catch (Exception)
@@ -345,7 +358,7 @@ public partial class RigCommands
 
             try
             {
-                FEntry = "Validate";
+                _entry = "Validate";
                 loadCommonResult.Validation = StrToMask(ReadStringFromIni(string.Empty));
             }
             catch (Exception)
@@ -365,8 +378,8 @@ public partial class RigCommands
 
     private void ListSupportedParams()
     {
-        ReadableParams = new List<TRigParam>();
-        WriteableParams = new List<TRigParam>();
+        ReadableParams = new List<RigParameter>();
+        WriteableParams = new List<RigParameter>();
 
         for (var i = 0; i <= StatusCmd.Count - 1; i++)
         {
@@ -381,7 +394,7 @@ public partial class RigCommands
             }
         }
 
-        for (var p = (TRigParam)Enum.GetValues(typeof(TRigParam)).GetLowerBound(0); p <= (TRigParam)Enum.GetValues(typeof(TRigParam)).GetUpperBound(0); p++)
+        for (var p = (RigParameter)Enum.GetValues(typeof(RigParameter)).GetLowerBound(0); p <= (RigParameter)Enum.GetValues(typeof(RigParameter)).GetUpperBound(0); p++)
         {
             if (WriteCmd.Count <= (int)p)
             {
@@ -397,8 +410,8 @@ public partial class RigCommands
 
     private string ReadStringFromIni(string defaultValue = "")
     {
-        var iniSetting = FIni.GetSectionSettings(FSection)
-            .FirstOrDefault(s => s.Name == FEntry);
+        var iniSetting = _iniFile.GetSectionSettings(_section)
+            .FirstOrDefault(s => s.Name == _entry);
         if (iniSetting != null)
         {
             return iniSetting.Value ?? defaultValue;
@@ -409,8 +422,8 @@ public partial class RigCommands
 
     private int ReadIntFromIni(int defaultValue = 0)
     {
-        var iniSetting = FIni.GetSectionSettings(FSection)
-            .FirstOrDefault(s => s.Name == FEntry);
+        var iniSetting = _iniFile.GetSectionSettings(_section)
+            .FirstOrDefault(s => s.Name == _entry);
         if (iniSetting == null)
         {
             return defaultValue;
@@ -424,19 +437,19 @@ public partial class RigCommands
     }
 
     //Value=5|5|vfBcdL|1|0[|pmXXX]
-    private TParamValue LoadValue()
+    private ParameterValue LoadValue()
     {
         try
         {
-            var loadValueResult = new TParamValue();
+            var loadValueResult = new ParameterValue();
             var value = ReadStringFromIni(string.Empty);
             if (string.IsNullOrEmpty(value))
             {
                 return loadValueResult;
             }
-            FList = value.Split(FDelimiter).ToList();
+            _fList = value.Split(_delimiter).ToList();
 
-            switch (FList.Count)
+            switch (_fList.Count)
             {
                 case 0:
                     return loadValueResult;
@@ -445,7 +458,7 @@ public partial class RigCommands
                     break;
 
                 case 6:
-                    loadValueResult.Param = StrToParam(FList[5]);
+                    loadValueResult.Param = StrToParam(_fList[5]);
                     break;
 
                 default:
@@ -455,7 +468,7 @@ public partial class RigCommands
 
             try
             {
-                loadValueResult.Start = Convert.ToInt32(FList[0]);
+                loadValueResult.Start = Convert.ToInt32(_fList[0]);
             }
             catch (Exception)
             {
@@ -464,18 +477,18 @@ public partial class RigCommands
 
             try
             {
-                loadValueResult.Len = Convert.ToInt32(FList[1]);
+                loadValueResult.Len = Convert.ToInt32(_fList[1]);
             }
             catch (Exception)
             {
                 Log("invalid Length value");
             }
 
-            loadValueResult.Format = StrToFmt(FList[2]);
+            loadValueResult.Format = StrToFmt(_fList[2]);
 
             try
             {
-                loadValueResult.Mult = Convert.ToDouble(FList[3], CultureInfo.InvariantCulture);
+                loadValueResult.Mult = Convert.ToDouble(_fList[3], CultureInfo.InvariantCulture);
             }
             catch (Exception)
             {
@@ -484,7 +497,7 @@ public partial class RigCommands
 
             try
             {
-                loadValueResult.Add = Convert.ToDouble(FList[4]);
+                loadValueResult.Add = Convert.ToDouble(_fList[4]);
             }
             catch (Exception)
             {
@@ -500,9 +513,9 @@ public partial class RigCommands
         }
     }
 
-    private TValueFormat StrToFmt(string s)
+    private ValueFormat StrToFmt(string s)
     {
-        if (Enum.TryParse<TValueFormat>(s, ignoreCase: true, out var result))
+        if (Enum.TryParse<ValueFormat>(s, ignoreCase: true, out var result))
         {
             return result;
         }
@@ -511,12 +524,12 @@ public partial class RigCommands
             Log("invalid format name");
         }
 
-        return TValueFormat.vfNone;
+        return ValueFormat.None;
     }
 
-    private TRigParam StrToParam(string S, bool showInLog = true)
+    private RigParameter StrToParam(string s, bool showInLog = true)
     {
-        if (Enum.TryParse<TRigParam>(S, ignoreCase: true, out var result))
+        if (Enum.TryParse<RigParameter>(s, ignoreCase: true, out var result))
         {
             return result;
         }
@@ -525,24 +538,19 @@ public partial class RigCommands
             Log("invalid format name");
         }
 
-        return TRigParam.pmNone;
-    }
-
-    private byte[] StrToBytes(string s)
-    {
-        return Encoding.UTF8.GetBytes(s);
+        return RigParameter.None;
     }
 
     private List<string> SplitString(string s)
     {
-        return s.Split(FDelimiter).ToList();
+        return s.Split(_delimiter).ToList();
     }
 
-    private TBitMask StrToMask(string s)
+    private BitMask StrToMask(string s)
     {
-        var strToMaskResult = new TBitMask
+        var strToMaskResult = new BitMask
         {
-            Param = TRigParam.pmNone,
+            Param = RigParameter.None,
             Mask = Array.Empty<byte>(),
             Flags = Array.Empty<byte>()
         };
@@ -553,39 +561,39 @@ public partial class RigCommands
         }
 
         //extract mask
-        FList = SplitString(s);
-        strToMaskResult.Mask = StrToBytes(FList[0]);
+        _fList = SplitString(s);
+        strToMaskResult.Mask = Encoding.UTF8.GetBytes(_fList[0]);
 
         if (strToMaskResult.Mask == null)
         {
             throw new Exception();
         }
 
-        switch (FList.Count)
+        switch (_fList.Count)
         {
             case 1:
-                strToMaskResult.Flags = RigCmdsUnit.FlagsFromMask(strToMaskResult.Mask, FList[0][1]);
+                strToMaskResult.Flags = RigCmdsUnit.FlagsFromMask(strToMaskResult.Mask, _fList[0][1]);
                 break;
 
             case 2:
                 {
-                    strToMaskResult.Param = StrToParam(FList[1], false);
+                    strToMaskResult.Param = StrToParam(_fList[1], false);
 
-                    if (strToMaskResult.Param != TRigParam.pmNone)
+                    if (strToMaskResult.Param != RigParameter.None)
                     {
-                        strToMaskResult.Flags = RigCmdsUnit.FlagsFromMask(strToMaskResult.Mask, FList[0][1]);
+                        strToMaskResult.Flags = RigCmdsUnit.FlagsFromMask(strToMaskResult.Mask, _fList[0][1]);
                     }
                     else
                     {
-                        strToMaskResult.Flags = StrToBytes(FList[1]);
+                        strToMaskResult.Flags = Encoding.UTF8.GetBytes(_fList[1]);
                     }
                 }
                 break;
 
             case 3:
                 {
-                    strToMaskResult.Flags = StrToBytes(FList[1]);
-                    strToMaskResult.Param = StrToParam(FList[2]);
+                    strToMaskResult.Flags = Encoding.UTF8.GetBytes(_fList[1]);
+                    strToMaskResult.Param = StrToParam(_fList[2]);
                 }
                 break;
 
@@ -602,7 +610,7 @@ public partial class RigCommands
     private void Clear(RigCommand rec)
     {
         rec.Code = Array.Empty<byte>();
-        rec.Value = new TParamValue();
+        rec.Value = new ParameterValue();
         rec.ReplyLength = 0;
         rec.ReplyEnd = Array.Empty<byte>();
         Clear(rec.Validation);
@@ -610,41 +618,40 @@ public partial class RigCommands
         rec.Flags.Clear();
     }
 
-    private void Clear(TBitMask Rec)
+    private void Clear(BitMask Rec)
     {
         Rec.Mask = Array.Empty<byte>();
         Rec.Flags = Array.Empty<byte>();
-        Rec.Param = TRigParam.pmNone;
+        Rec.Param = RigParameter.None;
     }
-
 }
 
 public static class RigCmdsUnit
 {
-    public static readonly TRigParam[] NumericParams =
+    public static readonly RigParameter[] NumericParameters =
     {
-        TRigParam.pmFreq,
-        TRigParam.pmFreqA,
-        TRigParam.pmFreqB,
-        TRigParam.pmPitch,
-        TRigParam.pmRitOffset
+        RigParameter.Freq,
+        RigParameter.FreqA,
+        RigParameter.FreqB,
+        RigParameter.Pitch,
+        RigParameter.RitOffset,
     };
 
-    public static readonly TRigParam[] VfoParams =
+    public static readonly RigParameter[] VfoParams =
     {
-        TRigParam.pmVfoAA, TRigParam.pmVfoAB, TRigParam.pmVfoBA,
-        TRigParam.pmVfoBB, TRigParam.pmVfoA, TRigParam.pmVfoB,
-        TRigParam.pmVfoEqual, TRigParam.pmVfoSwap
+        RigParameter.VfoAA, RigParameter.VfoAB, RigParameter.VfoBA,
+        RigParameter.VfoBB, RigParameter.VfoA, RigParameter.VfoB,
+        RigParameter.VfoEqual, RigParameter.VfoSwap,
     };
-    public static readonly TRigParam[] SplitParams = { TRigParam.pmSplitOn, TRigParam.pmSplitOff };
-    public static readonly TRigParam[] RitOnParams = { TRigParam.pmRitOn, TRigParam.pmRitOff };
-    public static readonly TRigParam[] XitOnParams = { TRigParam.pmXitOn, TRigParam.pmXitOff };
-    public static readonly TRigParam[] TxParams = { TRigParam.pmRx, TRigParam.pmTx };
+    public static readonly RigParameter[] SplitParams = { RigParameter.SplitOn, RigParameter.SplitOff, };
+    public static readonly RigParameter[] RitOnParams = { RigParameter.RitOn, RigParameter.RitOff, };
+    public static readonly RigParameter[] XitOnParams = { RigParameter.XitOn, RigParameter.XitOff, };
+    public static readonly RigParameter[] TxParams = { RigParameter.Rx, RigParameter.Tx, };
 
-    public static readonly TRigParam[] ModeParams =
+    public static readonly RigParameter[] ModeParams =
     {
-        TRigParam.pmCW_U, TRigParam.pmCW_L, TRigParam.pmSSB_U, TRigParam.pmSSB_L,
-        TRigParam.pmDIG_U, TRigParam.pmDIG_L, TRigParam.pmAM, TRigParam.pmFM
+        RigParameter.CW_U, RigParameter.CW_L, RigParameter.SSB_U, RigParameter.SSB_L,
+        RigParameter.DIG_U, RigParameter.DIG_L, RigParameter.AM, RigParameter.FM,
     };
     /* TRigCommands */
 
@@ -652,11 +659,11 @@ public static class RigCmdsUnit
     //                              system
     ////////////////////////////////////////////////////////////////////////////////
 
-    public static byte[] FlagsFromMask(byte[] mask, char Char1)
+    public static byte[] FlagsFromMask(byte[] mask, char char1)
     {
         var flagsFromMaskResult = mask.ToArray();
 
-        if (Char1 == '(')
+        if (char1 == '(')
         {
             for (var i = 0; i <= mask.Length - 1; i++)
             {
@@ -685,16 +692,16 @@ public static class RigCmdsUnit
         return flagsFromMaskResult;
     }
 
-    public static int ParamsToInt(List<TRigParam> Params)
+    public static int ParamsToInt(List<RigParameter> parameters)
     {
         int paramsToInt_result = 0;
-        Params = new List<TRigParam>();
-        TRigParam Par = new TRigParam();
+        parameters = new List<RigParameter>();
+        RigParameter Par = new RigParameter();
         paramsToInt_result = 0;
 
-        for (Par = (TRigParam)Enum.GetValues(typeof(TRigParam)).GetLowerBound(0); Par <= (TRigParam)Enum.GetValues(typeof(TRigParam)).GetUpperBound(0); Par++)
+        for (Par = (RigParameter)Enum.GetValues(typeof(RigParameter)).GetLowerBound(0); Par <= (RigParameter)Enum.GetValues(typeof(RigParameter)).GetUpperBound(0); Par++)
         {
-            if (Params.Contains(Par))
+            if (parameters.Contains(Par))
             {
                 paramsToInt_result = paramsToInt_result | (1 << Convert.ToInt32(Par));
             }
@@ -703,26 +710,26 @@ public static class RigCmdsUnit
         return paramsToInt_result;
     }
 
-    public static int ParamToInt(TRigParam Param)
+    public static int ParamToInt(RigParameter parameter)
     {
         int paramToInt_result = 0;
-        paramToInt_result = 1 << Convert.ToInt32(Param);
+        paramToInt_result = 1 << Convert.ToInt32(parameter);
         return paramToInt_result;
     }
 
-    public static TRigParam IntToParam(int Int)
+    public static RigParameter IntToParam(int value)
     {
-        TRigParam intToParam_result = new TRigParam();
+        RigParameter intToParam_result = new RigParameter();
 
-        for (intToParam_result = (TRigParam)Enum.GetValues(typeof(TRigParam)).GetLowerBound(0); intToParam_result <= (TRigParam)Enum.GetValues(typeof(TRigParam)).GetUpperBound(0); intToParam_result++)
+        for (intToParam_result = (RigParameter)Enum.GetValues(typeof(RigParameter)).GetLowerBound(0); intToParam_result <= (RigParameter)Enum.GetValues(typeof(RigParameter)).GetUpperBound(0); intToParam_result++)
         {
-            if ((1 << Convert.ToInt32(intToParam_result)) == Int)
+            if ((1 << Convert.ToInt32(intToParam_result)) == value)
             {
                 return intToParam_result;
             }
         }
 
-        intToParam_result = TRigParam.pmNone;
+        intToParam_result = RigParameter.None;
         return intToParam_result;
     }
 }
