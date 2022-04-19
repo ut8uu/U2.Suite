@@ -29,6 +29,17 @@ namespace U2.Core
         }
 
         public static Func<string, string> GetDatabaseFolderFunc { get; set; } = null;
+        public static Func<string> GetLocalFolderFunc { get; set; } = null;
+
+        public static string GetLocalFolder()
+        {
+            if (GetLocalFolderFunc != null)
+            {
+                return GetLocalFolderFunc();
+            }
+
+            return Path.GetDirectoryName(typeof(FileSystemHelper).Assembly.Location);
+        }
 
         public static string GetFullPath(string fileName)
         {
@@ -37,7 +48,7 @@ namespace U2.Core
 
         public static string GetFullPath(params string[] chunks)
         {
-            var currentDirectory = Path.GetDirectoryName(typeof(FileSystemHelper).Assembly.Location);
+            var currentDirectory = GetLocalFolder();
             var pathElements = new List<string>(chunks);
             pathElements.Insert(0, currentDirectory);
             var fullPath = Path.Combine(pathElements.ToArray());

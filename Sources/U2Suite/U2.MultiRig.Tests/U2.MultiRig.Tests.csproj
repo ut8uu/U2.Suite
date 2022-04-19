@@ -27,4 +27,10 @@
     <ProjectReference Include="..\U2.Tests.Common\U2.Tests.Common.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="TestData\RigCommand\INI\*">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

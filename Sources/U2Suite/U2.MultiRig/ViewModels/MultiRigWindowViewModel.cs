@@ -25,7 +25,7 @@ namespace U2.MultiRig.ViewModels
         public string SelectRigTitle { get; set; } = "Select rig";
 
         public ObservableCollection<RigSettings> AllRigs { get; }
-        public ObservableCollection<RigCommand> AllCommands { get; } = new();
+        public ObservableCollection<RigCommands> AllCommands { get; } = new();
         public ObservableCollection<string> AllPorts { get; } = new();
         public ObservableCollection<int> AllBaudRates { get; } = new(Data.BaudRates);
 
@@ -101,8 +101,8 @@ namespace U2.MultiRig.ViewModels
             AllRigs.Add(rig1);
             AllRigs.Add(new RigSettings { RigId = "RIG2", });
 
-            AllCommands.Add(new RigCommand { Title = "Kenwood TS-2000" });
-            AllCommands.Add(new RigCommand { Title = "Icom IC-705" });
+            AllCommands.Add(new RigCommands { Title = "Kenwood TS-2000" });
+            AllCommands.Add(new RigCommands { Title = "Icom IC-705" });
 
             AllPorts.AddRange(new[] {"NONE", "COM1", "COM2"});
 

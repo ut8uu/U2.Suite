@@ -8,7 +8,7 @@ dotnet sonarscanner begin /k:"U2.Suite" /d:sonar.host.url="http://localhost:9000
 dotnet build
 
 $array = @(
-	'U2.Logger.Tests'
+	'U2.Logger.Tests','U2.MultiRig.Tests'
 ) 
 
 if (Test-Path "$reportsPaths")
