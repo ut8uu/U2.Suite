@@ -319,7 +319,7 @@ public partial class RigCommands
             try
             {
                 _entry = "Command";
-                loadCommonResult.Code = Encoding.UTF8.GetBytes(ReadStringFromIni(string.Empty));
+                loadCommonResult.Code = ByteFunctions.StrToBytes(ReadStringFromIni(string.Empty));
             }
             catch (Exception)
             {
@@ -349,7 +349,7 @@ public partial class RigCommands
             try
             {
                 _entry = "ReplyEnd";
-                loadCommonResult.ReplyEnd = Encoding.UTF8.GetBytes(ReadStringFromIni(string.Empty));
+                loadCommonResult.ReplyEnd = ByteFunctions.StrToBytes(ReadStringFromIni(string.Empty));
             }
             catch (Exception)
             {
@@ -529,7 +529,12 @@ public partial class RigCommands
 
     private RigParameter StrToParam(string s, bool showInLog = true)
     {
-        if (Enum.TryParse<RigParameter>(s, ignoreCase: true, out var result))
+        if (!s.StartsWith("pm", StringComparison.InvariantCultureIgnoreCase))
+        {
+            throw new ParameterParseException(s);
+        }
+        var cutString = s.Replace("pm", string.Empty);
+        if (Enum.TryParse<RigParameter>(cutString, ignoreCase: true, out var result))
         {
             return result;
         }
@@ -562,7 +567,7 @@ public partial class RigCommands
 
         //extract mask
         _fList = SplitString(s);
-        strToMaskResult.Mask = Encoding.UTF8.GetBytes(_fList[0]);
+        strToMaskResult.Mask = ByteFunctions.StrToBytes(_fList[0]);
 
         if (strToMaskResult.Mask == null)
         {
@@ -585,14 +590,14 @@ public partial class RigCommands
                     }
                     else
                     {
-                        strToMaskResult.Flags = Encoding.UTF8.GetBytes(_fList[1]);
+                        strToMaskResult.Flags = ByteFunctions.StrToBytes(_fList[1]);
                     }
                 }
                 break;
 
             case 3:
                 {
-                    strToMaskResult.Flags = Encoding.UTF8.GetBytes(_fList[1]);
+                    strToMaskResult.Flags = ByteFunctions.StrToBytes(_fList[1]);
                     strToMaskResult.Param = StrToParam(_fList[2]);
                 }
                 break;

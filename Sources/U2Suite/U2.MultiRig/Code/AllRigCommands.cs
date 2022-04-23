@@ -11,18 +11,13 @@ namespace U2.MultiRig.Code
 {
     public static class AllRigCommands
     {
-        static AllRigCommands()
+        internal static bool TryLoadRigCommands(string iniFile, out RigCommands rigCommands)
         {
-            //LoadRigCommands();
-        }
-
-        internal static bool TryLoadRigCommands(string iniFile, out RigCommands rigCommand)
-        {
-            rigCommand = new RigCommands();
+            rigCommands = new RigCommands();
 
             using (var stream = File.OpenRead(iniFile))
             {
-                if (rigCommand.Read(stream))
+                if (rigCommands.Read(stream))
                 {
                     return true;
                 }
