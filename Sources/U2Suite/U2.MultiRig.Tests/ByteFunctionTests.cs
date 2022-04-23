@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using U2.MultiRig.Code;
 using Xunit;
+using Assert = Xunit.Assert;
 
 namespace U2.MultiRig.Tests
 {
@@ -47,13 +49,16 @@ namespace U2.MultiRig.Tests
             Assert.Equal(expectedResult, actualResult);
         }
 
-        [Fact]
-        public void StrToHex()
+        [Theory]
+        [InlineData("01.02.03.04.05", new byte[]{1,2,3,4,5})]
+        [InlineData("01020 30405", new byte[] { 1, 2, 3, 4, 5 })]
+        [InlineData("01 02 03 04 05", new byte[] { 1, 2, 3, 4, 5 })]
+        [InlineData("(abc)", new byte[] { 0x61, 0x62, 0x63 })]
+        [InlineData("qwer0", new byte[]{})]
+        public void StrToBytes(string str, byte[] expectedArray)
         {
-            var str = "ABC";
-            var expectedResult = "414243";
-            var actualResult = ByteFunctions.StrToHex(str);
-            Assert.Equal(expectedResult, actualResult);
+            var actualArray = ByteFunctions.StrToBytes(str);
+            Assert.True(actualArray.SequenceEqual(expectedArray));
         }
     }
 }

@@ -63,15 +63,41 @@ namespace U2.MultiRig.Tests
         public void Status3()
         {
             var file = Path.Combine(IniDirectory, "Status3.ini");
-            Assert.True(AllRigCommands.TryLoadRigCommands(file, out var cmd));
+            var cmd = RigCommandUtilities.LoadRigCommands(file);
+            Assert.NotNull(cmd);
+            //Assert.True(AllRigCommands.TryLoadRigCommands(file, out var cmd));
             Assert.Equal(3, cmd.StatusCmd.Count);
+        }
+
+        [Fact]
+        public void StatusWithValidateAndFlags()
+        {
+            var file = Path.Combine(IniDirectory, "StatusWithValidateAndFlags.ini");
+            var cmd = RigCommandUtilities.LoadRigCommands(file);
+            Assert.NotNull(cmd);
+            Assert.Equal(1, cmd.StatusCmd.Count);
         }
 
         [Fact]
         public void LoadRigCommands()
         {
-            AllRigCommands.LoadRigCommands();
-            Assert.Equal(2, AllRigCommands.RigCommands.Count);
+            var file = Path.Combine(IniDirectory, "ADT-200A.ini");
+            var commands = RigCommandUtilities.LoadRigCommands(file);
+            Assert.NotNull(commands);
+            Assert.Equal(7, commands.InitCmd.Count);
+
+            var expectedBytes = new byte[] {0x24, 0x56, 0x31, 0x3E, 0x0D};
+            Assert.True(expectedBytes.SequenceEqual(commands.InitCmd.First().Code));
+
+            Assert.Equal(3, commands.StatusCmd.Count);
+
+            Assert.Equal(10, commands.WriteCmd.Count);
+
+        }
+
+        private void TestRigCommand(RigCommand expectedCommand, RigCommand actualCommand)
+        {
+
         }
     }
 }
