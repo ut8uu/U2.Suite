@@ -30,6 +30,8 @@ namespace U2.MultiRig.Tests
             FileSystemHelper.GetLocalFolderFunc = null;
         }
 
+        #region Private methods
+
         private void InitTestFolder()
         {
             if (Directory.Exists(TestsDirectory))
@@ -59,6 +61,17 @@ namespace U2.MultiRig.Tests
             Assert.Equal(expectedCount, actualCount);
         }
 
+        private RigCommands LoadIni(string iniFile)
+        {
+            var file = Path.Combine(IniDirectory, iniFile);
+            var cmd = RigCommandUtilities.LoadRigCommands(file);
+            Assert.NotNull(cmd);
+
+            return cmd;
+        }
+
+        #endregion
+
         [Fact]
         public void Status3()
         {
@@ -72,9 +85,8 @@ namespace U2.MultiRig.Tests
         [Fact]
         public void StatusWithValidateAndFlags()
         {
-            var file = Path.Combine(IniDirectory, "StatusWithValidateAndFlags.ini");
-            var cmd = RigCommandUtilities.LoadRigCommands(file);
-            Assert.NotNull(cmd);
+            var cmd = LoadIni("StatusWithValidateAndFlags.ini");
+
             var status = Assert.Single(cmd.StatusCmd);
             var value = Assert.Single(status.Values);
             Assert.Equal(5, value.Start);
@@ -106,9 +118,8 @@ namespace U2.MultiRig.Tests
         [Fact]
         public void LoadRigCommands()
         {
-            var file = Path.Combine(IniDirectory, "ADT-200A.ini");
-            var commands = RigCommandUtilities.LoadRigCommands(file);
-            Assert.NotNull(commands);
+            var commands = LoadIni("ADT-200A.ini");
+
             Assert.Equal(7, commands.InitCmd.Count);
 
             var expectedBytes = new byte[] {0x24, 0x56, 0x31, 0x3E, 0x0D};
@@ -122,9 +133,7 @@ namespace U2.MultiRig.Tests
         [Fact]
         public void WriteOnly1()
         {
-            var file = Path.Combine(IniDirectory, "WriteOnly1.ini");
-            var cmd = RigCommandUtilities.LoadRigCommands(file);
-            Assert.NotNull(cmd);
+            var cmd = LoadIni("WriteOnly1.ini");
 
             var write = Assert.Single(cmd.WriteCmd);
             Assert.NotNull(write);
@@ -138,9 +147,17 @@ namespace U2.MultiRig.Tests
             Assert.Equal(0, write.Value.Add);
         }
 
-        private void TestRigCommand(RigCommand expectedCommand, RigCommand actualCommand)
+        [Fact]
+        private void InitOnly1()
         {
+            var file = Path.Combine(IniDirectory, "InitOnly1.ini");
+            var cmd = RigCommandUtilities.LoadRigCommands(file);
+            Assert.NotNull(cmd);
 
+            var init = Assert.Single(cmd.InitCmd);
+            Assert.NotNull(init);
+
+            Assert.Equal(new byte[]{ 0x24, 0x56, 0x31, 0x3E, 0x0D }, init.Code);
         }
     }
 }
