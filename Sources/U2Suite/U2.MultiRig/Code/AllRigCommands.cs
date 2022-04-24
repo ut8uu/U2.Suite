@@ -6,5 +6,5 @@ namespace U2.MultiRig;
 
 public static class AllRigCommands
 {
-    public static ReadOnlyCollection<RigCommands> RigCommands = RigCommandUtilities.LoadAllRigCommands();
+    public static readonly ReadOnlyCollection<RigCommands> RigCommands = RigCommandUtilities.LoadAllRigCommands();
 }
