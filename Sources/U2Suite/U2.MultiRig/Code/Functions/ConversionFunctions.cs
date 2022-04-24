@@ -22,7 +22,7 @@ internal static class ConversionFunctions
     /// Flag1 =13.00.00.00.00.00.00.00|00.00.00.00.00.00.00.00|pmVfoAA
     /// Validation=FEFEE05EFBFD
     /// Validation=FFFFFFFF.FF.0000000000.FF|FEFEE05E.03.0000000000.FD
-    public static BitMask StrToMask(string s)
+    public static BitMask StrToBitMask(string s)
     {
         var inputString = s.Trim();
         var result = new BitMask
@@ -43,16 +43,16 @@ internal static class ConversionFunctions
         switch (list.Count)
         {
             case 1:
-                result.Flags = FlagsFromMask(result.Mask, list[0][1]);
+                result.Flags = FlagsFromBitMask(result.Mask, list[0][1]);
                 break;
 
             case 2:
                 {
-                    result.Param = StrToParam(list[1], false);
+                    result.Param = StrToRigParameter(list[1], false);
 
                     if (result.Param != RigParameter.None)
                     {
-                        result.Flags = FlagsFromMask(result.Mask, list[0][1]);
+                        result.Flags = FlagsFromBitMask(result.Mask, list[0][1]);
                     }
                     else
                     {
@@ -64,7 +64,7 @@ internal static class ConversionFunctions
             case 3:
                 {
                     result.Flags = ByteFunctions.StrToBytes(list[1]);
-                    result.Param = StrToParam(list[2]);
+                    result.Param = StrToRigParameter(list[2]);
                 }
                 break;
 
@@ -75,7 +75,7 @@ internal static class ConversionFunctions
         return result;
     }
 
-    internal static ValueFormat StrToFmt(string s)
+    internal static ValueFormat StrToValueFormat(string s)
     {
         if (!s.StartsWith("vf", StringComparison.InvariantCultureIgnoreCase))
         {
@@ -97,7 +97,7 @@ internal static class ConversionFunctions
     /// <param name="showInLog"></param>
     /// <returns></returns>
     /// <exception cref="ParameterParseException"></exception>
-    internal static RigParameter StrToParam(string s, bool showInLog = true)
+    internal static RigParameter StrToRigParameter(string s, bool showInLog = true)
     {
         if (!s.StartsWith("pm", StringComparison.InvariantCultureIgnoreCase))
         {
@@ -112,12 +112,12 @@ internal static class ConversionFunctions
         throw new ParameterParseException(s);
     }
 
-    public static List<string> SplitString(string s)
+    internal static List<string> SplitString(string s)
     {
         return s.Split(Delimiter).ToList();
     }
 
-    public static byte[] FlagsFromMask(byte[] mask, char char1)
+    internal static byte[] FlagsFromBitMask(byte[] mask, char char1)
     {
         var flagsFromMaskResult = mask.ToArray();
 
@@ -149,5 +149,4 @@ internal static class ConversionFunctions
 
         return flagsFromMaskResult;
     }
-
 }
