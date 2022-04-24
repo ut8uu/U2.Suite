@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using SoftCircuits.IniFileParser;
 using U2.Core;
 using U2.MultiRig.Code;
+using static System.Collections.Specialized.BitVector32;
 
 namespace U2.MultiRig;
 
@@ -126,16 +127,11 @@ internal static class RigCommandUtilities
     private static List<RigCommand> LoadWriteCommands(IniFile iniFile)
     {
         var result = new List<RigCommand>();
-
-        var sections = iniFile.GetSections();
+        var sections = iniFile.GetSections()
+            .Where(s => !StartsWith(s, "status") && !StartsWith(s, "init"));
 
         foreach (var section in sections)
         {
-            if (StartsWith(section, "status") || StartsWith(section, "init"))
-            {
-                continue;
-            }
-
             try
             {
                 var entries = LoadSectionSettings(iniFile, section);
@@ -146,20 +142,15 @@ internal static class RigCommandUtilities
 
                 try
                 {
-                    var keys = entries.Select(e => e.Key);
                     var allowedEntries = new[]
                     {
-                        Entry.Command,
-                        Entry.ReplyLength,
-                        Entry.ReplyEnd,
-                        Entry.Validate,
-                        Entry.Value
+                        Entry.Command, Entry.ReplyLength, Entry.ReplyEnd, Entry.Validate, Entry.Value
                     };
-                    ValidateEntries(keys, allowedEntries);
+                    ValidateEntries(entries, allowedEntries);
                 }
-                catch (UnexpectedEntryException)
+                catch (UnexpectedEntryException ex)
                 {
-                    continue;
+                    throw new LoadWriteCommandException(ex.Message);
                 }
 
                 var cmd = LoadCommon(iniFile, section);
@@ -217,20 +208,19 @@ internal static class RigCommandUtilities
         {
             try
             {
-                var settings = LoadSectionSettings(iniFile, section);
-                if (!settings.Any())
+                var entries = LoadSectionSettings(iniFile, section);
+                if (!entries.Any())
                 {
                     continue;
                 }
 
-                var keys = settings.Select(e => e.Key);
                 var allowedEntries = new[]
                 {
                     Entry.Command, Entry.ReplyLength, Entry.ReplyEnd, Entry.Validate,
                     Entry.Value1, Entry.Value2, Entry.Value3, Entry.Value4, Entry.Value5, Entry.Value6,
                     Entry.Flag1, Entry.Flag2, Entry.Flag3, Entry.Flag4, Entry.Flag5, Entry.Flag6,
                 };
-                ValidateEntries(keys, allowedEntries);
+                ValidateEntries(entries, allowedEntries);
 
                 //common fields
                 var cmd = LoadCommon(iniFile, section);
@@ -244,13 +234,13 @@ internal static class RigCommandUtilities
                 cmd.Values.Clear();
                 cmd.Flags.Clear();
 
-                foreach (var setting in settings)
+                foreach (var entry in entries)
                 {
-                    if (CanReadStatusEntryValue(cmd, iniFile, section, setting, out var value))
+                    if (CanReadStatusEntryValue(cmd, iniFile, section, entry, out var value))
                     {
                         cmd.Values.Add(value.Value);
                     }
-                    else if (CanReadStatusEntryFlag(cmd, setting, out var flag))
+                    else if (CanReadStatusEntryFlag(cmd, entry, out var flag))
                     {
                         cmd.Flags.Add(flag.Value);
                     }
@@ -286,8 +276,7 @@ internal static class RigCommandUtilities
     {
         var result = new List<RigCommand>();
 
-        var sections = iniFile.GetSections()
-            .Where(s => StartsWith(s, "init"));
+        var sections = iniFile.GetSections().Where(s => StartsWith(s, "init"));
         foreach (var section in sections)
         {
             try
@@ -298,15 +287,14 @@ internal static class RigCommandUtilities
                     continue;
                 }
 
-                var keys = entries.Select(e => e.Key);
-                var allowedEntries = new[]
-                {
-                    Entry.Command, Entry.ReplyLength, Entry.ReplyEnd, Entry.Validate,
-                };
-                ValidateEntries(keys, allowedEntries);
+                var allowedEntries = new[] { Entry.Command, Entry.ReplyLength, Entry.ReplyEnd, Entry.Validate, };
+                ValidateEntries(entries, allowedEntries);
 
                 var command = LoadCommon(iniFile, section);
-                result.Add(command);
+                if (command.Code.Length > 0)
+                {
+                    result.Add(command);
+                }
             }
             catch (Exception ex)
             {
@@ -323,10 +311,15 @@ internal static class RigCommandUtilities
     /// <param name="keys">A keys to be validated.</param>
     /// <param name="allowedEntries">A collection of allowed keys.</param>
     /// <exception cref="UnexpectedEntryException">Is thrown when unexpected key met.</exception>
-    internal static void ValidateEntries(IEnumerable<string> keys, Entry[] allowedEntries)
+    internal static void ValidateEntries(IEnumerable<KeyValuePair<string, string>> keys, Entry[] allowedEntries)
     {
+        if (!keys.Any())
+        {
+            return;
+        }
+
         var allowedEntriesTitles = allowedEntries.Select(e => e.ToString());
-        if (keys.Any(n => !allowedEntriesTitles.Contains(n, StringComparer.CurrentCultureIgnoreCase)))
+        if (keys.Any(n => !allowedEntriesTitles.Contains(n.Key, StringComparer.CurrentCultureIgnoreCase)))
         {
             throw new UnexpectedEntryException();
         }
