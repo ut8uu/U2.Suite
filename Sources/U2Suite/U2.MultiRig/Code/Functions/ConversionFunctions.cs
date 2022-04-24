@@ -15,7 +15,7 @@ internal static class ConversionFunctions
     /// <summary>
     /// Reads mask from the string.
     /// </summary>
-    /// <param name="s"></param>
+    /// <param name="inputString"></param>
     /// <returns></returns>
     /// <exception cref="MaskParseException"></exception>
     /// Flag1 =  (V..RF...........ST........AU..MD0...)|pmFM
@@ -24,54 +24,55 @@ internal static class ConversionFunctions
     /// Validation=FFFFFFFF.FF.0000000000.FF|FEFEE05E.03.0000000000.FD
     public static BitMask StrToMask(string s)
     {
-        var strToMaskResult = new BitMask
+        var inputString = s.Trim();
+        var result = new BitMask
         {
             Param = RigParameter.None,
             Mask = Array.Empty<byte>(),
             Flags = Array.Empty<byte>()
         };
 
-        if (s == string.Empty)
+        if (inputString == string.Empty)
         {
-            return strToMaskResult;
+            return result;
         }
 
-        var list = SplitString(s);
-        strToMaskResult.Mask = ByteFunctions.StrToBytes(list[0]);
+        var list = SplitString(inputString);
+        result.Mask = ByteFunctions.StrToBytes(list[0]);
 
         switch (list.Count)
         {
             case 1:
-                strToMaskResult.Flags = RigCmdsUnit.FlagsFromMask(strToMaskResult.Mask, list[0][1]);
+                result.Flags = RigCmdsUnit.FlagsFromMask(result.Mask, list[0][1]);
                 break;
 
             case 2:
                 {
-                    strToMaskResult.Param = StrToParam(list[1], false);
+                    result.Param = StrToParam(list[1], false);
 
-                    if (strToMaskResult.Param != RigParameter.None)
+                    if (result.Param != RigParameter.None)
                     {
-                        strToMaskResult.Flags = RigCmdsUnit.FlagsFromMask(strToMaskResult.Mask, list[0][1]);
+                        result.Flags = RigCmdsUnit.FlagsFromMask(result.Mask, list[0][1]);
                     }
                     else
                     {
-                        strToMaskResult.Flags = ByteFunctions.StrToBytes(list[1]);
+                        result.Flags = result.Mask;
                     }
                 }
                 break;
 
             case 3:
                 {
-                    strToMaskResult.Flags = ByteFunctions.StrToBytes(list[1]);
-                    strToMaskResult.Param = StrToParam(list[2]);
+                    result.Flags = ByteFunctions.StrToBytes(list[1]);
+                    result.Param = StrToParam(list[2]);
                 }
                 break;
 
             default:
-                throw new MaskParseException(s);
+                throw new MaskParseException(inputString);
         }
 
-        return strToMaskResult;
+        return result;
     }
 
     internal static ValueFormat StrToFmt(string s)

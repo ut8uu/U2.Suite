@@ -75,7 +75,32 @@ namespace U2.MultiRig.Tests
             var file = Path.Combine(IniDirectory, "StatusWithValidateAndFlags.ini");
             var cmd = RigCommandUtilities.LoadRigCommands(file);
             Assert.NotNull(cmd);
-            Assert.Equal(1, cmd.StatusCmd.Count);
+            var status = Assert.Single(cmd.StatusCmd);
+            var value = Assert.Single(status.Values);
+            Assert.Equal(5, value.Start);
+            Assert.Equal(10, value.Len);
+            Assert.Equal(ValueFormat.Text, value.Format);
+            Assert.Equal(1, value.Mult);
+            Assert.Equal(0, value.Add);
+            Assert.Equal(RigParameter.Freq, value.Param);
+
+            Assert.Equal(5, status.Flags.Count);
+            var flag = status.Flags.First();
+            var expectedFlagStr = "V..RF...........ST........AU..MD0...";
+            for (var i = 0; i < expectedFlagStr.Length; i++)
+            {
+                var ch = expectedFlagStr[i];
+                var b1 = (byte) ch;
+                byte b2 = 0xff;
+                if (ch == '.')
+                {
+                    b1 = 0;
+                    b2 = 0;
+                }
+                Assert.Equal(b1, flag.Flags[i]);
+                Assert.Equal(b2, flag.Mask[i]);
+            }
+            Assert.Equal(RigParameter.FM, flag.Param);
         }
 
         [Fact]

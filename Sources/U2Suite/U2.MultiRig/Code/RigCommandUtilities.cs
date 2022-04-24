@@ -142,6 +142,11 @@ internal static class RigCommandUtilities
                 //common fields
                 var cmd = LoadCommon(iniFile, section);
 
+                if (cmd.ReplyLength == 0 && cmd.ReplyEnd.Length == 0)
+                {
+                    throw new LoadStatusCommandsException("Reply length or reply end must be specified.");
+                }
+
                 cmd.Validation.Mask = Array.Empty<byte>();
                 cmd.Values.Clear();
                 cmd.Flags.Clear();
@@ -244,24 +249,8 @@ internal static class RigCommandUtilities
             throw new EntryLoadErrorException(section, Command, "Command code is missing.");
         }
 
-        result.ReplyLength = ReadIntFromIni(iniFile, section, ReplyLength, -1);
+        result.ReplyLength = ReadIntFromIni(iniFile, section, ReplyLength, 0);
         result.ReplyEnd = ByteFunctions.HexStrToBytes(ReadStringFromIni(iniFile, section, ReplyEnd, string.Empty));
-
-        if (result.ReplyLength < 0 && result.ReplyEnd.Length == 0)
-        {
-            throw new EntryLoadErrorException(section, ReplyLength, "Reply length or reply end must be specified.");
-        }
-
-        if (result.ReplyLength > 0 && result.ReplyEnd.Length > 0
-            && result.ReplyLength != result.ReplyEnd.Length)
-        {
-            throw new EntryLoadErrorException(section, ReplyLength, "Reply length or reply end length mismatch.");
-        }
-
-        if (result.ReplyLength == -1)
-        {
-            result.ReplyLength = result.ReplyEnd.Length;
-        }
 
         try
         {
@@ -307,6 +296,11 @@ internal static class RigCommandUtilities
         return defaultValue;
     }
 
+    private static bool AreEqual(string stringOne, string stringTwo)
+    {
+        return stringOne.Equals(stringTwo, StringComparison.InvariantCultureIgnoreCase);
+    }
+
     /// <summary>
     /// 
     /// </summary>
@@ -340,14 +334,14 @@ internal static class RigCommandUtilities
         {
             throw new MaskValidationException("Mask hides valid bits");
         }
-        else if (entryName.Equals("validate", StringComparison.InvariantCultureIgnoreCase))
+        else if (AreEqual(entryName, "validate"))
         {
             if (mask.Param != RigParameter.None)
             {
                 throw new MaskValidationException("Parameter name is not allowed");
             }
 
-            var startIndex = mask.Flags.Length - end.Length - 1;
+            var startIndex = mask.Flags.Length - end.Length;
             var ending = mask.Flags[startIndex..];
 
             if (!ByteFunctions.ByteArraysEqual(ending, end))
@@ -508,6 +502,7 @@ internal static class RigCommandUtilities
         {
             var flag = ConversionFunctions.StrToMask(iniSetting.Value);
             ValidateMask(iniSetting.Name, flag, cmd.ReplyLength, cmd.ReplyEnd);
+            mask = flag;
         }
         catch (MaskParseException)
         {

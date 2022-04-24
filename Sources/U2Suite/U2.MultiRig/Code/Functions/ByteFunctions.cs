@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DynamicData;
 using U2.Core;
 
 namespace U2.MultiRig.Code;
@@ -55,6 +56,7 @@ public static class ByteFunctions
     }
 
     private const string HexChars = "0123456789abcdef";
+    private const char dot = '.';
     internal static byte[] StrToBytes(string s)
     {
         if (string.IsNullOrEmpty(s))
@@ -67,7 +69,21 @@ public static class ByteFunctions
         if (s.StartsWith("("))
         {
             trimmedString = trimmedString.Trim("()".ToCharArray());
-            return Encoding.UTF8.GetBytes(trimmedString);
+            var result = Encoding.UTF8.GetBytes(trimmedString);
+            if (!trimmedString.Contains(dot))
+            {
+                return result;
+            }
+
+            for (var i = 1; i < result.Length; i++)
+            {
+                if (trimmedString[i] == dot)
+                {
+                    result[i] = 0x00;
+                }
+            }
+
+            return result;
         }
         else if (HexChars.Contains(trimmedString[0]))
         {
