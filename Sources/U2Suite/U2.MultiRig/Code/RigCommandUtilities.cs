@@ -131,14 +131,7 @@ internal static class RigCommandUtilities
             {
                 RigParameter param;
 
-                try
-                {
-                    param = ConversionFunctions.StrToParam(section);
-                }
-                catch (ParameterParseException)
-                {
-                    continue;
-                }
+                param = ConversionFunctions.StrToParam(section);
 
                 var entries = iniFile.GetSectionSettings(section)
                     .Where(e => !string.IsNullOrEmpty(e.Name))
@@ -154,7 +147,11 @@ internal static class RigCommandUtilities
                     var keys = entries.Select(e => e.Key);
                     var allowedEntries = new[]
                     {
-                        Entry.Command, Entry.ReplyLength, Entry.ReplyEnd, Entry.Validate, Entry.Value
+                        Entry.Command,
+                        Entry.ReplyLength,
+                        Entry.ReplyEnd,
+                        Entry.Validate,
+                        Entry.Value
                     };
                     ValidateEntries(keys, allowedEntries);
                 }
@@ -187,6 +184,10 @@ internal static class RigCommandUtilities
             catch (LoadWriteCommandException)
             {
                 throw;
+            }
+            catch (ParameterParseException ex)
+            {
+                throw new LoadWriteCommandException(ex.Message, ex);
             }
             catch (Exception ex)
             {

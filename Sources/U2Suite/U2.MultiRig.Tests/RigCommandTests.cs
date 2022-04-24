@@ -148,7 +148,7 @@ namespace U2.MultiRig.Tests
         }
 
         [Fact]
-        private void InitOnly1()
+        public void InitOnly1()
         {
             var file = Path.Combine(IniDirectory, "InitOnly1.ini");
             var cmd = RigCommandUtilities.LoadRigCommands(file);
@@ -158,6 +158,24 @@ namespace U2.MultiRig.Tests
             Assert.NotNull(init);
 
             Assert.Equal(new byte[]{ 0x24, 0x56, 0x31, 0x3E, 0x0D }, init.Code);
+        }
+
+        [Theory]
+        [InlineData("[pmFreq]\r\nCommand=hello")] // bad value
+        [InlineData("[pmFreq]\r\nValue=4|13|vfText|1|0|pmFreqA|qww|aad")] // bad value
+        [InlineData("[pmFreq]\r\nReplyEnd=asas")] // bad value
+        [InlineData("[pmFreck]\r\nReplyEnd=0D")] // bad parameter name
+        [InlineData("[INIT1]\r\nCommand=hello")] // bad value
+        [InlineData("[STATUS1]\r\nCommand=hello")] // bad value
+        [InlineData("[STATUS1]\r\nReplyEnd=asas")] // bad value
+        [InlineData("[STATUS1]\r\nValue1=4|13|vfText|1|0|pmFreqA|qww")] // bad value
+        [InlineData("[STATUS1]\r\nTheCommand=24.46.52.31.3F.0D")] // bad entry
+        public void BadValues(string data)
+        {
+            var fileName = "BadValues.ini";
+            var file = Path.Combine(IniDirectory, fileName);
+            File.WriteAllText(file, data);
+            Assert.Throws<IniFileLoadException>(() => RigCommandUtilities.LoadRigCommands(file));
         }
     }
 }
