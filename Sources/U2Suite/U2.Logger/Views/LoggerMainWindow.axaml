@@ -12,10 +12,6 @@
         Icon="/Assets/logger.ico"
         Title="{Binding Path='WindowTitle'}">
 
-	<Window.Resources>
-		<core:ToUpperCaseConverter x:Key="UpperCaseConverter" />
-	</Window.Resources>
-
 	<Design.DataContext>
 		<logger:DesignMainWindowViewModel/>
 	</Design.DataContext>
