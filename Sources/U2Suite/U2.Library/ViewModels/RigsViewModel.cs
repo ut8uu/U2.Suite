@@ -10,7 +10,7 @@ namespace U2.Library.ViewModels
 {
     public sealed class RigsViewModel : ViewModelBase
     {
-        private LibraryDbContext _dbContext;
+        private readonly LibraryDbContext _dbContext;
         private int _selectedVendorIndex;
         private ObservableCollection<RigDbo> _selectedRigs = default!;
         private RigDbo _selectedRig = default!;
@@ -29,7 +29,7 @@ namespace U2.Library.ViewModels
             SelectedVendorIndex = 0;
         }
 
-        public IEnumerable<RigDbo> Rigs { get; set; }
+        public IEnumerable<RigDbo>? Rigs { get; set; }
         public int SelectedVendorIndex
         {
             get => _selectedVendorIndex;
@@ -39,7 +39,7 @@ namespace U2.Library.ViewModels
                 FilterList();
             }
         }
-        public IEnumerable<VendorDbo> Vendors { get; set; }
+        public IEnumerable<VendorDbo>? Vendors { get; set; }
 
         public ObservableCollection<RigDbo> SelectedRigs
         {

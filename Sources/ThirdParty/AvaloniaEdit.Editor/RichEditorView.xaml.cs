@@ -139,14 +139,11 @@ namespace AvaloniaEdit.Editor
 
         void textEditor_TextArea_TextEntering(object sender, TextInputEventArgs e)
         {
-            if (e?.Text?.Length > 0 && _completionWindow != null)
+            if (e?.Text?.Length > 0 && _completionWindow != null && !char.IsLetterOrDigit(e.Text[0]))
             {
-                if (!char.IsLetterOrDigit(e.Text[0]))
-                {
-                    // Whenever a non-letter is typed while the completion window is open,
-                    // insert the currently selected element.
-                    _completionWindow.CompletionList.RequestInsertion(e);
-                }
+                // Whenever a non-letter is typed while the completion window is open,
+                // insert the currently selected element.
+                _completionWindow.CompletionList.RequestInsertion(e);
             }
 
             _insightWindow?.Hide();

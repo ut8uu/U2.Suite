@@ -12,7 +12,7 @@ namespace U2.Library.ViewModels
     {
         private RigDbo _rig = default!;
         private List<KeyValuePair<string, string>> _rigCharacteristics = default!;
-        private string _rigImagePath = "pack://application:,,,/Database/Rigs/ADI/ar146.jpg";//default!;
+        private string _rigImagePath = "pack://application:,,,/Database/Rigs/ADI/ar146.jpg";
 
         public RigDetailsViewModel()
         {
