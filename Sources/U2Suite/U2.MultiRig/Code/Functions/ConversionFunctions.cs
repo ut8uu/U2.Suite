@@ -43,7 +43,7 @@ internal static class ConversionFunctions
         switch (list.Count)
         {
             case 1:
-                result.Flags = RigCmdsUnit.FlagsFromMask(result.Mask, list[0][1]);
+                result.Flags = FlagsFromMask(result.Mask, list[0][1]);
                 break;
 
             case 2:
@@ -52,7 +52,7 @@ internal static class ConversionFunctions
 
                     if (result.Param != RigParameter.None)
                     {
-                        result.Flags = RigCmdsUnit.FlagsFromMask(result.Mask, list[0][1]);
+                        result.Flags = FlagsFromMask(result.Mask, list[0][1]);
                     }
                     else
                     {
@@ -116,4 +116,38 @@ internal static class ConversionFunctions
     {
         return s.Split(Delimiter).ToList();
     }
+
+    public static byte[] FlagsFromMask(byte[] mask, char char1)
+    {
+        var flagsFromMaskResult = mask.ToArray();
+
+        if (char1 == '(')
+        {
+            for (var i = 0; i <= mask.Length - 1; i++)
+            {
+                if (mask[i] == '.')
+                {
+                    mask[i] = 0;
+                    flagsFromMaskResult[i] = 0;
+                }
+                else
+                {
+                    mask[i] = 0xFF;
+                }
+            }
+        }
+        else
+        {
+            for (var i = 0; i <= mask.Length - 1; i++)
+            {
+                if (mask[i] != 0)
+                {
+                    mask[i] = 0xFF;
+                }
+            }
+        }
+
+        return flagsFromMaskResult;
+    }
+
 }
