@@ -1,10 +1,10 @@
 ﻿namespace U2.MultiRig;
 
 [Serializable]
-internal sealed class MaskValidationException : Exception
+public sealed class MaskValidationException : Exception
 {
-    public MaskValidationException(string validationMessage) :
-        base(validationMessage)
+    public MaskValidationException(string message) :
+        base(message)
     {
 
     }
