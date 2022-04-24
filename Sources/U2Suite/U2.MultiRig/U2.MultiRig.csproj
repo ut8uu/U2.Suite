@@ -18,7 +18,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Assets\refresh.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <AvaloniaResource Include="Assets\multirig.ico" />
+    <AvaloniaResource Include="Assets\refresh.png" />
   </ItemGroup>
 
   <ItemGroup>

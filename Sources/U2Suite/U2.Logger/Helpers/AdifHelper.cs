@@ -104,7 +104,8 @@ internal static class AdifHelper
     {
         foreach (var tag in tags)
         {
-            if (RegularExpressionHelper.Match("<([^:]+):(\\d+)>(.+)", tag, out var matches, RegexOptions.IgnoreCase))
+            if (RegularExpressionHelper.Match("<([^:]+):(\\d+)>(.+)", 
+                    tag, RegexOptions.IgnoreCase, out var matches))
             {
                 var len = int.Parse(matches[2]);
                 var adifTag = matches[1].ToUpper().Trim();
@@ -231,7 +232,7 @@ internal static class AdifHelper
     public static (bool hasReference, string foundReference) ExtractWwffReference(string input)
     {
         var reference = string.Empty;
-        var found = RegularExpressionHelper.Match("([a-z]?[a-z\\d]ff)[^\\d]?(\\d+)", input, out var matches, RegexOptions.IgnoreCase);
+        var found = RegularExpressionHelper.Match("([a-z]?[a-z\\d]ff)[^\\d]?(\\d+)", input, RegexOptions.IgnoreCase, out var matches);
 
         if (found)
         {
@@ -243,7 +244,7 @@ internal static class AdifHelper
     public static (bool hasReference, string foundReference) ExtractSotaReference(string input)
     {
         var reference = string.Empty;
-        var found = RegularExpressionHelper.Match("([a-z][a-z\\d]?)[/-]?([a-z][a-z])-?(\\d+)", input, out var matches, RegexOptions.IgnoreCase);
+        var found = RegularExpressionHelper.Match("([a-z][a-z\\d]?)[/-]?([a-z][a-z])-?(\\d+)", input, RegexOptions.IgnoreCase, out var matches);
 
         if (found)
         {

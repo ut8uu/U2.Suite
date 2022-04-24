@@ -39,7 +39,7 @@ public sealed class RigSettingsTests : IDisposable
                 DtrMode = 1,
                 Parity = 1,
                 PollMs = 1,
-                Port = 1,
+                Port = "NONE",
                 RigType = 1,
                 RtsMode = 1,
                 StopBits = 1,
