@@ -90,3 +90,25 @@ public enum RigParameter
     AM,
     FM,
 }
+
+public enum Entry
+{
+    Command,
+    ReplyLength,
+    ReplyEnd,
+    Validate,
+    Value,
+    Value1,
+    Value2,
+    Value3,
+    Value4,
+    Value5,
+    Value6,
+    Flag,
+    Flag1,
+    Flag2,
+    Flag3,
+    Flag4,
+    Flag5,
+    Flag6,
+}

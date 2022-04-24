@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Configuration;
 using System.Globalization;
 using System.Linq;
@@ -18,15 +19,77 @@ internal static class RigCommandUtilities
     public const string ReplyEnd = nameof(ReplyEnd);
     public const string Command = nameof(Command);
     public const string Validate = nameof(Validate);
+    public const string Value = nameof(Value);
 
+    public static readonly RigParameter[] NumericParameters =
+    {
+        RigParameter.Freq,
+        RigParameter.FreqA,
+        RigParameter.FreqB,
+        RigParameter.Pitch,
+        RigParameter.RitOffset,
+    };
+
+    public static readonly RigParameter[] VfoParams =
+    {
+        RigParameter.VfoAA, RigParameter.VfoAB, RigParameter.VfoBA,
+        RigParameter.VfoBB, RigParameter.VfoA, RigParameter.VfoB,
+        RigParameter.VfoEqual, RigParameter.VfoSwap,
+    };
+
+    public static readonly RigParameter[] SplitParams = { RigParameter.SplitOn, RigParameter.SplitOff, };
+    public static readonly RigParameter[] RitOnParams = { RigParameter.RitOn, RigParameter.RitOff, };
+    public static readonly RigParameter[] XitOnParams = { RigParameter.XitOn, RigParameter.XitOff, };
+    public static readonly RigParameter[] TxParams = { RigParameter.Rx, RigParameter.Tx, };
+
+    public static readonly RigParameter[] ModeParams =
+    {
+        RigParameter.CW_U, RigParameter.CW_L, RigParameter.SSB_U, RigParameter.SSB_L,
+        RigParameter.DIG_U, RigParameter.DIG_L, RigParameter.AM, RigParameter.FM,
+    };
+
+    private static readonly Type[] IniFileRelatedExceptions =
+    {
+        typeof(LoadInitCommandsException),
+        typeof(LoadWriteCommandException),
+        typeof(LoadStatusCommandsException),
+    };
+
+    public static ReadOnlyCollection<RigCommands> LoadAllRigCommands()
+    {
+        var list = new List<RigCommands>();
+        var iniDirectory = Path.Combine(FileSystemHelper.GetLocalFolder(), "INI");
+        var files = Directory.EnumerateFiles(iniDirectory, "*.ini");
+        foreach (var file in files)
+        {
+            try
+            {
+                list.Add(RigCommandUtilities.LoadRigCommands(file));
+            }
+            catch (IniFileLoadException)
+            {
+#warning Log this
+            }
+        }
+
+        return new ReadOnlyCollection<RigCommands>(list);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="pathToIniFile"></param>
+    /// <returns></returns>
+    /// <exception cref="IniFileLoadException"></exception>
     public static RigCommands LoadRigCommands(string pathToIniFile)
     {
-        using (var stream = File.OpenRead(pathToIniFile))
-        {
-            using var streamReader = new StreamReader(stream);
-            var iniFile = new IniFile(StringComparer.CurrentCultureIgnoreCase);
-            iniFile.Load(streamReader);
+        using var stream = File.OpenRead(pathToIniFile);
+        using var streamReader = new StreamReader(stream);
+        var iniFile = new IniFile(StringComparer.CurrentCultureIgnoreCase);
+        iniFile.Load(streamReader);
 
+        try
+        {
             var result = new RigCommands
             {
                 InitCmd = LoadInitCommands(iniFile),
@@ -36,11 +99,21 @@ internal static class RigCommandUtilities
 
             return result;
         }
+        catch (Exception ex) when (IniFileRelatedExceptions.Contains(ex.GetType()))
+        {
+            throw new IniFileLoadException(ex.Message, ex);
+        }
     }
 
-    private static Func<string, string, bool> StartsWith
-     = (string haystack, string needle) => haystack.StartsWith(needle, StringComparison.InvariantCultureIgnoreCase);
+    private static readonly Func<string, string, bool> StartsWith
+     = (haystack, needle) => haystack.StartsWith(needle, StringComparison.InvariantCultureIgnoreCase);
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="iniFile"></param>
+    /// <returns></returns>
+    /// <exception cref="LoadWriteCommandException"></exception>
     private static List<RigCommand> LoadWriteCommands(IniFile iniFile)
     {
         var result = new List<RigCommand>();
@@ -67,7 +140,10 @@ internal static class RigCommandUtilities
                     continue;
                 }
 
-                var entries = iniFile.GetSectionSettings(section);
+                var entries = iniFile.GetSectionSettings(section)
+                    .Where(e => !string.IsNullOrEmpty(e.Name))
+                    .Select(e => new KeyValuePair<string, string>(e.Name ?? string.Empty, e.Value ?? string.Empty))
+                    .ToArray();
                 if (!entries.Any())
                 {
                     continue;
@@ -75,8 +151,11 @@ internal static class RigCommandUtilities
 
                 try
                 {
-                    var keys = entries.Select(e => e.Name);
-                    var allowedEntries = new[] {"COMMAND", "REPLYLENGTH", "REPLYEND", "VALIDATE", "VALUE"};
+                    var keys = entries.Select(e => e.Key);
+                    var allowedEntries = new[]
+                    {
+                        Entry.Command, Entry.ReplyLength, Entry.ReplyEnd, Entry.Validate, Entry.Value
+                    };
                     ValidateEntries(keys, allowedEntries);
                 }
                 catch (UnexpectedEntryException)
@@ -85,7 +164,7 @@ internal static class RigCommandUtilities
                 }
 
                 var cmd = LoadCommon(iniFile, section);
-                cmd.Value = LoadValue(iniFile, section, "Value");
+                cmd.Value = LoadValue(iniFile, section, Value);
                 ValidateValue(cmd.Value, cmd.Code.Length);
 
                 if (cmd.Value.Param != RigParameter.None)
@@ -93,12 +172,12 @@ internal static class RigCommandUtilities
                     throw new LoadWriteCommandException("parameter name is not allowed");
                 }
 
-                if (RigCmdsUnit.NumericParameters.Contains(param) && cmd.Value.Len == 0)
+                if (NumericParameters.Contains(param) && cmd.Value.Len == 0)
                 {
                     throw new LoadWriteCommandException("Value is missing");
                 }
 
-                if (!RigCmdsUnit.NumericParameters.Contains(param) && cmd.Value.Len > 0)
+                if (!NumericParameters.Contains(param) && cmd.Value.Len > 0)
                 {
                     throw new LoadWriteCommandException("parameter does not require a value");
                 }
@@ -111,13 +190,19 @@ internal static class RigCommandUtilities
             }
             catch (Exception ex)
             {
-                throw new LoadWriteCommandException(ex.Message);
+                throw new LoadWriteCommandException(ex.Message, ex);
             }
         }
 
         return result;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="iniFile"></param>
+    /// <returns></returns>
+    /// <exception cref="LoadStatusCommandsException"></exception>
     private static List<RigCommand> LoadStatusCommands(IniFile iniFile)
     {
         var result = new List<RigCommand>();
@@ -138,9 +223,9 @@ internal static class RigCommandUtilities
                     .Select(e => e.Name ?? string.Empty);
                 var allowedEntries = new[]
                 {
-                    "COMMAND", "REPLYLENGTH", "REPLYEND", "VALIDATE",
-                    "VALUE1", "VALUE2", "VALUE3", "VALUE4", "VALUE5", "VALUE6",
-                    "FLAG1", "FLAG2", "FLAG3", "FLAG4", "FLAG5", "FLAG6",
+                    Entry.Command, Entry.ReplyLength, Entry.ReplyEnd, Entry.Validate,
+                    Entry.Value1, Entry.Value2, Entry.Value3, Entry.Value4, Entry.Value5, Entry.Value6,
+                    Entry.Flag1, Entry.Flag2, Entry.Flag3, Entry.Flag4, Entry.Flag5, Entry.Flag6,
                 };
                 ValidateEntries(keys, allowedEntries);
 
@@ -177,18 +262,23 @@ internal static class RigCommandUtilities
             }
             catch (LoadStatusCommandsException)
             {
-                continue;
+                throw;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                continue;
-                //throw new LoadStatusCommandsException(ex.Message);
+                throw new LoadStatusCommandsException("Error loading of STATUS section.", ex);
             }
         }
 
         return result;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="iniFile"></param>
+    /// <returns></returns>
+    /// <exception cref="IniFileLoadException"></exception>
     internal static List<RigCommand> LoadInitCommands(IniFile iniFile)
     {
         var result = new List<RigCommand>();
@@ -206,15 +296,18 @@ internal static class RigCommandUtilities
                 }
 
                 var keys = entries.Select(e => e.Name);
-                var allowedEntries = new[] { "COMMAND", "REPLYLENGTH", "REPLYEND", "VALIDATE" };
+                var allowedEntries = new[]
+                {
+                    Entry.Command, Entry.ReplyLength, Entry.ReplyEnd, Entry.Validate,
+                };
                 ValidateEntries(keys, allowedEntries);
 
                 var command = LoadCommon(iniFile, section);
                 result.Add(command);
             }
-            catch (UnexpectedEntryException)
+            catch (Exception ex)
             {
-
+                throw new LoadInitCommandsException("Error loading of INIT section.", ex);
             }
         }
 
@@ -227,14 +320,22 @@ internal static class RigCommandUtilities
     /// <param name="keys">A keys to be validated.</param>
     /// <param name="allowedEntries">A collection of allowed keys.</param>
     /// <exception cref="UnexpectedEntryException">Is thrown when unexpected key met.</exception>
-    internal static void ValidateEntries(IEnumerable<string> keys, string[] allowedEntries)
+    internal static void ValidateEntries(IEnumerable<string> keys, Entry[] allowedEntries)
     {
-        if (keys.Any(n => !allowedEntries.Contains(n, StringComparer.CurrentCultureIgnoreCase)))
+        var allowedEntriesTitles = allowedEntries.Select(e => e.ToString());
+        if (keys.Any(n => !allowedEntriesTitles.Contains(n, StringComparer.CurrentCultureIgnoreCase)))
         {
             throw new UnexpectedEntryException();
         }
     }
 
+    /// <summary>
+    /// Reads the common data from the INI file
+    /// </summary>
+    /// <param name="iniFile"></param>
+    /// <param name="section"></param>
+    /// <returns></returns>
+    /// <exception cref="EntryLoadErrorException"></exception>
     internal static RigCommand LoadCommon(IniFile iniFile, string section)
     {
         var result = new RigCommand();
@@ -327,19 +428,23 @@ internal static class RigCommandUtilities
         {
             throw new MaskValidationException("Incorrect mask length");
         }
-        else if (mask.Mask.Length != mask.Flags.Length)
+
+        if (mask.Mask.Length != mask.Flags.Length)
         {
             throw new MaskValidationException("Incorrect mask length");
         }
-        else if (len > 0 && mask.Mask.Length != len)
+
+        if (len > 0 && mask.Mask.Length != len)
         {
             throw new MaskValidationException("Mask length <> ReplyLength");
         }
-        else if (!ByteFunctions.ByteArraysEqual(ByteFunctions.BytesAnd(mask.Flags, mask.Flags), mask.Flags))
+
+        if (!ByteFunctions.ByteArraysEqual(ByteFunctions.BytesAnd(mask.Flags, mask.Flags), mask.Flags))
         {
             throw new MaskValidationException("Mask hides valid bits");
         }
-        else if (AreEqual(entryName, "validate"))
+
+        if (AreEqual(entryName, "validate"))
         {
             if (mask.Param != RigParameter.None)
             {
@@ -494,7 +599,7 @@ internal static class RigCommandUtilities
         }
     }
 
-    internal static bool CanReadStatusEntryFlag(RigCommand cmd, 
+    internal static bool CanReadStatusEntryFlag(RigCommand cmd,
         IniSetting iniSetting, out BitMask? mask)
     {
         mask = null;
@@ -522,7 +627,7 @@ internal static class RigCommandUtilities
     }
 
     internal static bool CanReadStatusEntryValue(RigCommand cmd,
-        IniFile iniFile, string section, IniSetting iniSetting, 
+        IniFile iniFile, string section, IniSetting iniSetting,
         out ParameterValue? result)
     {
         result = null;
@@ -541,7 +646,7 @@ internal static class RigCommandUtilities
                 // parameter name is missing
                 return false;
             }
-            else if (!(RigCmdsUnit.NumericParameters.Contains(value.Param)))
+            else if (!NumericParameters.Contains(value.Param))
             {
                 // parameter must be of numeric type
                 return false;
