@@ -108,6 +108,15 @@ internal static class RigCommandUtilities
     private static readonly Func<string, string, bool> StartsWith
      = (haystack, needle) => haystack.StartsWith(needle, StringComparison.InvariantCultureIgnoreCase);
 
+
+    private static KeyValuePair<string, string>[] LoadSectionSettings(IniFile iniFile, string section)
+    {
+        return iniFile.GetSectionSettings(section)
+            .Where(e => !string.IsNullOrEmpty(e.Name))
+            .Select(e => new KeyValuePair<string, string>(e.Name ?? string.Empty, e.Value ?? string.Empty))
+            .ToArray();
+    }
+
     /// <summary>
     /// 
     /// </summary>
@@ -129,15 +138,8 @@ internal static class RigCommandUtilities
 
             try
             {
-                RigParameter param;
-
-                param = ConversionFunctions.StrToParam(section);
-
-                var entries = iniFile.GetSectionSettings(section)
-                    .Where(e => !string.IsNullOrEmpty(e.Name))
-                    .Select(e => new KeyValuePair<string, string>(e.Name ?? string.Empty, e.Value ?? string.Empty))
-                    .ToArray();
-                if (!entries.Any())
+                var entries = LoadSectionSettings(iniFile, section);
+                if (entries.Length == 0)
                 {
                     continue;
                 }
@@ -169,6 +171,7 @@ internal static class RigCommandUtilities
                     throw new LoadWriteCommandException("parameter name is not allowed");
                 }
 
+                var param = ConversionFunctions.StrToParam(section);
                 if (NumericParameters.Contains(param) && cmd.Value.Len == 0)
                 {
                     throw new LoadWriteCommandException("Value is missing");
@@ -214,14 +217,13 @@ internal static class RigCommandUtilities
         {
             try
             {
-                var settings = iniFile.GetSectionSettings(section);
+                var settings = LoadSectionSettings(iniFile, section);
                 if (!settings.Any())
                 {
                     continue;
                 }
 
-                var keys = settings.Where(e => !string.IsNullOrEmpty(e.Name))
-                    .Select(e => e.Name ?? string.Empty);
+                var keys = settings.Select(e => e.Key);
                 var allowedEntries = new[]
                 {
                     Entry.Command, Entry.ReplyLength, Entry.ReplyEnd, Entry.Validate,
@@ -242,7 +244,7 @@ internal static class RigCommandUtilities
                 cmd.Values.Clear();
                 cmd.Flags.Clear();
 
-                foreach (var setting in settings.Where(s => !string.IsNullOrEmpty(s.Name)))
+                foreach (var setting in settings)
                 {
                     if (CanReadStatusEntryValue(cmd, iniFile, section, setting, out var value))
                     {
@@ -290,13 +292,13 @@ internal static class RigCommandUtilities
         {
             try
             {
-                var entries = iniFile.GetSectionSettings(section);
+                var entries = LoadSectionSettings(iniFile, section);
                 if (!entries.Any())
                 {
                     continue;
                 }
 
-                var keys = entries.Select(e => e.Name);
+                var keys = entries.Select(e => e.Key);
                 var allowedEntries = new[]
                 {
                     Entry.Command, Entry.ReplyLength, Entry.ReplyEnd, Entry.Validate,
@@ -601,10 +603,10 @@ internal static class RigCommandUtilities
     }
 
     internal static bool CanReadStatusEntryFlag(RigCommand cmd,
-        IniSetting iniSetting, out BitMask? mask)
+        KeyValuePair<string, string> iniSetting, out BitMask? mask)
     {
         mask = null;
-        if (!iniSetting.Name.StartsWith("flag", StringComparison.CurrentCultureIgnoreCase))
+        if (!iniSetting.Key.StartsWith("flag", StringComparison.CurrentCultureIgnoreCase))
         {
             return false;
         }
@@ -612,7 +614,7 @@ internal static class RigCommandUtilities
         try
         {
             var flag = ConversionFunctions.StrToMask(iniSetting.Value);
-            ValidateMask(iniSetting.Name, flag, cmd.ReplyLength, cmd.ReplyEnd);
+            ValidateMask(iniSetting.Key, flag, cmd.ReplyLength, cmd.ReplyEnd);
             mask = flag;
         }
         catch (MaskParseException)
@@ -628,18 +630,18 @@ internal static class RigCommandUtilities
     }
 
     internal static bool CanReadStatusEntryValue(RigCommand cmd,
-        IniFile iniFile, string section, IniSetting iniSetting,
+        IniFile iniFile, string section, KeyValuePair<string, string> iniSetting,
         out ParameterValue? result)
     {
         result = null;
         try
         {
-            if (!iniSetting.Name.StartsWith("value", StringComparison.CurrentCultureIgnoreCase))
+            if (!iniSetting.Key.StartsWith("value", StringComparison.CurrentCultureIgnoreCase))
             {
                 return false;
             }
 
-            var value = LoadValue(iniFile, section, iniSetting.Name);
+            var value = LoadValue(iniFile, section, iniSetting.Key);
             ValidateValue(value, Math.Max(cmd.ReplyLength, cmd.Validation.Mask.Length));
 
             if (value.Param == RigParameter.None)
@@ -660,24 +662,6 @@ internal static class RigCommandUtilities
         catch (ValueLoadErrorException)
         {
             return false;
-        }
-    }
-
-    internal static byte[] StrToBytes(string s)
-    {
-        var preparedString = RegularExpressionHelper.ReplaceRegExpr("[^a-f0-9]", string.Empty, s);
-        if (preparedString.Length % 2 != 0)
-        {
-            return Array.Empty<byte>();
-        }
-
-        return Enumerable.Range(0, preparedString.Length / 2)
-            .Select(x => ToByte(preparedString, x))
-            .ToArray();
-
-        byte ToByte(string str, int x)
-        {
-            return Convert.ToByte(str.Substring(x * 2, 2), 16);
         }
     }
 }
