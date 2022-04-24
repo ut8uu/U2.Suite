@@ -16,6 +16,7 @@ namespace U2.MultiRig.ViewModels
         {
             AllRigsSettings.LoadSettings();
             AllRigs = new ObservableCollection<RigSettings>(AllRigsSettings.AllRigs);
+            AllCommands = new ObservableCollection<RigCommands>(AllRigCommands.RigCommands);
             SelectedRig = AllRigs.First();
             SelectedRigIndex = 0;
         }
@@ -25,7 +26,7 @@ namespace U2.MultiRig.ViewModels
         public string SelectRigTitle { get; set; } = "Select rig";
 
         public ObservableCollection<RigSettings> AllRigs { get; }
-        public ObservableCollection<RigCommands> AllCommands { get; } = new();
+        public ObservableCollection<RigCommands> AllCommands { get; }
         public ObservableCollection<string> AllPorts { get; } = new();
         public ObservableCollection<int> AllBaudRates { get; } = new(Data.BaudRates);
 

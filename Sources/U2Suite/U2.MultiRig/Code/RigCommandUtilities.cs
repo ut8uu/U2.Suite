@@ -96,6 +96,7 @@ internal static class RigCommandUtilities
                 InitCmd = LoadInitCommands(iniFile),
                 StatusCmd = LoadStatusCommands(iniFile),
                 WriteCmd = LoadWriteCommands(iniFile),
+                Title = Path.GetFileNameWithoutExtension(pathToIniFile),
             };
 
             return result;
