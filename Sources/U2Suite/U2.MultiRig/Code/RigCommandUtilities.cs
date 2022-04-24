@@ -45,10 +45,15 @@ internal static class RigCommandUtilities
     {
         var result = new List<RigCommand>();
 
-        var sections = iniFile.GetSections()
-            .Where(s => StartsWith(s, "write"));
+        var sections = iniFile.GetSections();
+
         foreach (var section in sections)
         {
+            if (StartsWith(section, "status") || StartsWith(section, "init"))
+            {
+                continue;
+            }
+
             try
             {
                 RigParameter param;

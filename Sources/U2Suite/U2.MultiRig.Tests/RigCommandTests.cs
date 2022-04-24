@@ -117,7 +117,25 @@ namespace U2.MultiRig.Tests
             Assert.Equal(3, commands.StatusCmd.Count);
 
             Assert.Equal(10, commands.WriteCmd.Count);
+        }
 
+        [Fact]
+        public void WriteOnly1()
+        {
+            var file = Path.Combine(IniDirectory, "WriteOnly1.ini");
+            var cmd = RigCommandUtilities.LoadRigCommands(file);
+            Assert.NotNull(cmd);
+
+            var write = Assert.Single(cmd.WriteCmd);
+            Assert.NotNull(write);
+            
+            Assert.Equal(new byte[]{0x0D}, write.ReplyEnd);
+            Assert.Equal(new byte[]{ 0x24, 0x46, 0x52, 0x31, 0x3A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0D }, write.Code);
+            Assert.Equal(5, write.Value.Start);
+            Assert.Equal(8, write.Value.Len);
+            Assert.Equal(ValueFormat.Text, write.Value.Format);
+            Assert.Equal(1, write.Value.Mult);
+            Assert.Equal(0, write.Value.Add);
         }
 
         private void TestRigCommand(RigCommand expectedCommand, RigCommand actualCommand)
