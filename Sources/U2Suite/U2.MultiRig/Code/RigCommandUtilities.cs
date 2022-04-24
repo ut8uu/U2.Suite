@@ -171,7 +171,7 @@ internal static class RigCommandUtilities
                     throw new LoadWriteCommandException("parameter name is not allowed");
                 }
 
-                var param = ConversionFunctions.StrToParam(section);
+                var param = ConversionFunctions.StrToRigParameter(section);
                 if (NumericParameters.Contains(param) && cmd.Value.Len == 0)
                 {
                     throw new LoadWriteCommandException("Value is missing");
@@ -364,7 +364,7 @@ internal static class RigCommandUtilities
         try
         {
             var maskValue = ReadStringFromIni(iniFile, section, Validate, string.Empty);
-            result.Validation = ConversionFunctions.StrToMask(maskValue);
+            result.Validation = ConversionFunctions.StrToBitMask(maskValue);
         }
         catch (MaskParseException ex)
         {
@@ -506,7 +506,7 @@ internal static class RigCommandUtilities
                     break;
 
                 case 6:
-                    result.Param = ConversionFunctions.StrToParam(elements[5]);
+                    result.Param = ConversionFunctions.StrToRigParameter(elements[5]);
                     break;
 
                 default:
@@ -531,7 +531,7 @@ internal static class RigCommandUtilities
                 throw new ValueLoadErrorException($"Invalid Length value in '{value}'");
             }
 
-            result.Format = ConversionFunctions.StrToFmt(elements[2]);
+            result.Format = ConversionFunctions.StrToValueFormat(elements[2]);
 
             try
             {
@@ -613,7 +613,7 @@ internal static class RigCommandUtilities
 
         try
         {
-            var flag = ConversionFunctions.StrToMask(iniSetting.Value);
+            var flag = ConversionFunctions.StrToBitMask(iniSetting.Value);
             ValidateMask(iniSetting.Key, flag, cmd.ReplyLength, cmd.ReplyEnd);
             mask = flag;
         }
