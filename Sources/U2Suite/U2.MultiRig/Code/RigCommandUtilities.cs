@@ -76,6 +76,15 @@ internal static class RigCommandUtilities
         return new ReadOnlyCollection<RigCommands>(list);
     }
 
+    public static IEnumerable<string> EnumerateAllRigCommandNames()
+    {
+        var list = new List<RigCommands>();
+        var iniDirectory = Path.Combine(FileSystemHelper.GetLocalFolder(), "INI");
+        var files = Directory.EnumerateFiles(iniDirectory, "*.ini");
+        return files.Select(f => Path.GetFileNameWithoutExtension(f) ?? string.Empty)
+            .Where(entry => !string.IsNullOrEmpty(entry));
+    }
+
     /// <summary>
     /// 
     /// </summary>

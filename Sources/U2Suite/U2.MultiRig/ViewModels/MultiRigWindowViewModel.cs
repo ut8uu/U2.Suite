@@ -16,12 +16,13 @@ public class MultiRigWindowViewModel : WindowViewModelBase
     private RigSettings? _selectedRig;
     private IEnumerable<ComPortInfo> _knownComPorts;
     private ComPortInfo? _selectedPort;
+    private string _selectedRigType;
 
     public MultiRigWindowViewModel()
     {
         AllRigsSettings.LoadSettings();
         AllRigs = new ObservableCollection<RigSettings>(AllRigsSettings.AllRigs);
-        AllCommands = new ObservableCollection<RigCommands>(AllRigCommands.RigCommands);
+        AllCommands = new ObservableCollection<string>(RigCommandUtilities.EnumerateAllRigCommandNames());
         _knownComPorts = ComPortHelper.EnumerateComPorts();
         AllPorts = new ObservableCollection<ComPortInfo>(_knownComPorts);
         SelectedRig = AllRigs.First();
@@ -33,7 +34,7 @@ public class MultiRigWindowViewModel : WindowViewModelBase
     public string SelectRigTitle { get; set; } = "Select rig";
 
     public ObservableCollection<RigSettings> AllRigs { get; }
-    public ObservableCollection<RigCommands> AllCommands { get; }
+    public ObservableCollection<string> AllCommands { get; }
     public ObservableCollection<ComPortInfo> AllPorts { get; } = new();
     public ObservableCollection<int> AllBaudRates { get; } = new(Data.BaudRates);
 
@@ -68,11 +69,18 @@ public class MultiRigWindowViewModel : WindowViewModelBase
         set
         {
             _selectedRig = value;
-            var port = _knownComPorts.FirstOrDefault(p => p.Name == _selectedRig?.Port)
-                       ?? _knownComPorts.FirstOrDefault(p => p.Name == ComPortInfo.None);
+            if (_selectedRig != null)
+            {
+                var port = _knownComPorts.FirstOrDefault(p => p.Name == _selectedRig?.Port)
+                           ?? _knownComPorts.FirstOrDefault(p => p.Name == ComPortInfo.None);
 
-            SelectedPort = port;
-            OnPropertyChanged(nameof(SelectedPort));
+                SelectedPort = port;
+                OnPropertyChanged(nameof(SelectedPort));
+
+                _selectedRigType = RigCommandUtilities.EnumerateAllRigCommandNames()
+                    .FirstOrDefault(cn => cn.Equals(_selectedRig.RigType)) ?? string.Empty;
+                OnPropertyChanged(nameof(SelectedRigType));
+            }
         }
     }
 
@@ -87,6 +95,21 @@ public class MultiRigWindowViewModel : WindowViewModelBase
                 && _selectedRig.Port != _selectedPort.Name)
             {
                 _selectedRig.Port = _selectedPort.Name;
+            }
+        }
+    }
+
+    public string SelectedRigType
+    {
+        get => _selectedRigType;
+        set
+        {
+            _selectedRigType = value;
+            if (!string.IsNullOrEmpty(_selectedRigType)
+                && _selectedRig != null
+                && _selectedRig.RigType != _selectedRigType)
+            {
+                _selectedRig.RigType = _selectedRigType;
             }
         }
     }
@@ -140,14 +163,14 @@ public class DesignMultiRigWindowViewModel : MultiRigWindowViewModel
         var rig1 = new RigSettings
         {
             RigId = "RIG1",
-            RigType = 0,
+            RigType = "Kenwood TS-2000",
             Port = ComPortInfo.None,
         };
         AllRigs.Add(rig1);
         AllRigs.Add(new RigSettings { RigId = "RIG2", });
 
-        AllCommands.Add(new RigCommands { Title = "Kenwood TS-2000" });
-        AllCommands.Add(new RigCommands { Title = "Icom IC-705" });
+        AllCommands.Add("Kenwood TS-2000");
+        AllCommands.Add("Icom IC-705");
 
         AllPorts.AddRange(new[]
         {

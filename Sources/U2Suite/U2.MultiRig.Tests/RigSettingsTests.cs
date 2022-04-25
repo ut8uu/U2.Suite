@@ -40,7 +40,7 @@ public sealed class RigSettingsTests : IDisposable
                 Parity = 1,
                 PollMs = 1,
                 Port = "NONE",
-                RigType = 1,
+                RigType = string.Empty,
                 RtsMode = 1,
                 StopBits = 1,
                 TimeoutMs = 1,

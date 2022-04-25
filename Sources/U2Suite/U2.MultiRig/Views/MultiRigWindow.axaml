@@ -46,12 +46,7 @@
                            Text="{Binding RigTypeTitle}"></TextBlock>
 				<ComboBox Grid.Column="1" Grid.Row="1" Name="RigTypeSelector"
                           Items="{Binding Path=AllCommands, Mode=TwoWay}"
-                          SelectedIndex="{Binding SelectedRig.RigType, Mode=TwoWay}">
-					<ComboBox.ItemTemplate>
-						<DataTemplate>
-							<TextBlock Text="{Binding Title}"></TextBlock>
-						</DataTemplate>
-					</ComboBox.ItemTemplate>
+                          SelectedItem="{Binding SelectedRigType, Mode=TwoWay}">
 				</ComboBox>
 
 				<TextBlock Grid.Column="0" Grid.Row="2" Margin="12"
