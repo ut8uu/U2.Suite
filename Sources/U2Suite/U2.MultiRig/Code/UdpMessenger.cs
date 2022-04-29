@@ -24,7 +24,7 @@ public delegate void RigTypeChangedEventHandler(int rigNumber, string newRigType
 public delegate void RigParametersEventHandler(int rigNumber, int parameters);
 public delegate void RigCustomCommandEventHandler(int rigNumber, byte[] customCommand);
 
-internal sealed class UdpMessenger
+public sealed class UdpMessenger
 {
     private const int TxPort = 11101;
     private const int RxPort = 11102;
@@ -105,5 +105,10 @@ internal sealed class UdpMessenger
     private void OnRigTypeChanged(int rigNumber, string newRigType)
     {
         RigTypeChanged?.Invoke(rigNumber, newRigType);
+    }
+
+    public void ComNotifyRigType(int rigNumber)
+    {
+        throw new NotImplementedException();
     }
 }
