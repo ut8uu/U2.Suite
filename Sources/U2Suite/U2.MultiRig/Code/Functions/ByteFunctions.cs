@@ -31,8 +31,7 @@ public static class ByteFunctions
 
     public static void BytesReverse(byte[] arr)
     {
-        var arrReversed = arr.Reverse().ToArray();
-        arrReversed.CopyTo(arr, index: 0);
+        Array.Reverse(arr);
     }
 
     public static string BytesToStr(byte[] bytes)
