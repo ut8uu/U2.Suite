@@ -30,7 +30,7 @@ public struct ParameterValue
     public ValueFormat Format; //encode or decode according to this format
     public double Mult;
     public double Add;    //linear transformation before encoding or after decoding
-    public RigParameter Param;     //param to insert or to report
+    public TRigParam Param;     //param to insert or to report
 }
 
 public enum ValueFormat
@@ -53,42 +53,43 @@ public struct BitMask
 {
     public byte[] Mask;   //do bitwise AND with this mask
     public byte[] Flags;  //compare result to these bits
-    public RigParameter Param;   //report this param if bits match
+    public TRigParam Param;   //report this param if bits match
 }
 
-public enum RigParameter
+[Flags]
+public enum TRigParam
 {
-    None,
-    Freq,
-    FreqA,
-    FreqB,
-    Pitch,
-    RitOffset,
-    Rit0,
-    VfoAA,
-    VfoAB,
-    VfoBA,
-    VfoBB,
-    VfoA,
-    VfoB,
-    VfoEqual,
-    VfoSwap,
-    SplitOn,
-    SplitOff,
-    RitOn,
-    RitOff,
-    XitOn,
-    XitOff,
-    Rx,
-    Tx,
-    CW_U,
-    CW_L,
-    SSB_U,
-    SSB_L,
-    DIG_U,
-    DIG_L,
-    AM,
-    FM,
+    None = 0,
+    Freq = 1,
+    FreqA = 2,
+    FreqB = 4,
+    Pitch = 8,
+    RitOffset = 16,
+    Rit0 = 32,
+    VfoAA = 64,
+    VfoAB = 128,
+    VfoBA = 256,
+    VfoBB = 512,
+    VfoA = 1024,
+    VfoB = 2048,
+    VfoEqual = 4096,
+    VfoSwap = 8192,
+    SplitOn = 16384,
+    SplitOff = 32768,
+    RitOn = 65536,
+    RitOff = 131072,
+    XitOn = 262144,
+    XitOff = XitOn * 2,
+    Rx = XitOff * 2,
+    Tx = Rx * 2,
+    CW_U = Tx * 2,
+    CW_L = CW_U * 2,
+    SSB_U = CW_L * 2,
+    SSB_L = SSB_U * 2,
+    DIG_U = SSB_L * 2,
+    DIG_L = DIG_U * 2,
+    AM = DIG_L * 2,
+    FM = AM * 2,
 }
 
 public enum Entry
