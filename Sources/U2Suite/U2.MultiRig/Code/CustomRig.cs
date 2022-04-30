@@ -4,6 +4,8 @@ using System.Data;
 using System.Collections.Generic;
 using System.Linq;
 using log4net;
+using MonoSerialPort;
+using MonoSerialPort.Port;
 using U2.MultiRig.Code;
 
 namespace U2.MultiRig;
@@ -15,6 +17,7 @@ public enum TRigCtlStatus
 
 public abstract class CustomRig
 {
+    private readonly RigSettings _rigSettings;
     private ILog _logger = LogManager.GetLogger(typeof(CustomRig));
     protected UdpMessenger _udpMessenger;
 
@@ -33,128 +36,75 @@ public abstract class CustomRig
 
     internal bool FEnabled = false;
     internal bool FOnline = false;
-    internal IntPtr FCritSect = new IntPtr();
-    internal RigCommands FRigCommands = new RigCommands();
+    internal RigCommands FRigCommands;
     internal DateTime FNextStatusTime;
     internal DateTime FDeadLineTime;
 
     public int RigNumber { get; set; } = 0;
     public int PollMs { get; set; } = 0;
     public int TimeoutMs { get; set; } = 0;
-    public TAlCommPort ComPort = new TAlCommPort();
+    public SerialPortInput _serialPort;
     public TRigParam LastWrittenMode = TRigParam.None;
 
-    protected CustomRig()
+    public event SerialPortInput.ConnectionStatusChangedEventHandler ConnectionStatusChanged;
+
+    protected CustomRig(int rigNumber, RigSettings rigSettings)
     {
-        FCritSect = new IntPtr();
+        _rigSettings = rigSettings;
+        RigNumber = rigNumber;
         FQueue = new TCommandQueue();
-        ComPort = new TAlCommPort
-        {
-            //OnReceived = RecvEvent(),
-            //OnSent = SentEvent(),
-            //OnCtsDsr = CtsDsrEvent()
-        };
+
+        _serialPort = new SerialPortInput(_rigSettings.Port,
+            baudRate: rigSettings.BaudRate,
+            parity: _parities[rigSettings.Parity],
+            dataBits:rigSettings.DataBits,
+            stopBits: _stopBits[_rigSettings.StopBits],
+            handshake: Handshake.None,
+            isVirtualPort:false);
+        _serialPort.SetPort(_rigSettings.Port, rigSettings.BaudRate);
+        _serialPort.ConnectionStatusChanged += SerialPort_ConnectionStatusChanged;
+        _serialPort.MessageReceived += SerialPort_MessageReceived;
 
         _udpMessenger = new UdpMessenger();
     }
 
-    public void Dispose()
+    private static StopBits[] _stopBits = {StopBits.One, StopBits.OnePointFive, StopBits.Two};
+    private static Parity[] _parities = {Parity.None, Parity.Odd, Parity.Even, Parity.Mark, Parity.Space};
+    private static Handshake[] _handshakes = {
+        Handshake.None, 
+        Handshake.RequestToSend, 
+        Handshake.RequestToSendXOnXOff, 
+        Handshake.XOnXOff,
+    };
+    private static Parity IntToParity(int parity)
     {
-        _udpMessenger?.Dispose();
+        return _parities[parity];
     }
 
-    ////////////////////////////////////////////////////////////////////////////////
-    //                                 Comm port
-    ////////////////////////////////////////////////////////////////////////////////
-    private void SetEnabled(bool value)
-    {
-        if (FEnabled == value)
-        {
-            return;
-        }
-
-        //check for valid RigCommands
-        if (value && (RigCommands == null))
-        {
-            return;
-        }
-
-        if (value)
-        {
-            Start();
-        }
-        else
-        {
-            Stop();
-        }
-
-        _udpMessenger.ComNotifyStatus(RigNumber);
-        LastWrittenMode = TRigParam.None;
-    }
-
-    private static readonly object GetStatusLockObject = new object();
-    ////////////////////////////////////////////////////////////////////////////////
-    //                                 status
-    ////////////////////////////////////////////////////////////////////////////////
-    private TRigCtlStatus GetStatus()
-    {
-        lock(GetStatusLockObject)
-        {
-            if (RigCommands == null)
-            {
-                return TRigCtlStatus.stNotConfigured;
-            }
-            else if (!FEnabled)
-            {
-                return TRigCtlStatus.stDisabled;
-            }
-            else if (!ComPort.Open)
-            {
-                return TRigCtlStatus.stPortBusy;
-            }
-            else if (!FOnline)
-            {
-                return TRigCtlStatus.stNotResponding;
-            }
-            else
-            {
-                return TRigCtlStatus.stOnLine;
-            }
-        }
-    }
-
-    private static readonly object RecvEventLockObject = new object();
-    private void RecvEvent(object sender)
+    private void SerialPort_MessageReceived(object sender, MessageReceivedEventArgs args)
     {
         lock (RecvEventLockObject)
         {
-            var data = new List<byte>();
-            if (ComPort.RxBuffer != string.Empty)
-            {
-                data = ByteFunctions.StrToBytes(ComPort.RxBuffer).ToList();
-            }
-
-            ComPort.PurgeRx();
+            var data = args.Data;
 
             //some COM ports do not send EV_TXEMPTY
-
             if (FQueue.Phase == TExchangePhase.phSending)
             {
                 FQueue.Phase = TExchangePhase.phReceiving;
-                //_logger.InfoFormat($"RIG{RigNumber} {ComPort.TxQueue} bytes in TX buffer, accepting reply", new string[] { Convert.ToString(RigNumber), ComPort.TxQueue });
+                _logger.Info($"RIG{RigNumber} {data.Length} bytes in TX buffer, accepting reply.");
             }
 
             if (FQueue.Phase == TExchangePhase.phReceiving)
             {
-                _logger.InfoFormat("RIG{0} reply received: {1}", Convert.ToString(RigNumber), ByteFunctions.BytesToHex(data.ToArray()));
+                _logger.DebugFormat("RIG{0} reply received: {1}", Convert.ToString(RigNumber), ByteFunctions.BytesToHex(data.ToArray()));
             }
             else
             {
-                _logger.InfoFormat("RIG{0} unexpected data received: {1}", Convert.ToString(RigNumber), ByteFunctions.BytesToHex(data.ToArray()));
+                _logger.DebugFormat("RIG{0} unexpected data received: {1}", Convert.ToString(RigNumber), ByteFunctions.BytesToHex(data.ToArray()));
             }
 
             //are we in the right state?
-            if (!ComPort.Open
+            if (!_serialPort.IsConnected
                 || FQueue.Phase != TExchangePhase.phReceiving
                 || FQueue.Count == 0)
             {
@@ -164,7 +114,7 @@ public abstract class CustomRig
             //process data
             try
             {
-                var currentCommand = FQueue.CurrentCmd();
+                var currentCommand = FQueue.CurrentCmd;
                 switch (currentCommand.Kind)
                 {
                     case TCommandKind.ckInit:
@@ -206,25 +156,97 @@ public abstract class CustomRig
         }
     }
 
+    private void SerialPort_ConnectionStatusChanged(object sender, ConnectionStatusChangedEventArgs args)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void Dispose()
+    {
+        _udpMessenger?.Dispose();
+        if (_serialPort.IsConnected)
+        {
+            _serialPort.Disconnect();
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////
+    //                                 Comm port
+    ////////////////////////////////////////////////////////////////////////////////
+    private void SetEnabled(bool value)
+    {
+        if (FEnabled == value)
+        {
+            return;
+        }
+
+        //check for valid RigCommands
+        if (value && (RigCommands == null))
+        {
+            return;
+        }
+
+        if (value)
+        {
+            Start();
+        }
+        else
+        {
+            Stop();
+        }
+
+        _udpMessenger.ComNotifyStatus(RigNumber);
+        LastWrittenMode = TRigParam.None;
+    }
+
+    private static readonly object GetStatusLockObject = new object();
+    ////////////////////////////////////////////////////////////////////////////////
+    //                                 status
+    ////////////////////////////////////////////////////////////////////////////////
+    private TRigCtlStatus GetStatus()
+    {
+        lock (GetStatusLockObject)
+        {
+            if (RigCommands == null)
+            {
+                return TRigCtlStatus.stNotConfigured;
+            }
+            else if (!FEnabled)
+            {
+                return TRigCtlStatus.stDisabled;
+            }
+            else if (!_serialPort.IsConnected)
+            {
+                return TRigCtlStatus.stPortBusy;
+            }
+            else if (!FOnline)
+            {
+                return TRigCtlStatus.stNotResponding;
+            }
+            else
+            {
+                return TRigCtlStatus.stOnLine;
+            }
+        }
+    }
+
+    private static readonly object RecvEventLockObject = new object();
+
     private static object _sentEventLockObject = new object();
 
     private void SentEvent(object sender)
     {
         //_logger.InfoFormat("RIG{0} data sent, {1} bytes in TX buffer", RigNumber, ComPort.TxQueue);
-
-        if (ComPort.TxQueue > 0)
-        {
-            return;
-        }
-
         lock (_sentEventLockObject)
         {
-            if ((!ComPort.Open) || (FQueue.Phase != TExchangePhase.phSending) || (FQueue.Count == 0))
+            if (!_serialPort.IsConnected
+                || FQueue.Phase != TExchangePhase.phSending
+                || FQueue.Count == 0)
             {
                 return;
             }
 
-            if (FQueue.CurrentCmd().NeedsReply())
+            if (FQueue.CurrentCmd.NeedsReply)
             {
                 FQueue.Phase = TExchangePhase.phReceiving;
                 FDeadLineTime = DateTime.Now.AddMilliseconds(TimeoutMs);
@@ -242,7 +264,7 @@ public abstract class CustomRig
     private void CtsDsrEvent(object sender)
     {
         string[] boolStr = { "OFF", "ON" };
-        _logger.Info($"RIG{RigNumber} ctrl bits: CTS={ComPort.CtsBit} DSR={ComPort.DsrBit} RLS={ComPort.RlsdBit}");
+        //_logger.Info($"RIG{RigNumber} ctrl bits: CTS={ComPort.CtsBit} DSR={ComPort.DsrBit} RLS={ComPort.RlsdBit}");
     }
 
     private void SetFreq(int value)
@@ -457,7 +479,7 @@ public abstract class CustomRig
 
             try
             {
-                ComPort.Open = true;
+                _serialPort.Connect();
             }
             catch (Exception ex1)
             {
@@ -465,13 +487,13 @@ public abstract class CustomRig
             }
         }
 
-        if (ComPort.Open)
+        if (_serialPort.IsConnected)
         {
             CheckQueue();
         }
         else
         {
-            _logger.InfoFormat("RIG{0} Unable to open port", RigNumber);
+            _logger.DebugFormat("RIG{0} Unable to open port", RigNumber);
         }
     }
 
@@ -483,7 +505,7 @@ public abstract class CustomRig
             return;
         }
 
-        _logger.InfoFormat("Stopping RIG{0}", Convert.ToString(RigNumber));
+        _logger.DebugFormat("Stopping RIG{0}", Convert.ToString(RigNumber));
 
         lock (_stopLockObject)
         {
@@ -491,7 +513,7 @@ public abstract class CustomRig
             FOnline = false;
             FQueue.Clear();
             FQueue.Phase = TExchangePhase.phIdle;
-            ComPort.Open = false;
+            _serialPort.Disconnect();
         }
     }
 
@@ -506,19 +528,13 @@ public abstract class CustomRig
             }
 
             //try to open port
-            if (!ComPort.Open)
+            if (!_serialPort.IsConnected)
             {
-                try
-                {
-                    ComPort.Open = true;
-                }
-                catch (Exception ex1)
-                {
-                }
+                _serialPort.Connect();
             }
 
             //refresh params
-            if (ComPort.Open && (DateTime.Now > FNextStatusTime))
+            if (_serialPort.IsConnected && DateTime.Now > FNextStatusTime)
             {
                 if (FQueue.HasStatusCommands)
                 {
@@ -549,9 +565,9 @@ public abstract class CustomRig
                 {
                     case TExchangePhase.phSending:
                         {
-                            _logger.InfoFormat("RIG{0} send timeout, {1} bytes still in TX buffer", RigNumber, ComPort.TxQueue);
+                            _logger.DebugFormat("RIG{0} send timeout", RigNumber);
                             //do not send the remaining part
-                            ComPort.PurgeTx();
+                            //ComPort.PurgeTx();
                             //send the same cmd again
                             FQueue.Phase = TExchangePhase.phIdle;
                             FDeadLineTime = DateTime.MaxValue;
@@ -560,10 +576,7 @@ public abstract class CustomRig
 
                     case TExchangePhase.phReceiving:
                         {
-                            _logger.InfoFormat("RIG{0} recv timeout. RX Buffer: \"{1}\"", RigNumber, ByteFunctions.StrToHex(ComPort.RxBuffer));
-                            //waste partial reply
-                            ComPort.PurgeRx();
-                            ComPort.RxBlockMode = TRxBlockMode.rbChar;
+                            _logger.DebugFormat("RIG{0} recv timeout.", RigNumber);
                             //consider current cmd unreplied
                             FQueue.RemoveAt(0);
                             //allow next cmd
@@ -583,36 +596,11 @@ public abstract class CustomRig
     {
         lock (_checkQueueLockObject)
         {
-            string s = string.Empty;
-            if (ComPort.Open && (FQueue.Phase == TExchangePhase.phIdle) && (FQueue.Count > 0))
+            if (_serialPort.IsConnected &&
+                FQueue.Phase == TExchangePhase.phIdle
+                && FQueue.Count > 0)
             {
-                if (ComPort.RxBuffer != string.Empty)
-                {
-                    _logger.InfoFormat("RIG{0} unexpected bytes in RX buffer: {1}",
-                        RigNumber, ByteFunctions.StrToHex(ComPort.RxBuffer));
-                    ComPort.PurgeRx();
-                }
-
-                {
-                    ComPort.RxBlockSize = FQueue[0].ReplyLength;
-                    ComPort.RxBlockTerminator = FQueue[0].ReplyEnd;
-
-                    if (FQueue[0].ReplyEnd != string.Empty)
-                    {
-                        ComPort.RxBlockMode = TRxBlockMode.rbTerminator;
-                    }
-                    else if (FQueue[0].ReplyLength > 0)
-                    {
-                        ComPort.RxBlockMode = TRxBlockMode.rbBlockSize;
-                    }
-                    else
-                    {
-                        ComPort.RxBlockMode = TRxBlockMode.rbChar;
-                    }
-                }
-
-                //log
-                s = FQueue[0].Kind switch
+                var s = FQueue[0].Kind switch
                 {
                     TCommandKind.ckInit => "init",
                     TCommandKind.ckWrite => FQueue[0].Param.ToString(),
@@ -621,15 +609,15 @@ public abstract class CustomRig
                     _ => throw new ArgumentOutOfRangeException()
                 };
 
-                _logger.InfoFormat("RIG{0} sending {1} command: {2}",
+                _logger.DebugFormat("RIG{0} sending {1} command: {2}",
                     Convert.ToString(RigNumber), s, ByteFunctions.BytesToHex(FQueue[0].Code));
                 //send command
                 FQueue.Phase = TExchangePhase.phSending;
                 FDeadLineTime = DateTime.Now.AddMilliseconds(TimeoutMs);
 
-                ComPort.Send(ByteFunctions.BytesToStr(FQueue[0].Code));
-                _logger.InfoFormat("RIG{0} ComPort.Send called, {1} bytes in TX buffer",
-                    RigNumber, ComPort.TxQueue);
+                _logger.DebugFormat("RIG{0} ComPort.Send called. Bytes sent: {1}",
+                    RigNumber, ByteFunctions.BytesToHex(FQueue[0].Code));
+                _serialPort.SendMessage(FQueue[0].Code);
             }
         }
     }
@@ -641,7 +629,7 @@ public abstract class CustomRig
             AddWriteCommand(Value);
         }
     }
-    
+
     public string GetStatusStr()
     {
         var getStatusStrResult = string.Empty;
@@ -797,6 +785,11 @@ public abstract class CustomRig
         {
             SetMode(value);
         }
+    }
+
+    protected virtual void OnConnectionStatusChanged(ConnectionStatusChangedEventArgs args)
+    {
+        ConnectionStatusChanged?.Invoke(this, args);
     }
 }
 public partial class CustRigUnit

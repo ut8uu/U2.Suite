@@ -4,7 +4,6 @@ using System.Linq;
 using System.Net.Sockets;
 using System.Net;
 using System.Text;
-using System.Threading.Tasks;
 using SimpleUdp;
 using log4net;
 
@@ -16,6 +15,7 @@ public class UdpMessageType
     public const string Params = nameof(Params);
     public const string Custom = nameof(Custom);
     public const string Visibility = nameof(Visibility);
+    public const string TxQueue = nameof(TxQueue);
 }
 
 public delegate void ApplicationVisibilityEventHandler();
@@ -80,6 +80,11 @@ public sealed class UdpMessenger
     public void ComNotifyCustom(int rigNumber, object Sender)
     {
         SendUdpMessage(UdpMessageType.Custom, rigNumber, Convert.ToInt32(Sender));
+    }
+
+    public void TxQueue(int rigNumber)
+    {
+        SendUdpMessage(UdpMessageType.TxQueue, rigNumber, 0);
     }
 
     private void OnShowApplication()
