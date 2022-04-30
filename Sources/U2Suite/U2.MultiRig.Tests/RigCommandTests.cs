@@ -94,7 +94,7 @@ namespace U2.MultiRig.Tests
             Assert.Equal(ValueFormat.Text, value.Format);
             Assert.Equal(1, value.Mult);
             Assert.Equal(0, value.Add);
-            Assert.Equal(RigParameter.Freq, value.Param);
+            Assert.Equal(TRigParam.Freq, value.Param);
 
             Assert.Equal(5, status.Flags.Count);
             var flag = status.Flags.First();
@@ -112,7 +112,7 @@ namespace U2.MultiRig.Tests
                 Assert.Equal(b1, flag.Flags[i]);
                 Assert.Equal(b2, flag.Mask[i]);
             }
-            Assert.Equal(RigParameter.FM, flag.Param);
+            Assert.Equal(TRigParam.FM, flag.Param);
         }
 
         [Fact]

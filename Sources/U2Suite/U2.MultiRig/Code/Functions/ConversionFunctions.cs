@@ -27,7 +27,7 @@ internal static class ConversionFunctions
         var inputString = s.Trim();
         var result = new BitMask
         {
-            Param = RigParameter.None,
+            Param = TRigParam.None,
             Mask = Array.Empty<byte>(),
             Flags = Array.Empty<byte>()
         };
@@ -50,7 +50,7 @@ internal static class ConversionFunctions
                 {
                     result.Param = StrToRigParameter(list[1], false);
 
-                    if (result.Param != RigParameter.None)
+                    if (result.Param != TRigParam.None)
                     {
                         result.Flags = FlagsFromBitMask(result.Mask, list[0][1]);
                     }
@@ -97,14 +97,14 @@ internal static class ConversionFunctions
     /// <param name="showInLog"></param>
     /// <returns></returns>
     /// <exception cref="ParameterParseException"></exception>
-    internal static RigParameter StrToRigParameter(string s, bool showInLog = true)
+    internal static TRigParam StrToRigParameter(string s, bool showInLog = true)
     {
         if (!s.StartsWith("pm", StringComparison.InvariantCultureIgnoreCase))
         {
             throw new ParameterParseException(s);
         }
         var cutString = s.Replace("pm", string.Empty);
-        if (Enum.TryParse<RigParameter>(cutString, ignoreCase: true, out var result))
+        if (Enum.TryParse<TRigParam>(cutString, ignoreCase: true, out var result))
         {
             return result;
         }

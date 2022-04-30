@@ -24,12 +24,12 @@ public abstract class CustomRig
     protected int FFreqB = 0;
     protected int FRitOffset = 0;
     protected int FPitch = 0;
-    protected RigParameter FVfo;
-    protected RigParameter FSplit;
-    protected RigParameter FRit;
-    protected RigParameter FXit;
-    protected RigParameter FTx;
-    protected RigParameter FMode;
+    protected TRigParam FVfo;
+    protected TRigParam FSplit;
+    protected TRigParam FRit;
+    protected TRigParam FXit;
+    protected TRigParam FTx;
+    protected TRigParam FMode;
 
     internal bool FEnabled = false;
     internal bool FOnline = false;
@@ -42,7 +42,7 @@ public abstract class CustomRig
     public int PollMs { get; set; } = 0;
     public int TimeoutMs { get; set; } = 0;
     public TAlCommPort ComPort = new TAlCommPort();
-    public RigParameter LastWrittenMode = RigParameter.None;
+    public TRigParam LastWrittenMode = TRigParam.None;
 
     protected CustomRig()
     {
@@ -89,7 +89,7 @@ public abstract class CustomRig
         }
 
         _udpMessenger.ComNotifyStatus(RigNumber);
-        LastWrittenMode = RigParameter.None;
+        LastWrittenMode = TRigParam.None;
     }
 
     private static readonly object GetStatusLockObject = new object();
@@ -249,7 +249,7 @@ public abstract class CustomRig
     {
         if (Enabled)
         {
-            AddWriteCommand(RigParameter.Freq, value);
+            AddWriteCommand(TRigParam.Freq, value);
         }
     }
 
@@ -259,7 +259,7 @@ public abstract class CustomRig
 
         if (Enabled && (value != FFreqA))
         {
-            AddWriteCommand(RigParameter.FreqA, value);
+            AddWriteCommand(TRigParam.FreqA, value);
         }
 
         _logger.InfoFormat("Exiting SetFreqA");
@@ -269,7 +269,7 @@ public abstract class CustomRig
     {
         if (Enabled && (value != FFreqB))
         {
-            AddWriteCommand(RigParameter.FreqB, value);
+            AddWriteCommand(TRigParam.FreqB, value);
         }
     }
 
@@ -277,7 +277,7 @@ public abstract class CustomRig
     {
         if (Enabled && (value != FRitOffset))
         {
-            AddWriteCommand(RigParameter.RitOffset, value);
+            AddWriteCommand(TRigParam.RitOffset, value);
         }
     }
 
@@ -288,16 +288,16 @@ public abstract class CustomRig
             return;
         }
 
-        AddWriteCommand(RigParameter.Pitch, value);
+        AddWriteCommand(TRigParam.Pitch, value);
 
         //remember the pitch that we set if we cannot read it back from the rig
-        if (!(RigCommands.ReadableParams.Contains(RigParameter.Pitch)))
+        if (!(RigCommands.ReadableParams.Contains(TRigParam.Pitch)))
         {
             FPitch = value;
         }
     }
 
-    private void SetVfo(RigParameter value)
+    private void SetVfo(TRigParam value)
     {
         if (Enabled && (RigCommandUtilities.VfoParams.Contains(value)) && (value != FVfo))
         {
@@ -305,7 +305,7 @@ public abstract class CustomRig
         }
     }
 
-    private void SetSplit(RigParameter value)
+    private void SetSplit(TRigParam value)
     {
         if (!(Enabled && (RigCommandUtilities.SplitParams.Contains(value))))
         {
@@ -316,28 +316,28 @@ public abstract class CustomRig
         {
             AddWriteCommand(value);
         }
-        else if (value == RigParameter.SplitOn)
+        else if (value == TRigParam.SplitOn)
         {
-            if (Vfo == RigParameter.VfoAA)
+            if (Vfo == TRigParam.VfoAA)
             {
-                Vfo = RigParameter.VfoAB;
+                Vfo = TRigParam.VfoAB;
             }
-            else if (Vfo == RigParameter.VfoBB)
+            else if (Vfo == TRigParam.VfoBB)
             {
-                Vfo = RigParameter.VfoBA;
+                Vfo = TRigParam.VfoBA;
             }
         }
-        else if (Vfo == RigParameter.VfoAB)
+        else if (Vfo == TRigParam.VfoAB)
         {
-            Vfo = RigParameter.VfoAA;
+            Vfo = TRigParam.VfoAA;
         }
-        else if (Vfo == RigParameter.VfoBA)
+        else if (Vfo == TRigParam.VfoBA)
         {
-            Vfo = RigParameter.VfoBB;
+            Vfo = TRigParam.VfoBB;
         }
     }
 
-    private void SetRit(RigParameter value)
+    private void SetRit(TRigParam value)
     {
         if (Enabled && (RigCommandUtilities.RitOnParams.Contains(value)) && (value != FRit))
         {
@@ -345,7 +345,7 @@ public abstract class CustomRig
         }
     }
 
-    private void SetXit(RigParameter value)
+    private void SetXit(TRigParam value)
     {
         if (Enabled && (RigCommandUtilities.XitOnParams.Contains(value)) && (value != Xit))
         {
@@ -353,7 +353,7 @@ public abstract class CustomRig
         }
     }
 
-    private void SetTx(RigParameter value)
+    private void SetTx(TRigParam value)
     {
         if (Enabled && (RigCommandUtilities.TxParams.Contains(value)))
         {
@@ -361,7 +361,7 @@ public abstract class CustomRig
         }
     }
 
-    private void SetMode(RigParameter value)
+    private void SetMode(TRigParam value)
     {
         if (Enabled && (RigCommandUtilities.ModeParams.Contains(value)))
         {
@@ -378,21 +378,21 @@ public abstract class CustomRig
         _udpMessenger.ComNotifyRigType(RigNumber);
     }
 
-    private RigParameter GetSplit()
+    private TRigParam GetSplit()
     {
         var getSplitResult = FSplit;
 
-        if (getSplitResult != RigParameter.None)
+        if (getSplitResult != TRigParam.None)
         {
             return getSplitResult;
         }
-        if (new[] { RigParameter.VfoAA, RigParameter.VfoBB }.Contains(Vfo))
+        if (new[] { TRigParam.VfoAA, TRigParam.VfoBB }.Contains(Vfo))
         {
-            getSplitResult = RigParameter.SplitOff;
+            getSplitResult = TRigParam.SplitOff;
         }
-        else if (new[] { RigParameter.VfoAB, RigParameter.VfoBA }.Contains(Vfo))
+        else if (new[] { TRigParam.VfoAB, TRigParam.VfoBA }.Contains(Vfo))
         {
-            getSplitResult = RigParameter.SplitOn;
+            getSplitResult = TRigParam.SplitOn;
         }
         return getSplitResult;
     }
@@ -400,13 +400,13 @@ public abstract class CustomRig
     //these commands are implemented in the descendant class,
     //just to keep them in a separate file
 
-    protected abstract void AddCommands(List<RigCommand> commands, TCommandKind kind);
+    protected abstract void AddCommands(IEnumerable<RigCommand> commands, TCommandKind kind);
 
     protected abstract void ProcessInitReply(int number, byte[] data);
 
     protected abstract void ProcessStatusReply(int number, byte[] data);
 
-    protected abstract void ProcessWriteReply(RigParameter param, byte[] data);
+    protected abstract void ProcessWriteReply(TRigParam param, byte[] data);
 
     protected abstract void ProcessCustomReply(object sender, byte[] code, byte[] data);
 
@@ -428,7 +428,7 @@ public abstract class CustomRig
         disposed = true;
     }
 
-    public abstract void AddWriteCommand(RigParameter param, int value = 0);
+    public abstract void AddWriteCommand(TRigParam param, int value = 0);
 
     public abstract void AddCustomCommand(object sender, byte[] code, int len, string end);
 
@@ -541,7 +541,7 @@ public abstract class CustomRig
                 {
                     FOnline = false;
                     _udpMessenger.ComNotifyStatus(RigNumber);
-                    LastWrittenMode = RigParameter.None;
+                    LastWrittenMode = TRigParam.None;
                 }
 
                 //cancel pending operation
@@ -634,7 +634,7 @@ public abstract class CustomRig
         }
     }
 
-    public void ForceVfo(RigParameter Value)
+    public void ForceVfo(TRigParam Value)
     {
         if (Enabled)
         {
@@ -732,7 +732,7 @@ public abstract class CustomRig
             SetRitOffset(value);
         }
     }
-    public RigParameter Vfo
+    public TRigParam Vfo
     {
         get
         {
@@ -743,7 +743,7 @@ public abstract class CustomRig
             SetVfo(value);
         }
     }
-    public RigParameter Split
+    public TRigParam Split
     {
         get
         {
@@ -754,7 +754,7 @@ public abstract class CustomRig
             SetSplit(value);
         }
     }
-    public RigParameter Rit
+    public TRigParam Rit
     {
         get
         {
@@ -765,7 +765,7 @@ public abstract class CustomRig
             SetRit(value);
         }
     }
-    public RigParameter Xit
+    public TRigParam Xit
     {
         get
         {
@@ -776,7 +776,7 @@ public abstract class CustomRig
             SetXit(value);
         }
     }
-    public RigParameter Tx
+    public TRigParam Tx
     {
         get
         {
@@ -787,7 +787,7 @@ public abstract class CustomRig
             SetTx(value);
         }
     }
-    public RigParameter Mode
+    public TRigParam Mode
     {
         get
         {
