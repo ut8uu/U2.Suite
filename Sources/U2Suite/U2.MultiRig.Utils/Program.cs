@@ -107,9 +107,18 @@ static bool PollIcom705Port(params object[] parameters)
         DataBits = 8,
         Parity = (int)U2.MultiRig.Code.Data.Parity.None,
         StopBits = (int)U2.MultiRig.Code.Data.StopBits.IndexOf(1m),
+        Enabled = true,
     };
 
-    var rig = new Rig(1, settings);
+    var rigCommands = AllRigCommands.RigCommands
+        .FirstOrDefault(c => c.RigType == "IC-705");
+    if (rigCommands == null)
+    {
+        Log("Commands for IC-705 not found.");
+        return true;
+    }
+
+    var rig = new Rig(1, settings, rigCommands);
     rig.Connect();
 
     Console.WriteLine("Press Enter to continue.");

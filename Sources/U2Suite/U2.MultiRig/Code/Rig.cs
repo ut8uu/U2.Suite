@@ -84,8 +84,8 @@ public class Rig : CustomRig
         return formatValueResult;
     }
 
-    public Rig(int rigNumber, RigSettings settings) 
-        : base(rigNumber, settings)
+    public Rig(int rigNumber, RigSettings settings, RigCommands rigCommands) 
+        : base(rigNumber, settings, rigCommands)
     {
 
     }
