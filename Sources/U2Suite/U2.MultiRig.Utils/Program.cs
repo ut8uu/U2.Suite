@@ -1,11 +1,13 @@
 ﻿using System.Text;
 using DynamicData;
+using log4net;
+using U2.Core;
 using U2.MultiRig;
 
 List<ConsoleManagementElement> mainMenu
     = new List<ConsoleManagementElement>
     {
-        new ConsoleManagementElement
+        new()
         {
             Function = PollIcom705,
             Key = ConsoleKey.D1,
@@ -15,17 +17,29 @@ List<ConsoleManagementElement> mainMenu
 
 ManageFlow(mainMenu);
 
-static bool PollIcom705()
+static void Log(string message)
 {
-    var settings = new RigSettings
+    LogManager.GetLogger(typeof(Program)).Info(message);
+}
+
+static bool PollIcom705(object[] parameters)
+{
+    var ports = ComPortHelper.EnumerateComPorts();
+    var menu = new List<ConsoleManagementElement>();
+    var key = ConsoleKey.D1;
+    foreach (var port in ports)
     {
-        Port = "COM10",
-        BaudRate = 9600,
-        DataBits = U2.MultiRig.Code.Data.DataBits.IndexOf(8),
-        Parity = (int)U2.MultiRig.Code.Data.Parity.None,
-        StopBits = (int)U2.MultiRig.Code.Data.StopBits.IndexOf(1m),
-        
-    };
+        menu.Add(new()
+        {
+            Function = PollIcom705Port,
+            FunctionParameters = new object[]{ key },
+            Key = key,
+            Title = port.Description,
+        });
+        key++;
+    }
+
+    ManageFlow(menu);
 
     return true;
 }
@@ -57,7 +71,7 @@ static void ManageFlow(List<ConsoleManagementElement> input)
                 Console.WriteLine(func.Title);
                 Console.WriteLine("---------------------------------------");
 
-                func.Function();
+                func.Function(func.FunctionParameters);
 
                 Console.WriteLine("---------------------------------------");
                 Console.WriteLine("Press any key to continue...");
@@ -75,9 +89,33 @@ static void ManageFlow(List<ConsoleManagementElement> input)
         }
     }
 }
-public sealed class ConsoleManagementElement
+
+static bool PollIcom705Port(params object[] parameters)
 {
-    public ConsoleKey Key { get; init; }
-    public string? Title { get; init; }
-    public Func<bool>? Function { get; init; }
+    Log("Entered PollIcom705()");
+
+    Console.WriteLine("Polling the Icom IC-705");
+    Console.Write("Select the COM port the device is connected to.");
+
+    var key = (ConsoleKey)parameters[0];
+    var ports = ComPortHelper.EnumerateComPorts();
+    var index = key - ConsoleKey.D1;
+    var settings = new RigSettings
+    {
+        Port = ports.ElementAt(index).Name,
+        BaudRate = 57600,
+        DataBits = 8,
+        Parity = (int)U2.MultiRig.Code.Data.Parity.None,
+        StopBits = (int)U2.MultiRig.Code.Data.StopBits.IndexOf(1m),
+    };
+
+    var rig = new Rig(1, settings);
+    rig.Connect();
+
+    Console.WriteLine("Press Enter to continue.");
+    Console.ReadLine();
+
+    rig.Dispose();
+
+    return true;
 }

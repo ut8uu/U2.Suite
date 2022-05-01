@@ -22,31 +22,31 @@ internal static class RigCommandUtilities
     public const string Validate = nameof(Validate);
     public const string Value = nameof(Value);
 
-    public static readonly TRigParam[] NumericParameters =
+    public static readonly RigParameter[] NumericParameters =
     {
-        TRigParam.Freq,
-        TRigParam.FreqA,
-        TRigParam.FreqB,
-        TRigParam.Pitch,
-        TRigParam.RitOffset,
+        RigParameter.Freq,
+        RigParameter.FreqA,
+        RigParameter.FreqB,
+        RigParameter.Pitch,
+        RigParameter.RitOffset,
     };
 
-    public static readonly TRigParam[] VfoParams =
+    public static readonly RigParameter[] VfoParams =
     {
-        TRigParam.VfoAA, TRigParam.VfoAB, TRigParam.VfoBA,
-        TRigParam.VfoBB, TRigParam.VfoA, TRigParam.VfoB,
-        TRigParam.VfoEqual, TRigParam.VfoSwap,
+        RigParameter.VfoAA, RigParameter.VfoAB, RigParameter.VfoBA,
+        RigParameter.VfoBB, RigParameter.VfoA, RigParameter.VfoB,
+        RigParameter.VfoEqual, RigParameter.VfoSwap,
     };
 
-    public static readonly TRigParam[] SplitParams = { TRigParam.SplitOn, TRigParam.SplitOff, };
-    public static readonly TRigParam[] RitOnParams = { TRigParam.RitOn, TRigParam.RitOff, };
-    public static readonly TRigParam[] XitOnParams = { TRigParam.XitOn, TRigParam.XitOff, };
-    public static readonly TRigParam[] TxParams = { TRigParam.Rx, TRigParam.Tx, };
+    public static readonly RigParameter[] SplitParams = { RigParameter.SplitOn, RigParameter.SplitOff, };
+    public static readonly RigParameter[] RitOnParams = { RigParameter.RitOn, RigParameter.RitOff, };
+    public static readonly RigParameter[] XitOnParams = { RigParameter.XitOn, RigParameter.XitOff, };
+    public static readonly RigParameter[] TxParams = { RigParameter.Rx, RigParameter.Tx, };
 
-    public static readonly TRigParam[] ModeParams =
+    public static readonly RigParameter[] ModeParams =
     {
-        TRigParam.CW_U, TRigParam.CW_L, TRigParam.SSB_U, TRigParam.SSB_L,
-        TRigParam.DIG_U, TRigParam.DIG_L, TRigParam.AM, TRigParam.FM,
+        RigParameter.CW_U, RigParameter.CW_L, RigParameter.SSB_U, RigParameter.SSB_L,
+        RigParameter.DIG_U, RigParameter.DIG_L, RigParameter.AM, RigParameter.FM,
     };
 
     private static readonly Type[] IniFileRelatedExceptions =
@@ -167,7 +167,7 @@ internal static class RigCommandUtilities
                 cmd.Value = LoadValue(iniFile, section, Value);
                 ValidateValue(cmd.Value, cmd.Code.Length);
 
-                if (cmd.Value.Param != TRigParam.None)
+                if (cmd.Value.Param != RigParameter.None)
                 {
                     throw new LoadWriteCommandException("parameter name is not allowed");
                 }
@@ -425,7 +425,7 @@ internal static class RigCommandUtilities
     {
         if (mask.Mask.Length == 0
             && mask.Flags.Length == 0
-            && (mask.Param == TRigParam.None))
+            && (mask.Param == RigParameter.None))
         {
             return;
         }
@@ -452,7 +452,7 @@ internal static class RigCommandUtilities
 
         if (AreEqual(entryName, "validate"))
         {
-            if (mask.Param != TRigParam.None)
+            if (mask.Param != RigParameter.None)
             {
                 throw new MaskValidationException("Parameter name is not allowed");
             }
@@ -467,7 +467,7 @@ internal static class RigCommandUtilities
         }
         else
         {
-            if (mask.Param == TRigParam.None)
+            if (mask.Param == RigParameter.None)
             {
                 throw new MaskValidationException("Parameter name is missing");
             }
@@ -572,7 +572,7 @@ internal static class RigCommandUtilities
     {
         try
         {
-            if (value.Param == TRigParam.None)
+            if (value.Param == RigParameter.None)
             {
                 return;
             }
@@ -647,7 +647,7 @@ internal static class RigCommandUtilities
             var value = LoadValue(iniFile, section, iniSetting.Key);
             ValidateValue(value, Math.Max(cmd.ReplyLength, cmd.Validation.Mask.Length));
 
-            if (value.Param == TRigParam.None)
+            if (value.Param == RigParameter.None)
             {
                 // parameter name is missing
                 return false;
@@ -668,18 +668,18 @@ internal static class RigCommandUtilities
         }
     }
 
-    public static int ParamsToInt(List<TRigParam> parameters)
+    public static int ParamsToInt(List<RigParameter> parameters)
     {
         return parameters.Aggregate(0, (current, param) => current | (int) param);
     }
 
-    public static int ParamToInt(TRigParam parameter)
+    public static int ParamToInt(RigParameter parameter)
     {
         return Convert.ToInt32(parameter);
     }
 
-    public static TRigParam IntToParam(int value)
+    public static RigParameter IntToParam(int value)
     {
-        return (TRigParam) value;
+        return (RigParameter) value;
     }
 }

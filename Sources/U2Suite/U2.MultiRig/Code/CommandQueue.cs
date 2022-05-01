@@ -21,7 +21,7 @@ public partial class TQueueItem
 {
     public byte[] Code;
     public TCommandKind Kind;
-    public TRigParam Param = new TRigParam();
+    public RigParameter Param = new RigParameter();
     public int Number = 0;
     public object CustSender = new object();
     public int ReplyLength = 0;

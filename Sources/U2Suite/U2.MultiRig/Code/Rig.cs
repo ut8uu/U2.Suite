@@ -12,10 +12,10 @@ using U2.Core;
 
 namespace U2.MultiRig;
 
-public class TRig : CustomRig
+public class Rig : CustomRig
 {
-    private readonly ILog _logger = LogManager.GetLogger(typeof(TRig));
-    protected readonly List<TRigParam> _changedParams = new List<TRigParam>();
+    private readonly ILog _logger = LogManager.GetLogger(typeof(Rig));
+    protected readonly List<RigParameter> _changedParams = new List<RigParameter>();
 
     private byte[] FormatValue(int inputValue, ParameterValue info)
     {
@@ -84,7 +84,7 @@ public class TRig : CustomRig
         return formatValueResult;
     }
 
-    public TRig(int rigNumber, RigSettings settings) 
+    public Rig(int rigNumber, RigSettings settings) 
         : base(rigNumber, settings)
     {
 
@@ -329,7 +329,7 @@ public class TRig : CustomRig
         _changedParams.Clear();
     }
     
-    protected override void ProcessWriteReply(TRigParam param, byte[] data)
+    protected override void ProcessWriteReply(RigParameter param, byte[] data)
     {
         ValidateReply(data, RigCommands.WriteCmd[(int)param].Validation);
     }
@@ -348,7 +348,7 @@ public class TRig : CustomRig
     }
     //add command to the queue
     
-    public override void AddWriteCommand(TRigParam param, int value = 0)
+    public override void AddWriteCommand(RigParameter param, int value = 0)
     {
         byte[] NewCode;
         _logger.DebugFormat("RIG{0} Generating Write command for {1}", RigNumber, param);
@@ -535,9 +535,9 @@ public class TRig : CustomRig
     ////////////////////////////////////////////////////////////////////////////////
     //                         store extracted param
     ////////////////////////////////////////////////////////////////////////////////
-    private void StoreParam(TRigParam parameter)
+    private void StoreParam(RigParameter parameter)
     {
-        TRigParam parsedParam;
+        RigParameter parsedParam;
 
         if (RigCommandUtilities.VfoParams.Contains(parameter))
         {
@@ -582,34 +582,34 @@ public class TRig : CustomRig
         if ((RigCommandUtilities.ModeParams.Contains(parameter)) 
             && (parameter != LastWrittenMode))
         {
-            LastWrittenMode = TRigParam.None;
+            LastWrittenMode = RigParameter.None;
         }
 
         _logger.DebugFormat("RIG{0} status changed: {1} enabled", RigNumber, parameter);
     }
     
-    private void StoreParam(TRigParam Param, int Value)
+    private void StoreParam(RigParameter Param, int Value)
     {
         int PValue;
         switch (Param)
         {
-            case TRigParam.FreqA:
+            case RigParameter.FreqA:
                 PValue = FFreqA;
                 break;
 
-            case TRigParam.FreqB:
+            case RigParameter.FreqB:
                 PValue = FFreqB;
                 break;
 
-            case TRigParam.Freq:
+            case RigParameter.Freq:
                 PValue = FFreq;
                 break;
 
-            case TRigParam.Pitch:
+            case RigParameter.Pitch:
                 PValue = FPitch;
                 break;
 
-            case TRigParam.RitOffset:
+            case RigParameter.RitOffset:
                 PValue = FRitOffset;
                 break;
 

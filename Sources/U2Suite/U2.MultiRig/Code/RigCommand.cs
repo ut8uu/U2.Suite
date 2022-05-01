@@ -30,7 +30,7 @@ public struct ParameterValue
     public ValueFormat Format; //encode or decode according to this format
     public double Mult;
     public double Add;    //linear transformation before encoding or after decoding
-    public TRigParam Param;     //param to insert or to report
+    public RigParameter Param;     //param to insert or to report
 }
 
 public enum ValueFormat
@@ -53,11 +53,11 @@ public struct BitMask
 {
     public byte[] Mask;   //do bitwise AND with this mask
     public byte[] Flags;  //compare result to these bits
-    public TRigParam Param;   //report this param if bits match
+    public RigParameter Param;   //report this param if bits match
 }
 
 [Flags]
-public enum TRigParam
+public enum RigParameter
 {
     None = 0,
     Freq = 1,
