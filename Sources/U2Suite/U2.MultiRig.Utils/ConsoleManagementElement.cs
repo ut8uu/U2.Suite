@@ -1,4 +1,6 @@
-﻿public sealed class ConsoleManagementElement
+﻿namespace U2.MultiRig.Utils;
+
+public sealed class ConsoleManagementElement
 {
     public ConsoleKey Key { get; init; }
     public string? Title { get; init; }
