@@ -112,4 +112,8 @@ public enum Entry
     Flag4,
     Flag5,
     Flag6,
+    Flag7,
+    Flag8,
+    Flag9,
+    Flag10,
 }

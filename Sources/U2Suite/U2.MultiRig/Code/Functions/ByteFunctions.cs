@@ -84,7 +84,7 @@ public static class ByteFunctions
 
             return result;
         }
-        else if (HexChars.Contains(trimmedString[0]))
+        else if (HexChars.Contains(trimmedString[0], StringComparison.InvariantCultureIgnoreCase))
         {
             return HexStrToBytes(trimmedString);
         }

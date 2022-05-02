@@ -118,8 +118,7 @@ internal static class RigCommandUtilities
 
     private static readonly Func<string, string, bool> StartsWith
      = (haystack, needle) => haystack.StartsWith(needle, StringComparison.InvariantCultureIgnoreCase);
-
-
+    
     private static KeyValuePair<string, string>[] LoadSectionSettings(IniFile iniFile, string section)
     {
         return iniFile.GetSectionSettings(section)
@@ -154,7 +153,8 @@ internal static class RigCommandUtilities
                 {
                     var allowedEntries = new[]
                     {
-                        Entry.Command, Entry.ReplyLength, Entry.ReplyEnd, Entry.Validate, Entry.Value
+                        Entry.Command, Entry.ReplyLength, Entry.ReplyEnd, Entry.Validate, 
+                        Entry.Value
                     };
                     ValidateEntries(entries, allowedEntries);
                 }
@@ -228,7 +228,9 @@ internal static class RigCommandUtilities
                 {
                     Entry.Command, Entry.ReplyLength, Entry.ReplyEnd, Entry.Validate,
                     Entry.Value1, Entry.Value2, Entry.Value3, Entry.Value4, Entry.Value5, Entry.Value6,
-                    Entry.Flag1, Entry.Flag2, Entry.Flag3, Entry.Flag4, Entry.Flag5, Entry.Flag6,
+                    Entry.Flag1, Entry.Flag2, Entry.Flag3, Entry.Flag4, 
+                    Entry.Flag5, Entry.Flag6, Entry.Flag7, Entry.Flag8,
+                    Entry.Flag9, Entry.Flag10, 
                 };
                 ValidateEntries(entries, allowedEntries);
 
@@ -240,7 +242,6 @@ internal static class RigCommandUtilities
                     throw new LoadStatusCommandsException("Reply length or reply end must be specified.");
                 }
 
-                cmd.Validation.Mask = Array.Empty<byte>();
                 cmd.Values.Clear();
                 cmd.Flags.Clear();
 
@@ -269,7 +270,7 @@ internal static class RigCommandUtilities
             }
             catch (Exception ex)
             {
-                throw new LoadStatusCommandsException("Error loading of STATUS section.", ex);
+                throw new LoadStatusCommandsException($"Error loading of STATUS section. {ex.Message}", ex);
             }
         }
 
@@ -385,7 +386,7 @@ internal static class RigCommandUtilities
             .FirstOrDefault(s => s.Name == settingName);
         if (iniSetting != null)
         {
-            return iniSetting.Value ?? defaultValue;
+            return (iniSetting.Value ?? defaultValue).Trim();
         }
 
         return defaultValue;
@@ -540,18 +541,18 @@ internal static class RigCommandUtilities
             {
                 result.Mult = Convert.ToDouble(elements[3], CultureInfo.InvariantCulture);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw new ValueLoadErrorException($"invalid Multiplier value in '{value}'");
+                throw new ValueLoadErrorException($"invalid Multiplier value in '{value}'. {ex.Message}");
             }
 
             try
             {
-                result.Add = Convert.ToDouble(elements[4]);
+                result.Add = Convert.ToDouble(elements[4], CultureInfo.InvariantCulture);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw new ValueLoadErrorException($"invalid Add value in '{value}'");
+                throw new ValueLoadErrorException($"invalid Add value in '{value}'. {ex.Message}");
             }
 
             return result;

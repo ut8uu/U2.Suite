@@ -1,14 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using DeepEqual.Syntax;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using U2.Core;
 using U2.MultiRig.Code;
 using U2.Tests.Common;
 using Xunit;
+using Assert = Xunit.Assert;
 
 namespace U2.MultiRig.Tests
 {
@@ -176,6 +178,73 @@ namespace U2.MultiRig.Tests
             var file = Path.Combine(IniDirectory, fileName);
             File.WriteAllText(file, data);
             Assert.Throws<IniFileLoadException>(() => RigCommandUtilities.LoadRigCommands(file));
+        }
+
+        [Theory]
+        [ClassData(typeof(RigCommandTestsStatusRecordsData))]
+        public void ReadStatusRecords(StatusTestData testData)
+        {
+            var fileName = "ReadStatusRecords.ini";
+            var file = Path.Combine(IniDirectory, fileName);
+            File.WriteAllText(file, testData.Text);
+
+            var cmd = LoadIni(fileName);
+            var statusCmd = cmd.StatusCmd.Single();
+            Assert.Equal(testData.Command, statusCmd.Code);
+            var value = Assert.Single(statusCmd.Values);
+            Assert.Equal(testData.ParameterValue.Len, value.Len);
+            Assert.Equal(testData.ParameterValue.Add, value.Add);
+            Assert.Equal(testData.ParameterValue.Mult, value.Mult);
+            Assert.Equal(testData.ParameterValue.Start, value.Start);
+            Assert.Equal(testData.ParameterValue.Format, value.Format);
+            Assert.Equal(testData.ParameterValue.Param, value.Param);
+
+            if (testData.Flags != null && testData.Flags.Any())
+            {
+                Assert.Equal(testData.Flags.Length, statusCmd.Flags.Count);
+                var expectedFlags = testData.Flags.First();
+                var actualFlags = statusCmd.Flags.First();
+                Assert.Equal(expectedFlags.Flags, actualFlags.Flags);
+                Assert.Equal(expectedFlags.Mask, actualFlags.Mask);
+                Assert.Equal(expectedFlags.Param, actualFlags.Param);
+            }
+        }
+
+        [Theory]
+        [ClassData(typeof(RigCommandTestsWriteRecordsData))]
+        public void ReadWriteRecords(WriteTestData testData)
+        {
+            var fileName = "ReadWriteRecords.ini";
+            var file = Path.Combine(IniDirectory, fileName);
+            File.WriteAllText(file, testData.Text);
+
+            var cmd = LoadIni(fileName);
+            var writeCmd = cmd.WriteCmd.Single();
+            Assert.Equal(testData.Command, writeCmd.Code);
+            var value = writeCmd.Value;
+            Assert.Equal(testData.ParameterValue.Len, value.Len);
+            Assert.Equal(testData.ParameterValue.Add, value.Add);
+            Assert.Equal(testData.ParameterValue.Mult, value.Mult);
+            Assert.Equal(testData.ParameterValue.Start, value.Start);
+            Assert.Equal(testData.ParameterValue.Format, value.Format);
+            Assert.Equal(testData.ParameterValue.Param, value.Param);
+
+            if (testData.Command != null && testData.Command.Any())
+            {
+                Assert.Equal(testData.Command, writeCmd.Code);
+                Assert.Equal(testData.Validate, writeCmd.Validation.Flags);
+                Assert.Equal(testData.ReplyLength, writeCmd.ReplyLength);
+                Assert.Equal(testData.ParameterValue, writeCmd.Value);
+            }
+        }
+
+        [Fact]
+        public void CanReadIc705()
+        {
+            var cmd = LoadIni("IC-705.ini");
+            Assert.Equal(3, cmd.InitCmd.Count);
+            Assert.Equal(9, cmd.StatusCmd.Count);
+            Assert.Equal(24, cmd.WriteCmd.Count);
         }
     }
 }
