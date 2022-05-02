@@ -244,7 +244,38 @@ namespace U2.MultiRig.Tests
             var cmd = LoadIni("IC-705.ini");
             Assert.Equal(3, cmd.InitCmd.Count);
             Assert.Equal(9, cmd.StatusCmd.Count);
-            Assert.Equal(24, cmd.WriteCmd.Count);
+            var parameters = new[]
+            {
+                RigParameter.FreqA,
+                RigParameter.FreqB,
+                RigParameter.Rit0,
+                RigParameter.Pitch,
+                RigParameter.SplitOn,
+                RigParameter.SplitOff,
+                RigParameter.VfoA,
+                RigParameter.VfoB,
+                RigParameter.VfoEqual,
+                RigParameter.VfoSwap,
+                RigParameter.VfoAA,
+                RigParameter.VfoAB,
+                RigParameter.VfoBA,
+                RigParameter.VfoBB,
+                RigParameter.RitOn,
+                RigParameter.RitOff,
+                RigParameter.XitOn,
+                RigParameter.XitOff,
+                RigParameter.Rx,
+                RigParameter.Tx,
+                RigParameter.CW_U,
+                RigParameter.CW_L,
+                RigParameter.SSB_U,
+                RigParameter.SSB_L,
+                RigParameter.DIG_U,
+                RigParameter.DIG_L,
+                RigParameter.AM,
+                RigParameter.FM,
+            };
+            Assert.Equal(parameters.Length, cmd.WriteCmd.Count);
         }
     }
 }
