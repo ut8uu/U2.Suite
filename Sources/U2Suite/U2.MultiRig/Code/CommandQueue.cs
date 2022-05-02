@@ -2,49 +2,48 @@
 using System.IO;
 using System.Data;
 using System.Collections;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace U2.MultiRig;
 
-public enum TCommandKind
+public enum CommandKind
 {
-    ckInit, ckWrite, ckStatus, ckCustom
+    Init, Write, Status, Custom
 }
 
-public enum TExchangePhase
+public enum ExchangePhase
 {
-    phSending, phReceiving, phIdle
+    Sending, Receiving, Idle
 }
 
-public partial class TQueueItem
+public sealed class QueueItem
 {
-    public byte[] Code;
-    public TCommandKind Kind;
-    public RigParameter Param = new RigParameter();
-    public int Number = 0;
-    public object CustSender = new object();
-    public int ReplyLength = 0;
-    public string ReplyEnd = string.Empty;
+    public byte[] Code { get; set; }
+    public CommandKind Kind { get; set; }
+    public RigParameter Param { get; set; } = new RigParameter();
+    public int Number { get; set; } = 0;
+    public object CustSender { get; set; } = new object();
+    public int ReplyLength { get; set; } = 0;
+    public string ReplyEnd { get; set; } = string.Empty;
 
     public bool NeedsReply => ReplyLength > 0 || ReplyEnd != string.Empty;
 }
 
 
-public partial class TCommandQueue : Collection<TQueueItem>
+public sealed class CommandQueue : Collection<QueueItem>
 {
-    public TExchangePhase Phase;
+    public ExchangePhase Phase;
     
-    public TQueueItem Add()
+    public QueueItem Add()
     {
-        var item = new TQueueItem();
+        var item = new QueueItem();
         Add(item);
         return item;
     }
 
-    public void AddBeforeStatusCommands(TQueueItem item)
+    public void AddBeforeStatusCommands(QueueItem item)
     {
-        var firstStatusItem = Items.FirstOrDefault(x => x.Kind == TCommandKind.ckStatus);
+        var firstStatusItem = Items.FirstOrDefault(x => x.Kind == CommandKind.Status);
         if (firstStatusItem == null)
         {
             Add(item);
@@ -65,8 +64,8 @@ public partial class TCommandQueue : Collection<TQueueItem>
 
     public bool HasStatusCommands
     {
-        get { return Items.Any(x => x.Kind == TCommandKind.ckStatus); }
+        get { return Items.Any(x => x.Kind == CommandKind.Status); }
     }
 
-    public TQueueItem CurrentCmd => Items[0];
+    public QueueItem CurrentCmd => Items[0];
 }

@@ -3,6 +3,7 @@ using DynamicData;
 using log4net;
 using U2.Core;
 using U2.MultiRig;
+using U2.MultiRig.Utils;
 
 List<ConsoleManagementElement> mainMenu
     = new List<ConsoleManagementElement>

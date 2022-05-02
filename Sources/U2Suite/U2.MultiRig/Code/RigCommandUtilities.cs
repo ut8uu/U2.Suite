@@ -7,6 +7,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using log4net;
 using SoftCircuits.IniFileParser;
 using U2.Core;
 using U2.MultiRig.Code;
@@ -67,9 +68,9 @@ internal static class RigCommandUtilities
             {
                 list.Add(RigCommandUtilities.LoadRigCommands(file));
             }
-            catch (IniFileLoadException)
+            catch (IniFileLoadException ex)
             {
-#warning Log this
+                LogManager.GetLogger(typeof(RigCommandUtilities)).Error($"Error loading ini file. {ex.Message}");
             }
         }
 
@@ -127,6 +128,24 @@ internal static class RigCommandUtilities
             .ToArray();
     }
 
+    private static void ValidateWriteCommandEntries(IniFile iniFile, string section)
+    {
+        try
+        {
+            var allowedEntries = new[]
+            {
+                Entry.Command, Entry.ReplyLength, Entry.ReplyEnd, Entry.Validate,
+                Entry.Value
+            };
+            var entries = LoadSectionSettings(iniFile, section);
+            ValidateEntries(entries, allowedEntries);
+        }
+        catch (UnexpectedEntryException ex)
+        {
+            throw new LoadWriteCommandException(ex.Message);
+        }
+    }
+
     /// <summary>
     /// 
     /// </summary>
@@ -143,25 +162,7 @@ internal static class RigCommandUtilities
         {
             try
             {
-                var entries = LoadSectionSettings(iniFile, section);
-                if (entries.Length == 0)
-                {
-                    continue;
-                }
-
-                try
-                {
-                    var allowedEntries = new[]
-                    {
-                        Entry.Command, Entry.ReplyLength, Entry.ReplyEnd, Entry.Validate, 
-                        Entry.Value
-                    };
-                    ValidateEntries(entries, allowedEntries);
-                }
-                catch (UnexpectedEntryException ex)
-                {
-                    throw new LoadWriteCommandException(ex.Message);
-                }
+                ValidateWriteCommandEntries(iniFile, section);
 
                 var cmd = LoadCommon(iniFile, section);
                 cmd.Value = LoadValue(iniFile, section, Value);
@@ -583,21 +584,19 @@ internal static class RigCommandUtilities
                 len = int.MaxValue;
             }
 
+            if (value.Start < 0 || value.Start >= len)
             {
-                if ((value.Start < 0) || (value.Start >= len))
-                {
-                    throw new ValueValidationException("Invalid Start value");
-                }
+                throw new ValueValidationException($"Invalid Start value: {value.Start}");
+            }
 
-                if (value.Len < 0 || value.Start + value.Len > len)
-                {
-                    throw new ValueValidationException("invalid Length value");
-                }
+            if (value.Len < 0 || value.Start + value.Len > len)
+            {
+                throw new ValueValidationException($"invalid Length value. Start={value.Start}, Len={value.Len}");
+            }
 
-                if (value.Mult <= 0)
-                {
-                    throw new ValueValidationException("invalid Multiplier value");
-                }
+            if (value.Mult <= 0)
+            {
+                throw new ValueValidationException($"invalid Multiplier value: {value.Mult}");
             }
         }
         catch (Exception e)

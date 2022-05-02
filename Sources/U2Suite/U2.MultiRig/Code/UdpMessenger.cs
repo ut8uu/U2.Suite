@@ -24,7 +24,7 @@ public delegate void RigTypeChangedEventHandler(int rigNumber, string newRigType
 public delegate void RigParametersEventHandler(int rigNumber, int parameters);
 public delegate void RigCustomCommandEventHandler(int rigNumber, byte[] customCommand);
 
-public sealed class UdpMessenger
+public sealed class UdpMessenger : IDisposable
 {
     private const int TxPort = 11101;
     private const int RxPort = 11102;

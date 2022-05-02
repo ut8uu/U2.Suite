@@ -2,9 +2,11 @@
 using System.IO;
 using System.Data;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using U2.MultiRig.Code;
 using log4net;
@@ -263,12 +265,12 @@ public class Rig : CustomRig
     ////////////////////////////////////////////////////////////////////////////////
     //                          add command to queue
     ////////////////////////////////////////////////////////////////////////////////
-    protected override void AddCommands(IEnumerable<RigCommand> commands, TCommandKind kind)
+    protected override void AddCommands(IEnumerable<RigCommand> commands, CommandKind kind)
     {
         var index = 0;
         foreach (var command in commands)
         {
-            FQueue.Add(new TQueueItem
+            _queue.Add(new QueueItem
             {
                 Code = command.Code,
                 Number = index++,
@@ -286,21 +288,20 @@ public class Rig : CustomRig
     
     protected override void ProcessStatusReply(int number, byte[] data)
     {
-        int i = 0;
         //validate reply
-        var Cmd = RigCommands.StatusCmd[number];
+        var cmd = RigCommands.StatusCmd[number];
 
-        if (!ValidateReply(data, Cmd.Validation))
+        if (!ValidateReply(data, cmd.Validation))
         {
             return;
         }
 
         //extract numeric values
-        for (i = 0; i <= Cmd.Values.Count - 1; i++)
+        for (var index = 0; index <= cmd.Values.Count - 1; index++)
         {
             try
             {
-                StoreParam(Cmd.Values[i].Param, UnformatValue(data, Cmd.Values[i]));
+                StoreParam(cmd.Values[index].Param, UnformatValue(data, cmd.Values[index]));
             }
             catch (Exception ex)
             {
@@ -309,15 +310,16 @@ public class Rig : CustomRig
         }
 
         //extract bit flags
-        for (i = 0; i <= Cmd.Flags.Count - 1; i++)
+        for (var index = 0; index <= cmd.Flags.Count - 1; index++)
         {
-            if ((data.Length != Cmd.Flags[i].Mask.Length) || (data.Length != Cmd.Flags[i].Flags.Length))
+            if (data.Length != cmd.Flags[index].Mask.Length 
+                || data.Length != cmd.Flags[index].Flags.Length)
             {
                 _logger.ErrorFormat("RIG{0}: incorrect reply length", RigNumber);
             }
-            else if (Cmd.Flags[i].Flags.SequenceEqual(ByteFunctions.BytesAnd(data, Cmd.Flags[i].Mask)))
+            else if (cmd.Flags[index].Flags.SequenceEqual(ByteFunctions.BytesAnd(data, cmd.Flags[index].Mask)))
             {
-                StoreParam(Cmd.Flags[i].Param);
+                StoreParam(cmd.Flags[index].Param);
             }
         }
 
@@ -335,16 +337,16 @@ public class Rig : CustomRig
     }
 
 
-    private static object _processCustomReplyLockObject = new object();
-    protected override void ProcessCustomReply(object ASender, byte[] ACode, byte[] AData)
+    private static readonly object ProcessCustomReplyLockObject = new();
+    protected override void ProcessCustomReply(object sender, byte[] code, byte[] data)
     {
-        lock (_processCustomReplyLockObject)
+        lock (ProcessCustomReplyLockObject)
         {
             //MissedLogic.TOmniRigX(ASender).CustCommand = ACode;
             //MissedLogic.TOmniRigX(ASender).CustReply = AData;
         }
         
-        _udpMessenger.ComNotifyCustom(RigNumber, ASender);
+        _udpMessenger.ComNotifyCustom(RigNumber, sender);
     }
     //add command to the queue
     
@@ -390,15 +392,15 @@ public class Rig : CustomRig
         }
 
         //add to queue
-        var queueItem = new TQueueItem
+        var queueItem = new QueueItem
         {
             Code = NewCode,
             Param = param,
-            Kind = TCommandKind.ckWrite,
+            Kind = CommandKind.Write,
             ReplyLength = cmd.ReplyLength,
             ReplyEnd = ByteFunctions.BytesToStr(cmd.ReplyEnd),
         };
-        FQueue.AddBeforeStatusCommands(queueItem);
+        _queue.AddBeforeStatusCommands(queueItem);
 
         //reminder to check queue
         _udpMessenger.TxQueue(RigNumber);
@@ -412,16 +414,16 @@ public class Rig : CustomRig
             return;
         }
 
-        var item = new TQueueItem
+        var item = new QueueItem
         {
             Code = code,
-            Kind = TCommandKind.ckCustom,
+            Kind = CommandKind.Custom,
             CustSender = sender,
             ReplyLength = len,
             ReplyEnd = end
         };
 
-        FQueue.Add(item);
+        _queue.Add(item);
         _udpMessenger.TxQueue(RigNumber);
         CheckQueue();
     }
@@ -487,7 +489,6 @@ public class Rig : CustomRig
         return Convert.ToInt32(data);
     }
 
-    /* TRig */
     private int FromText(byte[] data)
     {
         try
@@ -532,48 +533,56 @@ public class Rig : CustomRig
         return sign * FromBinB(data);
     }
 
+    private static FieldInfo GetFieldInfo(string name)
+    {
+        var result = typeof(Rig).GetField(name, BindingFlags.NonPublic | BindingFlags.Instance);
+        Debug.Assert(result != null, $"Field {name} not found in Rig.");
+        return result;
+    }
+
     ////////////////////////////////////////////////////////////////////////////////
     //                         store extracted param
     ////////////////////////////////////////////////////////////////////////////////
     private void StoreParam(RigParameter parameter)
     {
-        RigParameter parsedParam;
-
+        FieldInfo field;
         if (RigCommandUtilities.VfoParams.Contains(parameter))
         {
-            parsedParam = FVfo;
+            field = GetFieldInfo(nameof(_vfo));
         }
         else if (RigCommandUtilities.SplitParams.Contains(parameter))
         {
-            parsedParam = FSplit;
+            field = GetFieldInfo(nameof(_split));
         }
         else if (RigCommandUtilities.RitOnParams.Contains(parameter))
         {
-            parsedParam = FRit;
+            field = GetFieldInfo(nameof(_rit));
         }
         else if (RigCommandUtilities.XitOnParams.Contains(parameter))
         {
-            parsedParam = FXit;
+            field = GetFieldInfo(nameof(_xit));
         }
         else if (RigCommandUtilities.TxParams.Contains(parameter))
         {
-            parsedParam = FTx;
+            field = GetFieldInfo(nameof(_tx));
         }
         else if (RigCommandUtilities.ModeParams.Contains(parameter))
         {
-            parsedParam = FMode;
+            field = GetFieldInfo(nameof(_mode));
         }
         else
         {
             return;
         }
 
-        if (parameter == parsedParam)
+        var fieldValue = field.GetValue(this);
+        if (fieldValue == null || parameter == (RigParameter)fieldValue)
         {
             return;
         }
 
-        parsedParam = parameter;
+        field.SetValue(this, parameter);
+
         _changedParams.Add(parameter);
 
         //unsolved problem:
@@ -588,43 +597,45 @@ public class Rig : CustomRig
         _logger.DebugFormat("RIG{0} status changed: {1} enabled", RigNumber, parameter);
     }
     
-    private void StoreParam(RigParameter Param, int Value)
+    private void StoreParam(RigParameter param, int value)
     {
-        int PValue;
-        switch (Param)
+        FieldInfo field;
+
+        switch (param)
         {
             case RigParameter.FreqA:
-                PValue = FFreqA;
+                field = GetFieldInfo(nameof(_freqA));
                 break;
 
             case RigParameter.FreqB:
-                PValue = FFreqB;
+                field = GetFieldInfo(nameof(_freqB));
                 break;
 
             case RigParameter.Freq:
-                PValue = FFreq;
+                field = GetFieldInfo(nameof(_freq));
                 break;
 
             case RigParameter.Pitch:
-                PValue = FPitch;
+                field = GetFieldInfo(nameof(_pitch));
                 break;
 
             case RigParameter.RitOffset:
-                PValue = FRitOffset;
+                field = GetFieldInfo(nameof(_ritOffset));
                 break;
 
             default:
                 return;
         }
 
-        if (Value == PValue)
+        var fieldValue = field.GetValue(this);
+        if (fieldValue == null || value == (int)fieldValue)
         {
             return;
         }
 
-        PValue = Value;
-        _changedParams.Add(Param);
-        _logger.DebugFormat("RIG{0} status changed: {1} = {2}", RigNumber, Param.ToString(), Convert.ToString(Value));
+        field.SetValue(this, value);
+        _changedParams.Add(param);
+        _logger.DebugFormat("RIG{0} status changed: {1} = {2}", RigNumber, param.ToString(), Convert.ToString(value));
     }
     
     private int FromFloat(byte[] data)
@@ -632,8 +643,8 @@ public class Rig : CustomRig
         try
         {
             var s = Encoding.UTF8.GetString(data);
-            return Convert.ToInt32(Math.Round(Convert.ToDouble(Convert.ToDouble(s.Trim())), 
-                MidpointRounding.AwayFromZero));
+            var value = Convert.ToDouble(s.Trim(), CultureInfo.InvariantCulture);
+            return Convert.ToInt32(Math.Round(value, MidpointRounding.AwayFromZero));
         }
         catch (Exception)
         {
