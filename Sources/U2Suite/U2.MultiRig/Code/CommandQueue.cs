@@ -67,5 +67,5 @@ public sealed class CommandQueue : Collection<QueueItem>
         get { return Items.Any(x => x.Kind == CommandKind.Status); }
     }
 
-    public QueueItem CurrentCmd => Items[0];
+    public QueueItem? CurrentCmd => Items.FirstOrDefault();
 }

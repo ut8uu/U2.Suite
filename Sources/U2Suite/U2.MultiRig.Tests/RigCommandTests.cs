@@ -71,6 +71,13 @@ namespace U2.MultiRig.Tests
         #endregion
 
         [Fact]
+        public void AllRigCommands()
+        {
+            var commands = U2.MultiRig.AllRigCommands.RigCommands;
+            Assert.Contains(commands, c => c.Title == "Status3");
+        }
+
+        [Fact]
         public void Status3()
         {
             var file = Path.Combine(IniDirectory, "Status3.ini");
