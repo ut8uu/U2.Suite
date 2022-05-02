@@ -41,7 +41,7 @@ public class RigCommandTestsWriteRecordsData : IEnumerable<object[]>
         return GetEnumerator();
     }
 
-    private WriteTestData GetFreqA()
+    private static WriteTestData GetFreqA()
     {
         return new WriteTestData
         {
@@ -72,7 +72,7 @@ Validate=FEFEA4E025000000000000FD.FEFEE0A4FBFD",
         };
     }
 
-    private WriteTestData GetFreqB()
+    private static WriteTestData GetFreqB()
     {
         return new WriteTestData
         {
@@ -103,7 +103,7 @@ Validate=FEFEA4E025010000000000FD.FEFEE0A4FBFD",
         };
     }
 
-    private WriteTestData GetRit0()
+    private static WriteTestData GetRit0()
     {
         return new WriteTestData
         {
@@ -124,7 +124,7 @@ Validate=FEFEA4E02100000000FD.FEFEE0A4FBFD",
         };
     }
 
-    private WriteTestData GetPitch()
+    private static WriteTestData GetPitch()
     {
         return new WriteTestData
         {
@@ -156,7 +156,7 @@ Validate=FEFEA4E014090000FD.FEFEE0A4FBFD",
         };
     }
 
-    private WriteTestData GetSplitOn()
+    private static WriteTestData GetSplitOn()
     {
         return new WriteTestData
         {
@@ -177,7 +177,7 @@ Validate=FEFEA4E00F01FD.FEFEE0A4FBFD",
         };
     }
 
-    private WriteTestData GetSplitOff()
+    private static WriteTestData GetSplitOff()
     {
         return new WriteTestData
         {
@@ -198,7 +198,7 @@ Validate=FEFEA4E00F00FD.FEFEE0A4FBFD",
         };
     }
 
-    private WriteTestData GetVfoA()
+    private static WriteTestData GetVfoA()
     {
         return new WriteTestData
         {
@@ -219,7 +219,7 @@ Validate=FEFEA4E00700FD.FEFEE0A4FBFD",
         };
     }
 
-    private WriteTestData GetVfoB()
+    private static WriteTestData GetVfoB()
     {
         return new WriteTestData
         {
@@ -240,7 +240,7 @@ Validate=FEFEA4E00701FD.FEFEE0A4FBFD",
         };
     }
 
-    private WriteTestData GetVfoEqual()
+    private static WriteTestData GetVfoEqual()
     {
         return new WriteTestData
         {
@@ -261,7 +261,7 @@ Validate=FEFEA4E007A0FD.FEFEE0A4FBFD",
         };
     }
 
-    private WriteTestData GetVfoSwap()
+    private static WriteTestData GetVfoSwap()
     {
         return new WriteTestData
         {
@@ -282,7 +282,7 @@ Validate=FEFEA4E007B0FD.FEFEE0A4FBFD",
         };
     }
 
-    private WriteTestData GetVfoAA()
+    private static WriteTestData GetVfoAA()
     {
         return new WriteTestData
         {
@@ -305,7 +305,7 @@ Validate=FEFEA4E00700FD.FEFEA4E00F00FD.FEFEE0A4FBFD",
         };
     }
 
-    private WriteTestData GetVfoAB()
+    private static WriteTestData GetVfoAB()
     {
         return new WriteTestData
         {
@@ -328,7 +328,7 @@ Validate=FEFEA4E00700FD.FEFEA4E00F01FD.FEFEE0A4FBFD",
         };
     }
 
-    private WriteTestData GetVfoBA()
+    private static WriteTestData GetVfoBA()
     {
         return new WriteTestData
         {
@@ -351,7 +351,7 @@ Validate=FEFEA4E00701FD.FEFEA4E00F00FD.FEFEE0A4FBFD",
         };
     }
 
-    private WriteTestData GetVfoBB()
+    private static WriteTestData GetVfoBB()
     {
         return new WriteTestData
         {
@@ -374,7 +374,7 @@ Validate=FEFEA4E00701FD.FEFEA4E00F00FD.FEFEE0A4FBFD",
         };
     }
 
-    private WriteTestData GetRitOn()
+    private static WriteTestData GetRitOn()
     {
         return new WriteTestData
         {
@@ -395,7 +395,7 @@ Validate=FEFEA4E0210101FD.FEFEE0A4FBFD",
         };
     }
 
-    private WriteTestData GetRitOff()
+    private static WriteTestData GetRitOff()
     {
         return new WriteTestData
         {
@@ -416,7 +416,7 @@ Validate=FEFEA4E0210100FD.FEFEE0A4FBFD",
         };
     }
 
-    private WriteTestData GetXitOn()
+    private static WriteTestData GetXitOn()
     {
         return new WriteTestData
         {
@@ -437,7 +437,7 @@ Validate=FEFEA4E0210201FD.FEFEE0A4FBFD",
         };
     }
 
-    private WriteTestData GetXitOff()
+    private static WriteTestData GetXitOff()
     {
         return new WriteTestData
         {
@@ -458,7 +458,7 @@ Validate=FEFEA4E0210200FD.FEFEE0A4FBFD",
         };
     }
 
-    private WriteTestData GetRx()
+    private static WriteTestData GetRx()
     {
         return new WriteTestData
         {
@@ -479,7 +479,7 @@ Validate=FEFEA4E01C0000FD.FEFEE0A4FBFD",
         };
     }
 
-    private WriteTestData GetTx()
+    private static WriteTestData GetTx()
     {
         return new WriteTestData
         {
@@ -499,7 +499,6 @@ Validate=FEFEA4E01C0001FD.FEFEE0A4FBFD",
             },
         };
     }
-
 }
 
 public class WriteTestData
