@@ -19,16 +19,21 @@ public class Rig : CustomRig
     private readonly ILog _logger = LogManager.GetLogger(typeof(Rig));
     protected readonly List<RigParameter> _changedParams = new List<RigParameter>();
 
+    public Rig(int rigNumber, RigSettings settings, RigCommands rigCommands) 
+        : base(rigNumber, settings, rigCommands)
+    {
+    }
+
     private byte[] FormatValue(int inputValue, ParameterValue info)
     {
         var value = Convert.ToInt32(Math.Round(Convert.ToDouble(inputValue * info.Mult + info.Add), MidpointRounding.AwayFromZero));
         var formatValueResult = new byte[info.Len];
         Array.Resize(ref formatValueResult, info.Len);
 
-        if (new[] { ValueFormat.BcdLU, ValueFormat.BcdBU }.Contains(info.Format)
+        if (info.Format is ValueFormat.BcdLU or ValueFormat.BcdBU
             && value < 0)
         {
-            //MainForm.Log("RIG{0}: {!}user passed invalid value: {1}", new string[] { RigNumber, Convert.ToString(AValue) });
+            _logger.ErrorFormat($"RIG{RigNumber}: user passed invalid value: {inputValue}");
             return formatValueResult;
         }
 
@@ -84,12 +89,6 @@ public class Rig : CustomRig
         }
 
         return formatValueResult;
-    }
-
-    public Rig(int rigNumber, RigSettings settings, RigCommands rigCommands) 
-        : base(rigNumber, settings, rigCommands)
-    {
-
     }
 
     //ASCII codes of digits
