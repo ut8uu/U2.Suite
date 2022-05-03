@@ -139,12 +139,13 @@ public abstract class CustomRig : IDisposable
         return Parities[parity];
     }
 
+    private readonly List<byte> _receiveQueue = new List<byte>();
     private void SerialPort_MessageReceived(object sender, MessageReceivedEventArgs args)
     {
         lock (RecvEventLockObject)
         {
-            var data = args.Data;
-            _logger.Debug($"RIG{RigNumber}: Received data {data}");
+            var receivedData = args.Data;
+            _receiveQueue.AddRange(receivedData);
 
             //some COM ports do not send EV_TXEMPTY
             if (_queue.Phase == ExchangePhase.Sending)
@@ -155,11 +156,13 @@ public abstract class CustomRig : IDisposable
 
             if (_queue.Phase == ExchangePhase.Receiving)
             {
-                _logger.DebugFormat("RIG{0} reply received: {1}", RigNumber, ByteFunctions.BytesToHex(data));
+                _logger.DebugFormat("RIG{0}: reply received: {1} ({2} bytes)", 
+                    RigNumber, ByteFunctions.BytesToHex(receivedData), receivedData.Length);
             }
             else
             {
-                _logger.DebugFormat("RIG{0} unexpected data received: {1}", RigNumber, ByteFunctions.BytesToHex(data));
+                _logger.ErrorFormat("RIG{0}: received data when not in the receiving state: {1} ({2} bytes)", 
+                    RigNumber, ByteFunctions.BytesToHex(receivedData), receivedData.Length);
                 return;
             }
 
@@ -170,26 +173,39 @@ public abstract class CustomRig : IDisposable
                 return;
             }
 
+            if (_queue.CurrentCmd.NeedsReply
+                && _queue.CurrentCmd.ReplyLength > _receiveQueue.Count)
+            {
+                _logger.Debug($"RIG{RigNumber}: Buffer has insufficient data. Waiting for the rest.");
+                return;
+            }
+
             //process data
             try
             {
+                DisableTimeoutTimer();
+
+                var data = _receiveQueue.Take(_queue.CurrentCmd.ReplyLength).ToArray();
+                var theTail = _receiveQueue.Skip(_queue.CurrentCmd.ReplyLength);
+                _receiveQueue.Clear();
+                _receiveQueue.AddRange(theTail);
                 var currentCommand = _queue.CurrentCmd;
                 switch (currentCommand.Kind)
                 {
                     case CommandKind.Init:
-                        ProcessInitReply(currentCommand.Number, data.ToArray());
+                        ProcessInitReply(currentCommand.Number, data);
                         break;
 
                     case CommandKind.Write:
-                        ProcessWriteReply(currentCommand.Param, data.ToArray());
+                        ProcessWriteReply(currentCommand.Param, data);
                         break;
 
                     case CommandKind.Status:
-                        ProcessStatusReply(currentCommand.Number, data.ToArray());
+                        ProcessStatusReply(currentCommand.Number, data);
                         break;
 
                     case CommandKind.Custom:
-                        ProcessCustomReply(currentCommand.CustSender, currentCommand.Code, data.ToArray());
+                        ProcessCustomReply(currentCommand.CustSender, currentCommand.Code, data);
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();
@@ -567,8 +583,8 @@ public abstract class CustomRig : IDisposable
     {
         _logger.Debug("Timer ticked.");
 
-        var connected = false;
-        if (!_serialPort.IsConnected)
+        var connected = _serialPort.IsConnected;
+        if (!connected)
         {
             _logger.Debug($"RIG{RigNumber} is not connected. (Re)Connecting.");
             connected = _serialPort.Connect();

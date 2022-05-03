@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using log4net;
+using U2.Core;
 using U2.MultiRig.Code;
 
 namespace U2.MultiRig;
@@ -11,6 +14,8 @@ namespace U2.MultiRig;
 internal static class ConversionFunctions
 {
     internal static readonly char[] Delimiter = { '|' };
+
+    private static ILog ClassLog => LogManager.GetLogger(typeof(ConversionFunctions));
 
     /// <summary>
     /// Reads mask from the string.
@@ -148,5 +153,351 @@ internal static class ConversionFunctions
         }
 
         return flagsFromMaskResult;
+    }
+
+    public static int FromBcdBS(byte[] data)
+    {
+        int sign = 0;
+
+        if (data[0] == 0)
+        {
+            sign = 1;
+        }
+        else
+        {
+            sign = -1;
+        }
+
+        data[0] = 0;
+        return sign * FromBcdBU(data);
+    }
+
+    public static int FromBcdBU(byte[] data)
+    {
+        var sb = new StringBuilder();
+        for (var i = 0; i <= data.Length - 1; i++)
+        {
+            sb.Append((char)('0' + data[i] / 16));
+            sb.Append((char)('0' + data[i] % 16));
+        }
+
+        try
+        {
+            return Convert.ToInt32(sb.ToString());
+        }
+        catch (Exception ex)
+        {
+            ClassLog.ErrorFormat("invalid BCD value: {0}. {1}", 
+                ByteFunctions.BytesToHex(data), ex.Message);
+            throw;
+        }
+    }
+
+    public static int FromBcdLS(byte[] data)
+    {
+        Array.Reverse(data);
+        return FromBcdBS(data);
+    }
+
+    public static int FromBcdLU(byte[] data)
+    {
+        Array.Reverse(data);
+        return FromBcdBU(data);
+    }
+
+    public static int FromBinB(byte[] data)
+    {
+        Array.Reverse(data);
+        return FromBinL(data);
+    }
+
+    public static int FromBinL(byte[] data)
+    {
+        return Convert.ToInt32(data);
+    }
+
+    public static int FromText(byte[] data)
+    {
+        try
+        {
+            var s = Encoding.UTF8.GetString(data);
+            return Convert.ToInt32(s);
+        }
+        catch (Exception)
+        {
+            ClassLog.ErrorFormat("Invalid reply: {0}", ByteFunctions.BytesToHex(data));
+            throw;
+        }
+    }
+
+    public static int FromDPIcom(byte[] data)
+    {
+        try
+        {
+            var s = Encoding.UTF8.GetString(data);
+            s = RegularExpressionHelper.MatchAndGetFirst("([\\d+\\.*\\d*])", s);
+            return Convert.ToInt32(Math.Round(Convert.ToDouble(1E6 * Convert.ToDouble(s.Trim())), MidpointRounding.AwayFromZero));
+        }
+        catch (Exception)
+        {
+            ClassLog.ErrorFormat("Invalid DPIcom reply: {0}", ByteFunctions.BytesToHex(data));
+            throw;
+        }
+    }
+
+    //16 bits. high bit of the 1-st byte is sign,
+    //the rest is integer, absolute value, big endian (not complementary!)
+    public static int FromYaesu(byte[] data)
+    {
+        var sign = -1;
+
+        if ((data[0] & 0x80) == 0)
+        {
+            sign = 1;
+        }
+
+        data[0] = (byte)(data[0] & 0x7F);
+        return sign * FromBinB(data);
+    }
+
+    public static int FromFloat(byte[] data)
+    {
+        try
+        {
+            var s = Encoding.UTF8.GetString(data);
+            var value = Convert.ToDouble(s.Trim(), CultureInfo.InvariantCulture);
+            return Convert.ToInt32(Math.Round(value, MidpointRounding.AwayFromZero));
+        }
+        catch (Exception)
+        {
+            ClassLog.ErrorFormat("Invalid reply: {0}", ByteFunctions.BytesToHex(data));
+            throw;
+        }
+    }
+
+    //bytes to value
+
+    ////////////////////////////////////////////////////////////////////////////////
+    //                                unformat
+    ////////////////////////////////////////////////////////////////////////////////
+    public static int UnformatValue(byte[] sourceData, ParameterValue info)
+    {
+        if (sourceData.Length < info.Start + info.Len)
+        {
+            ClassLog.Error($"Reply too short.");
+            throw new AbortException();
+        }
+
+        var data = sourceData.Skip(info.Start).Take(info.Len).ToArray();
+
+        return info.Format switch
+        {
+            ValueFormat.Text => FromText(data),
+            ValueFormat.BinL => FromBinL(data),
+            ValueFormat.BinB => FromBinB(data),
+            ValueFormat.BcdLU => FromBcdLU(data),
+            ValueFormat.BcdLS => FromBcdLS(data),
+            ValueFormat.BcdBU => FromBcdBU(data),
+            ValueFormat.BcdBS => FromBcdBS(data),
+            ValueFormat.DPIcom => FromDPIcom(data),
+            ValueFormat.Float => FromFloat(data),
+            ValueFormat.Yaesu => FromYaesu(data),
+            ValueFormat.None => 0,
+            ValueFormat.TextUD => 0,
+            _ => throw new ArgumentOutOfRangeException($"Format {info.Format} not recognized.")
+        };
+    }
+
+    public static byte[] FormatValue(int inputValue, ParameterValue info)
+    {
+        var value = Convert.ToInt32(Math.Round(Convert.ToDouble(inputValue * info.Mult + info.Add), MidpointRounding.AwayFromZero));
+        var formatValueResult = new byte[info.Len];
+        Array.Resize(ref formatValueResult, info.Len);
+
+        if (info.Format is ValueFormat.BcdLU or ValueFormat.BcdBU
+            && value < 0)
+        {
+            ClassLog.ErrorFormat($"Passed invalid value: {inputValue}. Expected to be a BCD kind.");
+            return formatValueResult;
+        }
+
+        switch (info.Format)
+        {
+            case ValueFormat.Text:
+                ToText(formatValueResult, value);
+                break;
+
+            case ValueFormat.BinL:
+                ToBinL(formatValueResult, value);
+                break;
+
+            case ValueFormat.BinB:
+                ToBinB(formatValueResult, value);
+                break;
+
+            case ValueFormat.BcdLU:
+                ToBcdLU(formatValueResult, value);
+                break;
+
+            case ValueFormat.BcdLS:
+                ToBcdLS(formatValueResult, value);
+                break;
+
+            case ValueFormat.BcdBU:
+                ToBcdBU(formatValueResult, value);
+                break;
+
+            case ValueFormat.BcdBS:
+                ToBcdBS(formatValueResult, value);
+                break;
+
+            case ValueFormat.Yaesu:
+                ToYaesu(formatValueResult, value);
+                break;
+
+            case ValueFormat.DPIcom:
+                ToDPIcom(formatValueResult, value);
+                break;
+
+            case ValueFormat.TextUD:
+                ToTextUD(formatValueResult, value);
+                break;
+
+            case ValueFormat.Float:
+                ToFloat(formatValueResult, value);
+                break;
+            case ValueFormat.None:
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
+
+        return formatValueResult;
+    }
+
+    //ASCII codes of digits
+
+    public static void ToText(byte[] arr, int value)
+    {
+        var len = arr.Length;
+
+        if (value < 0)
+        {
+            len--;
+        }
+
+        var s = value.ToString().PadLeft(len, '0');
+        var bytes = Encoding.UTF8.GetBytes(s);
+        bytes.CopyTo(arr, 0);
+    }
+
+    //BCD big endian signed
+    // ReSharper disable once InconsistentNaming
+
+    public static void ToBcdBS(byte[] arr, int value)
+    {
+        ToBcdBU(arr, Math.Abs(value));
+
+        if (value < 0)
+        {
+            arr[0] = 0xFF;
+        }
+    }
+
+    //BCD big endian unsigned
+    // ReSharper disable once InconsistentNaming
+
+    public static void ToBcdBU(byte[] arr, int value)
+    {
+        var chars = new byte[arr.Length];
+        ToText(chars, value);
+
+        for (var i = 0; i <= arr.Length - 1; i++)
+        {
+            var char1 = (byte)((chars[i * 2] - 0x30) << 4);
+            var char2 = (byte)(chars[i * 2 + 1] - 0x30);
+            arr[i] = (byte)(char1 | char2);
+        }
+    }
+
+    //BCD little endian signed; sign in high byte (00 or FF)
+    // ReSharper disable once InconsistentNaming
+
+    public static void ToBcdLS(byte[] arr, int value)
+    {
+        ToBcdLU(arr, Math.Abs(value));
+
+        if (value < 0)
+        {
+            arr[^1] = 0xFF;
+        }
+    }
+
+    //BCD little endian unsigned
+    // ReSharper disable once InconsistentNaming
+
+    public static void ToBcdLU(byte[] arr, int value)
+    {
+        ToBcdBU(arr, value);
+        Array.Reverse(arr);
+    }
+
+    //integer, big endian
+
+    public static void ToBinB(byte[] arr, int value)
+    {
+        ToBinL(arr, value);
+        Array.Reverse(arr);
+    }
+
+    //integer, little endian
+
+    public static void ToBinL(byte[] arr, int value)
+    {
+        var bytes = BitConverter.GetBytes(value);
+        if (BitConverter.IsLittleEndian)
+        {
+            Array.Reverse(bytes);
+        }
+        bytes.CopyTo(arr, 0);
+    }
+
+    public static void ToDPIcom(byte[] arr, int value)
+    {
+        var f = value / 1000000;
+        var s = Convert.ToString(f).PadLeft(arr.Length, '0');
+        var bytes = Encoding.UTF8.GetBytes(s);
+        bytes.CopyTo(arr, 0);
+    }
+
+    //16 bits. high bit of the 1-st byte is sign,
+    //the rest is integer, absolute value, big endian (not complementary!)
+
+    public static void ToYaesu(byte[] arr, int value)
+    {
+        ToBinB(arr, Math.Abs(value));
+
+        if (value < 0)
+        {
+            arr[0] = (byte)(arr[0] | 0x80);
+        }
+    }
+
+    // ReSharper disable once InconsistentNaming
+    public static void ToTextUD(byte[] arr, int value)
+    {
+        var prefix = (value >= 0) ? "U" : "D";
+        var s = prefix + Convert.ToString(Math.Abs(value))
+            .PadLeft(arr.Length - 1, '0');
+
+        var bytes = Encoding.UTF8.GetBytes(s);
+        bytes.CopyTo(arr, 0);
+    }
+
+    public static void ToFloat(byte[] arr, int value)
+    {
+        var s = value.ToString("F", CultureInfo.InvariantCulture).PadLeft(arr.Length, ' ');
+        var bytes = Encoding.UTF8.GetBytes(s);
+        bytes.CopyTo(arr, 0);
     }
 }
