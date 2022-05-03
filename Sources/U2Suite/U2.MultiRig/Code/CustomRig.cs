@@ -40,12 +40,10 @@ public abstract class CustomRig : IDisposable
 
     protected bool _online = false;
     protected RigCommands _rigCommands;
+    protected SerialPortInput _serialPort;
+    protected RigParameter LastWrittenMode = RigParameter.None;
 
     public int RigNumber { get; set; } = 0;
-    public int PollMs { get; set; } = 0;
-    public int TimeoutMs { get; set; } = 0;
-    public SerialPortInput _serialPort;
-    public RigParameter LastWrittenMode = RigParameter.None;
 
     public event SerialPortInput.ConnectionStatusChangedEventHandler? ConnectionStatusChanged;
 
