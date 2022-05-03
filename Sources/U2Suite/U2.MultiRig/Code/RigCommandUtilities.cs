@@ -57,6 +57,8 @@ internal static class RigCommandUtilities
         typeof(LoadStatusCommandsException),
     };
 
+    private static ILog ClassLog => LogManager.GetLogger(typeof(RigCommandUtilities));
+
     public static ReadOnlyCollection<RigCommands> LoadAllRigCommands()
     {
         var list = new List<RigCommands>();
@@ -64,13 +66,15 @@ internal static class RigCommandUtilities
         var files = Directory.EnumerateFiles(iniDirectory, "*.ini");
         foreach (var file in files)
         {
+            ClassLog.Debug($"Loading commands from {Path.GetFileNameWithoutExtension(file)}.");
             try
             {
-                list.Add(RigCommandUtilities.LoadRigCommands(file));
+                list.Add(LoadRigCommands(file));
             }
             catch (IniFileLoadException ex)
             {
-                LogManager.GetLogger(typeof(RigCommandUtilities)).Error($"Error loading ini file. {ex.Message}");
+                LogManager.GetLogger(typeof(RigCommandUtilities))
+                    .Error($"Error loading ini file. {ex.Message}");
             }
         }
 
@@ -101,12 +105,14 @@ internal static class RigCommandUtilities
 
         try
         {
+            var rigType = Path.GetFileNameWithoutExtension(pathToIniFile);
             var result = new RigCommands
             {
                 InitCmd = LoadInitCommands(iniFile),
                 StatusCmd = LoadStatusCommands(iniFile),
                 WriteCmd = LoadWriteCommands(iniFile),
-                Title = Path.GetFileNameWithoutExtension(pathToIniFile),
+                Title = rigType,
+                RigType = rigType,
             };
 
             return result;
@@ -118,12 +124,14 @@ internal static class RigCommandUtilities
     }
 
     private static readonly Func<string, string, bool> StartsWith
-     = (haystack, needle) => haystack.StartsWith(needle, StringComparison.InvariantCultureIgnoreCase);
+     = (haystack, needle) => haystack.Trim().StartsWith(needle.Trim(), StringComparison.InvariantCultureIgnoreCase);
     
     private static KeyValuePair<string, string>[] LoadSectionSettings(IniFile iniFile, string section)
     {
         return iniFile.GetSectionSettings(section)
-            .Where(e => !string.IsNullOrEmpty(e.Name))
+            .Where(e => !string.IsNullOrEmpty(e.Name) 
+                        && !StartsWith(e.Name, ";")
+                        && !StartsWith(e.Name, ":"))
             .Select(e => new KeyValuePair<string, string>(e.Name ?? string.Empty, e.Value ?? string.Empty))
             .ToArray();
     }
@@ -162,6 +170,11 @@ internal static class RigCommandUtilities
         {
             try
             {
+                if (!LoadSectionSettings(iniFile, section).Any())
+                {
+                    // the entire section is empty
+                    continue;
+                }
                 ValidateWriteCommandEntries(iniFile, section);
 
                 var cmd = LoadCommon(iniFile, section);
@@ -228,10 +241,14 @@ internal static class RigCommandUtilities
                 var allowedEntries = new[]
                 {
                     Entry.Command, Entry.ReplyLength, Entry.ReplyEnd, Entry.Validate,
-                    Entry.Value1, Entry.Value2, Entry.Value3, Entry.Value4, Entry.Value5, Entry.Value6,
+                    Entry.Value,
+                    Entry.Value1, Entry.Value2, Entry.Value3, Entry.Value4, Entry.Value5, 
+                    Entry.Value6, Entry.Value7, Entry.Value8, Entry.Value9, Entry.Value10,
                     Entry.Flag1, Entry.Flag2, Entry.Flag3, Entry.Flag4, 
                     Entry.Flag5, Entry.Flag6, Entry.Flag7, Entry.Flag8,
-                    Entry.Flag9, Entry.Flag10, 
+                    Entry.Flag9, Entry.Flag10, Entry.Flag11, Entry.Flag12, Entry.Flag13,
+                    Entry.Flag14, Entry.Flag15, Entry.Flag16, Entry.Flag17, Entry.Flag18, 
+                    Entry.Flag19, Entry.Flag20, Entry.Flag21, Entry.Flag22,
                 };
                 ValidateEntries(entries, allowedEntries);
 
@@ -323,7 +340,8 @@ internal static class RigCommandUtilities
     /// <param name="keys">A keys to be validated.</param>
     /// <param name="allowedEntries">A collection of allowed keys.</param>
     /// <exception cref="UnexpectedEntryException">Is thrown when unexpected key met.</exception>
-    internal static void ValidateEntries(IEnumerable<KeyValuePair<string, string>> keys, Entry[] allowedEntries)
+    internal static void ValidateEntries(IEnumerable<KeyValuePair<string, string>> keys, 
+        Entry[] allowedEntries)
     {
         if (!keys.Any())
         {
@@ -331,6 +349,9 @@ internal static class RigCommandUtilities
         }
 
         var allowedEntriesTitles = allowedEntries.Select(e => e.ToString());
+        var inputKeys = keys.Select(x => x.Key).ToArray();
+        var unresolvedEntries = inputKeys
+            .Where(k => !allowedEntriesTitles.Contains(k, StringComparer.InvariantCultureIgnoreCase)).ToArray();
         if (keys.Any(n => !allowedEntriesTitles.Contains(n.Key, StringComparer.CurrentCultureIgnoreCase)))
         {
             throw new UnexpectedEntryException();
@@ -351,7 +372,14 @@ internal static class RigCommandUtilities
         try
         {
             var settingValue = ReadStringFromIni(iniFile, section, Command, string.Empty);
-            result.Code = ByteFunctions.HexStrToBytes(settingValue);
+            if (StartsWith(settingValue, "("))
+            {
+                result.Code = ByteFunctions.StrToBytes(settingValue);
+            }
+            else
+            {
+                result.Code = ByteFunctions.HexStrToBytes(settingValue);
+            }
         }
         catch (Exception)
         {

@@ -43,6 +43,7 @@ public sealed class UdpMessenger : IDisposable
     public void Dispose()
     {
         _udp?.Stop();
+        _udp?.Dispose();
     }
 
     public event ApplicationVisibilityEventHandler? ShowApplication = null;

@@ -119,8 +119,9 @@ static bool PollIcom705Port(params object[] parameters)
         return true;
     }
 
+    settings.Enabled = true;
     var rig = new Rig(1, settings, rigCommands);
-    rig.Connect();
+    rig.Start();
 
     Console.WriteLine("Press Enter to continue.");
     Console.ReadLine();
