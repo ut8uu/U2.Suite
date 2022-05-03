@@ -311,193 +311,155 @@ internal static class ConversionFunctions
     public static byte[] FormatValue(int inputValue, ParameterValue info)
     {
         var value = Convert.ToInt32(Math.Round(Convert.ToDouble(inputValue * info.Mult + info.Add), MidpointRounding.AwayFromZero));
-        var formatValueResult = new byte[info.Len];
-        Array.Resize(ref formatValueResult, info.Len);
 
         if (info.Format is ValueFormat.BcdLU or ValueFormat.BcdBU
             && value < 0)
         {
             ClassLog.ErrorFormat($"Passed invalid value: {inputValue}. Expected to be a BCD kind.");
-            return formatValueResult;
+            return Array.Empty<byte>();
         }
 
-        switch (info.Format)
+        return info.Format switch
         {
-            case ValueFormat.Text:
-                ToText(formatValueResult, value);
-                break;
-
-            case ValueFormat.BinL:
-                ToBinL(formatValueResult, value);
-                break;
-
-            case ValueFormat.BinB:
-                ToBinB(formatValueResult, value);
-                break;
-
-            case ValueFormat.BcdLU:
-                ToBcdLU(formatValueResult, value);
-                break;
-
-            case ValueFormat.BcdLS:
-                ToBcdLS(formatValueResult, value);
-                break;
-
-            case ValueFormat.BcdBU:
-                ToBcdBU(formatValueResult, value);
-                break;
-
-            case ValueFormat.BcdBS:
-                ToBcdBS(formatValueResult, value);
-                break;
-
-            case ValueFormat.Yaesu:
-                ToYaesu(formatValueResult, value);
-                break;
-
-            case ValueFormat.DPIcom:
-                ToDPIcom(formatValueResult, value);
-                break;
-
-            case ValueFormat.TextUD:
-                ToTextUD(formatValueResult, value);
-                break;
-
-            case ValueFormat.Float:
-                ToFloat(formatValueResult, value);
-                break;
-            case ValueFormat.None:
-                break;
-            default:
-                throw new ArgumentOutOfRangeException();
-        }
-
-        return formatValueResult;
+            ValueFormat.Text => ToText(value, info.Len),
+            ValueFormat.BinL => ToBinL(value, info.Len),
+            ValueFormat.BinB => ToBinB(value, info.Len),
+            ValueFormat.BcdLU => ToBcdLU(value, info.Len),
+            ValueFormat.BcdLS => ToBcdLS(value, info.Len),
+            ValueFormat.BcdBU => ToBcdBU(value, info.Len),
+            ValueFormat.BcdBS => ToBcdBS(value, info.Len),
+            ValueFormat.Yaesu => ToYaesu(value, info.Len),
+            ValueFormat.DPIcom => ToDPIcom(value, info.Len),
+            ValueFormat.TextUD => ToTextUD(value, info.Len),
+            ValueFormat.Float => ToFloat(value, info.Len),
+            ValueFormat.None => Array.Empty<byte>(),
+            _ => throw new ArgumentOutOfRangeException($"{info.Format} not recognized.")
+        };
     }
 
     //ASCII codes of digits
 
-    public static void ToText(byte[] arr, int value)
+    public static byte[] ToText(int value, int len)
     {
-        var len = arr.Length;
-
-        if (value < 0)
-        {
-            len--;
-        }
-
         var s = value.ToString().PadLeft(len, '0');
-        var bytes = Encoding.UTF8.GetBytes(s);
-        bytes.CopyTo(arr, 0);
+        return Encoding.UTF8.GetBytes(s);
     }
 
     //BCD big endian signed
     // ReSharper disable once InconsistentNaming
 
-    public static void ToBcdBS(byte[] arr, int value)
+    public static byte[] ToBcdBS(int value, int len)
     {
-        ToBcdBU(arr, Math.Abs(value));
+        var result = ToBcdBU(Math.Abs(value), len);
 
         if (value < 0)
         {
-            arr[0] = 0xFF;
+            result[0] = 0xFF;
         }
+
+        return result;
     }
 
     //BCD big endian unsigned
     // ReSharper disable once InconsistentNaming
 
-    public static void ToBcdBU(byte[] arr, int value)
+    public static byte[] ToBcdBU(int value, int len)
     {
-        var chars = new byte[arr.Length];
-        ToText(chars, value);
+        var chars = ToText(value, len*2);
+        var result = new byte[len];
 
-        for (var i = 0; i <= arr.Length - 1; i++)
+        for (var i = 0; i < len; i++)
         {
             var char1 = (byte)((chars[i * 2] - 0x30) << 4);
             var char2 = (byte)(chars[i * 2 + 1] - 0x30);
-            arr[i] = (byte)(char1 | char2);
+            result[i] = (byte)(char1 | char2);
         }
+
+        return result;
     }
 
     //BCD little endian signed; sign in high byte (00 or FF)
     // ReSharper disable once InconsistentNaming
 
-    public static void ToBcdLS(byte[] arr, int value)
+    public static byte[] ToBcdLS(int value, int len)
     {
-        ToBcdLU(arr, Math.Abs(value));
+        var arr = ToBcdLU(Math.Abs(value), len);
 
         if (value < 0)
         {
             arr[^1] = 0xFF;
         }
+
+        return arr;
     }
 
     //BCD little endian unsigned
     // ReSharper disable once InconsistentNaming
 
-    public static void ToBcdLU(byte[] arr, int value)
+    public static byte[] ToBcdLU(int value, int len)
     {
-        ToBcdBU(arr, value);
+        var arr = ToBcdBU(value, len);
         Array.Reverse(arr);
+        return arr;
     }
 
     //integer, big endian
 
-    public static void ToBinB(byte[] arr, int value)
+    public static byte[] ToBinB(int value, int len)
     {
-        ToBinL(arr, value);
+        var arr = ToBinL(value, len);
         Array.Reverse(arr);
+        return arr;
     }
 
     //integer, little endian
 
-    public static void ToBinL(byte[] arr, int value)
+    public static byte[] ToBinL(int value, int len)
     {
         var bytes = BitConverter.GetBytes(value);
         if (BitConverter.IsLittleEndian)
         {
             Array.Reverse(bytes);
         }
-        bytes.CopyTo(arr, 0);
+
+        return bytes;
     }
 
-    public static void ToDPIcom(byte[] arr, int value)
+    public static byte[] ToDPIcom(int value, int len)
     {
         var f = value / 1000000;
-        var s = Convert.ToString(f).PadLeft(arr.Length, '0');
-        var bytes = Encoding.UTF8.GetBytes(s);
-        bytes.CopyTo(arr, 0);
+        var s = Convert.ToString(f).PadLeft(len, '0');
+        return Encoding.UTF8.GetBytes(s);
     }
 
     //16 bits. high bit of the 1-st byte is sign,
     //the rest is integer, absolute value, big endian (not complementary!)
 
-    public static void ToYaesu(byte[] arr, int value)
+    public static byte[] ToYaesu(int value, int len)
     {
-        ToBinB(arr, Math.Abs(value));
+        var arr = ToBinB(Math.Abs(value), len);
 
         if (value < 0)
         {
             arr[0] = (byte)(arr[0] | 0x80);
         }
+
+        return arr;
     }
 
     // ReSharper disable once InconsistentNaming
-    public static void ToTextUD(byte[] arr, int value)
+    public static byte[] ToTextUD(int value, int len)
     {
         var prefix = (value >= 0) ? "U" : "D";
         var s = prefix + Convert.ToString(Math.Abs(value))
-            .PadLeft(arr.Length - 1, '0');
+            .PadLeft(len - 1, '0');
 
-        var bytes = Encoding.UTF8.GetBytes(s);
-        bytes.CopyTo(arr, 0);
+        return Encoding.UTF8.GetBytes(s);
     }
 
-    public static void ToFloat(byte[] arr, int value)
+    public static byte[] ToFloat(int value, int len)
     {
-        var s = value.ToString("F", CultureInfo.InvariantCulture).PadLeft(arr.Length, ' ');
-        var bytes = Encoding.UTF8.GetBytes(s);
-        bytes.CopyTo(arr, 0);
+        var s = value.ToString("F", CultureInfo.InvariantCulture).PadLeft(len, ' ');
+        return Encoding.UTF8.GetBytes(s);
     }
 }

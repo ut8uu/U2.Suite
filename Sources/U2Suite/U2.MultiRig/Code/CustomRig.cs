@@ -23,7 +23,6 @@ public abstract class CustomRig : IDisposable
     protected UdpMessenger _udpMessenger;
     protected readonly Timer _connectivityTimer;
     protected readonly Timer _timeoutTimer;
-    protected bool _started = false;
 
     protected CommandQueue _queue;
     protected int _freq = 0;
@@ -66,6 +65,11 @@ public abstract class CustomRig : IDisposable
     }
 
     public void Dispose()
+    {
+        Dispose(true);
+    }
+
+    protected virtual void Dispose(bool disposing)
     {
         _logger.Debug("Disposing");
 

@@ -28,5 +28,21 @@ namespace U2.MultiRig.Tests
             result = ConversionFunctions.FromBcdBS(data);
             Assert.Equal(233207, result);
         }
+
+        [Fact]
+        public void ToBcdBU()
+        {
+            var result = ConversionFunctions.ToBcdBU(12345, 4);
+            var expectedResult = new byte[] {0x00, 0x01, 0x23, 0x45};
+            Assert.Equal(expectedResult, result);
+        }
+
+        [Fact]
+        public void ToBcdBS()
+        {
+            var result = ConversionFunctions.ToBcdBS(-12345, 4);
+            var expectedResult = new byte[] {0xFF, 0x01, 0x23, 0x45};
+            Assert.Equal(expectedResult, result);
+        }
     }
 }
