@@ -60,5 +60,18 @@ namespace U2.MultiRig.Tests
             var actualArray = ByteFunctions.StrToBytes(str);
             Assert.True(actualArray.SequenceEqual(expectedArray));
         }
+
+        [Fact]
+        public void BytesToHexStr()
+        {
+            var bytes = new byte[]
+            {
+                0xFE, 0xFE, 0xA4, 0xE0, 0x1A, 
+                0x05, 0x01, 0x32, 0x01, 0xFD,
+            };
+            var expectedString = "FEFEA4E01A05013201FD";
+            var actualString = ByteFunctions.BytesToHex(bytes);
+            Assert.Equal(expectedString, actualString);
+        }
     }
 }

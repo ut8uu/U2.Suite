@@ -44,7 +44,7 @@ public static class ByteFunctions
         var stringBuilder = new StringBuilder();
         foreach (var b in bytes)
         {
-            stringBuilder.Append($"{b:X}");
+            stringBuilder.Append($"{b:X2}");
         }
         return stringBuilder.ToString();
     }
