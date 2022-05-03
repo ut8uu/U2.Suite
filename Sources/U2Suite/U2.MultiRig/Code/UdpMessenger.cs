@@ -19,7 +19,7 @@ public class UdpMessageType
 }
 
 public delegate void ApplicationVisibilityEventHandler();
-public delegate void RigStatusEventHandler(int rigNumber);
+public delegate void RigStatusCheckEventHandler(int rigNumber);
 public delegate void RigTypeChangedEventHandler(int rigNumber, string newRigType);
 public delegate void RigParametersEventHandler(int rigNumber, int parameters);
 public delegate void RigCustomCommandEventHandler(int rigNumber, byte[] customCommand);
@@ -47,8 +47,8 @@ public sealed class UdpMessenger : IDisposable
     }
 
     public event ApplicationVisibilityEventHandler? ShowApplication = null;
-    public event RigStatusEventHandler? RigStatus = null;
-    public event RigParametersEventHandler? RigParameters = null;
+    public event RigStatusCheckEventHandler? RigStatusCheck = null;
+    public event RigParametersEventHandler? RigParametersChanged = null;
     public event RigCustomCommandEventHandler? RigCustomCommand = null;
     public event RigTypeChangedEventHandler? RigTypeChanged = null;
 
@@ -95,12 +95,12 @@ public sealed class UdpMessenger : IDisposable
 
     private void OnRigStatus(int rigNumber)
     {
-        RigStatus?.Invoke(rigNumber);
+        RigStatusCheck?.Invoke(rigNumber);
     }
 
     private void OnRigParameters(int rigNumber, int parameters)
     {
-        RigParameters?.Invoke(rigNumber, parameters);
+        RigParametersChanged?.Invoke(rigNumber, parameters);
     }
 
     private void OnRigCustomCommand(int rigNumber, byte[] customCommand)

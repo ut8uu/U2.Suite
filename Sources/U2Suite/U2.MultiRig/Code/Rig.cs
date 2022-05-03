@@ -14,6 +14,9 @@ using U2.Core;
 
 namespace U2.MultiRig;
 
+public delegate void RigParameterChangedEventHandler(object sender, int rigNumber,
+    RigParameter parameter, object value);
+
 public class Rig : CustomRig
 {
     private readonly ILog _logger = LogManager.GetLogger(typeof(Rig));
@@ -23,6 +26,8 @@ public class Rig : CustomRig
         : base(rigNumber, settings, rigCommands)
     {
     }
+
+    public event RigParameterChangedEventHandler RigParameterChanged;
 
     ////////////////////////////////////////////////////////////////////////////////
     //                           interpret reply
@@ -110,7 +115,52 @@ public class Rig : CustomRig
         {
             _udpMessenger.ComNotifyParams(RigNumber, RigCommandUtilities.ParamsToInt(_changedParams));
         }
+        ReportChangedParameters(_changedParams);
         _changedParams.Clear();
+    }
+
+    private void ReportChangedParameters(IEnumerable<RigParameter> parameters)
+    {
+        foreach (var parameter in parameters)
+        {
+            object parameterValue = parameter switch
+            {
+                RigParameter.FreqA => _freqA,
+                RigParameter.None => 0,
+                RigParameter.Freq => _freq,
+                RigParameter.FreqB => _freqB,
+                RigParameter.Pitch => _pitch,
+                RigParameter.RitOffset => _ritOffset,
+                RigParameter.Rit0 => _rit,
+                RigParameter.VfoAA => 0,
+                RigParameter.VfoAB => 0,
+                RigParameter.VfoBA => 0,
+                RigParameter.VfoBB => 0,
+                RigParameter.VfoA => 0,
+                RigParameter.VfoB => 0,
+                RigParameter.VfoEqual => 0,
+                RigParameter.VfoSwap => 0,
+                RigParameter.SplitOn => 1,
+                RigParameter.SplitOff => 0,
+                RigParameter.RitOn => 1,
+                RigParameter.RitOff => 0,
+                RigParameter.XitOn => 1,
+                RigParameter.XitOff => 0,
+                RigParameter.Rx => 1,
+                RigParameter.Tx => 1,
+                RigParameter.CW_U => "CW",
+                RigParameter.CW_L => "CW",
+                RigParameter.SSB_U => "USB",
+                RigParameter.SSB_L => "LSB",
+                RigParameter.DIG_U => "DIGI-U",
+                RigParameter.DIG_L => "DIGI-L",
+                RigParameter.AM => "AM",
+                RigParameter.FM => "FM",
+                _ => 0
+            };
+
+            OnRigParameterChanged(RigNumber, parameter, parameterValue);
+        }
     }
     
     protected override void ProcessWriteReply(RigParameter param, byte[] data)
@@ -313,5 +363,10 @@ public class Rig : CustomRig
         field.SetValue(this, value);
         _changedParams.Add(param);
         _logger.DebugFormat("RIG{0} status changed: {1} = {2}", RigNumber, param.ToString(), Convert.ToString(value));
+    }
+
+    protected virtual void OnRigParameterChanged(int rigNumber, RigParameter parameter, object value)
+    {
+        RigParameterChanged?.Invoke(this, rigNumber, parameter, value);
     }
 }
