@@ -25,76 +25,75 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using U2.Core;
 
-namespace U2.MultiRig
+namespace U2.MultiRig;
+
+public static class AllRigsSettings
 {
-    public static class AllRigsSettings
+    private const string SettingsFileName = "RigSettings.json";
+    private static readonly List<RigSettings> DefaultRigSettings = new()
     {
-        private const string SettingsFileName = "RigSettings.json";
-        private static readonly List<RigSettings> _defaultRigSettings = new()
+        new RigSettings
         {
-            new RigSettings
-            {
-                RigId = "RIG1",
-            }
+            RigId = "RIG1",
+        }
+    };
+
+    internal static readonly string PathToSettings = Path.Combine(
+        FileSystemHelper.GetAppDataFolderPath(nameof(AllRigsSettings)), SettingsFileName);
+    private static readonly JsonSerializerOptions SerializationOptions =
+        new()
+        {
+            PropertyNameCaseInsensitive = true,
+            WriteIndented = true,
         };
 
-        internal static readonly string _pathToSettings = Path.Combine(
-            FileSystemHelper.GetAppDataFolderPath(nameof(AllRigsSettings)), SettingsFileName);
-        private static readonly JsonSerializerOptions _serializationOptions =
-            new()
-            {
-                PropertyNameCaseInsensitive = true,
-                WriteIndented = true,
-            };
 
+    public static List<RigSettings> AllRigs { get; } = new();
 
-        public static List<RigSettings> AllRigs { get; } = new();
+    public static void LoadSettings()
+    {
+        AllRigs.Clear();
 
-        internal static void LoadSettings()
+        if (!File.Exists(PathToSettings))
         {
-            AllRigs.Clear();
-
-            if (!File.Exists(_pathToSettings))
-            {
-                AllRigs.AddRange(_defaultRigSettings);
-                return;
-            }
-
-            using var fs = File.OpenRead(_pathToSettings);
-            List<RigSettings> settings;
-            try
-            {
-                settings = JsonSerializer.Deserialize<List<RigSettings>>(fs);
-                if (settings == null || !settings.Any())
-                {
-                    AllRigs.AddRange(_defaultRigSettings);
-                    return;
-                }
-            }
-            catch (JsonException)
-            {
-                settings = _defaultRigSettings;
-            }
-
-            AllRigs.AddRange(settings);
+            AllRigs.AddRange(DefaultRigSettings);
+            return;
         }
 
-        public static void SaveSettings()
+        using var fs = File.OpenRead(PathToSettings);
+        List<RigSettings> settings;
+        try
         {
-            if (File.Exists(_pathToSettings))
+            settings = JsonSerializer.Deserialize<List<RigSettings>>(fs);
+            if (settings == null || !settings.Any())
             {
-                var backupFilePath = $"{_pathToSettings}.bak";
-                if (File.Exists(_pathToSettings))
-                {
-                    File.Move(_pathToSettings, backupFilePath,
-                        overwrite: true);
-                }
+                AllRigs.AddRange(DefaultRigSettings);
+                return;
             }
+        }
+        catch (JsonException)
+        {
+            settings = DefaultRigSettings;
+        }
 
-            using (var fs = File.OpenWrite(_pathToSettings))
+        AllRigs.AddRange(settings);
+    }
+
+    public static void SaveSettings()
+    {
+        if (File.Exists(PathToSettings))
+        {
+            var backupFilePath = $"{PathToSettings}.bak";
+            if (File.Exists(PathToSettings))
             {
-                JsonSerializer.Serialize(fs, AllRigs, _serializationOptions);
+                File.Move(PathToSettings, backupFilePath,
+                    overwrite: true);
             }
+        }
+
+        using (var fs = File.OpenWrite(PathToSettings))
+        {
+            JsonSerializer.Serialize(fs, AllRigs, SerializationOptions);
         }
     }
 }
