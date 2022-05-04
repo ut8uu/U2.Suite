@@ -157,6 +157,7 @@ public class MultiRigWindowViewModel : WindowViewModelBase
     public override void ExecuteOkAction()
     {
         AllRigsSettings.SaveSettings();
+        Owner.Close();
     }
 
     public override void ExecuteCancelAction()
