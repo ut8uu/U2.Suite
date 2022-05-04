@@ -37,7 +37,7 @@ public enum ExchangePhase
 
 public sealed class QueueItem
 {
-    public byte[] Code { get; set; }
+    public byte[]? Code { get; set; }
     public CommandKind Kind { get; set; }
     public RigParameter Param { get; set; } = new RigParameter();
     public int Number { get; set; } = 0;
@@ -52,7 +52,7 @@ public sealed class QueueItem
 public sealed class CommandQueue : Collection<QueueItem>
 {
     public ExchangePhase Phase;
-    
+
     public QueueItem Add()
     {
         var item = new QueueItem();
@@ -66,19 +66,17 @@ public sealed class CommandQueue : Collection<QueueItem>
         if (firstStatusItem == null)
         {
             Add(item);
+            return;
         }
-        else
+
+        var index = Items.IndexOf(firstStatusItem);
+        if (index == 0 && Items.Count > 1)
         {
-            var index = Items.IndexOf(firstStatusItem);
-            if (index == 0)
-            {
-                if (Items.Count > 1)
-                {
-                    index++;
-                }
-            }
-            Items.Insert(index, item);
+            // status command is the first in the list and cannot be replaced
+            // therefore, the new element should be inserted after it
+            index++;
         }
+        Items.Insert(index, item);
     }
 
     public bool HasStatusCommands
