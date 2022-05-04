@@ -30,11 +30,21 @@ namespace U2.MultiRig.Demo.ViewModels
 {
     public sealed class DemoViewModel : WindowViewModelBase
     {
-        private Rig _rig;
+        private Rig? _rig;
         private bool _connected = false;
         private readonly ILog _logger = LogManager.GetLogger(typeof(DemoViewModel));
+        private RigSettings? _rigSettings;
+
+        public DemoViewModel()
+        {
+            AllRigsSettings.LoadSettings();
+            _rigSettings = AllRigsSettings.AllRigs.FirstOrDefault();
+            ConnectButtonEnabled = _rigSettings != null;
+            OnPropertyChanged(nameof(ConnectButtonEnabled));
+        }
 
         public string ConnectButtonTitle { get; set; } = "Connect";
+        public bool ConnectButtonEnabled { get; set; } = false;
         public string FreqA { get; set; } = "0";
         public string FreqB { get; set; } = "0";
 
@@ -43,44 +53,42 @@ namespace U2.MultiRig.Demo.ViewModels
             var configWindow = new MultiRigWindow();
             var dialogTask = configWindow.ShowDialog(Owner);
             await dialogTask;
+
+            _rigSettings = AllRigsSettings.AllRigs.FirstOrDefault();
+            ConnectButtonEnabled = _rigSettings != null;
+            OnPropertyChanged(nameof(ConnectButtonEnabled));
         }
 
         public void ExecuteConnectRigAction()
         {
-            _connected = !_connected;
-            if (!_connected)
+            if (_connected)
             {
+                _connected = false;
                 ConnectButtonTitle = "Connect";
-                _rig.Stop();
+                _rig?.Stop();
+                _rig?.Dispose();
             }
             else
             {
-                ConnectButtonTitle = "Disconnect";
-                var ports = ComPortHelper.EnumerateComPorts();
-                var port = ports.FirstOrDefault(p =>
-                    p.Description.Contains("ci-v", StringComparison.InvariantCultureIgnoreCase));
-
-                var settings = new RigSettings
+                if (_rigSettings == null)
                 {
-                    BaudRate = 57600,
-                    DataBits = 8,
-                    DtrMode = 0,
-                    RtsMode = 0,
-                    Enabled = true,
-                    Port = port.Name,
-                    Parity = 0,
-                    StopBits = 0,
-                    PollMs = 500,
-                    TimeoutMs = 3000,
-                    RigType = "IC-705",
-                    RigId = "ic705",
-                };
-                var rigCommands = AllRigCommands.RigCommands
-                    .FirstOrDefault(rc => rc.RigType.Equals("IC-705"));
+                    MessageBoxHelper.ShowMessageBox("Error", "Please configure RIG first.");
+                    return;
+                }
 
-                _rig = new Rig(1, settings, rigCommands);
+                var rigCommands = AllRigCommands.GetByRigType(_rigSettings.RigType);
+                if (rigCommands == null)
+                {
+                    MessageBoxHelper.ShowMessageBox("Error", "The desired RIG settings not found.");
+                    return;
+                }
+
+                _rig = new Rig(1, _rigSettings, rigCommands);
                 _rig.RigParameterChanged += RigOnRigParameterChanged;
                 _rig.Start();
+
+                _connected = true;
+                ConnectButtonTitle = "Disconnect";
             }
 
             OnPropertyChanged(nameof(ConnectButtonTitle));
