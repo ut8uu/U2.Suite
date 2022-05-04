@@ -18,7 +18,9 @@
 			<StackPanel Orientation="Horizontal">
 				<Button Content="Configure RIG" Command="{Binding ExecuteConfigureRigAction}"></Button>
 				<Panel Width="5"></Panel>
-                <Button Content="{Binding ConnectButtonTitle}" Command="{Binding ExecuteConnectRigAction}"></Button>
+                <Button Content="{Binding ConnectButtonTitle}" 
+                        Command="{Binding ExecuteConnectRigAction}"
+                        IsEnabled="{Binding ConnectButtonEnabled}"></Button>
 			</StackPanel>
 		</Border>
 
