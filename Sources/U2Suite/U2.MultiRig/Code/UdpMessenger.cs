@@ -50,13 +50,14 @@ public sealed class UdpMessenger : IDisposable
 
     private readonly UdpEndpoint _udp;
     private readonly ILog _logger = LogManager.GetLogger(typeof(UdpMessenger));
+    private bool _started = false;
 
     public UdpMessenger()
     {
         _udp = new UdpEndpoint(IPAddress.Loopback.ToString(), RxPort);
         _udp.EndpointDetected += EndpointDetected;
         _udp.DatagramReceived += DatagramReceived;
-        _udp.Start();
+        Start();
     }
 
     public void Dispose()
@@ -70,6 +71,26 @@ public sealed class UdpMessenger : IDisposable
     public event RigParametersEventHandler? RigParametersChanged = null;
     public event RigCustomCommandEventHandler? RigCustomCommand = null;
     public event RigTypeChangedEventHandler? RigTypeChanged = null;
+
+    public void Start()
+    {
+        if (_started)
+        {
+            return;
+        }
+        _udp.Start();
+        _started = true;
+    }
+
+    public void Stop()
+    {
+        if (!_started)
+        {
+            return;
+        }
+        _udp.Stop();
+        _started = false;
+    }
 
     private void DatagramReceived(object? sender, Datagram e)
     {
