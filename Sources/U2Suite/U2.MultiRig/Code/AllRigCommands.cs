@@ -26,4 +26,10 @@ namespace U2.MultiRig;
 public static class AllRigCommands
 {
     public static readonly ReadOnlyCollection<RigCommands> RigCommands = RigCommandUtilities.LoadAllRigCommands();
+
+    public static RigCommands? GetByRigType(string rigType)
+    {
+        return RigCommands.FirstOrDefault(rc =>
+            rc.RigType.Equals(rigType, StringComparison.InvariantCultureIgnoreCase));
+    }
 }
