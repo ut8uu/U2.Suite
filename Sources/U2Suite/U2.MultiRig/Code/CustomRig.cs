@@ -21,6 +21,7 @@ using System;
 using System.IO;
 using System.Data;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using log4net;
 using MonoSerialPort;
@@ -86,6 +87,7 @@ public abstract class CustomRig : IDisposable
     public void Dispose()
     {
         Dispose(true);
+        GC.SuppressFinalize(this);
     }
 
     protected virtual void Dispose(bool disposing)
@@ -129,12 +131,6 @@ public abstract class CustomRig : IDisposable
         Parity.Mark,
         Parity.Space
     };
-    private static Handshake[] _handshakes = {
-        Handshake.None,
-        Handshake.RequestToSend,
-        Handshake.RequestToSendXOnXOff,
-        Handshake.XOnXOff,
-    };
 
     #endregion
 
@@ -155,11 +151,6 @@ public abstract class CustomRig : IDisposable
             isVirtualPort: false);
     }
 
-    private static Parity IntToParity(int parity)
-    {
-        return Parities[parity];
-    }
-
     private readonly List<byte> _receiveQueue = new List<byte>();
     private void SerialPort_MessageReceived(object sender, MessageReceivedEventArgs args)
     {
@@ -177,12 +168,12 @@ public abstract class CustomRig : IDisposable
 
             if (_queue.Phase == ExchangePhase.Receiving)
             {
-                _logger.DebugFormat("RIG{0}: reply received: {1} ({2} bytes)", 
+                _logger.DebugFormat("RIG{0}: reply received: {1} ({2} bytes)",
                     RigNumber, ByteFunctions.BytesToHex(receivedData), receivedData.Length);
             }
             else
             {
-                _logger.ErrorFormat("RIG{0}: received data when not in the receiving state: {1} ({2} bytes)", 
+                _logger.ErrorFormat("RIG{0}: received data when not in the receiving state: {1} ({2} bytes)",
                     RigNumber, ByteFunctions.BytesToHex(receivedData), receivedData.Length);
                 return;
             }
@@ -194,8 +185,11 @@ public abstract class CustomRig : IDisposable
                 return;
             }
 
-            if (_queue.CurrentCmd.NeedsReply
-                && _queue.CurrentCmd.ReplyLength > _receiveQueue.Count)
+            var currentCommand = _queue.CurrentCmd;
+            Debug.Assert(currentCommand != null);
+
+            if (currentCommand.NeedsReply
+                && currentCommand.ReplyLength > _receiveQueue.Count)
             {
                 _logger.Debug($"RIG{RigNumber}: Buffer has insufficient data. Waiting for the rest.");
                 return;
@@ -206,11 +200,10 @@ public abstract class CustomRig : IDisposable
             {
                 DisableTimeoutTimer();
 
-                var data = _receiveQueue.Take(_queue.CurrentCmd.ReplyLength).ToArray();
-                var theTail = _receiveQueue.Skip(_queue.CurrentCmd.ReplyLength);
+                var data = _receiveQueue.Take(currentCommand.ReplyLength).ToArray();
+                var theTail = _receiveQueue.Skip(currentCommand.ReplyLength);
                 _receiveQueue.Clear();
                 _receiveQueue.AddRange(theTail);
-                var currentCommand = _queue.CurrentCmd;
                 switch (currentCommand.Kind)
                 {
                     case CommandKind.Init:
@@ -226,7 +219,8 @@ public abstract class CustomRig : IDisposable
                         break;
 
                     case CommandKind.Custom:
-                        ProcessCustomReply(currentCommand.CustSender, currentCommand.Code, data);
+                        ProcessCustomReply(currentCommand.CustSender,
+                            currentCommand.Code ?? Array.Empty<byte>(), data);
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();
@@ -270,26 +264,19 @@ public abstract class CustomRig : IDisposable
     {
         lock (GetStatusLockObject)
         {
-            if (RigCommands == null)
-            {
-                return RigCtlStatus.NotConfigured;
-            }
-            else if (!_rigSettings.Enabled)
+            if (!_rigSettings.Enabled)
             {
                 return RigCtlStatus.Disabled;
             }
-            else if (!_serialPort.IsConnected)
+            if (!_serialPort.IsConnected)
             {
                 return RigCtlStatus.PortBusy;
             }
-            else if (!_online)
+            if (!_online)
             {
                 return RigCtlStatus.NotResponding;
             }
-            else
-            {
-                return RigCtlStatus.OnLine;
-            }
+            return RigCtlStatus.OnLine;
         }
     }
 
@@ -637,9 +624,9 @@ public abstract class CustomRig : IDisposable
     {
         lock (CheckQueueLockObject)
         {
-            if (!Enabled 
-                || !_serialPort.IsConnected 
-                || _queue.Phase != ExchangePhase.Idle 
+            if (!Enabled
+                || !_serialPort.IsConnected
+                || _queue.Phase != ExchangePhase.Idle
                 || _queue.Count == 0)
             {
                 return;
