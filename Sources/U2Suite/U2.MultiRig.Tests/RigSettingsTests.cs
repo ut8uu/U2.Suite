@@ -36,7 +36,7 @@ public sealed class RigSettingsTests : IDisposable
 
     private static void PrepareDirectory()
     {
-        var pathToFile = AllRigsSettings._pathToSettings;
+        var pathToFile = AllRigsSettings.PathToSettings;
         var directory = Path.GetDirectoryName(pathToFile);
         Assert.NotNull(directory);
         if (Directory.Exists(directory))
@@ -78,7 +78,7 @@ public sealed class RigSettingsTests : IDisposable
     public void LoadAllSettings()
     {
         var allSettings = PrepareRigSettings();
-        var pathToFile = AllRigsSettings._pathToSettings;
+        var pathToFile = AllRigsSettings.PathToSettings;
         using (var fs = File.OpenWrite(pathToFile))
         {
             // file should not be locked
@@ -101,8 +101,8 @@ public sealed class RigSettingsTests : IDisposable
         AllRigsSettings.AllRigs.AddRange(settings);
         AllRigsSettings.SaveSettings();
 
-        Assert.True(File.Exists(AllRigsSettings._pathToSettings));
-        using (var fs = File.OpenRead(AllRigsSettings._pathToSettings))
+        Assert.True(File.Exists(AllRigsSettings.PathToSettings));
+        using (var fs = File.OpenRead(AllRigsSettings.PathToSettings))
         {
             var savedSettings = JsonSerializer.Deserialize<List<RigSettings>>(fs);
             savedSettings.ShouldDeepEqual(settings);
@@ -112,7 +112,7 @@ public sealed class RigSettingsTests : IDisposable
     [Fact]
     public void LoadEmptySettings_ShouldCreateOneDefaultSetting()
     {
-        var pathToFile = AllRigsSettings._pathToSettings;
+        var pathToFile = AllRigsSettings.PathToSettings;
         File.WriteAllText(pathToFile, string.Empty);
         AllRigsSettings.LoadSettings();
         Assert.Single(AllRigsSettings.AllRigs);
@@ -121,7 +121,7 @@ public sealed class RigSettingsTests : IDisposable
     [Fact]
     public void LoadFromNonExistentFile_ShouldCreateOneDefaultSetting()
     {
-        var pathToFile = AllRigsSettings._pathToSettings;
+        var pathToFile = AllRigsSettings.PathToSettings;
         AllRigsSettings.LoadSettings();
         Assert.Single(AllRigsSettings.AllRigs);
     }
@@ -130,7 +130,7 @@ public sealed class RigSettingsTests : IDisposable
     public void ShouldDeleteExistingSettings()
     {
         const string oldName = nameof(oldName);
-        var pathToFile = AllRigsSettings._pathToSettings;
+        var pathToFile = AllRigsSettings.PathToSettings;
         AllRigsSettings.AllRigs.Add(new()
         {
             RigId = oldName,
