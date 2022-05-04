@@ -61,22 +61,15 @@ public static class AllRigsSettings
         }
 
         using var fs = File.OpenRead(PathToSettings);
-        List<RigSettings> settings;
         try
         {
-            settings = JsonSerializer.Deserialize<List<RigSettings>>(fs);
-            if (settings == null || !settings.Any())
-            {
-                AllRigs.AddRange(DefaultRigSettings);
-                return;
-            }
+            var settings = JsonSerializer.Deserialize<List<RigSettings>>(fs) ?? DefaultRigSettings;
+            AllRigs.AddRange(settings);
         }
         catch (JsonException)
         {
-            settings = DefaultRigSettings;
+            AllRigs.AddRange(DefaultRigSettings);
         }
-
-        AllRigs.AddRange(settings);
     }
 
     public static void SaveSettings()
@@ -84,11 +77,7 @@ public static class AllRigsSettings
         if (File.Exists(PathToSettings))
         {
             var backupFilePath = $"{PathToSettings}.bak";
-            if (File.Exists(PathToSettings))
-            {
-                File.Move(PathToSettings, backupFilePath,
-                    overwrite: true);
-            }
+            File.Move(PathToSettings, backupFilePath, overwrite: true);
         }
 
         using (var fs = File.OpenWrite(PathToSettings))
