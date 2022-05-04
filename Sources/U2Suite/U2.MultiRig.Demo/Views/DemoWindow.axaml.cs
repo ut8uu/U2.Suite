@@ -28,8 +28,6 @@ namespace U2.MultiRig.Demo.Views
     [DoNotNotify]
     public sealed class DemoWindow : Window
     {
-        private DemoViewModel _model;
-
         public DemoWindow()
         {
             InitializeComponent();
@@ -37,11 +35,10 @@ namespace U2.MultiRig.Demo.Views
             this.AttachDevTools();
 #endif
 
-            _model = new DemoViewModel
+            this.DataContext = new DemoViewModel
             {
                 Owner = this
             };
-            this.DataContext = _model;
         }
 
         private void InitializeComponent()
