@@ -77,10 +77,10 @@ public abstract class CustomRig : IDisposable
         _serialPort.MessageReceived += SerialPort_MessageReceived;
 
         _udpMessenger = new UdpMessenger();
-        var interval = TimeSpan.FromMilliseconds(rigSettings.PollMs);
         _connectivityTimer = new Timer(ConnectivityTimerCallbackFunc);
         DisableConnectivityTimer();
         _timeoutTimer = new Timer(TimeoutTimerCallbackFunc);
+        DisableTimeoutTimer();
     }
 
     public void Dispose()
@@ -147,9 +147,9 @@ public abstract class CustomRig : IDisposable
     private SerialPortInput CreateSerialPort(RigSettings rigSettings)
     {
         return new SerialPortInput(_rigSettings.Port,
-            baudRate: rigSettings.BaudRate,
+            baudRate: Data.BaudRates[rigSettings.BaudRate],
             parity: Parities[rigSettings.Parity],
-            dataBits: rigSettings.DataBits,
+            dataBits: Data.DataBits[rigSettings.DataBits],
             stopBits: StopBits[_rigSettings.StopBits],
             handshake: Handshake.None,
             isVirtualPort: false);
@@ -516,6 +516,7 @@ public abstract class CustomRig : IDisposable
                 return;
             }
 
+            _udpMessenger.Start();
             _queue.Clear();
             _queue.Phase = ExchangePhase.Idle;
             AddCommands(RigCommands.InitCmd, CommandKind.Init);
@@ -543,6 +544,7 @@ public abstract class CustomRig : IDisposable
             _queue.Clear();
             _queue.Phase = ExchangePhase.Idle;
             _serialPort.Disconnect();
+            _udpMessenger.Stop();
         }
     }
 
