@@ -16,9 +16,15 @@
 	<DockPanel>
 		<Border DockPanel.Dock="Top" Classes="Card">
 			<StackPanel Orientation="Horizontal">
-				<Button Content="Configure RIG" Command="{Binding ExecuteConfigureRigAction}"></Button>
-				<Panel Width="5"></Panel>
-                <Button Content="{Binding ConnectButtonTitle}" 
+				<ComboBox Name="SourceTypeComboBox" 
+                          SelectedIndex="{Binding SourceType, Mode=TwoWay}">
+					<ComboBoxItem>Internal</ComboBoxItem>
+					<ComboBoxItem>External</ComboBoxItem>
+				</ComboBox>
+				<Button Margin="5 0 0 0" Content="Configure RIG" 
+                        Command="{Binding ExecuteConfigureRigAction}"
+                        IsVisible="{Binding ConfigureRigButtonVisible}"></Button>
+				<Button Margin="5 0 0 0" Content="{Binding ConnectButtonTitle}"
                         Command="{Binding ExecuteConnectRigAction}"
                         IsEnabled="{Binding ConnectButtonEnabled}"></Button>
 			</StackPanel>
@@ -30,8 +36,8 @@
 				<TextBlock Grid.Column="0" Grid.Row="1" FontSize="32" Text="{Binding FreqA}"></TextBlock>
 
 				<TextBlock Grid.Column="1" Grid.Row="0">Freq B</TextBlock>
-                <TextBlock Grid.Column="1" Grid.Row="1" FontSize="32" Text="{Binding FreqB}"></TextBlock>
-            </Grid>
+				<TextBlock Grid.Column="1" Grid.Row="1" FontSize="32" Text="{Binding FreqB}"></TextBlock>
+			</Grid>
 		</Border>
 	</DockPanel>
 </Window>

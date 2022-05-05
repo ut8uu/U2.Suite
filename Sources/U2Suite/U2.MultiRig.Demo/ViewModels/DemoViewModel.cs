@@ -19,12 +19,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Avalonia.Controls;
 using log4net;
 using U2.CommonControls;
-using U2.Core;
 
 namespace U2.MultiRig.Demo.ViewModels
 {
@@ -34,6 +36,10 @@ namespace U2.MultiRig.Demo.ViewModels
         private bool _connected = false;
         private readonly ILog _logger = LogManager.GetLogger(typeof(DemoViewModel));
         private RigSettings? _rigSettings;
+        private int _sourceType = 0;
+
+        public const string Internal = nameof(Internal);
+        public const string External = nameof(External);
 
         public DemoViewModel()
         {
@@ -45,6 +51,19 @@ namespace U2.MultiRig.Demo.ViewModels
 
         public string ConnectButtonTitle { get; set; } = "Connect";
         public bool ConnectButtonEnabled { get; set; } = false;
+        public bool ConfigureRigButtonVisible { get; set; } = true;
+
+        public int SourceType
+        {
+            get => _sourceType;
+            set
+            {
+                _sourceType = value;
+                ConfigureRigButtonVisible = value == 0; // 0 = internal
+                OnPropertyChanged(nameof(ConfigureRigButtonVisible));
+            }
+        }
+
         public string FreqA { get; set; } = "0";
         public string FreqB { get; set; } = "0";
 
