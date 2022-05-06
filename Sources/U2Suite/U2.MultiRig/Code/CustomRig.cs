@@ -81,7 +81,8 @@ public abstract class CustomRig : IDisposable
         _serialPort.ConnectionStatusChanged += SerialPort_ConnectionStatusChanged;
         _serialPort.MessageReceived += SerialPort_MessageReceived;
 
-        _udpMessenger = new UdpClient();
+        _udpMessenger = new UdpServer();
+
         _connectivityTimer = new Timer(ConnectivityTimerCallbackFunc);
         DisableConnectivityTimer();
         _timeoutTimer = new Timer(TimeoutTimerCallbackFunc);

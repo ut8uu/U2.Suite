@@ -17,6 +17,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+using System.ComponentModel;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
@@ -28,6 +29,8 @@ namespace U2.MultiRig.Demo.Views
     [DoNotNotify]
     public sealed class DemoWindow : Window
     {
+        private readonly DemoViewModel _model;
+
         public DemoWindow()
         {
             InitializeComponent();
@@ -35,10 +38,18 @@ namespace U2.MultiRig.Demo.Views
             this.AttachDevTools();
 #endif
 
-            this.DataContext = new DemoViewModel
+            _model = new DemoViewModel
             {
                 Owner = this
             };
+            this.DataContext = _model;
+
+            this.Closing += OnClosing;
+        }
+
+        private void OnClosing(object? sender, CancelEventArgs e)
+        {
+            _model.Dispose();
         }
 
         private void InitializeComponent()

@@ -29,7 +29,7 @@ using U2.CommonControls;
 
 namespace U2.MultiRig.Demo.ViewModels
 {
-    public sealed class DemoViewModel : WindowViewModelBase
+    public sealed class DemoViewModel : WindowViewModelBase, IDisposable
     {
         private Rig? _rig;
         private bool _connected = false;
@@ -97,49 +97,112 @@ namespace U2.MultiRig.Demo.ViewModels
             }
             else
             {
-                if (_sourceType == 0 && !ConnectInternalSource())
+                try
                 {
-                    return;
-                }
+                    if (_sourceType == 0)
+                    {
+                        ConnectInternalSource();
+                    }
+                    else if (_sourceType == 1)
+                    {
+                        ConnectExternalSource();
+                    }
 
-                if (_sourceType == 1 && !ConnectExternalSource())
+                    _connected = true;
+                    ConnectButtonTitle = "Disconnect";
+                }
+                catch (ApplicationException ex)
                 {
-                    return;
+                    _logger.Error(ex.Message);
+                    _connected = false;
+                    ConnectButtonTitle = "Connect";
                 }
-
-                _connected = true;
-                ConnectButtonTitle = "Disconnect";
             }
 
             OnPropertyChanged(nameof(ConnectButtonTitle));
         }
 
-        private bool ConnectExternalSource()
+        private void ConnectExternalSource()
         {
-            _udpClient = new UdpClient();
-            _udpClient.Start();
-            return true;
+            try
+            {
+                _udpClient = new UdpClient();
+                _udpClient.MessageReceived += UdpClientOnMessageReceived;
+                _udpClient.Start();
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException(ex.Message, ex);
+            }
         }
 
-        private bool ConnectInternalSource()
+        private void UdpClientOnMessageReceived(object sender, string message)
+        {
+            if (string.IsNullOrEmpty(message) || !message.StartsWith("MR", StringComparison.InvariantCultureIgnoreCase))
+            {
+                _logger.Error($"Received unknown UDP message: {message}");
+                return;
+            }
+
+            var chunks = message.Split('|', StringSplitOptions.RemoveEmptyEntries);
+            if (chunks.Length != 5)
+            {
+                _logger.Error($"Received invalid UDP message: {message}. Expected chunks: 5.");
+                return;
+            }
+
+            var rigNumber = int.Parse(chunks[1]);
+            var key = chunks[2];
+            var param1 = chunks[3];
+            var param2 = chunks[4];
+
+            switch (key)
+            {
+                case UdpMessageType.Parameter:
+                    ReportParameter(rigNumber, param1, param2);
+                    break;
+                default:
+                    Console.WriteLine($@"{key} not recognized.");
+                    break;
+            }
+        }
+
+        private void ReportParameter(int rigNumber, string paramId, string value)
+        {
+            var id = Convert.ToInt32(paramId);
+            var param = (RigParameter)id;
+            Console.WriteLine($@"{param}: {value}");
+            switch (param)
+            {
+                case RigParameter.FreqA:
+                    FreqA = value;
+                    OnPropertyChanged(nameof(FreqA));
+                    break;
+                case RigParameter.FreqB:
+                    FreqB = value;
+                    OnPropertyChanged(nameof(FreqB));
+                    break;
+            }
+        }
+
+        private void ConnectInternalSource()
         {
             if (_rigSettings == null)
             {
                 MessageBoxHelper.ShowMessageBox("Error", "Please configure RIG first.");
-                return true;
+                throw new ApplicationException("Rig is not configured.");
             }
 
             var rigCommands = AllRigCommands.GetByRigType(_rigSettings.RigType);
             if (rigCommands == null)
             {
                 MessageBoxHelper.ShowMessageBox("Error", "The desired RIG settings not found.");
-                return true;
+                throw new ApplicationException("RIG settings not found.");
             }
 
             _rig = new Rig(1, _rigSettings, rigCommands);
             _rig.RigParameterChanged += RigOnRigParameterChanged;
             _rig.Start();
-            return false;
         }
 
         private void RigOnRigParameterChanged(object sender, int rigNumber, 
@@ -219,6 +282,14 @@ namespace U2.MultiRig.Demo.ViewModels
                 default:
                     throw new ArgumentOutOfRangeException(nameof(parameter), parameter, null);
             }
+        }
+
+        public void Dispose()
+        {
+            _rig?.Stop();
+            _rig?.Dispose();
+            _udpClient?.Stop();
+            _udpClient?.Dispose();
         }
     }
 }

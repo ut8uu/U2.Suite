@@ -58,8 +58,8 @@ public sealed class UdpServer : UdpMessenger
 
 public abstract class UdpMessenger : IDisposable
 {
-    public const int ServerTxPort = 11101;
-    public const int ServerRxPort = 11102;
+    public const int ClientPort = 11101;
+    public const int ServerPort = 11102;
     
     private readonly UdpEndpoint _udp;
     private readonly ILog _logger = LogManager.GetLogger(typeof(UdpMessenger));
@@ -67,7 +67,7 @@ public abstract class UdpMessenger : IDisposable
 
     protected UdpMessenger(UdpMessengerKind kind)
     {
-        var port = kind == UdpMessengerKind.Server ? ServerRxPort : ServerTxPort;
+        var port = kind == UdpMessengerKind.Server ? ServerPort : ClientPort;
         _udp = new UdpEndpoint(IPAddress.Loopback.ToString(), port);
         _udp.EndpointDetected += EndpointDetected;
         _udp.DatagramReceived += DatagramReceived;
@@ -134,7 +134,7 @@ public abstract class UdpMessenger : IDisposable
     private void SendUdpMessage(int rigNumber, string key, object param1, object param2)
     {
         var s = $"MR|{rigNumber}|{key}|{param1}|{param2}";
-        _udp.Send(IPAddress.Loopback.ToString(), ServerTxPort, s);
+        _udp.Send(IPAddress.Loopback.ToString(), ClientPort, s);
     }
 
     public void ComNotifyStatus(int rigNumber)
