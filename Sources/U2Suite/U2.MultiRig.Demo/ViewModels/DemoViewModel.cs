@@ -24,7 +24,6 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Avalonia.Controls;
 using log4net;
 using U2.CommonControls;
 
@@ -37,6 +36,7 @@ namespace U2.MultiRig.Demo.ViewModels
         private readonly ILog _logger = LogManager.GetLogger(typeof(DemoViewModel));
         private RigSettings? _rigSettings;
         private int _sourceType = 0;
+        private UdpMessenger _udpClient;
 
         public const string Internal = nameof(Internal);
         public const string External = nameof(External);
@@ -84,33 +84,62 @@ namespace U2.MultiRig.Demo.ViewModels
             {
                 _connected = false;
                 ConnectButtonTitle = "Connect";
-                _rig?.Stop();
-                _rig?.Dispose();
+                if (_sourceType == 0)
+                {
+                    _rig?.Stop();
+                    _rig?.Dispose();
+                }
+                else
+                {
+                    _udpClient.Stop();
+                    _udpClient.Dispose();
+                }
             }
             else
             {
-                if (_rigSettings == null)
+                if (_sourceType == 0 && !ConnectInternalSource())
                 {
-                    MessageBoxHelper.ShowMessageBox("Error", "Please configure RIG first.");
                     return;
                 }
 
-                var rigCommands = AllRigCommands.GetByRigType(_rigSettings.RigType);
-                if (rigCommands == null)
+                if (_sourceType == 1 && !ConnectExternalSource())
                 {
-                    MessageBoxHelper.ShowMessageBox("Error", "The desired RIG settings not found.");
                     return;
                 }
-
-                _rig = new Rig(1, _rigSettings, rigCommands);
-                _rig.RigParameterChanged += RigOnRigParameterChanged;
-                _rig.Start();
 
                 _connected = true;
                 ConnectButtonTitle = "Disconnect";
             }
 
             OnPropertyChanged(nameof(ConnectButtonTitle));
+        }
+
+        private bool ConnectExternalSource()
+        {
+            _udpClient = new UdpClient();
+            _udpClient.Start();
+            return true;
+        }
+
+        private bool ConnectInternalSource()
+        {
+            if (_rigSettings == null)
+            {
+                MessageBoxHelper.ShowMessageBox("Error", "Please configure RIG first.");
+                return true;
+            }
+
+            var rigCommands = AllRigCommands.GetByRigType(_rigSettings.RigType);
+            if (rigCommands == null)
+            {
+                MessageBoxHelper.ShowMessageBox("Error", "The desired RIG settings not found.");
+                return true;
+            }
+
+            _rig = new Rig(1, _rigSettings, rigCommands);
+            _rig.RigParameterChanged += RigOnRigParameterChanged;
+            _rig.Start();
+            return false;
         }
 
         private void RigOnRigParameterChanged(object sender, int rigNumber, 
