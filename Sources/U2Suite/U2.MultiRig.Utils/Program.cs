@@ -33,6 +33,12 @@ List<ConsoleManagementElement> mainMenu
             Key = ConsoleKey.D1,
             Title = "Poll Icom IC-705",
         },
+        new()
+        {
+            Function = TestUdpClient,
+            Key = ConsoleKey.D2,
+            Title = "Test UDP client",
+        },
     };
 
 ManageFlow(mainMenu);
@@ -148,4 +154,70 @@ static bool PollIcom705Port(params object[] parameters)
     rig.Dispose();
 
     return true;
+}
+
+static bool TestUdpClient(object[] parameters)
+{
+    var tokenSource = new CancellationTokenSource();
+    var client = new UdpClient();
+    client.MessageReceived += ClientOnMessageReceived;
+    client.Start();
+
+    var server = new UdpServer();
+    server.Start();
+
+    server.ComNotifySingleParameter(1, RigParameter.FreqA, 14100123);
+    
+    Console.WriteLine("Press x to finish.");
+
+    while (true)
+    {
+        var key = Console.Read();
+        if (key == 'x')
+        {
+            break;
+        }
+    }
+
+    client.Stop();
+    server.Stop();
+    return true;
+}
+
+static void ClientOnMessageReceived(object sender, string message)
+{
+    if (string.IsNullOrEmpty(message) || !message.StartsWith("MR", StringComparison.InvariantCultureIgnoreCase))
+    {
+        Console.WriteLine($"Received unknown UDP message: {message}");
+        return;
+    }
+
+    var chunks = message.Split('|', StringSplitOptions.RemoveEmptyEntries);
+    if (chunks.Length != 5)
+    {
+        Console.WriteLine($"Received invalid UDP message: {message}. Expected chunks: 5.");
+        return;
+    }
+
+    var rigNumber = int.Parse(chunks[1]);
+    var key = chunks[2];
+    var param1 = chunks[3];
+    var param2 = chunks[4];
+
+    switch (key)
+    {
+        case UdpMessageType.Parameter:
+            ReportParameter(rigNumber, param1, param2);
+            break;
+        default:
+            Console.WriteLine($@"{key} not recognized.");
+            break;
+    }
+}
+
+static void ReportParameter(int rigNumber, string paramId, string value)
+{
+    var id = Convert.ToInt32(paramId);
+    var param = (RigParameter) id;
+    Console.WriteLine($@"{param}: {value}");
 }
