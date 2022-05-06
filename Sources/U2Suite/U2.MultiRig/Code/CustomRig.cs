@@ -27,7 +27,6 @@ using log4net;
 using MonoSerialPort;
 using MonoSerialPort.Port;
 using U2.MultiRig.Code;
-using System.Reactive;
 
 namespace U2.MultiRig;
 
@@ -38,6 +37,10 @@ public enum RigCtlStatus
 
 public abstract class CustomRig : IDisposable
 {
+    private static readonly object LockStart = new();
+    private static readonly object StopLockObject = new();
+    private static readonly object TimerTickLockObject = new();
+
     private readonly RigSettings _rigSettings;
     private readonly ILog _logger = LogManager.GetLogger(typeof(CustomRig));
     protected UdpMessenger _udpMessenger;
@@ -77,7 +80,7 @@ public abstract class CustomRig : IDisposable
         _serialPort.ConnectionStatusChanged += SerialPort_ConnectionStatusChanged;
         _serialPort.MessageReceived += SerialPort_MessageReceived;
 
-        _udpMessenger = new UdpMessenger();
+        _udpMessenger = new UdpClient();
         _connectivityTimer = new Timer(ConnectivityTimerCallbackFunc);
         DisableConnectivityTimer();
         _timeoutTimer = new Timer(TimeoutTimerCallbackFunc);
@@ -485,9 +488,6 @@ public abstract class CustomRig : IDisposable
 
     public abstract void AddWriteCommand(RigParameter param, int value = 0);
 
-    public abstract void AddCustomCommand(object sender, byte[] code, int len, string end);
-
-    private static readonly object LockStart = new();
     public void Start()
     {
         if (RigCommands == null)
@@ -513,7 +513,6 @@ public abstract class CustomRig : IDisposable
         EnableConnectivityTimer();
     }
 
-    private static readonly object StopLockObject = new();
     public void Stop()
     {
         if (!_rigSettings.Enabled)
@@ -545,8 +544,6 @@ public abstract class CustomRig : IDisposable
     {
         _connectivityTimer.Change(Timeout.Infinite, Timeout.Infinite);
     }
-
-    private static readonly object TimerTickLockObject = new();
 
     private void ConnectivityTimerCallbackFunc(object? state)
     {
@@ -653,21 +650,6 @@ public abstract class CustomRig : IDisposable
                 _logger.Debug($"RIG{RigNumber}: Waiting for reply from radio.");
             }
         }
-    }
-
-    public void ForceVfo(RigParameter Value)
-    {
-        if (Enabled)
-        {
-            AddWriteCommand(Value);
-        }
-    }
-
-    public string GetStatusStr()
-    {
-        var getStatusStrResult = string.Empty;
-        string[] statusStr = { "Rig is not configured", "Rig is disabled", "Port is not available", "Rig is not responding", "On-line" };
-        return statusStr[(int)GetStatus()];
     }
 
     protected virtual void OnConnectionStatusChanged(ConnectionStatusChangedEventArgs args)

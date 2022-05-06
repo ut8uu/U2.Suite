@@ -253,8 +253,6 @@ public class Rig : CustomRig
         };
         _queue.AddBeforeStatusCommands(queueItem);
 
-        //reminder to check queue
-        _udpMessenger.TxQueue(RigNumber);
         CheckQueue();
     }
     
@@ -382,6 +380,7 @@ public class Rig : CustomRig
         field.SetValue(this, value);
         _changedParams.Add(param);
         _logger.DebugFormat("RIG{0} status changed: {1} = {2}", RigNumber, param.ToString(), Convert.ToString(value));
+        _udpMessenger.ComNotifySingleParameter(RigNumber, param, value);
     }
 
     protected virtual void OnRigParameterChanged(int rigNumber, RigParameter parameter, object value)
