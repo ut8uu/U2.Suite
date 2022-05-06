@@ -256,27 +256,6 @@ public class Rig : CustomRig
         CheckQueue();
     }
     
-    public override void AddCustomCommand(object sender, byte[] code, int len, string end)
-    {
-        if (code == null)
-        {
-            return;
-        }
-
-        var item = new QueueItem
-        {
-            Code = code,
-            Kind = CommandKind.Custom,
-            CustSender = sender,
-            ReplyLength = len,
-            ReplyEnd = end
-        };
-
-        _queue.Add(item);
-        _udpMessenger.TxQueue(RigNumber);
-        CheckQueue();
-    }
-
     private static FieldInfo GetFieldInfo(string name)
     {
         var result = typeof(Rig).GetField(name, BindingFlags.NonPublic | BindingFlags.Instance);

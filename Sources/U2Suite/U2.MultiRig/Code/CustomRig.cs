@@ -40,6 +40,7 @@ public abstract class CustomRig : IDisposable
     private static readonly object LockStart = new();
     private static readonly object StopLockObject = new();
     private static readonly object TimerTickLockObject = new();
+    private static readonly object CheckQueueLockObject = new();
 
     private readonly RigSettings _rigSettings;
     private readonly ILog _logger = LogManager.GetLogger(typeof(CustomRig));
@@ -313,33 +314,24 @@ public abstract class CustomRig : IDisposable
         }
     }
 
-    private void CtsDsrEvent(object sender)
-    {
-        string[] boolStr = { "OFF", "ON" };
-        //_logger.Info($"RIG{RigNumber} ctrl bits: CTS={ComPort.CtsBit} DSR={ComPort.DsrBit} RLS={ComPort.RlsdBit}");
-    }
-
     public void SetFreq(int value)
     {
         if (Enabled)
         {
+            _freq = value;
             AddWriteCommand(RigParameter.Freq, value);
         }
     }
 
-    private void SetFreqA(int value)
+    public void SetFreqA(int value)
     {
-        _logger.InfoFormat("Entered SetFreqA");
-
-        if (Enabled && (value != _freqA))
+        if (Enabled && value != _freqA)
         {
             AddWriteCommand(RigParameter.FreqA, value);
         }
-
-        _logger.InfoFormat("Exiting SetFreqA");
     }
 
-    private void SetFreqB(int value)
+    public void SetFreqB(int value)
     {
         if (Enabled && (value != _freqB))
         {
@@ -347,7 +339,7 @@ public abstract class CustomRig : IDisposable
         }
     }
 
-    private void SetRitOffset(int value)
+    public void SetRitOffset(int value)
     {
         if (Enabled && (value != _ritOffset))
         {
@@ -355,7 +347,7 @@ public abstract class CustomRig : IDisposable
         }
     }
 
-    private void SetPitch(int value)
+    public void SetPitch(int value)
     {
         if (!Enabled)
         {
@@ -371,7 +363,7 @@ public abstract class CustomRig : IDisposable
         }
     }
 
-    private void SetVfo(RigParameter value)
+    public void SetVfo(RigParameter value)
     {
         if (Enabled && RigCommandUtilities.VfoParams.Contains(value) && value != _vfo)
         {
@@ -379,7 +371,7 @@ public abstract class CustomRig : IDisposable
         }
     }
 
-    private void SetSplit(RigParameter value)
+    public void SetSplit(RigParameter value)
     {
         if (!(Enabled && RigCommandUtilities.SplitParams.Contains(value)))
         {
@@ -402,7 +394,9 @@ public abstract class CustomRig : IDisposable
                     break;
             }
         }
-        else switch (Vfo)
+        else
+        {
+            switch (Vfo)
             {
                 case RigParameter.VfoAB:
                     SetVfo(RigParameter.VfoAA);
@@ -411,9 +405,10 @@ public abstract class CustomRig : IDisposable
                     SetVfo(RigParameter.VfoBB);
                     break;
             }
+        }
     }
 
-    private void SetRit(RigParameter value)
+    public void SetRit(RigParameter value)
     {
         if (Enabled && (RigCommandUtilities.RitOnParams.Contains(value)) && (value != _rit))
         {
@@ -421,7 +416,7 @@ public abstract class CustomRig : IDisposable
         }
     }
 
-    private void SetXit(RigParameter value)
+    public void SetXit(RigParameter value)
     {
         if (Enabled && (RigCommandUtilities.XitOnParams.Contains(value)) && (value != Xit))
         {
@@ -429,7 +424,7 @@ public abstract class CustomRig : IDisposable
         }
     }
 
-    private void SetTx(RigParameter value)
+    public void SetTx(RigParameter value)
     {
         if (Enabled && (RigCommandUtilities.TxParams.Contains(value)))
         {
@@ -437,7 +432,7 @@ public abstract class CustomRig : IDisposable
         }
     }
 
-    private void SetMode(RigParameter value)
+    public void SetMode(RigParameter value)
     {
         if (Enabled && (RigCommandUtilities.ModeParams.Contains(value)))
         {
@@ -534,6 +529,8 @@ public abstract class CustomRig : IDisposable
         }
     }
 
+    #region Timer related methods
+
     private void EnableConnectivityTimer()
     {
         var interval = TimeSpan.FromMilliseconds(_rigSettings.PollMs);
@@ -616,7 +613,8 @@ public abstract class CustomRig : IDisposable
         CheckQueue();
     }
 
-    private static readonly object CheckQueueLockObject = new();
+    #endregion
+
     public void CheckQueue()
     {
         lock (CheckQueueLockObject)
