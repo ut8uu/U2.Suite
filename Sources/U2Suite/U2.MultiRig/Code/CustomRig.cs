@@ -642,6 +642,10 @@ public abstract class CustomRig : IDisposable
                 _queue.Phase = ExchangePhase.Receiving;
                 EnableTimeoutTimer();
             }
+            else
+            {
+                _queue.RemoveAt(0);
+            }
         }
     }
 

@@ -59,7 +59,6 @@ public class Rig : CustomRig
             var data = ByteFunctions.BytesAnd(inputData, mask.Mask);
             if (data.SequenceEqual(mask.Flags))
             {
-                _logger.Debug($"RIG{RigNumber}: Validation successful.");
                 return true;
             }
         }
@@ -203,7 +202,6 @@ public class Rig : CustomRig
     
     public override void AddWriteCommand(RigParameter param, int value = 0)
     {
-        byte[] NewCode;
         _logger.DebugFormat("RIG{0} Generating Write command for {1}", RigNumber, param);
 
         //is cmd supported?
@@ -221,7 +219,7 @@ public class Rig : CustomRig
         }
 
         //generate cmd
-        NewCode = cmd.Code;
+        var newCode = cmd.Code;
 
         if (cmd.Value.Format != ValueFormat.None)
         {
@@ -229,12 +227,12 @@ public class Rig : CustomRig
             {
                 var fmtValue = ConversionFunctions.FormatValue(value, cmd.Value);
 
-                if (cmd.Value.Start + cmd.Value.Len > NewCode.Length)
+                if (cmd.Value.Start + cmd.Value.Len > newCode.Length)
                 {
-                    _logger.ErrorFormat($"Value {cmd.Code} exceeds expected length of {NewCode.Length} bytes.");
+                    _logger.ErrorFormat($"Value {cmd.Code} exceeds expected length of {newCode.Length} bytes.");
                     throw new Exception("Value too long");
                 }
-                Array.Copy(fmtValue, 0, NewCode, cmd.Value.Start, cmd.Value.Len);
+                Array.Copy(fmtValue, 0, newCode, cmd.Value.Start, cmd.Value.Len);
             }
             catch (Exception e)
             {
@@ -245,7 +243,7 @@ public class Rig : CustomRig
         //add to queue
         var queueItem = new QueueItem
         {
-            Code = NewCode,
+            Code = newCode,
             Param = param,
             Kind = CommandKind.Write,
             ReplyLength = cmd.ReplyLength,
@@ -353,6 +351,7 @@ public class Rig : CustomRig
         var fieldValue = field.GetValue(this);
         if (fieldValue == null || value == (int)fieldValue)
         {
+            //_logger.Debug($"StoreParam: parameter {param}, existing value='{fieldValue}', new value='{value}'");
             return;
         }
 
