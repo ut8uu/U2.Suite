@@ -22,6 +22,7 @@ using DynamicData;
 using log4net;
 using U2.Core;
 using U2.MultiRig;
+using U2.MultiRig.Code;
 using U2.MultiRig.Utils;
 
 List<ConsoleManagementElement> mainMenu
@@ -129,10 +130,10 @@ static bool PollIcom705Port(params object[] parameters)
     var settings = new RigSettings
     {
         Port = ports.ElementAt(index).Name,
-        BaudRate = 57600,
-        DataBits = 8,
-        Parity = (int)U2.MultiRig.Code.Data.Parity.None,
-        StopBits = (int)U2.MultiRig.Code.Data.StopBits.IndexOf(1m),
+        BaudRate = Data.BaudRates.IndexOf(57600),
+        DataBits = Data.DataBits.IndexOf(8),
+        Parity = (int)Data.Parity.None,
+        StopBits = Data.StopBits.IndexOf(1m),
         Enabled = true,
     };
 
@@ -146,6 +147,10 @@ static bool PollIcom705Port(params object[] parameters)
 
     settings.Enabled = true;
     var rig = new Rig(1, settings, rigCommands);
+    rig.RigParameterChanged += (sender, number, parameter, value) =>
+    {
+        Console.WriteLine($"RIG{number}: {parameter}={value}");
+    };
     rig.Start();
 
     Console.WriteLine("Press Enter to continue.");
@@ -159,11 +164,11 @@ static bool PollIcom705Port(params object[] parameters)
 static bool TestUdpClient(object[] parameters)
 {
     var tokenSource = new CancellationTokenSource();
-    var client = new UdpClient();
+    var client = new UdpClient(CancellationToken.None);
     client.MessageReceived += ClientOnMessageReceived;
     client.Start();
 
-    var server = new UdpServer();
+    var server = new UdpServer(CancellationToken.None);
     server.Start();
 
     server.ComNotifySingleParameter(1, RigParameter.FreqA, 14100123);
