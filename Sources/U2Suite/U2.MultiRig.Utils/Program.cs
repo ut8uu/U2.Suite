@@ -25,19 +25,27 @@ using U2.MultiRig;
 using U2.MultiRig.Code;
 using U2.MultiRig.Utils;
 
+ConsoleKey startKey = ConsoleKey.D1;
+
 List<ConsoleManagementElement> mainMenu
     = new List<ConsoleManagementElement>
     {
         new()
         {
             Function = PollIcom705,
-            Key = ConsoleKey.D1,
+            Key = startKey++,
             Title = "Poll Icom IC-705",
         },
         new()
         {
+            Function = ManageIcom705,
+            Key = startKey++,
+            Title = "Manage Icom IC-705",
+        },
+        new()
+        {
             Function = TestUdpClient,
-            Key = ConsoleKey.D2,
+            Key = startKey++,
             Title = "Test UDP client",
         },
     };
@@ -49,7 +57,7 @@ static void Log(string message)
     LogManager.GetLogger(typeof(Program)).Info(message);
 }
 
-static bool PollIcom705(object[] parameters)
+static bool SelectComPort(Func<object[], bool> func)
 {
     var ports = ComPortHelper.EnumerateComPorts();
     var menu = new List<ConsoleManagementElement>();
@@ -58,8 +66,8 @@ static bool PollIcom705(object[] parameters)
     {
         menu.Add(new()
         {
-            Function = PollIcom705Port,
-            FunctionParameters = new object[]{ key },
+            Function = func,
+            FunctionParameters = new object[] { key },
             Key = key,
             Title = port.Description,
         });
@@ -69,6 +77,48 @@ static bool PollIcom705(object[] parameters)
     ManageFlow(menu);
 
     return true;
+}
+
+static bool ManageIcom705(object[] parameters)
+{
+    return SelectComPort(ManageIcom705Port);
+}
+
+static bool ManageIcom705Port(params object[] parameters)
+{
+    Log("Entered PollIcom705()");
+
+    Console.WriteLine("Polling the Icom IC-705");
+    Console.Write("Select the COM port the device is connected to.");
+
+    var rig = GetIC705Rig(parameters);
+    rig.Start();
+
+    Console.WriteLine("Press any key to abort.");
+
+    var i = 20;
+    while (i > 0)
+    {
+        var newValue = 21100000 + i-- * 1000;
+        Console.WriteLine($"Setting FreqA to {newValue}");
+        rig.SetFreqA(newValue);
+        Thread.Sleep(1000);
+
+        if (Console.KeyAvailable)
+        {
+            break;
+        }
+    }
+
+    Console.WriteLine("Press Enter to continue.");
+    Console.ReadLine();
+
+    return true;
+}
+
+static bool PollIcom705(object[] parameters)
+{
+    return SelectComPort(PollIcom705Port);
 }
 
 static void ManageFlow(List<ConsoleManagementElement> input)
@@ -124,6 +174,19 @@ static bool PollIcom705Port(params object[] parameters)
     Console.WriteLine("Polling the Icom IC-705");
     Console.Write("Select the COM port the device is connected to.");
 
+    var rig = GetIC705Rig(parameters);
+    rig.Start();
+
+    Console.WriteLine("Press Enter to continue.");
+    Console.ReadLine();
+
+    rig.Dispose();
+
+    return true;
+}
+
+static Rig GetIC705Rig(object[] parameters)
+{
     var key = (ConsoleKey)parameters[0];
     var ports = ComPortHelper.EnumerateComPorts();
     var index = key - ConsoleKey.D1;
@@ -142,7 +205,7 @@ static bool PollIcom705Port(params object[] parameters)
     if (rigCommands == null)
     {
         Log("Commands for IC-705 not found.");
-        return true;
+        throw new FileNotFoundException("INI file for IC-705 not found.");
     }
 
     settings.Enabled = true;
@@ -151,14 +214,8 @@ static bool PollIcom705Port(params object[] parameters)
     {
         Console.WriteLine($"RIG{number}: {parameter}={value}");
     };
-    rig.Start();
 
-    Console.WriteLine("Press Enter to continue.");
-    Console.ReadLine();
-
-    rig.Dispose();
-
-    return true;
+    return rig;
 }
 
 static bool TestUdpClient(object[] parameters)
