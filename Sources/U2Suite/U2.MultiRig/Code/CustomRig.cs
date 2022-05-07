@@ -47,6 +47,7 @@ public abstract class CustomRig : IDisposable
     protected UdpMessenger _udpMessenger;
     protected readonly Timer _connectivityTimer;
     protected readonly Timer _timeoutTimer;
+    protected CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
 
     protected CommandQueue _queue;
     protected int _freq = 0;
@@ -81,7 +82,7 @@ public abstract class CustomRig : IDisposable
         _serialPort.ConnectionStatusChanged += SerialPort_ConnectionStatusChanged;
         _serialPort.MessageReceived += SerialPort_MessageReceived;
 
-        _udpMessenger = new UdpServer();
+        _udpMessenger = new UdpServer(_cancellationTokenSource.Token);
 
         _connectivityTimer = new Timer(ConnectivityTimerCallbackFunc);
         DisableConnectivityTimer();
@@ -177,7 +178,7 @@ public abstract class CustomRig : IDisposable
                     RigNumber, ByteFunctions.BytesToHex(receivedData), receivedData.Length);
             }
             else
-            {
+            { 
                 _logger.ErrorFormat("RIG{0}: received data when not in the receiving state: {1} ({2} bytes)",
                     RigNumber, ByteFunctions.BytesToHex(receivedData), receivedData.Length);
                 return;
@@ -499,7 +500,8 @@ public abstract class CustomRig : IDisposable
                 return;
             }
 
-            _udpMessenger.Start();
+            _cancellationTokenSource = new CancellationTokenSource();
+            _udpMessenger.Start(_cancellationTokenSource.Token);
             _queue.Clear();
             _queue.Phase = ExchangePhase.Idle;
             AddCommands(RigCommands.InitCmd, CommandKind.Init);
@@ -516,12 +518,12 @@ public abstract class CustomRig : IDisposable
             return;
         }
 
-        DisableConnectivityTimer();
-
         _logger.Debug($"Stopping RIG{RigNumber}");
 
         lock (StopLockObject)
         {
+            _cancellationTokenSource.Cancel();
+            DisableConnectivityTimer();
             _online = false;
             _queue.Clear();
             _queue.Phase = ExchangePhase.Idle;
@@ -586,7 +588,7 @@ public abstract class CustomRig : IDisposable
 
     private void ConnectivityTimerTick()
     {
-        _logger.Debug("Timer ticked.");
+        //_logger.Debug("Timer ticked.");
 
         var connected = _serialPort.IsConnected;
         if (!connected)
@@ -601,13 +603,8 @@ public abstract class CustomRig : IDisposable
             return;
         }
 
-        if (_queue.HasStatusCommands)
+        if (!_queue.HasStatusCommands)
         {
-            _logger.DebugFormat("RIG{0} Status commands is already in the queue", RigNumber);
-        }
-        else
-        {
-            _logger.DebugFormat("RIG{0} Adding status commands to the queue", RigNumber);
             AddCommands(RigCommands.StatusCmd, CommandKind.Status);
         }
 
@@ -637,8 +634,6 @@ public abstract class CustomRig : IDisposable
                 _ => throw new ArgumentOutOfRangeException()
             };
 
-            _logger.DebugFormat("RIG{0}: Sending {1} command: {2}",
-                RigNumber, s, ByteFunctions.BytesToHex(_queue.CurrentCmd.Code));
             //send command
             _serialPort.SendMessage(_queue.CurrentCmd.Code);
 
@@ -646,7 +641,6 @@ public abstract class CustomRig : IDisposable
             {
                 _queue.Phase = ExchangePhase.Receiving;
                 EnableTimeoutTimer();
-                _logger.Debug($"RIG{RigNumber}: Waiting for reply from radio.");
             }
         }
     }
