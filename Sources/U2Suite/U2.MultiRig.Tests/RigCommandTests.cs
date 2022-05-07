@@ -159,7 +159,7 @@ namespace U2.MultiRig.Tests
         {
             var cmd = LoadIni("WriteOnly1.ini");
 
-            var write = Assert.Single(cmd.WriteCmd);
+            var write = Assert.Single(cmd.WriteCmd).Value;
             Assert.NotNull(write);
             
             Assert.Equal(new byte[]{0x0D}, write.ReplyEnd);
@@ -241,7 +241,7 @@ namespace U2.MultiRig.Tests
             File.WriteAllText(file, testData.Text);
 
             var cmd = LoadIni(fileName);
-            var writeCmd = cmd.WriteCmd.Single();
+            var writeCmd = cmd.WriteCmd.Single().Value;
             Assert.Equal(testData.Command, writeCmd.Code);
             var value = writeCmd.Value;
             Assert.Equal(testData.ParameterValue.Len, value.Len);

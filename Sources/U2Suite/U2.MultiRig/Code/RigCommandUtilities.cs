@@ -179,9 +179,9 @@ internal static class RigCommandUtilities
     /// <param name="iniFile"></param>
     /// <returns></returns>
     /// <exception cref="LoadWriteCommandException"></exception>
-    private static List<RigCommand> LoadWriteCommands(IniFile iniFile)
+    private static Dictionary<int, RigCommand> LoadWriteCommands(IniFile iniFile)
     {
-        var result = new List<RigCommand>();
+        var result = new Dictionary<int, RigCommand>();
         var sections = iniFile.GetSections()
             .Where(s => !StartsWith(s, "status") && !StartsWith(s, "init"));
 
@@ -216,7 +216,8 @@ internal static class RigCommandUtilities
                     throw new LoadWriteCommandException("parameter does not require a value");
                 }
 
-                result.Add(cmd);
+                var id = (int)Enum.Parse<RigParameter>(section.Replace("pm", ""));
+                result[id] = cmd;
             }
             catch (LoadWriteCommandException)
             {
