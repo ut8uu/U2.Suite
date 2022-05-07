@@ -23,19 +23,21 @@ using System.Linq;
 using System.Net.Sockets;
 using System.Net;
 using System.Text;
+using CommandLineParser.Arguments;
 using SimpleUdp;
 using log4net;
+using System.Reflection.Metadata;
+using System.ServiceModel.Channels;
 
 namespace U2.MultiRig;
 
 public class UdpMessageType
 {
-    public const string Status = nameof(Status);
-    public const string ParameterList = nameof(ParameterList);
-    public const string Parameter = nameof(Parameter);
-    public const string Custom = nameof(Custom);
-    public const string RigType = nameof(RigType);
-    public const string TxQueue = nameof(TxQueue);
+    public const string Status = "ST";
+    public const string ParameterList = "PL";
+    public const string Parameter = "P1";
+    public const string Custom = "CU";
+    public const string RigType = "RT";
 }
 
 public delegate void UdpMessageReceivedEventHandler(object sender, string message);
@@ -46,33 +48,88 @@ public enum UdpMessengerKind
     Server,
 }
 
+public sealed class UdpMessage
+{
+    public int RigNumber { get; init; }
+    public string MessageType { get; init; }
+    public int Parameter { get; init; }
+    public object Value { get; set; }
+}
+
 public sealed class UdpClient : UdpMessenger
 {
-    public UdpClient() : base(UdpMessengerKind.Client){}
+    public UdpClient(CancellationToken cancellationToken)
+        : base(UdpMessengerKind.Client, cancellationToken) { }
 }
 
 public sealed class UdpServer : UdpMessenger
 {
-    public UdpServer() : base(UdpMessengerKind.Server){}
+    public UdpServer(CancellationToken cancellationToken)
+        : base(UdpMessengerKind.Server, cancellationToken) { }
 }
 
 public abstract class UdpMessenger : IDisposable
 {
     public const int ClientPort = 11101;
     public const int ServerPort = 11102;
-    
+
     private readonly UdpEndpoint _udp;
     private readonly ILog _logger = LogManager.GetLogger(typeof(UdpMessenger));
     private bool _started;
+    private readonly Timer _sendTimer;
+    private readonly List<UdpMessage> _queue = new();
+    private CancellationToken _cancellationToken;
+    private readonly TimeSpan _sendTimeSpan = TimeSpan.FromMilliseconds(500);
 
-    protected UdpMessenger(UdpMessengerKind kind)
+    protected UdpMessenger(UdpMessengerKind kind, CancellationToken cancellationToken)
     {
+        _cancellationToken = cancellationToken;
         var port = kind == UdpMessengerKind.Server ? ServerPort : ClientPort;
         _udp = new UdpEndpoint(IPAddress.Loopback.ToString(), port);
         _udp.EndpointDetected += EndpointDetected;
         _udp.DatagramReceived += DatagramReceived;
         _udp.Events.Started += Started;
         _udp.Events.Stopped += Stopped;
+
+        _sendTimer = new Timer(Flush);
+    }
+
+    private void EnableTimer()
+    {
+        _sendTimer.Change(_sendTimeSpan, _sendTimeSpan);
+    }
+
+    private void DisableTimer()
+    {
+        _sendTimer.Change(Timeout.InfiniteTimeSpan, Timeout.InfiniteTimeSpan);
+    }
+
+    private void Flush(object? state)
+    {
+        if (!_started || _queue.Count == 0)
+        {
+            return;
+        }
+        DisableTimer();
+        try
+        {
+            var sb = new StringBuilder();
+            var list = _queue.ToList();
+            _queue.Clear();
+            foreach (var msg in list)
+            {
+                var message = $"MR|{msg.RigNumber}|{msg.MessageType}|{msg.Parameter}|{msg.Value}";
+                sb.AppendLine(message);
+            }
+            _udp.Send(IPAddress.Loopback.ToString(), ClientPort, sb.ToString());
+        }
+        finally
+        {
+            if (!_cancellationToken.IsCancellationRequested)
+            {
+                EnableTimer();
+            }
+        }
     }
 
     private void Stopped(object? sender, EventArgs e)
@@ -97,10 +154,21 @@ public abstract class UdpMessenger : IDisposable
 
     public void Start()
     {
+        Start(CancellationToken.None);
+    }
+
+    public void Start(CancellationToken cancellationToken)
+    {
         if (_started)
         {
             return;
         }
+
+        if (cancellationToken != CancellationToken.None)
+        {
+            _cancellationToken = cancellationToken;
+        }
+        EnableTimer();
         _udp.Start();
         _started = true;
     }
@@ -111,6 +179,7 @@ public abstract class UdpMessenger : IDisposable
         {
             return;
         }
+        DisableTimer();
         _udp.Stop();
         _started = false;
     }
@@ -131,35 +200,50 @@ public abstract class UdpMessenger : IDisposable
         _logger.Debug($"Endpoint {e.Ip}:{e.Port} detected.");
     }
 
-    private void SendUdpMessage(int rigNumber, string key, object param1, object param2)
+    private void EnqueueMessage(int rigNumber, string key, int parameter, object value)
     {
-        var s = $"MR|{rigNumber}|{key}|{param1}|{param2}";
-        _udp.Send(IPAddress.Loopback.ToString(), ClientPort, s);
+        var existingMessage = _queue.FirstOrDefault(x => x.RigNumber == rigNumber
+                                                         && x.MessageType == key
+                                                         && x.Parameter == parameter);
+        if (existingMessage != null)
+        {
+            existingMessage.Value = value;
+        }
+        else
+        {
+            _queue.Add(new()
+            {
+                RigNumber = rigNumber,
+                MessageType = key,
+                Parameter = parameter,
+                Value = value,
+            });
+        }
     }
 
     public void ComNotifyStatus(int rigNumber)
     {
-        SendUdpMessage(rigNumber, UdpMessageType.Status, 0, 0);
+        EnqueueMessage(rigNumber, UdpMessageType.Status, 0, 0);
     }
 
     public void ComNotifyParams(int rigNumber, int parameters)
     {
-        SendUdpMessage(rigNumber, UdpMessageType.ParameterList, parameters, 0);
+        EnqueueMessage(rigNumber, UdpMessageType.ParameterList, parameters, 0);
     }
 
     public void ComNotifySingleParameter(int rigNumber, RigParameter parameter, object parameterValue = null)
     {
-        SendUdpMessage(rigNumber, UdpMessageType.Parameter, (int)parameter, parameterValue);
+        EnqueueMessage(rigNumber, UdpMessageType.Parameter, (int)parameter, parameterValue);
     }
 
     public void ComNotifyCustom(int rigNumber, object Sender)
     {
-        SendUdpMessage(rigNumber, UdpMessageType.Custom, Convert.ToInt32(Sender), 0);
+        EnqueueMessage(rigNumber, UdpMessageType.Custom, Convert.ToInt32(Sender), 0);
     }
 
     public void TxQueue(int rigNumber)
     {
-        SendUdpMessage(rigNumber, UdpMessageType.TxQueue, 0, 0);
+        EnqueueMessage(rigNumber, UdpMessageType.TxQueue, 0, 0);
     }
 
     public void ComNotifyRigType(int rigNumber)

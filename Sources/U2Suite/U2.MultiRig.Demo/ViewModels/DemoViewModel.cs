@@ -126,7 +126,7 @@ namespace U2.MultiRig.Demo.ViewModels
         {
             try
             {
-                _udpClient = new UdpClient();
+                _udpClient = new UdpClient(CancellationToken.None);
                 _udpClient.MessageReceived += UdpClientOnMessageReceived;
                 _udpClient.Start();
             }
