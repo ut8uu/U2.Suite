@@ -241,11 +241,6 @@ public abstract class UdpMessenger : IDisposable
         EnqueueMessage(rigNumber, UdpMessageType.Custom, Convert.ToInt32(Sender), 0);
     }
 
-    public void TxQueue(int rigNumber)
-    {
-        EnqueueMessage(rigNumber, UdpMessageType.TxQueue, 0, 0);
-    }
-
     public void ComNotifyRigType(int rigNumber)
     {
         throw new NotImplementedException();
