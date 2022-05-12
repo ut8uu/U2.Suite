@@ -29,11 +29,6 @@ namespace U2.MultiRig.Code;
 
 public static class ByteFunctions
 {
-    public static bool ByteArraysEqual(byte[] arr1, byte[] arr2)
-    {
-        return arr1.SequenceEqual(arr2);
-    }
-
     public static byte[] BytesAnd(byte[] arr1, byte[] arr2)
     {
         List<byte> result = new();
@@ -46,11 +41,6 @@ public static class ByteFunctions
         }
 
         return result.ToArray();
-    }
-
-    public static void BytesReverse(byte[] arr)
-    {
-        Array.Reverse(arr);
     }
 
     public static string BytesToStr(byte[] bytes)

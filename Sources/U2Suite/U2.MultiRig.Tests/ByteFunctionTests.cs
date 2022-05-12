@@ -46,7 +46,7 @@ namespace U2.MultiRig.Tests
         {
             var arr1 = new byte[] { 0x10, 0x22, 0x80, 0x55 };
             var expectedResult = new byte[] { 0x55, 0x80, 0x22, 0x10 };
-            ByteFunctions.BytesReverse(arr1);
+            Array.Reverse(arr1);
             Assert.True(expectedResult.SequenceEqual(arr1));
         }
 
