@@ -495,7 +495,7 @@ internal static class RigCommandUtilities
             throw new MaskValidationException("Mask length <> ReplyLength");
         }
 
-        if (!ByteFunctions.ByteArraysEqual(ByteFunctions.BytesAnd(mask.Flags, mask.Flags), mask.Flags))
+        if (!ByteFunctions.BytesAnd(mask.Flags, mask.Flags).SequenceEqual(mask.Flags))
         {
             throw new MaskValidationException("Mask hides valid bits");
         }
@@ -510,7 +510,7 @@ internal static class RigCommandUtilities
             var startIndex = mask.Flags.Length - end.Length;
             var ending = mask.Flags[startIndex..];
 
-            if (!ByteFunctions.ByteArraysEqual(ending, end))
+            if (!ending.SequenceEqual(end))
             {
                 throw new MaskValidationException("Mask does not end with ReplyEnd");
             }
