@@ -19,13 +19,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DynamicData;
 using U2.Core;
 
-namespace U2.MultiRig.Code;
+namespace U2.MultiRig;
 
 public static class ByteFunctions
 {
@@ -117,5 +118,16 @@ public static class ByteFunctions
         {
             return Convert.ToByte(str.Substring(position * 2, 2), 16);
         }
+    }
+
+    public static byte[] TimestampToBytes(DateTime timestamp)
+    {
+        return BitConverter.GetBytes(timestamp.ToBinary());
+    }
+
+    public static DateTime BytesToTimestamp(byte[] data)
+    {
+        var res = DateTime.FromBinary(BitConverter.ToInt64(data));
+        return res;
     }
 }

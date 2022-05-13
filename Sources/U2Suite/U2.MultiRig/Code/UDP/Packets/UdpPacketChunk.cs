@@ -21,32 +21,7 @@ using System;
 using System.Text;
 using JetBrains.Annotations;
 
-namespace U2.MultiRig.Code.UDP;
-
-public enum PacketChunkType
-{
-    MagicNumber,
-    
-}
-
-public class MagicNumberPacketChunk : UdpPacketChunk<string?>
-{
-    public MagicNumberPacketChunk(byte[] data) 
-        : base("MagicNumber", PacketChunkType.MagicNumber, 0, 4, data)
-    {
-    }
-
-    internal override string? GetValueFromBytes(byte[] data)
-    {
-        var chunkData = GetBytes(data, StartPosition, ChunkSize);
-        return ByteFunctions.BytesToHex(chunkData);
-    }
-
-    internal override byte[] GetBytesFromValue()
-    {
-        return ByteFunctions.HexStrToBytes(Value ?? string.Empty);
-    }
-}
+namespace U2.MultiRig;
 
 public abstract class UdpPacketChunk<T>
 {
@@ -69,9 +44,17 @@ public abstract class UdpPacketChunk<T>
         Value = GetValueFromBytes(_data);
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="data"></param>
+    /// <param name="start"></param>
+    /// <param name="len"></param>
+    /// <returns></returns>
+    /// <exception cref="UdpPacketException"></exception>
     protected static byte[] GetBytes(byte[] data, int start, int len)
     {
-        if (start + len >= data.Length)
+        if (start + len > data.Length)
         {
             throw new UdpPacketException($"Data too short.");
         }

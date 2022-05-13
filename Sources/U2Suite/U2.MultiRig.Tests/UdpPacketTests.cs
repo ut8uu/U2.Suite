@@ -23,6 +23,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using U2.MultiRig.Code;
+using U2.MultiRig.Code.Exceptions;
 using U2.MultiRig.Code.UDP;
 using Xunit;
 
@@ -38,11 +39,28 @@ public class UdpPacketTests
     }
 
     [Fact]
-    public void GetMagicNumber()
+    public void MagicNumber_HappyPass()
     {
-        var data = ByteFunctions.HexStrToBytes("30313233343536"); //0123456 as Hex
-        var magicNumber = new MagicNumberPacketChunk(data);
-        Assert.Equal("30313233", magicNumber.Value);
-        Assert.Equal(Encoding.UTF8.GetBytes("0123"), magicNumber.GetBytesFromValue());
+        var data = ByteFunctions.HexStrToBytes(TestHelper.UdpPacketGoodValue); 
+        var magicNumberChunk = new MagicNumberPacketChunk(data);
+        Assert.Equal(TestHelper.MagicNumberHexStr, magicNumberChunk.Value);
+        Assert.Equal(TestHelper.MagicNumberByteArray, magicNumberChunk.GetBytesFromValue());
+    }
+
+    [Fact]
+    public void MagicNumber_IncorrectSignature()
+    {
+        var data = ByteFunctions.HexStrToBytes(TestHelper.UdpPacketUnknownMagicNumber);
+        var exception = Assert.Throws<UdpPacketException>(() => new MagicNumberPacketChunk(data));
+        var expectedMessage = KnownErrors.FormatWrongSignatureError(TestHelper.UnknownMagicNumberHexStr);
+        Assert.Equal(expectedMessage, exception.Message);
+    }
+
+    [Fact]
+    public void GetTimestamp()
+    {
+        var data = ByteFunctions.HexStrToBytes($"{TestHelper.MagicNumberHexStr}{TestHelper.UnixEpochTimestampHexStr}");
+        var timestamp = new TimestampPacketChunk(data);
+        Assert.Equal(DateTime.UnixEpoch, timestamp.Value);
     }
 }

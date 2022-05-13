@@ -25,6 +25,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
+using log4net;
 
 namespace U2.MultiRig.Code.UDP
 {
@@ -36,6 +37,7 @@ namespace U2.MultiRig.Code.UDP
         public const int ServerBufferSize = 8192;
 
         private readonly CancellationToken _cancellationToken;
+        private readonly ILog _log = LogManager.GetLogger(typeof(RigUdpMessenger));
         private readonly UdpServer _server;
         private readonly UdpClient _client;
         private bool _disposed;
@@ -71,7 +73,14 @@ namespace U2.MultiRig.Code.UDP
                 return;
             }
 
-            var packet = RigUdpMessengerPacket.Create(eventArgs.Data);
+            try
+            {
+                var packet = RigUdpMessengerPacket.Create(eventArgs.Data);
+            }
+            catch (UdpPacketException ex)
+            {
+                _log.Error(ex.Message);
+            }
         }
 
         private void SendMultiCastMessage(byte[] data)
