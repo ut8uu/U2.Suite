@@ -92,5 +92,17 @@ namespace U2.MultiRig.Tests
             var actualString = ByteFunctions.BytesToHex(bytes);
             Assert.Equal(expectedString, actualString);
         }
+
+        [Fact]
+        public void TestTimestamp()
+        {
+            var timestamp = DateTime.UnixEpoch;
+            var unixEpochBytes = ByteFunctions.HexStrToBytes("0080B5F7F57F9F48");
+            var bytes = ByteFunctions.TimestampToBytes(timestamp);
+            var decodedTimestamp = ByteFunctions.BytesToTimestamp(bytes);
+
+            Assert.Equal(unixEpochBytes, bytes);
+            Assert.Equal(timestamp, decodedTimestamp);
+        }
     }
 }
