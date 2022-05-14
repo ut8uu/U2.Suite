@@ -20,17 +20,21 @@ modern approach based on the exchange of the UDP messages was used.
 
 ## Supported rigs
 
-Being based on the OmniRig, the U2.MultiRig software can use INI files
-from the OmniRig without any change. If for some reason you cannot see your device
-in the dropdown list of supported rigs, but OmniRig has it listed, please report this
-on the GitHub ([link to issue tracker](https://github.com/ut8uu/U2.Suite/issues)).
+Being based on the OmniRig, the U2.MultiRig software can use the INI files
+from the OmniRig without any change. If, for some reason, you cannot see your device
+in the dropdown list of the supported rigs, but OmniRig has it listed, please 
+report this using the GitHub ([link to the issue tracker](https://github.com/ut8uu/U2.Suite/issues)).
 
 ## The protocol
 
-The used protocol is adopted from the WSJT-X, where the similar UDP-based exchange 
-is used. The UDP datagramm consists of the following parts
+The UDP datagramm consists of the following parts.
 
 | Title       | Size    | Description |
 | ----------- | ------- | ----------- |
 | MagicNumber | 4 bytes | Indicates this is an U2.MultiRig-related datagram. Always equals 0xABBA1105. |
 | Timestamp   | 8 bytes | A 64-bit integer value representing the DateTime in binary format. |
+| SenderId    | 2 bytes | A 16-bit unsigned integer representing the sender of the datagram. |
+| ReceiverId  | 2 bytes | A 16-bit unsigned integer representing the receiver of the datagram. |
+
+All values are stored and sent using the big-endian order, when the first 
+(or most significant) byte of the sequence is being sent first.

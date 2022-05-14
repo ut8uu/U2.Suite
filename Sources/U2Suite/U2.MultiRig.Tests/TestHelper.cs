@@ -31,8 +31,10 @@ namespace U2.MultiRig.Tests
         public static readonly byte[] MagicNumberByteArray = new byte[] {0xAB, 0xBA, 0x11, 0x05};
         public const string UnknownMagicNumberHexStr = "ABADBABA";
         public const string UnixEpochTimestampHexStr = "0080B5F7F57F9F48";
+        public const string SenderId = "0102";
+        public const string ReceiverId = "0304";
 
-        public const string UdpPacketGoodValue = $"{MagicNumberHexStr}{UnixEpochTimestampHexStr}";
-        public const string UdpPacketUnknownMagicNumber = $"{UnknownMagicNumberHexStr}{UnixEpochTimestampHexStr}";
+        public const string UdpPacketGoodValue = $"{MagicNumberHexStr}{UnixEpochTimestampHexStr}{SenderId}{ReceiverId}";
+        public const string UdpPacketUnknownMagicNumber = $"{UnknownMagicNumberHexStr}{UnixEpochTimestampHexStr}{SenderId}{ReceiverId}";
     }
 }

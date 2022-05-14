@@ -25,9 +25,15 @@ public sealed class RigUdpMessengerPacket
     public const int MagicNumberLen = 4;
     public const int TimestampStart = MagicNumberStart + MagicNumberLen;
     public const int TimestampLen = 8;
+    public const int SenderIdStart = TimestampStart + TimestampLen;
+    public const int SenderIdLen = 2;
+    public const int ReceiverIdStart = SenderIdStart + SenderIdLen;
+    public const int ReceiverIdLen = 2;
 
     public MagicNumberPacketChunk? MagicNumber { get; init; }
     public TimestampPacketChunk? Timestamp { get; init; }
+    public SenderIdPacketChunk? SenderId { get; set; }
+    public ReceiverIdPacketChunk? ReceiverId { get; set; }
 
     public static RigUdpMessengerPacket Create(byte[] data)
     {
@@ -35,6 +41,8 @@ public sealed class RigUdpMessengerPacket
         {
             MagicNumber = new MagicNumberPacketChunk(data),
             Timestamp = new TimestampPacketChunk(data),
+            SenderId = new SenderIdPacketChunk(data),
+            ReceiverId = new ReceiverIdPacketChunk(data),
         };
 
         return result;

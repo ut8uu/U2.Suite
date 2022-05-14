@@ -59,8 +59,30 @@ public class UdpPacketTests
     [Fact]
     public void GetTimestamp()
     {
-        var data = ByteFunctions.HexStrToBytes($"{TestHelper.MagicNumberHexStr}{TestHelper.UnixEpochTimestampHexStr}");
+        var data = ByteFunctions.HexStrToBytes($"{TestHelper.UdpPacketGoodValue}");
         var timestamp = new TimestampPacketChunk(data);
         Assert.Equal(DateTime.UnixEpoch, timestamp.Value);
+    }
+
+    [Fact]
+    public void SenderId()
+    {
+        var data = ByteFunctions.HexStrToBytes($"{TestHelper.UdpPacketGoodValue}");
+        var sender = new SenderIdPacketChunk(data);
+        var expectedBytes = ByteFunctions.HexStrToBytes(TestHelper.SenderId);
+        var actualBytes = sender.GetBytesFromValue();
+        Assert.True(expectedBytes.SequenceEqual(actualBytes));
+        Assert.Equal(256 + 2 /* 0x0102 */, sender.Value);
+    }
+
+    [Fact]
+    public void ReceiverId()
+    {
+        var data = ByteFunctions.HexStrToBytes($"{TestHelper.UdpPacketGoodValue}");
+        var receiver = new ReceiverIdPacketChunk(data);
+        var expectedBytes = ByteFunctions.HexStrToBytes(TestHelper.ReceiverId);
+        var actualBytes = receiver.GetBytesFromValue();
+        Assert.True(expectedBytes.SequenceEqual(actualBytes));
+        Assert.Equal(3 * 256 + 4 /* 0x0304 */, receiver.Value);
     }
 }
