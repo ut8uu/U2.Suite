@@ -17,7 +17,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-using System.ComponentModel;
+using System;
 using U2.MultiRig.Code.Exceptions;
 using U2.MultiRig.Code.UDP;
 
@@ -34,7 +34,7 @@ public sealed class MessageTypePacketChunk : UdpPacketChunk<char>
 
     internal override byte[] GetBytesFromValue()
     {
-        return new byte[]{ (byte)Value };
+        return new[]{ (byte)Value };
     }
 
     internal override char GetValueFromBytes(byte[] data)
@@ -54,9 +54,8 @@ public sealed class MessageTypePacketChunk : UdpPacketChunk<char>
     {
         get
         {
-            var c = (char) Value;
-            var allowedChars = new char[] {'R', 'A', 'I', 'S'};
-            return allowedChars.Contains(c);
+            var allowedChars = new[] {'R', 'A', 'I', 'S'};
+            return allowedChars.Contains(Value);
         }
     }
 }

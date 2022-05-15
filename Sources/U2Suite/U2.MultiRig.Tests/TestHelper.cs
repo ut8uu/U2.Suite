@@ -32,7 +32,6 @@ internal class TestHelper
     public const string UnknownMagicNumberHexStr = "ABADBABA";
 
     public const string UnixEpochTimestampHexStr = "0080B5F7F57F9F48";
-    //public static readonly UnixEpochTimestamp = DateTime.
     public const string SenderIdHexStr = "0102";
     public const string ReceiverIdHexStr = "0304";
     public const string MessageIdHexStr = "0511";

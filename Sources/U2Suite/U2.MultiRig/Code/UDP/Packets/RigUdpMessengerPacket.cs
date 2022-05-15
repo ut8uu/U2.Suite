@@ -17,8 +17,6 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-using System.ServiceModel.Channels;
-
 namespace U2.MultiRig.Code.UDP;
 
 public sealed class RigUdpMessengerPacket

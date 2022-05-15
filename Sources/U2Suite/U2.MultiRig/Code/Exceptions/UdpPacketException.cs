@@ -20,7 +20,7 @@
 namespace U2.MultiRig;
 
 [Serializable]
-internal class UdpPacketException : Exception
+public class UdpPacketException : Exception
 {
     public UdpPacketException(string message) : base(message)
     {

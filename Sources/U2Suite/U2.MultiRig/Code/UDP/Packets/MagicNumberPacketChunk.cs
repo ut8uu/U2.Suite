@@ -17,14 +17,14 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-using U2.MultiRig.Code.Exceptions;
+using System;
 using U2.MultiRig.Code.UDP;
 
 namespace U2.MultiRig;
 
 public sealed class MagicNumberPacketChunk : UdpPacketChunk<byte[]>
 {
-    private readonly byte[] _signature = new byte[] {0xAB, 0xBA, 0x11, 0x05};
+    private readonly byte[] _signature = {0xAB, 0xBA, 0x11, 0x05};
 
     public MagicNumberPacketChunk(byte[] data) 
         : base(PacketChunkType.MagicNumber,

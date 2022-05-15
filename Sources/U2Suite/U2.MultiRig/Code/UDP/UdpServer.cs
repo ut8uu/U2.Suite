@@ -110,7 +110,7 @@ public class UdpServer : IDisposable
         {
             try
             {
-                _socket.Shutdown(SocketShutdown.Both);
+                _socket?.Shutdown(SocketShutdown.Both);
             }
             catch (SocketException)
             {
@@ -121,7 +121,8 @@ public class UdpServer : IDisposable
             }
             finally
             {
-                _socket.Close();
+                _socket?.Close();
+                _socket?.Dispose();
             }
         }
         _socket = null;
