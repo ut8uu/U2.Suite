@@ -23,30 +23,20 @@ using U2.MultiRig.Code.UDP;
 
 namespace U2.MultiRig;
 
-public sealed class TimestampPacketChunk : UdpPacketChunk<DateTime>
+public sealed class DataPacketChunk : UdpPacketChunk<byte[]>
 {
-    public TimestampPacketChunk(byte[] data) 
-        : base(PacketChunkType.Timestamp,
-            RigUdpMessengerPacket.TimestampStart, RigUdpMessengerPacket.TimestampLen, 
-            data)
+    public DataPacketChunk(byte[] data) 
+        : base(PacketChunkType.Data, RigUdpMessengerPacket.DataStart, 65536, data)
     {
     }
 
     internal override byte[] GetBytesFromValue()
     {
-        return ByteFunctions.TimestampToBytes(Value);
+        return Value ?? Array.Empty<byte>();
     }
 
-    internal override DateTime GetValueFromBytes(byte[] data)
+    internal override byte[] GetValueFromBytes(byte[] data)
     {
-        var chunkData = GetBytes(data, StartPosition, ChunkSize);
-        try
-        {
-            return ByteFunctions.BytesToTimestamp(chunkData);
-        }
-        catch (ArgumentException)
-        {
-            throw new UdpPacketException(KnownErrors.FormatByteToTimestampError(chunkData));
-        }
+        return Value ?? Array.Empty<byte>();
     }
 }

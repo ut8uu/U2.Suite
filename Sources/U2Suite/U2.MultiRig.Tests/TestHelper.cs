@@ -23,18 +23,25 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace U2.MultiRig.Tests
-{
-    internal class TestHelper
-    {
-        public const string MagicNumberHexStr = "ABBA1105";
-        public static readonly byte[] MagicNumberByteArray = new byte[] {0xAB, 0xBA, 0x11, 0x05};
-        public const string UnknownMagicNumberHexStr = "ABADBABA";
-        public const string UnixEpochTimestampHexStr = "0080B5F7F57F9F48";
-        public const string SenderId = "0102";
-        public const string ReceiverId = "0304";
+namespace U2.MultiRig.Tests;
 
-        public const string UdpPacketGoodValue = $"{MagicNumberHexStr}{UnixEpochTimestampHexStr}{SenderId}{ReceiverId}";
-        public const string UdpPacketUnknownMagicNumber = $"{UnknownMagicNumberHexStr}{UnixEpochTimestampHexStr}{SenderId}{ReceiverId}";
-    }
+internal class TestHelper
+{
+    public const string MagicNumberHexStr = "ABBA1105";
+    public static readonly byte[] MagicNumberByteArray = new byte[] { 0xAB, 0xBA, 0x11, 0x05 };
+    public const string UnknownMagicNumberHexStr = "ABADBABA";
+
+    public const string UnixEpochTimestampHexStr = "0080B5F7F57F9F48";
+    //public static readonly UnixEpochTimestamp = DateTime.
+    public const string SenderIdHexStr = "0102";
+    public const string ReceiverIdHexStr = "0304";
+    public const string MessageIdHexStr = "0511";
+    public const string MessageTypeHexStr = "01";
+    public const string ChecksumHexStr = "01020304";
+    public const string CommandIdHexStr = "1123";
+    public const string DataLengthHexStr = "03";
+    public const string DataHexStr = "AABBCC";
+
+    public const string UdpPacketGoodValue = $"{MagicNumberHexStr}{UnixEpochTimestampHexStr}{MessageIdHexStr}{SenderIdHexStr}{ReceiverIdHexStr}{MessageTypeHexStr}{ChecksumHexStr}{CommandIdHexStr}{DataLengthHexStr}{DataHexStr}";
+    public const string UdpPacketUnknownMagicNumber = $"{UnknownMagicNumberHexStr}{UnixEpochTimestampHexStr}{MessageIdHexStr}{SenderIdHexStr}{ReceiverIdHexStr}{MessageTypeHexStr}{ChecksumHexStr}{CommandIdHexStr}{DataLengthHexStr}{DataHexStr}";
 }

@@ -23,10 +23,10 @@ using U2.MultiRig.Code.UDP;
 
 namespace U2.MultiRig;
 
-public sealed class SenderIdPacketChunk : UdpPacketChunk<UInt16>
+public sealed class SenderIdPacketChunk : UdpPacketChunk<ushort>
 {
     public SenderIdPacketChunk(byte[] data) 
-        : base("SenderId", PacketChunkType.SenderId,
+        : base(PacketChunkType.SenderId,
             RigUdpMessengerPacket.SenderIdStart, RigUdpMessengerPacket.SenderIdLen, 
             data)
     {
@@ -39,7 +39,7 @@ public sealed class SenderIdPacketChunk : UdpPacketChunk<UInt16>
         return data;
     }
 
-    internal override UInt16 GetValueFromBytes(byte[] data)
+    internal override ushort GetValueFromBytes(byte[] data)
     {
         var chunkData = GetBytes(data, StartPosition, ChunkSize);
         try

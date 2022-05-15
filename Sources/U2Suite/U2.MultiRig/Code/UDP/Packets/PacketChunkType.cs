@@ -23,6 +23,12 @@ public enum PacketChunkType
 {
     MagicNumber,
     Timestamp,
+    MessageId,
     SenderId,
     ReceiverId,
+    MessageType,
+    Checksum,
+    CommandId,
+    DataLength,
+    Data,
 }

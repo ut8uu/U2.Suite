@@ -23,26 +23,29 @@ using U2.MultiRig.Code.UDP;
 
 namespace U2.MultiRig;
 
-public sealed class TimestampPacketChunk : UdpPacketChunk<DateTime>
+public sealed class ChecksumPacketChunk : UdpPacketChunk<int>
 {
-    public TimestampPacketChunk(byte[] data) 
-        : base(PacketChunkType.Timestamp,
-            RigUdpMessengerPacket.TimestampStart, RigUdpMessengerPacket.TimestampLen, 
+    public ChecksumPacketChunk(byte[] data) 
+        : base(PacketChunkType.Checksum,
+            RigUdpMessengerPacket.ChecksumStart, RigUdpMessengerPacket.ChecksumLen, 
             data)
     {
     }
 
     internal override byte[] GetBytesFromValue()
     {
-        return ByteFunctions.TimestampToBytes(Value);
+        var data = BitConverter.GetBytes(Value);
+        Array.Reverse(data); // big endian is expected
+        return data;
     }
 
-    internal override DateTime GetValueFromBytes(byte[] data)
+    internal override int GetValueFromBytes(byte[] data)
     {
         var chunkData = GetBytes(data, StartPosition, ChunkSize);
         try
         {
-            return ByteFunctions.BytesToTimestamp(chunkData);
+            Array.Reverse(chunkData); // big endian is expected
+            return BitConverter.ToUInt16(chunkData);
         }
         catch (ArgumentException)
         {

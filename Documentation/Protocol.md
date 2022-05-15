@@ -41,8 +41,8 @@ A timestamp 01.01.0000 00:00:01 is encoded as 10.000.000 (10M).
 
 An internal identifier of the message. As far as datagrams can arrive in the 
 wrong order, the field can be used to map requests and responses. 
-It is recommended to increment the message identifier after sending the message 
-requiring an answer.
+It is recommended to increment the message identifier every time after sending 
+the message requiring the reply.
 
 ### SenderId
 

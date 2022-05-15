@@ -22,31 +22,26 @@ using U2.MultiRig.Code.UDP;
 
 namespace U2.MultiRig;
 
-public sealed class MagicNumberPacketChunk : UdpPacketChunk<string?>
+public sealed class MagicNumberPacketChunk : UdpPacketChunk<byte[]>
 {
     private readonly byte[] _signature = new byte[] {0xAB, 0xBA, 0x11, 0x05};
 
     public MagicNumberPacketChunk(byte[] data) 
-        : base("MagicNumber", PacketChunkType.MagicNumber,
+        : base(PacketChunkType.MagicNumber,
             RigUdpMessengerPacket.MagicNumberStart, RigUdpMessengerPacket.MagicNumberLen, 
             data)
     {
     }
 
-    internal override string? GetValueFromBytes(byte[] data)
+    internal override byte[] GetValueFromBytes(byte[] data)
     {
-        var chunkData = GetBytes(data, StartPosition, ChunkSize);
-        var hexValue = ByteFunctions.BytesToHex(chunkData);
-        if (!chunkData.SequenceEqual(_signature))
-        {
-            throw new UdpPacketException(KnownErrors.FormatWrongSignatureError(hexValue));
-        }
-
-        return hexValue;
+        return GetBytes(data, StartPosition, ChunkSize);
     }
 
     internal override byte[] GetBytesFromValue()
     {
-        return ByteFunctions.HexStrToBytes(Value ?? string.Empty);
+        return Value ?? Array.Empty<byte>();
     }
+
+    public override bool IsValid => (Value ?? Array.Empty<byte>()).SequenceEqual(_signature);
 }

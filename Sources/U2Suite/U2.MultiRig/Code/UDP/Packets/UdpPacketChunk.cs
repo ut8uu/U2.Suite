@@ -27,9 +27,8 @@ public abstract class UdpPacketChunk<T>
 {
     private readonly byte[] _data;
 
-    protected UdpPacketChunk(string name, PacketChunkType type, int start, int len, byte[] data)
+    protected UdpPacketChunk(PacketChunkType type, int start, int len, byte[] data)
     {
-        Name = name;
         ChunkType = type;
         StartPosition = start;
         ChunkSize = len;
@@ -72,10 +71,11 @@ public abstract class UdpPacketChunk<T>
         throw new NotImplementedException();
     }
 
-    public string Name { get; }
     public PacketChunkType ChunkType { get; }
     public int StartPosition { get; }
     public int ChunkSize { get; }
 
     public T? Value { get; private set; }
+
+    public virtual bool IsValid => true;
 }
