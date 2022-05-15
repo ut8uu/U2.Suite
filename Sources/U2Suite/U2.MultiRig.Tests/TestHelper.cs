@@ -36,7 +36,8 @@ internal class TestHelper
     public const string SenderIdHexStr = "0102";
     public const string ReceiverIdHexStr = "0304";
     public const string MessageIdHexStr = "0511";
-    public const string MessageTypeHexStr = "01";
+    public const int MessageId = 1297; // 5*256 + 17
+    public const string MessageTypeHexStr = "41"; // 'A'
     public const string ChecksumHexStr = "01020304";
     public const string CommandIdHexStr = "1123";
     public const string DataLengthHexStr = "03";

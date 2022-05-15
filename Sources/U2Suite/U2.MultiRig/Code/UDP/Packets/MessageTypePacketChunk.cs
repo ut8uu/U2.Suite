@@ -23,7 +23,7 @@ using U2.MultiRig.Code.UDP;
 
 namespace U2.MultiRig;
 
-public sealed class MessageTypePacketChunk : UdpPacketChunk<byte>
+public sealed class MessageTypePacketChunk : UdpPacketChunk<char>
 {
     public MessageTypePacketChunk(byte[] data) 
         : base(PacketChunkType.MessageType,
@@ -34,15 +34,15 @@ public sealed class MessageTypePacketChunk : UdpPacketChunk<byte>
 
     internal override byte[] GetBytesFromValue()
     {
-        return new []{ Value };
+        return new byte[]{ (byte)Value };
     }
 
-    internal override byte GetValueFromBytes(byte[] data)
+    internal override char GetValueFromBytes(byte[] data)
     {
         var chunkData = GetBytes(data, StartPosition, ChunkSize);
         try
         {
-            return chunkData[0];
+            return (char)chunkData[0];
         }
         catch (ArgumentException)
         {
@@ -55,7 +55,7 @@ public sealed class MessageTypePacketChunk : UdpPacketChunk<byte>
         get
         {
             var c = (char) Value;
-            var allowedChars = new char[] {'R', 'I', 'A', 'S'};
+            var allowedChars = new char[] {'R', 'A', 'I', 'S'};
             return allowedChars.Contains(c);
         }
     }

@@ -43,17 +43,15 @@ public class UdpPacketTests
     {
         var data = ByteFunctions.HexStrToBytes(TestHelper.UdpPacketGoodValue); 
         var magicNumberChunk = new MagicNumberPacketChunk(data);
-        Assert.Equal(TestHelper.MagicNumberHexStr, magicNumberChunk.Value);
-        Assert.Equal(TestHelper.MagicNumberByteArray, magicNumberChunk.GetBytesFromValue());
+        Assert.Equal(TestHelper.MagicNumberByteArray, magicNumberChunk.Value);
     }
 
     [Fact]
     public void MagicNumber_IncorrectSignature()
     {
         var data = ByteFunctions.HexStrToBytes(TestHelper.UdpPacketUnknownMagicNumber);
-        var exception = Assert.Throws<UdpPacketException>(() => new MagicNumberPacketChunk(data));
-        var expectedMessage = KnownErrors.FormatWrongSignatureError(TestHelper.UnknownMagicNumberHexStr);
-        Assert.Equal(expectedMessage, exception.Message);
+        var magicNumber = new MagicNumberPacketChunk(data);
+        Assert.False(magicNumber.IsValid);
     }
 
     [Fact]
@@ -69,7 +67,7 @@ public class UdpPacketTests
     {
         var data = ByteFunctions.HexStrToBytes($"{TestHelper.UdpPacketGoodValue}");
         var sender = new SenderIdPacketChunk(data);
-        var expectedBytes = ByteFunctions.HexStrToBytes(TestHelper.SenderId);
+        var expectedBytes = ByteFunctions.HexStrToBytes(TestHelper.SenderIdHexStr);
         var actualBytes = sender.GetBytesFromValue();
         Assert.True(expectedBytes.SequenceEqual(actualBytes));
         Assert.Equal(256 + 2 /* 0x0102 */, sender.Value);
@@ -80,9 +78,35 @@ public class UdpPacketTests
     {
         var data = ByteFunctions.HexStrToBytes($"{TestHelper.UdpPacketGoodValue}");
         var receiver = new ReceiverIdPacketChunk(data);
-        var expectedBytes = ByteFunctions.HexStrToBytes(TestHelper.ReceiverId);
+        var expectedBytes = ByteFunctions.HexStrToBytes(TestHelper.ReceiverIdHexStr);
         var actualBytes = receiver.GetBytesFromValue();
         Assert.True(expectedBytes.SequenceEqual(actualBytes));
         Assert.Equal(3 * 256 + 4 /* 0x0304 */, receiver.Value);
+    }
+
+    [Fact]
+    public void MessageId()
+    {
+        var data = ByteFunctions.HexStrToBytes($"{TestHelper.UdpPacketGoodValue}");
+        var chunk = new MessageIdPacketChunk(data);
+        var expectedBytes = ByteFunctions.HexStrToBytes(TestHelper.MessageIdHexStr);
+        var actualBytes = chunk.GetBytesFromValue();
+        Assert.True(expectedBytes.SequenceEqual(actualBytes));
+        Assert.Equal(TestHelper.MessageId /* 0x0511 */, chunk.Value);
+    }
+
+    [Theory]
+    [InlineData('R', true)]
+    [InlineData('A', true)]
+    [InlineData('I', true)]
+    [InlineData('S', true)]
+    [InlineData('X', false)]
+    public void MessageType(char type, bool isValid)
+    {
+        var data = ByteFunctions.HexStrToBytes($"{TestHelper.UdpPacketGoodValue}");
+        data[RigUdpMessengerPacket.MessageTypeStart] = (byte) type;
+        var chunk = new MessageTypePacketChunk(data);
+        Assert.Equal(isValid, chunk.IsValid);
+        Assert.Equal(type, chunk.Value);
     }
 }
