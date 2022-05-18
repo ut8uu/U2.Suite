@@ -30,6 +30,12 @@ public sealed class DataPacketChunk : UdpPacketChunk<byte[]>
     {
     }
 
+    public static DataPacketChunk FromUdpPacket(byte[] data)
+    {
+        var chunkData = GetBytes(data, RigUdpMessengerPacket.DataStart, 65536);
+        return new DataPacketChunk(chunkData);
+    }
+
     internal override byte[] GetBytesFromValue()
     {
         return Value ?? Array.Empty<byte>();
@@ -38,5 +44,12 @@ public sealed class DataPacketChunk : UdpPacketChunk<byte[]>
     internal override byte[] GetValueFromBytes(byte[] data)
     {
         return Value ?? Array.Empty<byte>();
+    }
+
+    public static DataPacketChunk Create(byte[] data)
+    {
+        var result = new DataPacketChunk(Array.Empty<byte>());
+        result.SetValue(data);
+        return result;
     }
 }

@@ -25,11 +25,27 @@ namespace U2.MultiRig;
 
 public sealed class CommandIdPacketChunk : UdpPacketChunk<ushort>
 {
-    public CommandIdPacketChunk(byte[] data) 
+    public CommandIdPacketChunk(ushort commandId)
         : base(PacketChunkType.CommandId,
-            RigUdpMessengerPacket.CommandIdStart, RigUdpMessengerPacket.CommandIdLen, 
-            data)
+            RigUdpMessengerPacket.CommandIdStart, RigUdpMessengerPacket.CommandIdLen,
+            ByteFunctions.CommandIdToBytes(commandId))
     {
+    }
+
+    public static CommandIdPacketChunk FromUdpPacket(byte[] data)
+    {
+        var chunkData = GetBytes(data, RigUdpMessengerPacket.CommandIdStart,
+                RigUdpMessengerPacket.CommandIdLen);
+        try
+        {
+            Array.Reverse(chunkData); // big endian is expected
+            var value = BitConverter.ToUInt16(chunkData);
+            return new CommandIdPacketChunk(value);
+        }
+        catch (ArgumentOutOfRangeException)
+        {
+            throw new UdpPacketException(KnownErrors.FormatByteToCommandIdError(chunkData));
+        }
     }
 
     internal override byte[] GetBytesFromValue()

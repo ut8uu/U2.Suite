@@ -24,13 +24,26 @@ namespace U2.MultiRig;
 
 public sealed class MagicNumberPacketChunk : UdpPacketChunk<byte[]>
 {
-    private readonly byte[] _signature = {0xAB, 0xBA, 0x11, 0x05};
+    private static readonly byte[] _signature = {0xAB, 0xBA, 0x11, 0x05};
+
+    public MagicNumberPacketChunk()
+        : base(PacketChunkType.MagicNumber,
+            RigUdpMessengerPacket.MagicNumberStart, RigUdpMessengerPacket.MagicNumberLen, _signature)
+    {
+    }
 
     public MagicNumberPacketChunk(byte[] data) 
         : base(PacketChunkType.MagicNumber,
             RigUdpMessengerPacket.MagicNumberStart, RigUdpMessengerPacket.MagicNumberLen, 
             data)
     {
+    }
+
+    public static MagicNumberPacketChunk FromUdpPacket(byte[] data)
+    {
+        var chunkData = GetBytes(data, RigUdpMessengerPacket.MagicNumberStart,
+                RigUdpMessengerPacket.MagicNumberLen);
+        return new MagicNumberPacketChunk(chunkData);
     }
 
     internal override byte[] GetValueFromBytes(byte[] data)

@@ -26,7 +26,7 @@ public sealed class RigUdpMessengerPacket
     public const int TimestampStart = MagicNumberStart + MagicNumberLen;
     public const int TimestampLen = 8;
     public const int MessageIdStart = TimestampStart + TimestampLen;
-    public const int MessageIdLen = 2;
+    public const int MessageIdLen = 1;
     public const int SenderIdStart = MessageIdStart + MessageIdLen;
     public const int SenderIdLen = 2;
     public const int ReceiverIdStart = SenderIdStart + SenderIdLen;
@@ -34,12 +34,14 @@ public sealed class RigUdpMessengerPacket
     public const int MessageTypeStart = ReceiverIdStart + ReceiverIdLen;
     public const int MessageTypeLen = 1;
     public const int ChecksumStart = MessageTypeStart + MessageTypeLen;
-    public const int ChecksumLen = 4;
+    public const int ChecksumLen = 1;
     public const int CommandIdStart = ChecksumStart + ChecksumLen;
     public const int CommandIdLen = 2;
     public const int DataLengthStart = CommandIdStart + CommandIdLen;
     public const int DataLengthLen = 2;
     public const int DataStart = DataLengthStart + DataLengthLen;
+
+    #region Properties
 
     public MagicNumberPacketChunk? MagicNumber { get; init; }
     public TimestampPacketChunk? Timestamp { get; init; }
@@ -52,20 +54,22 @@ public sealed class RigUdpMessengerPacket
     public DataLengthPacketChunk? DataLength { get; set; }
     public DataPacketChunk? Data { get; set; }
 
-    public static RigUdpMessengerPacket Create(byte[] data)
+    #endregion
+
+    public static RigUdpMessengerPacket FromUdpPacket(byte[] data)
     {
         var result = new RigUdpMessengerPacket
         {
-            MagicNumber = new MagicNumberPacketChunk(data),
-            Timestamp = new TimestampPacketChunk(data),
-            MessageId = new MessageIdPacketChunk(data),
-            SenderId = new SenderIdPacketChunk(data),
-            ReceiverId = new ReceiverIdPacketChunk(data),
-            MessageType = new MessageTypePacketChunk(data),
-            Checksum = new ChecksumPacketChunk(data),
-            CommandId = new CommandIdPacketChunk(data),
-            DataLength = new DataLengthPacketChunk(data),
-            Data = new DataPacketChunk(data),
+            MagicNumber = MagicNumberPacketChunk.FromUdpPacket(data),
+            Timestamp = TimestampPacketChunk.FromUdpPacket(data),
+            MessageId = MessageIdPacketChunk.FromUdpPacket(data),
+            SenderId = SenderIdPacketChunk.FromUdpPacket(data),
+            ReceiverId = ReceiverIdPacketChunk.FromUdpPacket(data),
+            MessageType = MessageTypePacketChunk.FromUdpPacket(data),
+            Checksum = ChecksumPacketChunk.FromUdpPacket(data),
+            CommandId = CommandIdPacketChunk.FromUdpPacket(data),
+            DataLength = DataLengthPacketChunk.FromUdpPacket(data),
+            Data = DataPacketChunk.FromUdpPacket(data),
         };
 
         return result;

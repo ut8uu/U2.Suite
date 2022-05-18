@@ -18,38 +18,37 @@
  */
 
 using System.ComponentModel;
+using System.Diagnostics;
 using U2.MultiRig.Code.Exceptions;
 using U2.MultiRig.Code.UDP;
 
 namespace U2.MultiRig;
 
-public sealed class ChecksumPacketChunk : UdpPacketChunk<int>
+public sealed class ChecksumPacketChunk : UdpPacketChunk<byte>
 {
-    public ChecksumPacketChunk(byte[] data) 
+    public ChecksumPacketChunk(byte data)
         : base(PacketChunkType.Checksum,
-            RigUdpMessengerPacket.ChecksumStart, RigUdpMessengerPacket.ChecksumLen, 
-            data)
+            RigUdpMessengerPacket.ChecksumStart, RigUdpMessengerPacket.ChecksumLen,
+            new[] { data })
     {
+    }
+
+    public static ChecksumPacketChunk FromUdpPacket(byte[] data)
+    {
+        var chunkData = GetBytes(data, RigUdpMessengerPacket.ChecksumStart,
+                RigUdpMessengerPacket.ChecksumLen);
+        return new ChecksumPacketChunk(chunkData[0]);
     }
 
     internal override byte[] GetBytesFromValue()
     {
-        var data = BitConverter.GetBytes(Value);
-        Array.Reverse(data); // big endian is expected
-        return data;
+        return new[] { Value };
     }
 
-    internal override int GetValueFromBytes(byte[] data)
+    internal override byte GetValueFromBytes(byte[] data)
     {
+        Debug.Assert(ChunkSize == 1);
         var chunkData = GetBytes(data, StartPosition, ChunkSize);
-        try
-        {
-            Array.Reverse(chunkData); // big endian is expected
-            return BitConverter.ToUInt16(chunkData);
-        }
-        catch (ArgumentException)
-        {
-            throw new UdpPacketException(KnownErrors.FormatByteToTimestampError(chunkData));
-        }
+        return chunkData[0];
     }
 }

@@ -18,38 +18,38 @@
  */
 
 using System.ComponentModel;
+using System.Diagnostics;
+using U2.MultiRig.Code;
 using U2.MultiRig.Code.Exceptions;
 using U2.MultiRig.Code.UDP;
 
 namespace U2.MultiRig;
 
-public sealed class MessageIdPacketChunk : UdpPacketChunk<UInt16>
+public sealed class MessageIdPacketChunk : UdpPacketChunk<byte>
 {
-    public MessageIdPacketChunk(byte[] data) 
+    public MessageIdPacketChunk(byte messageId)
         : base(PacketChunkType.MessageId,
-            RigUdpMessengerPacket.MessageIdStart, RigUdpMessengerPacket.MessageIdLen, 
-            data)
+            RigUdpMessengerPacket.MessageIdStart, RigUdpMessengerPacket.MessageIdLen,
+            ByteFunctions.MessageIdToBytes(messageId))
     {
+    }
+
+    public static MessageIdPacketChunk FromUdpPacket(byte[] data)
+    {
+        var chunkData = GetBytes(data, RigUdpMessengerPacket.MessageIdStart,
+                RigUdpMessengerPacket.MessageIdLen);
+        return new MessageIdPacketChunk(chunkData[0]);
     }
 
     internal override byte[] GetBytesFromValue()
     {
-        var data = BitConverter.GetBytes(Value);
-        Array.Reverse(data); // big endian is expected
-        return data;
+        return ByteFunctions.MessageIdToBytes(Value);
     }
 
-    internal override UInt16 GetValueFromBytes(byte[] data)
+    internal override byte GetValueFromBytes(byte[] data)
     {
+        Debug.Assert(ChunkSize == 1);
         var chunkData = GetBytes(data, StartPosition, ChunkSize);
-        try
-        {
-            Array.Reverse(chunkData); // big endian is expected
-            return BitConverter.ToUInt16(chunkData);
-        }
-        catch (ArgumentException)
-        {
-            throw new UdpPacketException(KnownErrors.FormatByteToTimestampError(chunkData));
-        }
+        return chunkData[0];
     }
 }

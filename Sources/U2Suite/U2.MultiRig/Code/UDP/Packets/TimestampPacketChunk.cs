@@ -18,6 +18,7 @@
  */
 
 using System.ComponentModel;
+using U2.MultiRig.Code;
 using U2.MultiRig.Code.Exceptions;
 using U2.MultiRig.Code.UDP;
 
@@ -25,11 +26,28 @@ namespace U2.MultiRig;
 
 public sealed class TimestampPacketChunk : UdpPacketChunk<DateTime>
 {
-    public TimestampPacketChunk(byte[] data) 
+    public TimestampPacketChunk(DateTime timestamp)
         : base(PacketChunkType.Timestamp,
-            RigUdpMessengerPacket.TimestampStart, RigUdpMessengerPacket.TimestampLen, 
-            data)
+            RigUdpMessengerPacket.TimestampStart, RigUdpMessengerPacket.TimestampLen,
+            ByteFunctions.TimestampToBytes(timestamp))
     {
+    }
+
+    public static TimestampPacketChunk FromUdpPacket(byte[] data)
+    {
+        var chunkData = GetBytes(data, RigUdpMessengerPacket.TimestampStart,
+                RigUdpMessengerPacket.TimestampLen);
+        try
+        {
+            Array.Reverse(chunkData); // big endian is expected
+            var value = BitConverter.ToInt64(chunkData);
+            var timestamp = DateTime.FromBinary(value);
+            return new TimestampPacketChunk(timestamp);
+        }
+        catch (ArgumentOutOfRangeException)
+        {
+            throw new UdpPacketException(KnownErrors.FormatByteToTimestampError(chunkData));
+        }
     }
 
     internal override byte[] GetBytesFromValue()

@@ -18,6 +18,8 @@
  */
 
 using System.ComponentModel;
+using System.Diagnostics;
+using U2.MultiRig.Code;
 using U2.MultiRig.Code.Exceptions;
 using U2.MultiRig.Code.UDP;
 
@@ -25,31 +27,45 @@ namespace U2.MultiRig;
 
 public sealed class ReceiverIdPacketChunk : UdpPacketChunk<ushort>
 {
-    public ReceiverIdPacketChunk(byte[] data) 
+    public ReceiverIdPacketChunk(ushort receiverId)
         : base(PacketChunkType.ReceiverId,
-            RigUdpMessengerPacket.ReceiverIdStart, RigUdpMessengerPacket.ReceiverIdLen, 
-            data)
+            RigUdpMessengerPacket.ReceiverIdStart, RigUdpMessengerPacket.ReceiverIdLen,
+            ByteFunctions.ReceiverIdToBytes(receiverId))
     {
+    }
+
+    public static ReceiverIdPacketChunk FromUdpPacket(byte[] data)
+    {
+        var chunkData = GetBytes(data, RigUdpMessengerPacket.ReceiverIdStart,
+                RigUdpMessengerPacket.ReceiverIdLen);
+        try
+        {
+            Array.Reverse(chunkData); // big endian is expected
+            var value = BitConverter.ToUInt16(chunkData);
+            return new ReceiverIdPacketChunk(value);
+        }
+        catch (ArgumentOutOfRangeException)
+        {
+            throw new UdpPacketException(KnownErrors.FormatByteToReceiverIdError(chunkData));
+        }
     }
 
     internal override byte[] GetBytesFromValue()
     {
-        var data = BitConverter.GetBytes(Value);
-        Array.Reverse(data); // big endian is expected
-        return data;
+        return ByteFunctions.ReceiverIdToBytes(Value);
     }
 
     internal override ushort GetValueFromBytes(byte[] data)
     {
+        Debug.Assert(ChunkSize == 2);
         var chunkData = GetBytes(data, StartPosition, ChunkSize);
         try
         {
-            Array.Reverse(chunkData); // big endian is expected
-            return BitConverter.ToUInt16(chunkData);
+            return ByteFunctions.BytesToReceiverId(chunkData);
         }
-        catch (ArgumentException)
+        catch (ArgumentOutOfRangeException)
         {
-            throw new UdpPacketException(KnownErrors.FormatByteToTimestampError(chunkData));
+            throw new UdpPacketException(KnownErrors.FormatByteToReceiverIdError(chunkData));
         }
     }
 }

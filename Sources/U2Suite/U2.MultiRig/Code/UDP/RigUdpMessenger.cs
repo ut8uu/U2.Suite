@@ -75,7 +75,7 @@ namespace U2.MultiRig.Code.UDP
 
             try
             {
-                var packet = RigUdpMessengerPacket.Create(eventArgs.Data);
+                var packet = RigUdpMessengerPacket.FromUdpPacket(eventArgs.Data);
             }
             catch (UdpPacketException ex)
             {

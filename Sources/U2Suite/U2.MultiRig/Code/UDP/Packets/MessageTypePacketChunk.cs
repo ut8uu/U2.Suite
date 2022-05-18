@@ -25,36 +25,36 @@ namespace U2.MultiRig;
 
 public sealed class MessageTypePacketChunk : UdpPacketChunk<char>
 {
-    public MessageTypePacketChunk(byte[] data) 
+    public MessageTypePacketChunk(char data)
         : base(PacketChunkType.MessageType,
-            RigUdpMessengerPacket.MessageTypeStart, RigUdpMessengerPacket.MessageTypeLen, 
-            data)
+            RigUdpMessengerPacket.MessageTypeStart, RigUdpMessengerPacket.MessageTypeLen,
+            new[] { (byte)data })
     {
+    }
+
+    public static MessageTypePacketChunk FromUdpPacket(byte[] data)
+    {
+        var chunkData = GetBytes(data, RigUdpMessengerPacket.ChecksumStart,
+                RigUdpMessengerPacket.ChecksumLen);
+        return new MessageTypePacketChunk((char)chunkData[0]);
     }
 
     internal override byte[] GetBytesFromValue()
     {
-        return new[]{ (byte)Value };
+        return new[] { (byte)Value };
     }
 
     internal override char GetValueFromBytes(byte[] data)
     {
         var chunkData = GetBytes(data, StartPosition, ChunkSize);
-        try
-        {
-            return (char)chunkData[0];
-        }
-        catch (ArgumentException)
-        {
-            throw new UdpPacketException(KnownErrors.FormatByteToTimestampError(chunkData));
-        }
+        return (char)chunkData[0];
     }
 
     public override bool IsValid
     {
         get
         {
-            var allowedChars = new[] {'R', 'A', 'I', 'S'};
+            var allowedChars = new[] { 'R', 'A', 'I', 'S' };
             return allowedChars.Contains(Value);
         }
     }

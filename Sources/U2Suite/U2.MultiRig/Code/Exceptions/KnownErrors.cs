@@ -36,5 +36,25 @@ namespace U2.MultiRig.Code.Exceptions
         {
             return $"Cannot get timestamp from {ByteFunctions.BytesToHex(data)}";
         }
+
+        public static string FormatByteToDataLengthError(byte[] data)
+        {
+            return $"Cannot get data length from {ByteFunctions.BytesToHex(data)}";
+        }
+
+        public static string FormatByteToReceiverIdError(byte[] data)
+        {
+            return $"Cannot get receiver identifier from {ByteFunctions.BytesToHex(data)}";
+        }
+
+        public static string FormatByteToSenderIdError(byte[] data)
+        {
+            return $"Cannot get sender identifier from {ByteFunctions.BytesToHex(data)}";
+        }
+
+        public static string FormatByteToCommandIdError(byte[] data)
+        {
+            return $"Cannot get command identifier from {ByteFunctions.BytesToHex(data)}";
+        }
     }
 }

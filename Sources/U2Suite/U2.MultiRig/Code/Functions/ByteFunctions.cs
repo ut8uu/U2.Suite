@@ -21,6 +21,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.ServiceModel.Channels;
 using System.Text;
 using System.Threading.Tasks;
 using DynamicData;
@@ -129,5 +130,69 @@ public static class ByteFunctions
     {
         var res = DateTime.FromBinary(BitConverter.ToInt64(data));
         return res;
+    }
+
+    private static byte[] UshortToBytes(ushort input)
+    {
+        var data = BitConverter.GetBytes(input);
+        Array.Reverse(data); // big endian is expected
+        return data;
+    }
+
+    private static ushort BytesToUshort(byte[] data)
+    {
+        var arr = data.ToArray();
+        Array.Reverse(arr); // big endian is expected
+        return BitConverter.ToUInt16(arr);
+    }
+
+    public static byte[] MessageIdToBytes(ushort messageId)
+    {
+        return UshortToBytes(messageId);
+    }
+
+    public static ushort BytesToMessageId(byte[] data)
+    {
+        return BytesToUshort(data);
+    }
+
+    public static ushort BytesToSenderId(byte[] data)
+    {
+        return BytesToUshort(data);
+    }
+
+    public static byte[] SenderIdToBytes(ushort senderId)
+    {
+        return UshortToBytes(senderId);
+    }
+
+    public static ushort BytesToReceiverId(byte[] data)
+    {
+        return BytesToUshort(data);
+    }
+
+    public static byte[] ReceiverIdToBytes(ushort receiverId)
+    {
+        return UshortToBytes(receiverId);
+    }
+
+    public static ushort BytesToCommandId(byte[] data)
+    {
+        return BytesToUshort(data);
+    }
+
+    public static byte[] CommandIdToBytes(ushort commandId)
+    {
+        return UshortToBytes(commandId);
+    }
+
+    public static ushort BytesToDataLength(byte[] data)
+    {
+        return BytesToUshort(data);
+    }
+
+    public static byte[] DataLengthToBytes(ushort commandId)
+    {
+        return UshortToBytes(commandId);
     }
 }

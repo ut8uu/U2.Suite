@@ -33,14 +33,12 @@ public abstract class UdpPacketChunk<T>
         StartPosition = start;
         ChunkSize = len;
         _data = data;
-        Value = default(T);
-        
-        Init();
+        Value = FromBytes(_data);
     }
 
-    protected void Init()
+    protected T? FromBytes(byte[] data)
     {
-        Value = GetValueFromBytes(_data);
+        return GetValueFromBytes(data);
     }
 
     /// <summary>
@@ -78,4 +76,9 @@ public abstract class UdpPacketChunk<T>
     public T? Value { get; private set; }
 
     public virtual bool IsValid => true;
+
+    public void SetValue(T? value)
+    {
+        Value = value;
+    }
 }

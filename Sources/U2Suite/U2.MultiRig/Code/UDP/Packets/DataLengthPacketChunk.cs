@@ -18,6 +18,7 @@
  */
 
 using System.ComponentModel;
+using System.Diagnostics;
 using U2.MultiRig.Code.Exceptions;
 using U2.MultiRig.Code.UDP;
 
@@ -25,11 +26,28 @@ namespace U2.MultiRig;
 
 public sealed class DataLengthPacketChunk : UdpPacketChunk<ushort>
 {
-    public DataLengthPacketChunk(byte[] data) 
+    public DataLengthPacketChunk(ushort data)
         : base(PacketChunkType.DataLength,
-            RigUdpMessengerPacket.DataLengthStart, RigUdpMessengerPacket.DataLengthLen, 
-            data)
+            RigUdpMessengerPacket.DataLengthStart, 
+            RigUdpMessengerPacket.DataLengthLen,
+            ByteFunctions.DataLengthToBytes(data))
     {
+    }
+
+    public static DataLengthPacketChunk FromUdpPacket(byte[] data)
+    {
+        var chunkData = GetBytes(data, RigUdpMessengerPacket.DataLengthStart,
+            RigUdpMessengerPacket.DataLengthLen);
+        try
+        {
+            Array.Reverse(chunkData); // big endian is expected
+            var value = BitConverter.ToUInt16(chunkData);
+            return new DataLengthPacketChunk(value);
+        }
+        catch (ArgumentOutOfRangeException)
+        {
+            throw new UdpPacketException(KnownErrors.FormatByteToDataLengthError(chunkData));
+        }
     }
 
     internal override byte[] GetBytesFromValue()
@@ -41,15 +59,16 @@ public sealed class DataLengthPacketChunk : UdpPacketChunk<ushort>
 
     internal override ushort GetValueFromBytes(byte[] data)
     {
+        Debug.Assert(ChunkSize == 2);
         var chunkData = GetBytes(data, StartPosition, ChunkSize);
         try
         {
             Array.Reverse(chunkData); // big endian is expected
             return BitConverter.ToUInt16(chunkData);
         }
-        catch (ArgumentException)
+        catch (ArgumentOutOfRangeException)
         {
-            throw new UdpPacketException(KnownErrors.FormatByteToTimestampError(chunkData));
+            throw new UdpPacketException(KnownErrors.FormatByteToDataLengthError(chunkData));
         }
     }
 }
