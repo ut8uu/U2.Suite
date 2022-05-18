@@ -18,6 +18,7 @@
  */
 
 using System;
+using System.Diagnostics;
 using U2.MultiRig.Code.Exceptions;
 using U2.MultiRig.Code.UDP;
 
@@ -34,8 +35,8 @@ public sealed class MessageTypePacketChunk : UdpPacketChunk<char>
 
     public static MessageTypePacketChunk FromUdpPacket(byte[] data)
     {
-        var chunkData = GetBytes(data, RigUdpMessengerPacket.ChecksumStart,
-                RigUdpMessengerPacket.ChecksumLen);
+        var chunkData = GetBytes(data, RigUdpMessengerPacket.MessageTypeStart,
+            RigUdpMessengerPacket.MessageTypeLen);
         return new MessageTypePacketChunk((char)chunkData[0]);
     }
 
@@ -46,8 +47,8 @@ public sealed class MessageTypePacketChunk : UdpPacketChunk<char>
 
     internal override char GetValueFromBytes(byte[] data)
     {
-        var chunkData = GetBytes(data, StartPosition, ChunkSize);
-        return (char)chunkData[0];
+        Debug.Assert(data.Length > 0);
+        return (char)data.First();
     }
 
     public override bool IsValid

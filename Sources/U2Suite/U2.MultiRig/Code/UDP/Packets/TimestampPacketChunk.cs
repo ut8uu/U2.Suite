@@ -39,9 +39,7 @@ public sealed class TimestampPacketChunk : UdpPacketChunk<DateTime>
                 RigUdpMessengerPacket.TimestampLen);
         try
         {
-            Array.Reverse(chunkData); // big endian is expected
-            var value = BitConverter.ToInt64(chunkData);
-            var timestamp = DateTime.FromBinary(value);
+            var timestamp = ByteFunctions.BytesToTimestamp(chunkData);
             return new TimestampPacketChunk(timestamp);
         }
         catch (ArgumentOutOfRangeException)
@@ -57,14 +55,13 @@ public sealed class TimestampPacketChunk : UdpPacketChunk<DateTime>
 
     internal override DateTime GetValueFromBytes(byte[] data)
     {
-        var chunkData = GetBytes(data, StartPosition, ChunkSize);
         try
         {
-            return ByteFunctions.BytesToTimestamp(chunkData);
+            return ByteFunctions.BytesToTimestamp(data);
         }
         catch (ArgumentException)
         {
-            throw new UdpPacketException(KnownErrors.FormatByteToTimestampError(chunkData));
+            throw new UdpPacketException(KnownErrors.FormatByteToTimestampError(data));
         }
     }
 }

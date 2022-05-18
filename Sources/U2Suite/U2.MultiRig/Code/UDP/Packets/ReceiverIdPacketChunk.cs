@@ -57,15 +57,13 @@ public sealed class ReceiverIdPacketChunk : UdpPacketChunk<ushort>
 
     internal override ushort GetValueFromBytes(byte[] data)
     {
-        Debug.Assert(ChunkSize == 2);
-        var chunkData = GetBytes(data, StartPosition, ChunkSize);
         try
         {
-            return ByteFunctions.BytesToReceiverId(chunkData);
+            return ByteFunctions.BytesToReceiverId(data);
         }
         catch (ArgumentOutOfRangeException)
         {
-            throw new UdpPacketException(KnownErrors.FormatByteToReceiverIdError(chunkData));
+            throw new UdpPacketException(KnownErrors.FormatByteToReceiverIdError(data));
         }
     }
 }

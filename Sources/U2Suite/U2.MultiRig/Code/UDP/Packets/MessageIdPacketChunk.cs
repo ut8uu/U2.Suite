@@ -43,13 +43,11 @@ public sealed class MessageIdPacketChunk : UdpPacketChunk<byte>
 
     internal override byte[] GetBytesFromValue()
     {
-        return ByteFunctions.MessageIdToBytes(Value);
+        return new []{ Value };
     }
 
     internal override byte GetValueFromBytes(byte[] data)
     {
-        Debug.Assert(ChunkSize == 1);
-        var chunkData = GetBytes(data, StartPosition, ChunkSize);
-        return chunkData[0];
+        return data[0];
     }
 }

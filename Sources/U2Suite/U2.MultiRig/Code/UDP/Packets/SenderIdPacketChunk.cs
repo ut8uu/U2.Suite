@@ -37,11 +37,10 @@ public sealed class SenderIdPacketChunk : UdpPacketChunk<ushort>
     public static SenderIdPacketChunk FromUdpPacket(byte[] data)
     {
         var chunkData = GetBytes(data, RigUdpMessengerPacket.SenderIdStart,
-                RigUdpMessengerPacket.SenderIdLen);
+            RigUdpMessengerPacket.SenderIdLen);
         try
         {
-            Array.Reverse(chunkData); // big endian is expected
-            var value = BitConverter.ToUInt16(chunkData);
+            var value = ByteFunctions.BytesToSenderId(chunkData);
             return new SenderIdPacketChunk(value);
         }
         catch (ArgumentOutOfRangeException)
@@ -58,14 +57,13 @@ public sealed class SenderIdPacketChunk : UdpPacketChunk<ushort>
     internal override ushort GetValueFromBytes(byte[] data)
     {
         Debug.Assert(ChunkSize == 2);
-        var chunkData = GetBytes(data, StartPosition, ChunkSize);
         try
         {
-            return ByteFunctions.BytesToSenderId(chunkData);
+            return ByteFunctions.BytesToSenderId(data);
         }
         catch (ArgumentOutOfRangeException)
         {
-            throw new UdpPacketException(KnownErrors.FormatByteToSenderIdError(chunkData));
+            throw new UdpPacketException(KnownErrors.FormatByteToSenderIdError(data));
         }
     }
 }

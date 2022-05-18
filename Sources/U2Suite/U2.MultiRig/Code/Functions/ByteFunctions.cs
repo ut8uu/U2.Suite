@@ -146,14 +146,14 @@ public static class ByteFunctions
         return BitConverter.ToUInt16(arr);
     }
 
-    public static byte[] MessageIdToBytes(ushort messageId)
+    public static byte[] MessageIdToBytes(byte messageId)
     {
-        return UshortToBytes(messageId);
+        return new[] { messageId };
     }
 
-    public static ushort BytesToMessageId(byte[] data)
+    public static byte BytesToMessageId(byte[] data)
     {
-        return BytesToUshort(data);
+        return data.First();
     }
 
     public static ushort BytesToSenderId(byte[] data)

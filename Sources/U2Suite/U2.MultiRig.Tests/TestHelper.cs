@@ -31,11 +31,14 @@ internal class TestHelper
     public static readonly byte[] MagicNumberByteArray = new byte[] { 0xAB, 0xBA, 0x11, 0x05 };
     public const string UnknownMagicNumberHexStr = "ABADBABA";
 
+    public static readonly DateTime UnixEpochTimestamp = DateTime.UnixEpoch;
     public const string UnixEpochTimestampHexStr = "0080B5F7F57F9F48";
     public const string SenderIdHexStr = "0102";
+    public const int SenderId = 258;
     public const string ReceiverIdHexStr = "0304";
-    public const string MessageIdHexStr = "0511";
-    public const int MessageId = 1297; // 5*256 + 17
+    public const int ReceiverId = 772;
+    public const string MessageIdHexStr = "05";
+    public const int MessageId = 5;
     public const string MessageTypeHexStr = "41"; // 'A'
     public const string ChecksumHexStr = "01020304";
     public const string CommandIdHexStr = "1123";
