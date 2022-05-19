@@ -74,4 +74,33 @@ public sealed class RigUdpMessengerPacket
 
         return result;
     }
+
+    public bool IsValid
+    {
+        get
+        {
+            if (MagicNumber == null || Timestamp == null || MessageId == null
+                || SenderId == null || ReceiverId == null || MessageType == null
+                || Checksum == null || CommandId == null || DataLength == null 
+                || Data == null)
+            {
+                return true;
+            }
+
+            if (!MagicNumber.IsValid || !Timestamp.IsValid || !MessageId.IsValid 
+                || !SenderId.IsValid || !ReceiverId.IsValid || !MessageType.IsValid 
+                || !Checksum.IsValid || !CommandId.IsValid || !DataLength.IsValid 
+                || !Data.IsValid)
+            {
+                return false;
+            }
+
+            var checksum = MagicNumber.Checksum ^ Timestamp.Checksum ^
+                           MessageId.Checksum ^ SenderId.Checksum ^ ReceiverId.Checksum ^
+                           MessageType.Checksum ^ CommandId.Checksum ^ DataLength.Checksum ^ 
+                           Data.Checksum;
+
+            return Checksum.Value.Equals((byte)checksum);
+        }
+    }
 }

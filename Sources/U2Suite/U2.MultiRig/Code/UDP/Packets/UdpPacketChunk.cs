@@ -81,4 +81,18 @@ public abstract class UdpPacketChunk<T>
     {
         Value = value;
     }
+
+    public byte Checksum {
+        get
+        {
+            var bytes = GetBytesFromValue();
+            byte checksum = 0;
+            foreach (var b in bytes)
+            {
+                checksum ^= b;
+            }
+
+            return checksum;
+        }
+}
 }
