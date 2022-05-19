@@ -57,9 +57,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentat
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "U2.MultiRig", "U2.MultiRig", "{4AB9E742-EC48-4789-AB32-8BA25FEED600}"
 	ProjectSection(SolutionItems) = preProject
-		..\Documentation\Protocol.md = ..\Documentation\Protocol.md
-		..\Documentation\UdpCommands.md = ..\Documentation\UdpCommands.md
-		..\Documentation\UdpParameters.md = ..\Documentation\UdpParameters.md
+		..\Documentation\U2.MultiRig\Protocol.md = ..\Documentation\U2.MultiRig\Protocol.md
+		..\Documentation\U2.MultiRig\UdpCommands.md = ..\Documentation\U2.MultiRig\UdpCommands.md
+		..\Documentation\U2.MultiRig\UdpParameters.md = ..\Documentation\U2.MultiRig\UdpParameters.md
 	EndProjectSection
 EndProject
 Global
