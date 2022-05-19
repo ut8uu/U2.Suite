@@ -28,5 +28,5 @@ report this using the GitHub ([link to the issue tracker](https://github.com/ut8
 ## The protocol
 
 The U2.Suite protocol is described in the [Protocol](../../../Documentation/protocol.md) file.
-Also, you can find all the [command identifiers](../../../Documentation/UdpCommandIds.md)
+Also, there you can find all the [command identifiers](../../../Documentation/UdpCommandIds.md)
 and [parameter identifiers](../../../Documentation/UdpParameterIds.md)
