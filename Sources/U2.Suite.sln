@@ -54,6 +54,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "U2.MultiRig.Demo", "U2Suite\U2.MultiRig.Demo\U2.MultiRig.Demo.csproj", "{4DA0FFE9-31B3-478E-8E6F-9D07318ED3BA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentation", "{7B67A45A-7517-43AC-B62A-D5543A3352B5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "U2.MultiRig", "U2.MultiRig", "{4AB9E742-EC48-4789-AB32-8BA25FEED600}"
 	ProjectSection(SolutionItems) = preProject
 		..\Documentation\Protocol.md = ..\Documentation\Protocol.md
 		..\Documentation\UdpCommands.md = ..\Documentation\UdpCommands.md
@@ -160,6 +162,7 @@ Global
 		{5AA52E0B-F852-48B1-B3F1-3058053A3C77} = {2D0CB1BE-6DF0-46C8-96AD-4F67892F1BE7}
 		{FAA89451-6963-415F-A991-BC2E91104247} = {2D0CB1BE-6DF0-46C8-96AD-4F67892F1BE7}
 		{4DA0FFE9-31B3-478E-8E6F-9D07318ED3BA} = {FAA89451-6963-415F-A991-BC2E91104247}
+		{4AB9E742-EC48-4789-AB32-8BA25FEED600} = {7B67A45A-7517-43AC-B62A-D5543A3352B5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E8720C83-17E2-4C14-AFA9-CAAD4F71F4D6}

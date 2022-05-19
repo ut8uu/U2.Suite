@@ -19,10 +19,10 @@ The datagram consists of the following parts.
 | SenderId    | 2 bytes | A 16-bit unsigned integer representing the sender of the datagram. |
 | ReceiverId  | 2 bytes | A 16-bit unsigned integer representing the receiver of the datagram. |
 | MessageType | 1 byte  | A character, specifying the type of the message. Can be either 'R', 'A', 'I', OR 'S'. |
-| Checksum	  | 4 bytes | A 32-bit unsigned integer used to check if the arrived data are consistent. |
+| Checksum	  | 1 byte  | A 8-bit unsigned integer used to check if the arrived data are consistent. |
 | CommandId   | 2 bytes | A 16-bit unsigned integer representing the command. |
 | DataLength  | 2 bytes | A 16-bit unsigned integer specifying the length of the following data. |
-| Data		  | ??      | A content of the datagram. |
+| Data		  | ??      | A content of the datagram. Maximal size: 65536 bytes. |
 
 All values are being sent using the big-endian order when the first 
 (or most significant) byte of the sequence comes first.
@@ -106,3 +106,9 @@ A two-byte long unsigned integer. Specifies the length of the data in the datagr
 
 Actual data. All bytes exceeding the `DataLength` will be ignored.
 A datagram having less data will be ignored.
+
+### Checksum
+
+A 8-bit (one byte) value used to check the datagram consistency. 
+Is created by applying of the XOR boolean operator to all bytes of the datagram
+except the Checksum field.
