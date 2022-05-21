@@ -171,13 +171,13 @@ public abstract class CustomRig : IDisposable
             if (_queue.Phase == ExchangePhase.Sending)
             {
                 _queue.Phase = ExchangePhase.Receiving;
-                _logger.Debug($"RIG{RigNumber}: Data received from radio while receivivng is not expected. Switched to receiving.");
+                _logger.Error($"RIG{RigNumber}: Data received from radio while receiving is not expected. Switched to receiving.");
             }
 
             if (_queue.Phase == ExchangePhase.Receiving)
             {
-                _logger.DebugFormat("RIG{0}: reply received: {1} ({2} bytes)",
-                    RigNumber, ByteFunctions.BytesToHex(receivedData), receivedData.Length);
+                //_logger.DebugFormat("RIG{0}: reply received: {1} ({2} bytes)",
+                //    RigNumber, ByteFunctions.BytesToHex(receivedData), receivedData.Length);
             }
             else
             { 
@@ -199,7 +199,7 @@ public abstract class CustomRig : IDisposable
             if (currentCommand.NeedsReply
                 && currentCommand.ReplyLength > _receiveQueue.Count)
             {
-                _logger.Debug($"RIG{RigNumber}: Buffer has insufficient data. Waiting for the rest.");
+                //_logger.Debug($"RIG{RigNumber}: Buffer has insufficient data. Waiting for the rest.");
                 return;
             }
 
@@ -226,6 +226,10 @@ public abstract class CustomRig : IDisposable
                         ProcessStatusReply(currentCommand.Number, data);
                         break;
 
+                    case CommandKind.Custom:
+                        #warning TODO Check if Custom command is required
+                        _logger.Error($"A custom command is not handled.");
+                        break;
                     default:
                         throw new ArgumentOutOfRangeException();
                 }
