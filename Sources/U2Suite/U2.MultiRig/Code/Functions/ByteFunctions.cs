@@ -195,4 +195,11 @@ public static class ByteFunctions
     {
         return UshortToBytes(commandId);
     }
+
+    public static byte[] UlongToBytes(ulong input)
+    {
+        var data = BitConverter.GetBytes(input);
+        Array.Reverse(data); // big endian is expected
+        return data;
+    }
 }

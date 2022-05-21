@@ -17,7 +17,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace U2.MultiRig.Code.UDP;
+namespace U2.MultiRig;
 
 public sealed class RigUdpMessengerPacket
 {
@@ -75,6 +75,31 @@ public sealed class RigUdpMessengerPacket
         return result;
     }
 
+    public byte[] GetBytes()
+    {
+        var result = new List<byte>();
+        result.AddRange(MagicNumber.GetBytesFromValue());
+        result.AddRange(Timestamp.GetBytesFromValue());
+        result.AddRange(MessageId.GetBytesFromValue());
+        result.AddRange(SenderId.GetBytesFromValue());
+        result.AddRange(ReceiverId.GetBytesFromValue());
+        result.AddRange(MessageType.GetBytesFromValue());
+        result.AddRange(Checksum.GetBytesFromValue());
+        result.AddRange(CommandId.GetBytesFromValue());
+        result.AddRange(DataLength.GetBytesFromValue());
+        result.AddRange(Data.GetBytesFromValue());
+
+        return result.ToArray();
+    }
+
+    public byte GetCheckSum()
+    {
+        return (byte) (MagicNumber.Checksum ^ Timestamp.Checksum ^
+                       MessageId.Checksum ^ SenderId.Checksum ^ ReceiverId.Checksum ^
+                       MessageType.Checksum ^ CommandId.Checksum ^ DataLength.Checksum ^
+                       Data.Checksum);
+    }
+
     public bool IsValid
     {
         get
@@ -95,12 +120,7 @@ public sealed class RigUdpMessengerPacket
                 return false;
             }
 
-            var checksum = MagicNumber.Checksum ^ Timestamp.Checksum ^
-                           MessageId.Checksum ^ SenderId.Checksum ^ ReceiverId.Checksum ^
-                           MessageType.Checksum ^ CommandId.Checksum ^ DataLength.Checksum ^ 
-                           Data.Checksum;
-
-            return Checksum.Value.Equals((byte)checksum);
+            return Checksum.Value.Equals(GetCheckSum());
         }
     }
 }

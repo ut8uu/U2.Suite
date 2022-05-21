@@ -23,6 +23,13 @@ using U2.MultiRig.Code.UDP;
 
 namespace U2.MultiRig;
 
+public static class CommandIdentifiers
+{
+    public const ushort BroadcastInformation = 0;
+    public const ushort BroadcastMultipleParametersChangedNotification = 0x10;
+    public const ushort BroadcastSingleParameterChangedNotification = 0x11;
+}
+
 public sealed class CommandIdPacketChunk : UdpPacketChunk<ushort>
 {
     public CommandIdPacketChunk(ushort commandId)
@@ -57,15 +64,13 @@ public sealed class CommandIdPacketChunk : UdpPacketChunk<ushort>
 
     internal override ushort GetValueFromBytes(byte[] data)
     {
-        var chunkData = GetBytes(data, StartPosition, ChunkSize);
         try
         {
-            Array.Reverse(chunkData); // big endian is expected
-            return BitConverter.ToUInt16(chunkData);
+            return ByteFunctions.BytesToCommandId(data);
         }
         catch (ArgumentException)
         {
-            throw new UdpPacketException(KnownErrors.FormatByteToTimestampError(chunkData));
+            throw new UdpPacketException(KnownErrors.FormatByteToCommandIdError(data));
         }
     }
 }

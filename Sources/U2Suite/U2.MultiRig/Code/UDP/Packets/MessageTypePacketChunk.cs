@@ -24,6 +24,14 @@ using U2.MultiRig.Code.UDP;
 
 namespace U2.MultiRig;
 
+public static class MessageTypes
+{
+    public const char Answer = 'A';
+    public const char Information = 'I';
+    public const char Request = 'R';
+    public const char Status = 'S';
+}
+
 public sealed class MessageTypePacketChunk : UdpPacketChunk<char>
 {
     public MessageTypePacketChunk(char data)

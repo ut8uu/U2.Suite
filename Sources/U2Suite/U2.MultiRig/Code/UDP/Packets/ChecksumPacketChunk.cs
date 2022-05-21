@@ -47,8 +47,7 @@ public sealed class ChecksumPacketChunk : UdpPacketChunk<byte>
 
     internal override byte GetValueFromBytes(byte[] data)
     {
-        Debug.Assert(ChunkSize == 1);
-        var chunkData = GetBytes(data, StartPosition, ChunkSize);
-        return chunkData[0];
+        Debug.Assert(data.Length == 1);
+        return data.First();
     }
 }
