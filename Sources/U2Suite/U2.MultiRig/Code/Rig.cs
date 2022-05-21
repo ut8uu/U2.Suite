@@ -30,6 +30,7 @@ using System.Text;
 using U2.MultiRig.Code;
 using log4net;
 using U2.Core;
+using System.Reflection.Metadata;
 
 namespace U2.MultiRig;
 
@@ -39,7 +40,7 @@ public delegate void RigParameterChangedEventHandler(object sender, int rigNumbe
 public class Rig : CustomRig
 {
     private readonly ILog _logger = LogManager.GetLogger(typeof(Rig));
-    protected readonly List<RigParameter> _changedParams = new List<RigParameter>();
+    protected readonly List<RigParameter> _changedParams = new();
 
     public Rig(int rigNumber, RigSettings settings, RigCommands rigCommands) 
         : base(rigNumber, settings, rigCommands)
@@ -131,7 +132,11 @@ public class Rig : CustomRig
         //tell clients
         if (_changedParams.Any())
         {
-            _udpMessenger.ComNotifyParams(RigNumber, RigCommandUtilities.ParamsToInt(_changedParams));
+            var packet = UdpPacketFactory.CreateMultipleParametersReportingPacket(RigNumber,
+                senderId: KnownIdentifiers.U2MultiRig, receiverId: KnownIdentifiers.MultiCast,
+                _changedParams);
+            _udpMessenger.SendMultiCastMessage(packet);
+            _logger.Debug($"Multiple parameters changed. Multicast message sent: {ByteFunctions.BytesToHex(packet.GetBytes())}");
         }
         ReportChangedParameters(_changedParams);
         _changedParams.Clear();
@@ -186,20 +191,6 @@ public class Rig : CustomRig
         ValidateReply(data, RigCommands.WriteCmd[(int)param].Validation);
     }
 
-
-    private static readonly object ProcessCustomReplyLockObject = new();
-    protected override void ProcessCustomReply(object sender, byte[] code, byte[] data)
-    {
-        lock (ProcessCustomReplyLockObject)
-        {
-            //MissedLogic.TOmniRigX(ASender).CustCommand = ACode;
-            //MissedLogic.TOmniRigX(ASender).CustReply = AData;
-        }
-        
-        _udpMessenger.ComNotifyCustom(RigNumber, sender);
-    }
-    //add command to the queue
-    
     public override void AddWriteCommand(RigParameter param, int value = 0)
     {
         _logger.DebugFormat("RIG{0} Generating Write command for {1}", RigNumber, param);
@@ -309,8 +300,8 @@ public class Rig : CustomRig
         //unsolved problem:
         //there is no command to read the mode of the other VFO,
         //its change goes undetected.
-        if ((RigCommandUtilities.ModeParams.Contains(parameter)) 
-            && (parameter != LastWrittenMode))
+        if (RigCommandUtilities.ModeParams.Contains(parameter)
+            && parameter != LastWrittenMode)
         {
             LastWrittenMode = RigParameter.None;
         }
@@ -318,11 +309,11 @@ public class Rig : CustomRig
         _logger.DebugFormat("RIG{0} status changed: {1} enabled", RigNumber, parameter);
     }
     
-    private void StoreParam(RigParameter param, int value)
+    private void StoreParam(RigParameter parameter, int parameterValue)
     {
         FieldInfo field;
 
-        switch (param)
+        switch (parameter)
         {
             case RigParameter.FreqA:
                 field = GetFieldInfo(nameof(_freqA));
@@ -349,16 +340,20 @@ public class Rig : CustomRig
         }
 
         var fieldValue = field.GetValue(this);
-        if (fieldValue == null || value == (int)fieldValue)
+        if (fieldValue == null || parameterValue == (int)fieldValue)
         {
             //_logger.Debug($"StoreParam: parameter {param}, existing value='{fieldValue}', new value='{value}'");
             return;
         }
 
-        field.SetValue(this, value);
-        _changedParams.Add(param);
-        _logger.DebugFormat("RIG{0} status changed: {1} = {2}", RigNumber, param.ToString(), Convert.ToString(value));
-        _udpMessenger.ComNotifySingleParameter(RigNumber, param, value);
+        field.SetValue(this, parameterValue);
+        _changedParams.Add(parameter);
+        _logger.DebugFormat("RIG{0} status changed: {1} = {2}", RigNumber, parameter.ToString(), Convert.ToString(parameterValue));
+        var packet = UdpPacketFactory.CreateSingleParameterReportingPacket(RigNumber,
+            senderId: KnownIdentifiers.U2MultiRig, receiverId: KnownIdentifiers.MultiCast,
+            parameter, parameterValue);
+        _udpMessenger.SendMultiCastMessage(packet);
+        _logger.Debug($"A single parameter changed. A multicast message sent: {ByteFunctions.BytesToHex(packet.GetBytes())}");
     }
 
     protected virtual void OnRigParameterChanged(int rigNumber, RigParameter parameter, object value)
