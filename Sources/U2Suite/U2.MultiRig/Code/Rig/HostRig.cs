@@ -18,32 +18,20 @@
  */
 
 using System;
-using System.IO;
-using System.Data;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Globalization;
-using System.Runtime.InteropServices;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using U2.MultiRig.Code;
-using log4net;
-using U2.Core;
-using System.Reflection.Metadata;
+using System.Threading.Tasks;
+using JetBrains.Annotations;
 
 namespace U2.MultiRig;
 
-public delegate void RigParameterChangedEventHandler(object sender, int rigNumber,
-    RigParameter parameter, object value);
-
-public class Rig : CustomRig
+public sealed class HostRig : Rig
 {
-    private readonly ILog _logger = LogManager.GetLogger(typeof(Rig));
-    protected readonly List<RigParameter> _changedParams = new();
-
-    public Rig(int rigNumber, RigSettings settings, RigCommands rigCommands) 
-        : base(rigNumber, settings, rigCommands)
+    public HostRig(int rigNumber, [NotNull] RigSettings settings, [NotNull] RigCommands rigCommands)
+        : base(RigControlType.Host, rigNumber, settings, rigCommands)
     {
     }
 
@@ -91,7 +79,7 @@ public class Rig : CustomRig
     {
         ValidateReply(data, RigCommands.InitCmd[number].Validation);
     }
-    
+
     protected override void ProcessStatusReply(int number, byte[] data)
     {
         //validate reply
@@ -118,16 +106,22 @@ public class Rig : CustomRig
         //extract bit flags
         for (var index = 0; index <= cmd.Flags.Count - 1; index++)
         {
-            if (data.Length != cmd.Flags[index].Mask.Length 
+            if (data.Length != cmd.Flags[index].Mask.Length
                 || data.Length != cmd.Flags[index].Flags.Length)
             {
                 _logger.ErrorFormat("RIG{0}: incorrect reply length", RigNumber);
             }
             else if (cmd.Flags[index].Flags.SequenceEqual(ByteFunctions.BytesAnd(data, cmd.Flags[index].Mask)))
             {
-                StoreParam(cmd.Flags[index].Param);
+                var parameter = cmd.Flags[index].Param;
+                if (StoreParam(parameter))
+                {
+                    _changedParams.Add(parameter);
+                }
             }
         }
+        ReportChangedParameters(_changedParams);
+        _changedParams.Clear();
 
         //tell clients
         if (_changedParams.Any())
@@ -185,7 +179,7 @@ public class Rig : CustomRig
             OnRigParameterChanged(RigNumber, parameter, parameterValue);
         }
     }
-    
+
     protected override void ProcessWriteReply(RigParameter param, byte[] data)
     {
         ValidateReply(data, RigCommands.WriteCmd[(int)param].Validation);
@@ -244,7 +238,7 @@ public class Rig : CustomRig
 
         CheckQueue();
     }
-    
+
     private static FieldInfo GetFieldInfo(string name)
     {
         var result = typeof(Rig).GetField(name, BindingFlags.NonPublic | BindingFlags.Instance);
@@ -255,7 +249,7 @@ public class Rig : CustomRig
     ////////////////////////////////////////////////////////////////////////////////
     //                         store extracted param
     ////////////////////////////////////////////////////////////////////////////////
-    private void StoreParam(RigParameter parameter)
+    private bool StoreParam(RigParameter parameter)
     {
         FieldInfo field;
         if (RigCommandUtilities.VfoParams.Contains(parameter))
@@ -284,18 +278,19 @@ public class Rig : CustomRig
         }
         else
         {
-            return;
+            return false;
         }
 
         var fieldValue = field.GetValue(this);
         if (fieldValue == null || parameter == (RigParameter)fieldValue)
         {
-            return;
+            return false;
         }
 
         field.SetValue(this, parameter);
 
-        _changedParams.Add(parameter);
+        ReportChangedParameters(new []{parameter});
+        //_changedParams.Add(parameter);
 
         //unsolved problem:
         //there is no command to read the mode of the other VFO,
@@ -307,8 +302,10 @@ public class Rig : CustomRig
         }
 
         _logger.DebugFormat("RIG{0} status changed: {1} enabled", RigNumber, parameter);
+
+        return true;
     }
-    
+
     private void StoreParam(RigParameter parameter, int parameterValue)
     {
         FieldInfo field;
@@ -353,10 +350,10 @@ public class Rig : CustomRig
             senderId: KnownIdentifiers.U2MultiRig, receiverId: KnownIdentifiers.MultiCast,
             parameter, parameterValue);
         _udpMessenger.SendMultiCastMessage(packet);
-        _logger.Debug($"A single parameter changed. A multicast message sent: {ByteFunctions.BytesToHex(packet.GetBytes())}");
+        //_logger.Debug($"A single parameter changed. A multicast message sent: {ByteFunctions.BytesToHex(packet.GetBytes())}");
     }
 
-    protected virtual void OnRigParameterChanged(int rigNumber, RigParameter parameter, object value)
+    private void OnRigParameterChanged(int rigNumber, RigParameter parameter, object value)
     {
         RigParameterChanged?.Invoke(this, rigNumber, parameter, value);
     }

@@ -47,8 +47,8 @@ public abstract class CustomRig : IDisposable
     private readonly RigSettings _rigSettings;
     private readonly ILog _logger = LogManager.GetLogger(typeof(CustomRig));
     protected RigUdpMessenger _udpMessenger;
-    protected readonly Timer _connectivityTimer;
-    protected readonly Timer _timeoutTimer;
+    protected readonly Timer? _connectivityTimer;
+    protected readonly Timer? _timeoutTimer;
     protected CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
 
     protected CommandQueue _queue;
@@ -66,30 +66,33 @@ public abstract class CustomRig : IDisposable
 
     protected bool _online = false;
     protected RigCommands _rigCommands;
-    protected SerialPortInput _serialPort;
+    protected SerialPortInput? _serialPort;
     protected RigParameter LastWrittenMode = RigParameter.None;
 
     public int RigNumber { get; set; } = 0;
 
     public event SerialPortInput.ConnectionStatusChangedEventHandler? ConnectionStatusChanged;
 
-    protected CustomRig(int rigNumber, RigSettings rigSettings, RigCommands rigCommands)
+    protected CustomRig(RigControlType rigControlType, int rigNumber, RigSettings rigSettings, RigCommands rigCommands)
     {
         RigNumber = rigNumber;
         _rigSettings = rigSettings;
         _rigCommands = rigCommands;
         _queue = new CommandQueue();
 
-        _serialPort = CreateSerialPort(_rigSettings);
-        _serialPort.ConnectionStatusChanged += SerialPort_ConnectionStatusChanged;
-        _serialPort.MessageReceived += SerialPort_MessageReceived;
+        if (rigControlType == RigControlType.Host)
+        {
+            _serialPort = CreateSerialPort(_rigSettings);
+            _serialPort.ConnectionStatusChanged += SerialPort_ConnectionStatusChanged;
+            _serialPort.MessageReceived += SerialPort_MessageReceived;
+
+            _connectivityTimer = new Timer(ConnectivityTimerCallbackFunc);
+            DisableConnectivityTimer();
+            _timeoutTimer = new Timer(TimeoutTimerCallbackFunc);
+            DisableTimeoutTimer();
+        }
 
         _udpMessenger = new RigUdpMessenger(_cancellationTokenSource.Token);
-
-        _connectivityTimer = new Timer(ConnectivityTimerCallbackFunc);
-        DisableConnectivityTimer();
-        _timeoutTimer = new Timer(TimeoutTimerCallbackFunc);
-        DisableTimeoutTimer();
     }
 
     public void Dispose()
@@ -159,7 +162,7 @@ public abstract class CustomRig : IDisposable
             isVirtualPort: false);
     }
 
-    private readonly List<byte> _receiveQueue = new List<byte>();
+    private readonly List<byte> _receiveQueue = new();
     private void SerialPort_MessageReceived(object sender, MessageReceivedEventArgs args)
     {
         lock (RecvEventLockObject)

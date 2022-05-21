@@ -29,6 +29,8 @@ public class RigSettings
         BaudRate = Data.BaudRates.IndexOf(9600);
         DataBits = Data.DataBits.IndexOf(8);
         StopBits = Data.StopBits.IndexOf(1m);
+
+        Enabled = true;
     }
 
     public string RigId { get; set; } = string.Empty;
