@@ -19,6 +19,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
@@ -63,6 +64,7 @@ namespace U2.MultiRig.Code.UDP
                 return;
             }
             _server.Dispose();
+            _client.Dispose();
             _disposed = true;
         }
 
@@ -83,11 +85,12 @@ namespace U2.MultiRig.Code.UDP
             }
         }
 
-        private void SendMultiCastMessage(byte[] data)
+        public void SendMultiCastMessage(RigUdpMessengerPacket packet)
         {
+            var data = packet.GetBytes();
             var ipEndPoint = new IPEndPoint(MultiCastAddress, MessengerTxPort);
             _client.Send(data, data.Length, ipEndPoint);
-            _client.Close();
+            _log.Debug($"A datagram '{ByteFunctions.BytesToHex(data)}' sent.");
         }
     }
 }
