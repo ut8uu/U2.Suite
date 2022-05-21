@@ -83,17 +83,18 @@ internal static class RigCommandUtilities
         var list = new List<RigCommands>();
         var iniDirectory = Path.Combine(FileSystemHelper.GetLocalFolder(), "INI");
         var files = Directory.EnumerateFiles(iniDirectory, "*.ini");
+        var logger = LogManager.GetLogger(typeof(RigCommandUtilities));
         foreach (var file in files)
         {
-            ClassLog.Debug($"Loading commands from {Path.GetFileNameWithoutExtension(file)}.");
+            //ClassLog.Debug($"Loading commands from {Path.GetFileNameWithoutExtension(file)}.");
             try
             {
                 list.Add(LoadRigCommands(file));
             }
             catch (IniFileLoadException ex)
             {
-                LogManager.GetLogger(typeof(RigCommandUtilities))
-                    .Error($"Error loading ini file. {ex.Message}");
+                var fileName = Path.GetFileName(file);
+                logger.Error($"Error loading ini file {fileName}. {ex.Message}");
             }
         }
 
