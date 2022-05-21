@@ -716,17 +716,17 @@ internal static class RigCommandUtilities
         }
     }
 
-    public static int ParamsToInt(List<RigParameter> parameters)
+    public static ulong ParamsToUlong(IEnumerable<RigParameter> parameters)
     {
-        return parameters.Aggregate(0, (current, param) => current | (int) param);
+        return (ulong)parameters.Aggregate(0, (current, param) => current | (int) param);
     }
 
-    public static int ParamToInt(RigParameter parameter)
+    public static ulong ParamToInt64(RigParameter parameter)
     {
-        return Convert.ToInt32(parameter);
+        return Convert.ToUInt64(parameter);
     }
 
-    public static RigParameter IntToParam(int value)
+    public static RigParameter Int64ToParam(ulong value)
     {
         return (RigParameter) value;
     }
