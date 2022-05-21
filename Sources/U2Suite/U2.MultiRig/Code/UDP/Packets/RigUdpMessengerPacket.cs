@@ -69,7 +69,7 @@ public sealed class RigUdpMessengerPacket
             Checksum = ChecksumPacketChunk.FromUdpPacket(data),
             CommandId = CommandIdPacketChunk.FromUdpPacket(data),
             DataLength = DataLengthPacketChunk.FromUdpPacket(data),
-            Data = DataPacketChunk.FromUdpPacket(data),
+            Data = new DataPacketChunk(data[DataStart..]),
         };
 
         return result;

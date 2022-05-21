@@ -43,7 +43,8 @@ internal class TestHelper
     public const string ChecksumHexStr = "01";
     public const byte Checksum = 0x01;
     public const string CommandIdHexStr = "1123";
-    public const string DataLengthHexStr = "03";
+    public const string DataLengthHexStr = "0003";
+    public const ushort DataLength = 3;
     public const string DataHexStr = "AABBCC";
 
     public const string UdpPacketGoodValue = $"{MagicNumberHexStr}{UnixEpochTimestampHexStr}{MessageIdHexStr}{SenderIdHexStr}{ReceiverIdHexStr}{MessageTypeHexStr}{ChecksumHexStr}{CommandIdHexStr}{DataLengthHexStr}{DataHexStr}";

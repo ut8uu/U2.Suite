@@ -59,16 +59,14 @@ public sealed class DataLengthPacketChunk : UdpPacketChunk<ushort>
 
     internal override ushort GetValueFromBytes(byte[] data)
     {
-        Debug.Assert(ChunkSize == 2);
-        var chunkData = GetBytes(data, StartPosition, ChunkSize);
+        Debug.Assert(data.Length == 2);
         try
         {
-            Array.Reverse(chunkData); // big endian is expected
-            return BitConverter.ToUInt16(chunkData);
+            return ByteFunctions.BytesToDataLength(data);
         }
         catch (ArgumentOutOfRangeException)
         {
-            throw new UdpPacketException(KnownErrors.FormatByteToDataLengthError(chunkData));
+            throw new UdpPacketException(KnownErrors.FormatByteToDataLengthError(data));
         }
     }
 }

@@ -54,7 +54,7 @@ public class UdpPacketTests
     [Fact]
     public void GetTimestamp()
     {
-        var data = ByteFunctions.HexStrToBytes($"{TestHelper.UdpPacketGoodValue}");
+        var data = ByteFunctions.HexStrToBytes(TestHelper.UdpPacketGoodValue);
         var chunk = TimestampPacketChunk.FromUdpPacket(data);
         var expectedBytes = ByteFunctions.HexStrToBytes(TestHelper.UnixEpochTimestampHexStr);
         Assert.Equal(TestHelper.UnixEpochTimestamp, chunk.Value);
@@ -67,9 +67,25 @@ public class UdpPacketTests
     }
 
     [Fact]
+    public void DataLength()
+    {
+        var data = ByteFunctions.HexStrToBytes(TestHelper.UdpPacketGoodValue);
+        var chunk = DataLengthPacketChunk.FromUdpPacket(data);
+        var expectedBytes = ByteFunctions.HexStrToBytes(TestHelper.DataLengthHexStr);
+        var actualBytes = chunk.GetBytesFromValue();
+        Assert.True(expectedBytes.SequenceEqual(actualBytes));
+        Assert.Equal(TestHelper.DataLength, chunk.Value);
+
+        chunk = new DataLengthPacketChunk(TestHelper.DataLength);
+        Assert.True(chunk.IsValid);
+        Assert.Equal(TestHelper.DataLength, chunk.Value);
+        Assert.True(expectedBytes.SequenceEqual(chunk.GetBytesFromValue()));
+    }
+
+    [Fact]
     public void SenderId()
     {
-        var data = ByteFunctions.HexStrToBytes($"{TestHelper.UdpPacketGoodValue}");
+        var data = ByteFunctions.HexStrToBytes(TestHelper.UdpPacketGoodValue);
         var chunk = SenderIdPacketChunk.FromUdpPacket(data);
         var expectedBytes = ByteFunctions.HexStrToBytes(TestHelper.SenderIdHexStr);
         var actualBytes = chunk.GetBytesFromValue();
@@ -85,7 +101,7 @@ public class UdpPacketTests
     [Fact]
     public void ReceiverId()
     {
-        var data = ByteFunctions.HexStrToBytes($"{TestHelper.UdpPacketGoodValue}");
+        var data = ByteFunctions.HexStrToBytes(TestHelper.UdpPacketGoodValue);
         var chunk = ReceiverIdPacketChunk.FromUdpPacket(data);
         var expectedBytes = ByteFunctions.HexStrToBytes(TestHelper.ReceiverIdHexStr);
         var actualBytes = chunk.GetBytesFromValue();
@@ -101,7 +117,7 @@ public class UdpPacketTests
     [Fact]
     public void MessageId()
     {
-        var data = ByteFunctions.HexStrToBytes($"{TestHelper.UdpPacketGoodValue}");
+        var data = ByteFunctions.HexStrToBytes(TestHelper.UdpPacketGoodValue);
         var chunk = MessageIdPacketChunk.FromUdpPacket(data);
         var expectedBytes = ByteFunctions.HexStrToBytes(TestHelper.MessageIdHexStr);
         var actualBytes = chunk.GetBytesFromValue();
@@ -117,7 +133,7 @@ public class UdpPacketTests
     [Fact]
     public void Checksum()
     {
-        var data = ByteFunctions.HexStrToBytes($"{TestHelper.UdpPacketGoodValue}");
+        var data = ByteFunctions.HexStrToBytes(TestHelper.UdpPacketGoodValue);
         var chunk = ChecksumPacketChunk.FromUdpPacket(data);
         var expectedBytes = ByteFunctions.HexStrToBytes(TestHelper.ChecksumHexStr);
         var actualBytes = chunk.GetBytesFromValue();
@@ -138,7 +154,7 @@ public class UdpPacketTests
     [InlineData('X', false)]
     public void MessageType(char type, bool isValid)
     {
-        var data = ByteFunctions.HexStrToBytes($"{TestHelper.UdpPacketGoodValue}");
+        var data = ByteFunctions.HexStrToBytes(TestHelper.UdpPacketGoodValue);
         data[RigUdpMessengerPacket.MessageTypeStart] = (byte)type;
         var chunk = MessageTypePacketChunk.FromUdpPacket(data);
         Assert.Equal(isValid, chunk.IsValid);
@@ -149,5 +165,26 @@ public class UdpPacketTests
         Assert.Equal(type, chunk.Value);
         Assert.True(new[] { (byte)type }.SequenceEqual(chunk.GetBytesFromValue()));
 
+    }
+
+    [Fact]
+    public void EncodeDecodeUdpPacket()
+    {
+        var expectedValue = 14246015;
+        var packet1 = UdpPacketFactory.CreateSingleParameterReportingPacket(1,
+            KnownIdentifiers.U2MultiRig, KnownIdentifiers.U2Logger,
+            RigParameter.FreqB, expectedValue);
+
+        var packet2 = RigUdpMessengerPacket.FromUdpPacket(packet1.GetBytes());
+
+        Assert.Equal(packet1.Checksum.Value, packet2.Checksum.Value);
+        Assert.Equal(packet1.Timestamp.Value, packet2.Timestamp.Value);
+        Assert.Equal(packet1.SenderId.Value, packet2.SenderId.Value);
+        Assert.Equal(packet1.ReceiverId.Value, packet2.ReceiverId.Value);
+        Assert.Equal(packet1.CommandId.Value, packet2.CommandId.Value);
+        Assert.Equal(packet1.MessageId.Value, packet2.MessageId.Value);
+        Assert.Equal(packet1.MessageType.Value, packet2.MessageType.Value);
+        Assert.Equal(packet1.DataLength.Value, packet2.DataLength.Value);
+        Assert.True(packet1.Data.Value.SequenceEqual(packet2.Data.Value));
     }
 }
