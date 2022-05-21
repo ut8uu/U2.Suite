@@ -23,10 +23,12 @@ using System.Data;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net.Sockets;
 using log4net;
 using MonoSerialPort;
 using MonoSerialPort.Port;
 using U2.MultiRig.Code;
+using U2.MultiRig.Code.UDP;
 
 namespace U2.MultiRig;
 
@@ -44,7 +46,7 @@ public abstract class CustomRig : IDisposable
 
     private readonly RigSettings _rigSettings;
     private readonly ILog _logger = LogManager.GetLogger(typeof(CustomRig));
-    protected UdpMessenger _udpMessenger;
+    protected RigUdpMessenger _udpMessenger;
     protected readonly Timer _connectivityTimer;
     protected readonly Timer _timeoutTimer;
     protected CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
@@ -73,16 +75,16 @@ public abstract class CustomRig : IDisposable
 
     protected CustomRig(int rigNumber, RigSettings rigSettings, RigCommands rigCommands)
     {
+        RigNumber = rigNumber;
         _rigSettings = rigSettings;
         _rigCommands = rigCommands;
-        RigNumber = rigNumber;
         _queue = new CommandQueue();
 
         _serialPort = CreateSerialPort(_rigSettings);
         _serialPort.ConnectionStatusChanged += SerialPort_ConnectionStatusChanged;
         _serialPort.MessageReceived += SerialPort_MessageReceived;
 
-        _udpMessenger = new UdpServer(_cancellationTokenSource.Token);
+        _udpMessenger = new RigUdpMessenger(_cancellationTokenSource.Token);
 
         _connectivityTimer = new Timer(ConnectivityTimerCallbackFunc);
         DisableConnectivityTimer();
@@ -102,7 +104,7 @@ public abstract class CustomRig : IDisposable
 
         Stop();
 
-        _udpMessenger?.Dispose();
+        _udpMessenger.Dispose();
     }
 
     #region Properties
@@ -224,10 +226,6 @@ public abstract class CustomRig : IDisposable
                         ProcessStatusReply(currentCommand.Number, data);
                         break;
 
-                    case CommandKind.Custom:
-                        ProcessCustomReply(currentCommand.CustSender,
-                            currentCommand.Code ?? Array.Empty<byte>(), data);
-                        break;
                     default:
                         throw new ArgumentOutOfRangeException();
                 }
@@ -241,7 +239,7 @@ public abstract class CustomRig : IDisposable
             if (!_online)
             {
                 _online = true;
-                _udpMessenger.ComNotifyStatus(RigNumber);
+                //_udpMessenger.ComNotifyStatus(RigNumber);
             }
 
             //send next command if queue not empty
@@ -448,7 +446,7 @@ public abstract class CustomRig : IDisposable
     private void SeRigCommands(RigCommands value)
     {
         _rigCommands = value;
-        _udpMessenger.ComNotifyRigType(RigNumber);
+        //_udpMessenger.ComNotifyRigType(RigNumber);
     }
 
     private RigParameter GetSplit()
@@ -481,8 +479,6 @@ public abstract class CustomRig : IDisposable
 
     protected abstract void ProcessWriteReply(RigParameter param, byte[] data);
 
-    protected abstract void ProcessCustomReply(object sender, byte[] code, byte[] data);
-
     public abstract void AddWriteCommand(RigParameter param, int value = 0);
 
     public void Start()
@@ -501,7 +497,6 @@ public abstract class CustomRig : IDisposable
             }
 
             _cancellationTokenSource = new CancellationTokenSource();
-            _udpMessenger.Start(_cancellationTokenSource.Token);
             _queue.Clear();
             _queue.Phase = ExchangePhase.Idle;
             AddCommands(RigCommands.InitCmd, CommandKind.Init);
@@ -528,7 +523,7 @@ public abstract class CustomRig : IDisposable
             _queue.Clear();
             _queue.Phase = ExchangePhase.Idle;
             _serialPort.Disconnect();
-            _udpMessenger.Stop();
+            _udpMessenger.Dispose();
         }
     }
 
