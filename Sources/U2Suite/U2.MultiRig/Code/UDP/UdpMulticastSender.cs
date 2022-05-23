@@ -27,35 +27,30 @@ using log4net;
 
 namespace U2.MultiRig.Code.UDP
 {
-    public sealed class UdpBroadcastSender : IDisposable
+    public sealed class UdpMulticastSender : IDisposable
     {
         private readonly UdpClient _client;
         private readonly CancellationToken _token;
-        private readonly string _multicastAddress;
-        private readonly int _port;
         private readonly IPEndPoint _remoteEndpoint;
-        private readonly ILog _logger = LogManager.GetLogger(typeof(UdpBroadcastSender));
+        private readonly ILog _logger = LogManager.GetLogger(typeof(UdpMulticastSender));
 
-        public UdpBroadcastSender(string multicastAddress, int port, CancellationToken token)
+        public UdpMulticastSender(IPAddress multicastAddress, int port, CancellationToken token)
         {
-            _multicastAddress = multicastAddress;
-            _port = port;
             _token = token;
 
             _client = new UdpClient();
-            var multicastIPAddress = IPAddress.Parse(_multicastAddress);
 
             try
             {
                 // Join group
-                _client.JoinMulticastGroup(multicastIPAddress);
+                _client.JoinMulticastGroup(multicastAddress);
             }
             catch (Exception e) when (e is SocketException)
             {
                 _logger.Error(e.ToString());
             }
 
-            _remoteEndpoint = new IPEndPoint(multicastIPAddress, _port);
+            _remoteEndpoint = new IPEndPoint(multicastAddress, port);
         }
         
         public void Dispose()
@@ -69,6 +64,20 @@ namespace U2.MultiRig.Code.UDP
             {
                 var result = await _client.SendAsync(data, _remoteEndpoint, _token);
                 return result;
+            }
+            catch (Exception ex) when (ex is SocketException)
+            {
+                _logger.Error(ex);
+            }
+
+            return 0;
+        }
+
+        public int Send(byte[] data)
+        {
+            try
+            {
+                return _client.Send(data, _remoteEndpoint);
             }
             catch (Exception ex) when (ex is SocketException)
             {

@@ -130,7 +130,7 @@ public sealed class HostRig : Rig
                 senderId: KnownIdentifiers.U2MultiRig, receiverId: KnownIdentifiers.MultiCast,
                 _changedParams);
             _udpMessenger.SendMultiCastMessage(packet);
-            _logger.Debug($"Multiple parameters changed. Multicast message sent: {ByteFunctions.BytesToHex(packet.GetBytes())}");
+            _logger.Debug($"Multiple parameters changed. A multicast message sent: {ByteFunctions.BytesToHex(packet.GetBytes())}");
         }
         ReportChangedParameters(_changedParams);
         _changedParams.Clear();
@@ -163,8 +163,8 @@ public sealed class HostRig : Rig
                 RigParameter.RitOff => 0,
                 RigParameter.XitOn => 1,
                 RigParameter.XitOff => 0,
-                RigParameter.Rx => 1,
-                RigParameter.Tx => 1,
+                RigParameter.Rx => "RX",
+                RigParameter.Tx => "TX",
                 RigParameter.CW_U => "CW",
                 RigParameter.CW_L => "CW",
                 RigParameter.SSB_U => "USB",

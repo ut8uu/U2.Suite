@@ -25,17 +25,21 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Linq;
+using System.Net;
 using System.Reflection;
 using System.Text;
 using U2.MultiRig.Code;
 using log4net;
 using U2.Core;
 using System.Reflection.Metadata;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace U2.MultiRig;
 
 public delegate void RigParameterChangedEventHandler(object sender, int rigNumber,
     RigParameter parameter, object value);
+
+public delegate void UdpPacketReceivedEventHandler(object sender, RigUdpMessengerPacketEventArgs eventArgs);
 
 public enum RigControlType
 {
@@ -53,4 +57,16 @@ public abstract class Rig : CustomRig
     {
     }
 
+    public event UdpPacketReceivedEventHandler UdpPacketReceived;
+
+    protected virtual void OnUdpPacketReceived(RigUdpMessengerPacketEventArgs eventArgs)
+    {
+        UdpPacketReceived?.Invoke(this, eventArgs);
+    }
+}
+
+public sealed class RigUdpMessengerPacketEventArgs
+{
+    public RigUdpMessengerPacket Packet { get; init; }
+    public IPEndPoint RemoteEndpoint { get; init; }
 }
