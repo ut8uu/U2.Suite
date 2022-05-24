@@ -67,7 +67,7 @@ public sealed class GuestRig : Rig
         }
 
         if (packet.ReceiverId.Value != KnownIdentifiers.MultiCast
-            && packet.ReceiverId.Value != _applicationId)
+            && packet.ReceiverId.Value != ApplicationId)
         {
             return;
         }
@@ -92,7 +92,7 @@ public sealed class GuestRig : Rig
 
     private void ProcessAnswerPacket(RigUdpMessengerPacket packet)
     {
-        if (packet.ReceiverId.Value != _applicationId)
+        if (packet.ReceiverId.Value != ApplicationId)
         {
             // an answer packet must be addressed only
             return;

@@ -56,7 +56,7 @@ public abstract class Rig : CustomRig
         RigSettings settings, RigCommands rigCommands) 
         : base(rigControlType, rigNumber, applicationId, settings, rigCommands)
     {
-        _udpMessenger.UdpPacketReceived += UdpMessengerOnUdpPacketReceived;
+        UdpMessenger.UdpPacketReceived += UdpMessengerOnUdpPacketReceived;
     }
     
     public event UdpPacketReceivedEventHandler UdpPacketReceived;

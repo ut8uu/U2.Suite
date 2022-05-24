@@ -37,6 +37,7 @@ public enum RigCtlStatus
     NotConfigured, Disabled, PortBusy, NotResponding, OnLine
 }
 
+#nullable disable
 public abstract class CustomRig : IDisposable
 {
     private static readonly object LockStart = new();
@@ -44,31 +45,23 @@ public abstract class CustomRig : IDisposable
     private static readonly object TimerTickLockObject = new();
     private static readonly object CheckQueueLockObject = new();
 
-    protected readonly ushort _applicationId;
+    protected readonly ushort ApplicationId;
     private readonly RigSettings _rigSettings;
     private readonly ILog _logger = LogManager.GetLogger(typeof(CustomRig));
-    protected RigUdpMessenger _udpMessenger;
-    protected readonly Timer? _connectivityTimer;
-    protected readonly Timer? _timeoutTimer;
-    protected CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
+    protected RigUdpMessenger UdpMessenger;
+    private readonly Timer _connectivityTimer;
+    private readonly Timer _timeoutTimer;
+    private CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
+    private readonly RigCommands _rigCommands;
+    private readonly SerialPortInput _serialPort;
 
     protected CommandQueue _queue;
-    protected int _freq = 0;
-    protected int _freqA = 0;
-    protected int _freqB = 0;
-    protected int _ritOffset = 0;
-    protected int _pitch = 0;
-    protected RigParameter _vfo;
-    protected RigParameter _split;
-    protected RigParameter _rit;
-    protected RigParameter _xit;
-    protected RigParameter _tx;
-    protected RigParameter _mode;
 
     protected bool _online = false;
-    protected RigCommands _rigCommands;
-    protected SerialPortInput? _serialPort;
     protected RigParameter LastWrittenMode = RigParameter.None;
+
+    private static readonly object GetStatusLockObject = new();
+    private static readonly object MessageReceivedLockObject = new();
 
     public int RigNumber { get; set; } = 0;
 
@@ -78,7 +71,7 @@ public abstract class CustomRig : IDisposable
         RigSettings rigSettings, RigCommands rigCommands)
     {
         RigNumber = rigNumber;
-        _applicationId = applicationId;
+        ApplicationId = applicationId;
         _rigSettings = rigSettings;
         _rigCommands = rigCommands;
         _queue = new CommandQueue();
@@ -95,7 +88,7 @@ public abstract class CustomRig : IDisposable
             DisableTimeoutTimer();
         }
 
-        _udpMessenger = new RigUdpMessenger(rigControlType, _cancellationTokenSource.Token);
+        UdpMessenger = new RigUdpMessenger(rigControlType, _cancellationTokenSource.Token);
     }
 
     public void Dispose()
@@ -110,7 +103,7 @@ public abstract class CustomRig : IDisposable
 
         Stop();
 
-        _udpMessenger.Dispose();
+        UdpMessenger.Dispose();
     }
 
     #region Properties
@@ -119,17 +112,17 @@ public abstract class CustomRig : IDisposable
     public bool Enabled => _rigSettings.Enabled;
 
     public RigCtlStatus Status => GetStatus();
-    public int Freq => _freq;
-    public int FreqA => _freqA;
-    public int FreqB => _freqB;
-    public int Pitch => _pitch;
-    public int RitOffset => _ritOffset;
-    public RigParameter Vfo => _vfo;
+    public int Freq { get; set; }
+    public int FreqA { get; set; }
+    public int FreqB { get; set; }
+    public int Pitch { get; set; }
+    public int RitOffset { get; set; }
+    public RigParameter Vfo { get; set; }
     public RigParameter Split => GetSplit();
-    public RigParameter Rit => _rit;
-    public RigParameter Xit => _xit;
-    public RigParameter Tx => _tx;
-    public RigParameter Mode => _mode;
+    public RigParameter Rit { get; set; }
+    public RigParameter Xit { get; set; }
+    public RigParameter Tx { get; set; }
+    public RigParameter Mode { get; set; }
 
     private static readonly StopBits[] StopBits =
     {
@@ -168,7 +161,7 @@ public abstract class CustomRig : IDisposable
     private readonly List<byte> _receiveQueue = new();
     private void SerialPort_MessageReceived(object sender, MessageReceivedEventArgs args)
     {
-        lock (RecvEventLockObject)
+        lock (MessageReceivedLockObject)
         {
             var receivedData = args.Data;
             _receiveQueue.AddRange(receivedData);
@@ -243,7 +236,7 @@ public abstract class CustomRig : IDisposable
             if (!_online)
             {
                 _online = true;
-                _udpMessenger.SendMultiCastMessage(UdpPacketFactory.CreateHeartbeatPacket(RigNumber, _applicationId));
+                UdpMessenger.SendMultiCastMessage(UdpPacketFactory.CreateHeartbeatPacket(RigNumber, ApplicationId));
             }
 
             //send next command if queue not empty
@@ -264,7 +257,6 @@ public abstract class CustomRig : IDisposable
         OnConnectionStatusChanged(args);
     }
 
-    private static readonly object GetStatusLockObject = new();
     ////////////////////////////////////////////////////////////////////////////////
     //                                 status
     ////////////////////////////////////////////////////////////////////////////////
@@ -288,22 +280,18 @@ public abstract class CustomRig : IDisposable
         }
     }
 
-    private static readonly object RecvEventLockObject = new();
-
-    private static readonly object SentEventLockObject = new();
-
     public void SetFreq(int value)
     {
         if (Enabled)
         {
-            _freq = value;
+            Freq = value;
             AddWriteCommand(RigParameter.Freq, value);
         }
     }
 
     public void SetFreqA(int value)
     {
-        if (Enabled && value != _freqA)
+        if (Enabled && value != FreqA)
         {
             AddWriteCommand(RigParameter.FreqA, value);
         }
@@ -311,7 +299,7 @@ public abstract class CustomRig : IDisposable
 
     public void SetFreqB(int value)
     {
-        if (Enabled && (value != _freqB))
+        if (Enabled && (value != FreqB))
         {
             AddWriteCommand(RigParameter.FreqB, value);
         }
@@ -319,7 +307,7 @@ public abstract class CustomRig : IDisposable
 
     public void SetRitOffset(int value)
     {
-        if (Enabled && (value != _ritOffset))
+        if (Enabled && (value != RitOffset))
         {
             AddWriteCommand(RigParameter.RitOffset, value);
         }
@@ -335,15 +323,15 @@ public abstract class CustomRig : IDisposable
         AddWriteCommand(RigParameter.Pitch, value);
 
         //remember the pitch that we set if we cannot read it back from the rig
-        if (!(RigCommands.ReadableParams.Contains(RigParameter.Pitch)))
+        if (!RigCommands.ReadableParams.Contains(RigParameter.Pitch))
         {
-            _pitch = value;
+            Pitch = value;
         }
     }
 
     public void SetVfo(RigParameter value)
     {
-        if (Enabled && RigCommandUtilities.VfoParams.Contains(value) && value != _vfo)
+        if (Enabled && RigCommandUtilities.VfoParams.Contains(value) && value != Vfo)
         {
             AddWriteCommand(value);
         }
@@ -388,7 +376,8 @@ public abstract class CustomRig : IDisposable
 
     public void SetRit(RigParameter value)
     {
-        if (Enabled && (RigCommandUtilities.RitOnParams.Contains(value)) && (value != _rit))
+        if (Enabled && RigCommandUtilities.RitOnParams.Contains(value) 
+                    && value != Rit)
         {
             AddWriteCommand(value);
         }
@@ -396,7 +385,8 @@ public abstract class CustomRig : IDisposable
 
     public void SetXit(RigParameter value)
     {
-        if (Enabled && (RigCommandUtilities.XitOnParams.Contains(value)) && (value != Xit))
+        if (Enabled && RigCommandUtilities.XitOnParams.Contains(value) 
+                    && value != Xit)
         {
             AddWriteCommand(value);
         }
@@ -418,18 +408,9 @@ public abstract class CustomRig : IDisposable
         }
     }
 
-    ////////////////////////////////////////////////////////////////////////////////
-    //                               set param
-    ////////////////////////////////////////////////////////////////////////////////
-    private void SetRigCommands(RigCommands value)
-    {
-        _rigCommands = value;
-        //_udpMessenger.ComNotifyRigType(RigNumber);
-    }
-
     private RigParameter GetSplit()
     {
-        var getSplitResult = _split;
+        var getSplitResult = Split;
 
         if (getSplitResult != RigParameter.None)
         {
@@ -501,7 +482,7 @@ public abstract class CustomRig : IDisposable
             _queue.Clear();
             _queue.Phase = ExchangePhase.Idle;
             _serialPort.Disconnect();
-            _udpMessenger.Dispose();
+            UdpMessenger.Dispose();
         }
     }
 
@@ -627,3 +608,4 @@ public abstract class CustomRig : IDisposable
         ConnectionStatusChanged?.Invoke(this, args);
     }
 }
+#nullable restore

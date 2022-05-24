@@ -127,8 +127,8 @@ public sealed class HostRig : Rig
         if (_changedParams.Any())
         {
             var packet = UdpPacketFactory.CreateMultipleParametersReportingPacket(RigNumber,
-                senderId: _applicationId, receiverId: KnownIdentifiers.MultiCast, _changedParams);
-            _udpMessenger.SendMultiCastMessage(packet);
+                senderId: ApplicationId, receiverId: KnownIdentifiers.MultiCast, _changedParams);
+            UdpMessenger.SendMultiCastMessage(packet);
             _logger.Debug($"Multiple parameters changed. A multicast message sent: {ByteFunctions.BytesToHex(packet.GetBytes())}");
         }
         ReportChangedParameters(_changedParams);
@@ -141,13 +141,13 @@ public sealed class HostRig : Rig
         {
             object parameterValue = parameter switch
             {
-                RigParameter.FreqA => _freqA,
+                RigParameter.FreqA => FreqA,
                 RigParameter.None => 0,
-                RigParameter.Freq => _freq,
-                RigParameter.FreqB => _freqB,
-                RigParameter.Pitch => _pitch,
-                RigParameter.RitOffset => _ritOffset,
-                RigParameter.Rit0 => _rit,
+                RigParameter.Freq => Freq,
+                RigParameter.FreqB => FreqB,
+                RigParameter.Pitch => Pitch,
+                RigParameter.RitOffset => RitOffset,
+                RigParameter.Rit0 => Rit,
                 RigParameter.VfoAA => 0,
                 RigParameter.VfoAB => 0,
                 RigParameter.VfoBA => 0,
@@ -253,27 +253,27 @@ public sealed class HostRig : Rig
         FieldInfo field;
         if (RigCommandUtilities.VfoParams.Contains(parameter))
         {
-            field = GetFieldInfo(nameof(_vfo));
+            field = GetFieldInfo(nameof(Vfo));
         }
         else if (RigCommandUtilities.SplitParams.Contains(parameter))
         {
-            field = GetFieldInfo(nameof(_split));
+            field = GetFieldInfo(nameof(Split));
         }
         else if (RigCommandUtilities.RitOnParams.Contains(parameter))
         {
-            field = GetFieldInfo(nameof(_rit));
+            field = GetFieldInfo(nameof(Rit));
         }
         else if (RigCommandUtilities.XitOnParams.Contains(parameter))
         {
-            field = GetFieldInfo(nameof(_xit));
+            field = GetFieldInfo(nameof(Xit));
         }
         else if (RigCommandUtilities.TxParams.Contains(parameter))
         {
-            field = GetFieldInfo(nameof(_tx));
+            field = GetFieldInfo(nameof(Tx));
         }
         else if (RigCommandUtilities.ModeParams.Contains(parameter))
         {
-            field = GetFieldInfo(nameof(_mode));
+            field = GetFieldInfo(nameof(Mode));
         }
         else
         {
@@ -312,23 +312,23 @@ public sealed class HostRig : Rig
         switch (parameter)
         {
             case RigParameter.FreqA:
-                field = GetFieldInfo(nameof(_freqA));
+                field = GetFieldInfo(nameof(FreqA));
                 break;
 
             case RigParameter.FreqB:
-                field = GetFieldInfo(nameof(_freqB));
+                field = GetFieldInfo(nameof(FreqB));
                 break;
 
             case RigParameter.Freq:
-                field = GetFieldInfo(nameof(_freq));
+                field = GetFieldInfo(nameof(Freq));
                 break;
 
             case RigParameter.Pitch:
-                field = GetFieldInfo(nameof(_pitch));
+                field = GetFieldInfo(nameof(Pitch));
                 break;
 
             case RigParameter.RitOffset:
-                field = GetFieldInfo(nameof(_ritOffset));
+                field = GetFieldInfo(nameof(RitOffset));
                 break;
 
             default:
@@ -346,9 +346,9 @@ public sealed class HostRig : Rig
         _changedParams.Add(parameter);
         _logger.DebugFormat("RIG{0} status changed: {1} = {2}", RigNumber, parameter.ToString(), Convert.ToString(parameterValue));
         var packet = UdpPacketFactory.CreateSingleParameterReportingPacket(RigNumber,
-            senderId: _applicationId, receiverId: KnownIdentifiers.MultiCast,
+            senderId: ApplicationId, receiverId: KnownIdentifiers.MultiCast,
             parameter, parameterValue);
-        _udpMessenger.SendMultiCastMessage(packet);
+        UdpMessenger.SendMultiCastMessage(packet);
         //_logger.Debug($"A single parameter changed. A multicast message sent: {ByteFunctions.BytesToHex(packet.GetBytes())}");
     }
 
