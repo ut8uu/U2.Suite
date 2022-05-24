@@ -25,31 +25,28 @@ using System.Threading.Tasks;
 
 namespace U2.MultiRig;
 
+#nullable disable
 public sealed class RigCommand
 {
-    public byte[] Code;
+    public byte[] Code { get; set; }
+    public ParameterValue Value { get; set; }
+    public int ReplyLength { get; set; }
+    public byte[] ReplyEnd { get; set; }
 
-    public ParameterValue Value;
+    public BitMask Validation { get; set; }
 
-    //what to wait for
-    public int ReplyLength;
-    public byte[] ReplyEnd;
-
-    public BitMask Validation;
-
-    //what to extract
-    public List<ParameterValue> Values = new();
-    public List<BitMask> Flags = new();
+    public List<ParameterValue> Values { get; set; } = new();
+    public List<BitMask> Flags { get; set; } = new();
 }
 
 public struct ParameterValue
 {
-    public int Start;
-    public int Len;  //insert or extract bytes, Start is a 0-based index
-    public ValueFormat Format; //encode or decode according to this format
-    public double Mult;
-    public double Add;    //linear transformation before encoding or after decoding
-    public RigParameter Param;     //param to insert or to report
+    public int Start { get; set; }
+    public int Len { get; set; }  //insert or extract bytes, Start is a 0-based index
+    public ValueFormat Format { get; set; } //encode or decode according to this format
+    public double Mult { get; set; }
+    public double Add { get; set; }    //linear transformation before encoding or after decoding
+    public RigParameter Param { get; set; }     //param to insert or to report
 }
 
 public enum ValueFormat
@@ -70,12 +67,11 @@ public enum ValueFormat
 
 public struct BitMask
 {
-    public byte[] Mask;   //do bitwise AND with this mask
-    public byte[] Flags;  //compare result to these bits
-    public RigParameter Param;   //report this param if bits match
+    public byte[] Mask { get; set; }   //do bitwise AND with this mask
+    public byte[] Flags { get; set; }  //compare result to these bits
+    public RigParameter Param { get; set; }   //report this param if bits match
 }
 
-[Flags]
 public enum RigParameter
 {
     None = 0,           // 0x00000000
@@ -152,3 +148,4 @@ public enum Entry
     Flag21,
     Flag22,
 }
+#nullable restore

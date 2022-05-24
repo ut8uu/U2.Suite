@@ -35,9 +35,10 @@ public enum ExchangePhase
     Sending, Receiving, Idle
 }
 
+#nullable disable
 public sealed class QueueItem
 {
-    public byte[]? Code { get; set; }
+    public byte[] Code { get; set; }
     public CommandKind Kind { get; set; }
     public RigParameter Param { get; set; } = new RigParameter();
     public int Number { get; set; } = 0;
@@ -84,5 +85,6 @@ public sealed class CommandQueue : Collection<QueueItem>
         get { return Items.Any(x => x.Kind == CommandKind.Status); }
     }
 
-    public QueueItem? CurrentCmd => Items.FirstOrDefault();
+    public QueueItem CurrentCmd => Items.FirstOrDefault();
 }
+#nullable restore

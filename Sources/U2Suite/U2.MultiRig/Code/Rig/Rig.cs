@@ -28,11 +28,7 @@ using System.Linq;
 using System.Net;
 using System.Reflection;
 using System.Text;
-using U2.MultiRig.Code;
 using log4net;
-using U2.Core;
-using System.Reflection.Metadata;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace U2.MultiRig;
 
@@ -47,10 +43,10 @@ public enum RigControlType
     Guest,
 }
 
+#nullable disable
 public abstract class Rig : CustomRig
 {
-    protected readonly ILog _logger = LogManager.GetLogger(typeof(Rig));
-    protected readonly List<RigParameter> _changedParams = new();
+    protected readonly ILog Logger = LogManager.GetLogger(typeof(Rig));
 
     protected Rig(RigControlType rigControlType, int rigNumber, ushort applicationId, 
         RigSettings settings, RigCommands rigCommands) 
@@ -77,3 +73,4 @@ public sealed class RigUdpMessengerPacketEventArgs
     public RigUdpMessengerPacket Packet { get; init; }
     public IPEndPoint RemoteEndpoint { get; init; }
 }
+#nullable restore

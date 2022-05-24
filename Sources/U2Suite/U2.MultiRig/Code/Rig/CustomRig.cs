@@ -54,10 +54,8 @@ public abstract class CustomRig : IDisposable
     private CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
     private readonly RigCommands _rigCommands;
     private readonly SerialPortInput _serialPort;
-
-    protected CommandQueue _queue;
-
-    protected bool _online = false;
+    private readonly CommandQueue _queue;
+    private bool _online = false;
     protected RigParameter LastWrittenMode = RigParameter.None;
 
     private static readonly object GetStatusLockObject = new();
@@ -65,7 +63,7 @@ public abstract class CustomRig : IDisposable
 
     public int RigNumber { get; set; } = 0;
 
-    public event SerialPortInput.ConnectionStatusChangedEventHandler? ConnectionStatusChanged;
+    public event SerialPortInput.ConnectionStatusChangedEventHandler ConnectionStatusChanged;
 
     protected CustomRig(RigControlType rigControlType, int rigNumber, ushort applicationId, 
         RigSettings rigSettings, RigCommands rigCommands)
@@ -141,7 +139,7 @@ public abstract class CustomRig : IDisposable
 
     #endregion
 
-    private void TimeoutTimerCallbackFunc(object? state)
+    private void TimeoutTimerCallbackFunc(object state)
     {
         _logger.Debug($"RIG{RigNumber}: A timeout occurred.");
         _queue.Phase = ExchangePhase.Idle;
@@ -280,6 +278,8 @@ public abstract class CustomRig : IDisposable
         }
     }
 
+    #region Setters
+
     public void SetFreq(int value)
     {
         if (Enabled)
@@ -408,6 +408,8 @@ public abstract class CustomRig : IDisposable
         }
     }
 
+    #endregion
+
     private RigParameter GetSplit()
     {
         var getSplitResult = Split;
@@ -431,6 +433,16 @@ public abstract class CustomRig : IDisposable
     //just to keep them in a separate file
 
     protected abstract void AddCommands(IEnumerable<RigCommand> commands, CommandKind kind);
+
+    protected void AddCommand(QueueItem commandQueueItem)
+    {
+        _queue.Add(commandQueueItem);
+    }
+
+    protected void AddBeforeStatus(QueueItem commandQueueItem)
+    {
+        _queue.AddBeforeStatusCommands(commandQueueItem);
+    }
 
     protected abstract void ProcessInitReply(int number, byte[] data);
 
@@ -499,7 +511,7 @@ public abstract class CustomRig : IDisposable
         _connectivityTimer.Change(Timeout.Infinite, Timeout.Infinite);
     }
 
-    private void ConnectivityTimerCallbackFunc(object? state)
+    private void ConnectivityTimerCallbackFunc(object state)
     {
         if (!_rigSettings.Enabled || _queue.Phase != ExchangePhase.Idle)
         {
@@ -542,8 +554,6 @@ public abstract class CustomRig : IDisposable
 
     private void ConnectivityTimerTick()
     {
-        //_logger.Debug("Timer ticked.");
-
         var connected = _serialPort.IsConnected;
         if (!connected)
         {
@@ -578,15 +588,6 @@ public abstract class CustomRig : IDisposable
             {
                 return;
             }
-
-            var s = _queue.CurrentCmd.Kind switch
-            {
-                CommandKind.Init => "init",
-                CommandKind.Write => _queue.CurrentCmd.Param.ToString(),
-                CommandKind.Status => "status",
-                CommandKind.Custom => "custom",
-                _ => throw new ArgumentOutOfRangeException()
-            };
 
             //send command
             _serialPort.SendMessage(_queue.CurrentCmd.Code);

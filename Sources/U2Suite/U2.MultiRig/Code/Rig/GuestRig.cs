@@ -107,12 +107,12 @@ public sealed class GuestRig : Rig
 
     private void ProcessInformationPacket(RigUdpMessengerPacket packet)
     {
-        _logger.Debug($"A status packet received: {ByteFunctions.BytesToHex(packet.GetBytes())}");
+        Logger.Debug($"A status packet received: {ByteFunctions.BytesToHex(packet.GetBytes())}");
     }
 
     private void ProcessStatusPacket(RigUdpMessengerPacket packet)
     {
-        _logger.Debug($"A status packet received: {ByteFunctions.BytesToHex(packet.GetBytes())}");
+        Logger.Debug($"A status packet received: {ByteFunctions.BytesToHex(packet.GetBytes())}");
     }
 
     #endregion

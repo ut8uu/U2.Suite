@@ -24,14 +24,16 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using JetBrains.Annotations;
 
 namespace U2.MultiRig;
 
+#nullable disable
 public sealed class HostRig : Rig
 {
-    public HostRig(int rigNumber, ushort applictionId, [NotNull] RigSettings settings, [NotNull] RigCommands rigCommands)
-        : base(RigControlType.Host, rigNumber, applictionId, settings, rigCommands)
+    private readonly List<RigParameter> _changedParams = new();
+
+    public HostRig(int rigNumber, ushort applicationId, RigSettings settings, RigCommands rigCommands)
+        : base(RigControlType.Host, rigNumber, applicationId, settings, rigCommands)
     {
     }
 
@@ -52,7 +54,7 @@ public sealed class HostRig : Rig
             }
         }
 
-        _logger.Error($"RIG{RigNumber} reply validation failed.");
+        Logger.Error($"RIG{RigNumber} reply validation failed.");
         return false;
     }
 
@@ -64,7 +66,7 @@ public sealed class HostRig : Rig
         var index = 0;
         foreach (var command in commands)
         {
-            _queue.Add(new QueueItem
+            AddCommand(new QueueItem
             {
                 Code = command.Code,
                 Number = index++,
@@ -99,7 +101,7 @@ public sealed class HostRig : Rig
             }
             catch (Exception ex)
             {
-                _logger.Error(ex.Message);
+                Logger.Error(ex.Message);
             }
         }
 
@@ -109,7 +111,7 @@ public sealed class HostRig : Rig
             if (data.Length != cmd.Flags[index].Mask.Length
                 || data.Length != cmd.Flags[index].Flags.Length)
             {
-                _logger.ErrorFormat("RIG{0}: incorrect reply length", RigNumber);
+                Logger.ErrorFormat("RIG{0}: incorrect reply length", RigNumber);
             }
             else if (cmd.Flags[index].Flags.SequenceEqual(ByteFunctions.BytesAnd(data, cmd.Flags[index].Mask)))
             {
@@ -129,7 +131,7 @@ public sealed class HostRig : Rig
             var packet = UdpPacketFactory.CreateMultipleParametersReportingPacket(RigNumber,
                 senderId: ApplicationId, receiverId: KnownIdentifiers.MultiCast, _changedParams);
             UdpMessenger.SendMultiCastMessage(packet);
-            _logger.Debug($"Multiple parameters changed. A multicast message sent: {ByteFunctions.BytesToHex(packet.GetBytes())}");
+            Logger.Debug($"Multiple parameters changed. A multicast message sent: {ByteFunctions.BytesToHex(packet.GetBytes())}");
         }
         ReportChangedParameters(_changedParams);
         _changedParams.Clear();
@@ -186,7 +188,7 @@ public sealed class HostRig : Rig
 
     public override void AddWriteCommand(RigParameter param, int value = 0)
     {
-        _logger.DebugFormat("RIG{0} Generating Write command for {1}", RigNumber, param);
+        Logger.DebugFormat("RIG{0} Generating Write command for {1}", RigNumber, param);
 
         //is cmd supported?
         if (RigCommands == null)
@@ -198,7 +200,7 @@ public sealed class HostRig : Rig
 
         if (cmd.Code == null)
         {
-            _logger.ErrorFormat("RIG{0} Write command not supported for {1}", RigNumber, param);
+            Logger.ErrorFormat("RIG{0} Write command not supported for {1}", RigNumber, param);
             return;
         }
 
@@ -213,14 +215,14 @@ public sealed class HostRig : Rig
 
                 if (cmd.Value.Start + cmd.Value.Len > newCode.Length)
                 {
-                    _logger.ErrorFormat($"Value {cmd.Code} exceeds expected length of {newCode.Length} bytes.");
-                    throw new Exception("Value too long");
+                    Logger.ErrorFormat($"Value {cmd.Code} exceeds expected length of {newCode.Length} bytes.");
+                    throw new ValueValidationException($"Value {ByteFunctions.BytesToHex(cmd.Code)} too long");
                 }
                 Array.Copy(fmtValue, 0, newCode, cmd.Value.Start, cmd.Value.Len);
             }
-            catch (Exception e)
+            catch (Exception e) when (e is not ValueValidationException)
             {
-                _logger.ErrorFormat("RIG{0}: Generating command: {1}", RigNumber, e.Message);
+                Logger.ErrorFormat("RIG{0}: Generating command: {1}", RigNumber, e.Message);
             }
         }
 
@@ -233,7 +235,7 @@ public sealed class HostRig : Rig
             ReplyLength = cmd.ReplyLength,
             ReplyEnd = ByteFunctions.BytesToStr(cmd.ReplyEnd),
         };
-        _queue.AddBeforeStatusCommands(queueItem);
+        AddBeforeStatus(queueItem);
 
         CheckQueue();
     }
@@ -289,7 +291,6 @@ public sealed class HostRig : Rig
         field.SetValue(this, parameter);
 
         ReportChangedParameters(new []{parameter});
-        //_changedParams.Add(parameter);
 
         //unsolved problem:
         //there is no command to read the mode of the other VFO,
@@ -300,7 +301,7 @@ public sealed class HostRig : Rig
             LastWrittenMode = RigParameter.None;
         }
 
-        _logger.DebugFormat("RIG{0} status changed: {1} enabled", RigNumber, parameter);
+        Logger.DebugFormat("RIG{0} status changed: {1} enabled", RigNumber, parameter);
 
         return true;
     }
@@ -338,18 +339,16 @@ public sealed class HostRig : Rig
         var fieldValue = field.GetValue(this);
         if (fieldValue == null || parameterValue == (int)fieldValue)
         {
-            //_logger.Debug($"StoreParam: parameter {param}, existing value='{fieldValue}', new value='{value}'");
             return;
         }
 
         field.SetValue(this, parameterValue);
         _changedParams.Add(parameter);
-        _logger.DebugFormat("RIG{0} status changed: {1} = {2}", RigNumber, parameter.ToString(), Convert.ToString(parameterValue));
+        Logger.DebugFormat("RIG{0} status changed: {1} = {2}", RigNumber, parameter.ToString(), Convert.ToString(parameterValue));
         var packet = UdpPacketFactory.CreateSingleParameterReportingPacket(RigNumber,
             senderId: ApplicationId, receiverId: KnownIdentifiers.MultiCast,
             parameter, parameterValue);
         UdpMessenger.SendMultiCastMessage(packet);
-        //_logger.Debug($"A single parameter changed. A multicast message sent: {ByteFunctions.BytesToHex(packet.GetBytes())}");
     }
 
     private void OnRigParameterChanged(int rigNumber, RigParameter parameter, object value)
@@ -357,3 +356,4 @@ public sealed class HostRig : Rig
         RigParameterChanged?.Invoke(this, rigNumber, parameter, value);
     }
 }
+#nullable restore
