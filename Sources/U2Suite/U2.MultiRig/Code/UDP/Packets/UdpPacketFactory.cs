@@ -36,7 +36,7 @@ public static class UdpPacketFactory
 
     public static RigUdpMessengerPacket CreateSingleParameterReportingPacket(int rigNumber,
         ushort senderId, ushort receiverId,
-        RigParameter parameter, object? parameterValue)
+        RigParameter parameter, object parameterValue)
     {
         if (parameterValue == null)
         {

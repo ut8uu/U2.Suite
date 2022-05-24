@@ -75,7 +75,7 @@ namespace U2.MultiRig.Code.UDP
             _disposed = true;
         }
 
-        public event MulticastDataReceivedEventHandler? MulticastDataReceived;
+        public event MulticastDataReceivedEventHandler MulticastDataReceived;
 
         private void DataReceived(IAsyncResult ar)
         {

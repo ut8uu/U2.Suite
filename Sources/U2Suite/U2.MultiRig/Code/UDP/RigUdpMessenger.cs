@@ -41,7 +41,7 @@ namespace U2.MultiRig.Code.UDP
         private readonly UdpMulticastReceiver _receiver;
         private bool _disposed;
 
-        public event UdpPacketReceivedEventHandler? UdpPacketReceived;
+        public event UdpPacketReceivedEventHandler UdpPacketReceived;
 
         public RigUdpMessenger(RigControlType rigControlType, CancellationToken cancellationToken)
         {

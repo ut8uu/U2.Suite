@@ -30,5 +30,5 @@ public class RigCommands
     public List<RigParameter> ReadableParams = new();
     public List<RigParameter> WriteableParams = new();
 
-    public string? Title { get; set; }
+    public string Title { get; set; }
 }

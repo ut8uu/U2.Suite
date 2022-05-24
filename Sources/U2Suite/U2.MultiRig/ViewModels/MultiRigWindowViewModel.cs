@@ -32,9 +32,9 @@ namespace U2.MultiRig.ViewModels;
 
 public class MultiRigWindowViewModel : WindowViewModelBase
 {
-    private RigSettings? _selectedRig;
+    private RigSettings _selectedRig;
     private IEnumerable<ComPortInfo> _knownComPorts;
-    private ComPortInfo? _selectedPort;
+    private ComPortInfo _selectedPort;
     private string _selectedRigType;
 
     public MultiRigWindowViewModel()
@@ -82,7 +82,7 @@ public class MultiRigWindowViewModel : WindowViewModelBase
 
     public int SelectedRigIndex { get; set; }
 
-    public RigSettings? SelectedRig
+    public RigSettings SelectedRig
     {
         get => _selectedRig;
         set
@@ -103,7 +103,7 @@ public class MultiRigWindowViewModel : WindowViewModelBase
         }
     }
 
-    public ComPortInfo? SelectedPort
+    public ComPortInfo SelectedPort
     {
         get => _selectedPort;
         set

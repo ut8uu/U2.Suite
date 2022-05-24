@@ -62,7 +62,8 @@ namespace U2.MultiRig.Tests
 
         private void PrepareIniFiles()
         {
-            var currentDirectory = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location));
+            var currentDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            Assert.NotNull(currentDirectory);
             var sourceDirectory = Path.Combine(currentDirectory, "TestData", "RigCommand", "INI");
             Directory.CreateDirectory(IniDirectory);
 

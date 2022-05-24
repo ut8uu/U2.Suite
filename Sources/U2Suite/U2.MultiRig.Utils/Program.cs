@@ -255,7 +255,7 @@ static RigUdpMessengerPacket CreateNewPacket(byte messageId,
     return result;
 }
 
-static void OnNewDataFromUdpServerArrived(object? sender, UdpDataReceivedEventArgs e)
+static void OnNewDataFromUdpServerArrived(object sender, UdpDataReceivedEventArgs e)
 {
     if (e.Data.Length == 0)
     {
