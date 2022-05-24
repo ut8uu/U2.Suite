@@ -86,7 +86,6 @@ internal static class RigCommandUtilities
         var logger = LogManager.GetLogger(typeof(RigCommandUtilities));
         foreach (var file in files)
         {
-            //ClassLog.Debug($"Loading commands from {Path.GetFileNameWithoutExtension(file)}.");
             try
             {
                 list.Add(LoadRigCommands(file));
@@ -145,11 +144,11 @@ internal static class RigCommandUtilities
 
     private static readonly Func<string, string, bool> StartsWith
      = (haystack, needle) => haystack.Trim().StartsWith(needle.Trim(), StringComparison.InvariantCultureIgnoreCase);
-    
+
     private static KeyValuePair<string, string>[] LoadSectionSettings(IniFile iniFile, string section)
     {
         return iniFile.GetSectionSettings(section)
-            .Where(e => !string.IsNullOrEmpty(e.Name) 
+            .Where(e => !string.IsNullOrEmpty(e.Name)
                         && !StartsWith(e.Name, ";")
                         && !StartsWith(e.Name, ":"))
             .Select(e => new KeyValuePair<string, string>(e.Name ?? string.Empty, e.Value ?? string.Empty))
@@ -220,15 +219,7 @@ internal static class RigCommandUtilities
                 var id = (int)Enum.Parse<RigParameter>(section.Replace("pm", ""));
                 result[id] = cmd;
             }
-            catch (LoadWriteCommandException)
-            {
-                throw;
-            }
-            catch (ParameterParseException ex)
-            {
-                throw new LoadWriteCommandException(ex.Message, ex);
-            }
-            catch (Exception ex)
+            catch (Exception ex) when (ex is not LoadWriteCommandException)
             {
                 throw new LoadWriteCommandException(ex.Message, ex);
             }
@@ -263,12 +254,12 @@ internal static class RigCommandUtilities
                 {
                     Entry.Command, Entry.ReplyLength, Entry.ReplyEnd, Entry.Validate,
                     Entry.Value,
-                    Entry.Value1, Entry.Value2, Entry.Value3, Entry.Value4, Entry.Value5, 
+                    Entry.Value1, Entry.Value2, Entry.Value3, Entry.Value4, Entry.Value5,
                     Entry.Value6, Entry.Value7, Entry.Value8, Entry.Value9, Entry.Value10,
-                    Entry.Flag1, Entry.Flag2, Entry.Flag3, Entry.Flag4, 
+                    Entry.Flag1, Entry.Flag2, Entry.Flag3, Entry.Flag4,
                     Entry.Flag5, Entry.Flag6, Entry.Flag7, Entry.Flag8,
                     Entry.Flag9, Entry.Flag10, Entry.Flag11, Entry.Flag12, Entry.Flag13,
-                    Entry.Flag14, Entry.Flag15, Entry.Flag16, Entry.Flag17, Entry.Flag18, 
+                    Entry.Flag14, Entry.Flag15, Entry.Flag16, Entry.Flag17, Entry.Flag18,
                     Entry.Flag19, Entry.Flag20, Entry.Flag21, Entry.Flag22,
                 };
                 ValidateEntries(entries, allowedEntries);
@@ -281,20 +272,7 @@ internal static class RigCommandUtilities
                     throw new LoadStatusCommandsException("Reply length or reply end must be specified.");
                 }
 
-                cmd.Values.Clear();
-                cmd.Flags.Clear();
-
-                foreach (var entry in entries)
-                {
-                    if (CanReadStatusEntryValue(cmd, iniFile, section, entry, out var value))
-                    {
-                        cmd.Values.Add(value.Value);
-                    }
-                    else if (CanReadStatusEntryFlag(cmd, entry, out var flag))
-                    {
-                        cmd.Flags.Add(flag.Value);
-                    }
-                }
+                LoadStatusCommandsEntries(iniFile, section, entries, cmd);
 
                 if (!cmd.Values.Any() && !cmd.Flags.Any())
                 {
@@ -303,17 +281,32 @@ internal static class RigCommandUtilities
 
                 result.Add(cmd);
             }
-            catch (LoadStatusCommandsException)
-            {
-                throw;
-            }
-            catch (Exception ex)
+            catch (Exception ex) when (ex is not LoadStatusCommandsException)
             {
                 throw new LoadStatusCommandsException($"Error loading of STATUS section. {ex.Message}", ex);
             }
         }
 
         return result;
+    }
+
+    private static void LoadStatusCommandsEntries(IniFile iniFile, string section, 
+        IEnumerable<KeyValuePair<string, string>> entries, RigCommand cmd)
+    {
+        cmd.Values.Clear();
+        cmd.Flags.Clear();
+
+        foreach (var entry in entries)
+        {
+            if (CanReadStatusEntryValue(cmd, iniFile, section, entry, out var value))
+            {
+                cmd.Values.Add(value.Value);
+            }
+            else if (CanReadStatusEntryFlag(cmd, entry, out var flag))
+            {
+                cmd.Flags.Add(flag.Value);
+            }
+        }
     }
 
     /// <summary>
@@ -361,7 +354,7 @@ internal static class RigCommandUtilities
     /// <param name="keys">A keys to be validated.</param>
     /// <param name="allowedEntries">A collection of allowed keys.</param>
     /// <exception cref="UnexpectedEntryException">Is thrown when unexpected key met.</exception>
-    internal static void ValidateEntries(IEnumerable<KeyValuePair<string, string>> keys, 
+    internal static void ValidateEntries(IEnumerable<KeyValuePair<string, string>> keys,
         Entry[] allowedEntries)
     {
         if (!keys.Any())
@@ -717,9 +710,9 @@ internal static class RigCommandUtilities
         }
     }
 
-    public static ulong ParamsToUlong(IEnumerable<RigParameter> parameters)
+    public static ulong ParametersToUlong(IEnumerable<RigParameter> parameters)
     {
-        return (ulong)parameters.Aggregate(0, (current, param) => current | (int) param);
+        return (ulong)parameters.Aggregate(0, (current, param) => current | (int)param);
     }
 
     public static ulong ParamToInt64(RigParameter parameter)
@@ -729,6 +722,6 @@ internal static class RigCommandUtilities
 
     public static RigParameter Int64ToParam(ulong value)
     {
-        return (RigParameter) value;
+        return (RigParameter)value;
     }
 }
