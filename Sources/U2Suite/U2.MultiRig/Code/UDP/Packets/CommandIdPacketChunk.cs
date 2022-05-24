@@ -25,9 +25,10 @@ namespace U2.MultiRig;
 
 public static class CommandIdentifiers
 {
-    public const ushort BroadcastInformation = 0;
-    public const ushort BroadcastMultipleParametersChangedNotification = 0x10;
-    public const ushort BroadcastSingleParameterChangedNotification = 0x11;
+    public const ushort Information = 0;
+    public const ushort Heartbeat = 1;
+    public const ushort MultipleParametersChangedNotification = 0x10;
+    public const ushort SingleParameterChangedNotification = 0x11;
 }
 
 public sealed class CommandIdPacketChunk : UdpPacketChunk<ushort>
