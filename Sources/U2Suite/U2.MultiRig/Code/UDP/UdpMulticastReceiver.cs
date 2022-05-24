@@ -79,7 +79,7 @@ namespace U2.MultiRig.Code.UDP
 
         private void DataReceived(IAsyncResult ar)
         {
-            if (_disposed)
+            if (_disposed || _token.IsCancellationRequested)
             {
                 return;
             }
