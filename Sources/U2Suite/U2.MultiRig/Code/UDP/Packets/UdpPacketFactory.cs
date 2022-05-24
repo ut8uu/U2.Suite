@@ -88,7 +88,7 @@ public static class UdpPacketFactory
             throw new ArgumentException("A list of parameters is empty.", nameof(parameters));
         }
 
-        var parametersValue = RigCommandUtilities.ParamsToUlong(parameters);
+        var parametersValue = RigCommandUtilities.ParametersToUlong(parameters);
         var data = ByteFunctions.UlongToBytes(parametersValue);
         var packet = new RigUdpMessengerPacket
         {
