@@ -432,25 +432,25 @@ public abstract class CustomRig : IDisposable
     //these commands are implemented in the descendant class,
     //just to keep them in a separate file
 
-    protected abstract void AddCommands(IEnumerable<RigCommand> commands, CommandKind kind);
+    internal abstract void AddCommands(IEnumerable<RigCommand> commands, CommandKind kind);
 
-    protected void AddCommand(QueueItem commandQueueItem)
+    internal void AddCommand(QueueItem commandQueueItem)
     {
         _queue.Add(commandQueueItem);
     }
 
-    protected void AddBeforeStatus(QueueItem commandQueueItem)
+    internal void AddBeforeStatus(QueueItem commandQueueItem)
     {
         _queue.AddBeforeStatusCommands(commandQueueItem);
     }
 
-    protected abstract void ProcessInitReply(int number, byte[] data);
+    internal abstract void ProcessInitReply(int number, byte[] data);
 
-    protected abstract void ProcessStatusReply(int number, byte[] data);
+    internal abstract void ProcessStatusReply(int number, byte[] data);
 
-    protected abstract void ProcessWriteReply(RigParameter param, byte[] data);
+    internal abstract void ProcessWriteReply(RigParameter param, byte[] data);
 
-    public abstract void AddWriteCommand(RigParameter param, int value = 0);
+    internal abstract void AddWriteCommand(RigParameter param, int value = 0);
 
     public void Start()
     {

@@ -34,23 +34,23 @@ public sealed class GuestRig : Rig
 
     #region CustomRig members
 
-    protected override void AddCommands(IEnumerable<RigCommand> commands, CommandKind kind)
+    internal override void AddCommands(IEnumerable<RigCommand> commands, CommandKind kind)
     {
     }
 
-    protected override void ProcessInitReply(int number, byte[] data)
+    internal override void ProcessInitReply(int number, byte[] data)
     {
     }
 
-    protected override void ProcessStatusReply(int number, byte[] data)
+    internal override void ProcessStatusReply(int number, byte[] data)
     {
     }
 
-    protected override void ProcessWriteReply(RigParameter param, byte[] data)
+    internal override void ProcessWriteReply(RigParameter param, byte[] data)
     {
     }
 
-    public override void AddWriteCommand(RigParameter param, int value = 0)
+    internal override void AddWriteCommand(RigParameter param, int value = 0)
     {
     }
 

@@ -42,7 +42,7 @@ public sealed class HostRig : Rig
     ////////////////////////////////////////////////////////////////////////////////
     //                           interpret reply
     ////////////////////////////////////////////////////////////////////////////////
-    private bool ValidateReply(byte[] inputData, BitMask mask)
+    internal bool ValidateReply(byte[] inputData, BitMask mask)
     {
         if (inputData.Length == mask.Mask.Length
             && inputData.Length == mask.Flags.Length)
@@ -61,7 +61,7 @@ public sealed class HostRig : Rig
     ////////////////////////////////////////////////////////////////////////////////
     //                          add command to queue
     ////////////////////////////////////////////////////////////////////////////////
-    protected override void AddCommands(IEnumerable<RigCommand> commands, CommandKind kind)
+    internal override void AddCommands(IEnumerable<RigCommand> commands, CommandKind kind)
     {
         var index = 0;
         foreach (var command in commands)
@@ -77,12 +77,12 @@ public sealed class HostRig : Rig
         }
     }
 
-    protected override void ProcessInitReply(int number, byte[] data)
+    internal override void ProcessInitReply(int number, byte[] data)
     {
         ValidateReply(data, RigCommands.InitCmd[number].Validation);
     }
 
-    protected override void ProcessStatusReply(int number, byte[] data)
+    internal override void ProcessStatusReply(int number, byte[] data)
     {
         //validate reply
         var cmd = RigCommands.StatusCmd[number];
@@ -181,12 +181,12 @@ public sealed class HostRig : Rig
         }
     }
 
-    protected override void ProcessWriteReply(RigParameter param, byte[] data)
+    internal override void ProcessWriteReply(RigParameter param, byte[] data)
     {
         ValidateReply(data, RigCommands.WriteCmd[(int)param].Validation);
     }
 
-    public override void AddWriteCommand(RigParameter param, int value = 0)
+    internal override void AddWriteCommand(RigParameter param, int value = 0)
     {
         Logger.DebugFormat("RIG{0} Generating Write command for {1}", RigNumber, param);
 
