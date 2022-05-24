@@ -29,8 +29,6 @@ using System.Threading.Tasks;
 using log4net;
 using SoftCircuits.IniFileParser;
 using U2.Core;
-using U2.MultiRig.Code;
-using static System.Collections.Specialized.BitVector32;
 
 namespace U2.MultiRig;
 
@@ -462,10 +460,10 @@ internal static class RigCommandUtilities
     /// </summary>
     /// <param name="entryName"></param>
     /// <param name="mask"></param>
-    /// <param name="len"></param>
-    /// <param name="end"></param>
+    /// <param name="length"></param>
+    /// <param name="replyEnd"></param>
     /// <exception cref="MaskValidationException"></exception>
-    internal static void ValidateMask(string entryName, BitMask mask, int len, byte[] end)
+    internal static void ValidateMask(string entryName, BitMask mask, int length, byte[] replyEnd)
     {
         if (mask.Mask.Length == 0
             && mask.Flags.Length == 0
@@ -474,25 +472,7 @@ internal static class RigCommandUtilities
             return;
         }
 
-        if (mask.Mask.Length == 0 || mask.Flags.Length == 0)
-        {
-            throw new MaskValidationException("Incorrect mask length");
-        }
-
-        if (mask.Mask.Length != mask.Flags.Length)
-        {
-            throw new MaskValidationException("Incorrect mask length");
-        }
-
-        if (len > 0 && mask.Mask.Length != len)
-        {
-            throw new MaskValidationException("Mask length <> ReplyLength");
-        }
-
-        if (!ByteFunctions.BytesAnd(mask.Flags, mask.Flags).SequenceEqual(mask.Flags))
-        {
-            throw new MaskValidationException("Mask hides valid bits");
-        }
+        ValidateMaskChecks(mask, length);
 
         if (AreEqual(entryName, "validate"))
         {
@@ -501,10 +481,10 @@ internal static class RigCommandUtilities
                 throw new MaskValidationException("Parameter name is not allowed");
             }
 
-            var startIndex = mask.Flags.Length - end.Length;
+            var startIndex = mask.Flags.Length - replyEnd.Length;
             var ending = mask.Flags[startIndex..];
 
-            if (!ending.SequenceEqual(end))
+            if (!ending.SequenceEqual(replyEnd))
             {
                 throw new MaskValidationException("Mask does not end with ReplyEnd");
             }
@@ -520,6 +500,38 @@ internal static class RigCommandUtilities
             {
                 throw new MaskValidationException("Mask is blank");
             }
+        }
+    }
+
+    /// <summary>
+    /// Perform initial checks of the mask.
+    /// Throws exceptions in case the rule is broken.
+    /// Extracted to reduce the cognitive complexity
+    /// of the method it was extracted from.
+    /// </summary>
+    /// <param name="mask"></param>
+    /// <param name="length"></param>
+    /// <exception cref="MaskValidationException">Is thrown when mask is invalid.</exception>
+    private static void ValidateMaskChecks(BitMask mask, int length)
+    {
+        if (mask.Mask.Length == 0 || mask.Flags.Length == 0)
+        {
+            throw new MaskValidationException("Incorrect mask length");
+        }
+
+        if (mask.Mask.Length != mask.Flags.Length)
+        {
+            throw new MaskValidationException("Incorrect mask length");
+        }
+
+        if (length > 0 && mask.Mask.Length != length)
+        {
+            throw new MaskValidationException("Mask length <> ReplyLength");
+        }
+
+        if (!ByteFunctions.BytesAnd(mask.Flags, mask.Flags).SequenceEqual(mask.Flags))
+        {
+            throw new MaskValidationException("Mask hides valid bits");
         }
     }
 
