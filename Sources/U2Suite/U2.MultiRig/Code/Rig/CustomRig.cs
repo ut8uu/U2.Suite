@@ -180,13 +180,8 @@ public abstract class CustomRig : IDisposable
                 _logger.Error($"RIG{RigNumber}: Data received from radio while receiving is not expected. Switched to receiving.");
             }
 
-            if (_queue.Phase == ExchangePhase.Receiving)
+            if (_queue.Phase != ExchangePhase.Receiving)
             {
-                //_logger.DebugFormat("RIG{0}: reply received: {1} ({2} bytes)",
-                //    RigNumber, ByteFunctions.BytesToHex(receivedData), receivedData.Length);
-            }
-            else
-            { 
                 _logger.ErrorFormat("RIG{0}: received data when not in the receiving state: {1} ({2} bytes)",
                     RigNumber, ByteFunctions.BytesToHex(receivedData), receivedData.Length);
                 return;
@@ -205,7 +200,6 @@ public abstract class CustomRig : IDisposable
             if (currentCommand.NeedsReply
                 && currentCommand.ReplyLength > _receiveQueue.Count)
             {
-                //_logger.Debug($"RIG{RigNumber}: Buffer has insufficient data. Waiting for the rest.");
                 return;
             }
 
@@ -237,7 +231,7 @@ public abstract class CustomRig : IDisposable
                         _logger.Error($"A custom command is not handled.");
                         break;
                     default:
-                        throw new ArgumentOutOfRangeException();
+                        throw new ArgumentOutOfRangeException($"A command kind {currentCommand.Kind} not recognized.", nameof(currentCommand.Kind));
                 }
             }
             catch (Exception e)
@@ -249,7 +243,7 @@ public abstract class CustomRig : IDisposable
             if (!_online)
             {
                 _online = true;
-                //_udpMessenger.ComNotifyStatus(RigNumber);
+                _udpMessenger.SendMultiCastMessage(UdpPacketFactory.CreateHeartbeatPacket(RigNumber, _applicationId));
             }
 
             //send next command if queue not empty
@@ -282,7 +276,7 @@ public abstract class CustomRig : IDisposable
             {
                 return RigCtlStatus.Disabled;
             }
-            if (!_serialPort.IsConnected)
+            if (_serialPort is {IsConnected: false})
             {
                 return RigCtlStatus.PortBusy;
             }
@@ -297,32 +291,6 @@ public abstract class CustomRig : IDisposable
     private static readonly object RecvEventLockObject = new();
 
     private static readonly object SentEventLockObject = new();
-
-    private void SentEvent(object sender)
-    {
-        //_logger.InfoFormat("RIG{0} data sent, {1} bytes in TX buffer", RigNumber, ComPort.TxQueue);
-        lock (SentEventLockObject)
-        {
-            if (!_serialPort.IsConnected
-                || _queue.Phase != ExchangePhase.Sending
-                || _queue.Count == 0)
-            {
-                return;
-            }
-
-            if (_queue.CurrentCmd.NeedsReply)
-            {
-                _queue.Phase = ExchangePhase.Receiving;
-                EnableTimeoutTimer();
-            }
-            else
-            {
-                _queue.RemoveAt(0);
-                _queue.Phase = ExchangePhase.Idle;
-                CheckQueue();
-            }
-        }
-    }
 
     public void SetFreq(int value)
     {
@@ -453,7 +421,7 @@ public abstract class CustomRig : IDisposable
     ////////////////////////////////////////////////////////////////////////////////
     //                               set param
     ////////////////////////////////////////////////////////////////////////////////
-    private void SeRigCommands(RigCommands value)
+    private void SetRigCommands(RigCommands value)
     {
         _rigCommands = value;
         //_udpMessenger.ComNotifyRigType(RigNumber);
