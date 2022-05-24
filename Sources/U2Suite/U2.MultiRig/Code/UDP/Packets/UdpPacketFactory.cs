@@ -14,6 +14,26 @@ public static class UdpPacketFactory
         return _messageId++;
     }
 
+    public static RigUdpMessengerPacket CreateHeartbeatPacket(int rigNumber, ushort senderId)
+    {
+        var packet = new RigUdpMessengerPacket
+        {
+            MagicNumber = new MagicNumberPacketChunk(),
+            Timestamp = new TimestampPacketChunk(DateTime.UtcNow),
+            MessageId = new MessageIdPacketChunk(GetNextMessageId()),
+            SenderId = new SenderIdPacketChunk(senderId),
+            ReceiverId = new ReceiverIdPacketChunk(KnownIdentifiers.MultiCast),
+            MessageType = new MessageTypePacketChunk(MessageTypes.Status),
+            Checksum = new ChecksumPacketChunk(0),
+            CommandId = new CommandIdPacketChunk(CommandIdentifiers.SingleParameterChangedNotification),
+            DataLength = new DataLengthPacketChunk(0),
+            Data = new DataPacketChunk(Array.Empty<byte>()),
+        };
+        packet.Checksum.SetValue(packet.GetCheckSum());
+
+        return packet;
+    }
+
     public static RigUdpMessengerPacket CreateSingleParameterReportingPacket(int rigNumber,
         ushort senderId, ushort receiverId,
         RigParameter parameter, object? parameterValue)
@@ -46,7 +66,7 @@ public static class UdpPacketFactory
             ReceiverId = new ReceiverIdPacketChunk(receiverId),
             MessageType = new MessageTypePacketChunk(MessageTypes.Status),
             Checksum = new ChecksumPacketChunk(0),
-            CommandId = new CommandIdPacketChunk(CommandIdentifiers.BroadcastSingleParameterChangedNotification),
+            CommandId = new CommandIdPacketChunk(CommandIdentifiers.SingleParameterChangedNotification),
             DataLength = new DataLengthPacketChunk((ushort)data.Length),
             Data = new DataPacketChunk(data),
         };
@@ -56,8 +76,7 @@ public static class UdpPacketFactory
     }
 
     public static RigUdpMessengerPacket CreateMultipleParametersReportingPacket(int rigNumber,
-        ushort senderId, ushort receiverId,
-        IEnumerable<RigParameter> parameters)
+        ushort senderId, ushort receiverId, IEnumerable<RigParameter> parameters)
     {
         if (parameters == null)
         {
@@ -80,7 +99,7 @@ public static class UdpPacketFactory
             ReceiverId = new ReceiverIdPacketChunk(receiverId),
             MessageType = new MessageTypePacketChunk(MessageTypes.Status),
             Checksum = new ChecksumPacketChunk(0),
-            CommandId = new CommandIdPacketChunk(CommandIdentifiers.BroadcastSingleParameterChangedNotification),
+            CommandId = new CommandIdPacketChunk(CommandIdentifiers.SingleParameterChangedNotification),
             DataLength = new DataLengthPacketChunk((ushort)data.Length),
             Data = new DataPacketChunk(data),
         };
