@@ -26,9 +26,9 @@ public class RigSettings
 {
     public RigSettings()
     {
-        BaudRate = Data.BaudRates.IndexOf(9600);
-        DataBits = Data.DataBits.IndexOf(8);
-        StopBits = Data.StopBits.IndexOf(1m);
+        BaudRate = ComPortStuff.BaudRates.IndexOf(9600);
+        DataBits = ComPortStuff.DataBits.IndexOf(8);
+        StopBits = ComPortStuff.StopBits.IndexOf(1m);
 
         Enabled = true;
     }

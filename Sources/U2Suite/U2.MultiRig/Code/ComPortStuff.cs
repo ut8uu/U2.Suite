@@ -25,7 +25,7 @@ using System.Threading.Tasks;
 
 namespace U2.MultiRig.Code
 {
-    public static class Data
+    public static class ComPortStuff
     {
         public static readonly int[] BaudRates = {
             110, 300, 600, 1200, 2400, 4800, 9600, 14400, 19200, 38400, 56000,

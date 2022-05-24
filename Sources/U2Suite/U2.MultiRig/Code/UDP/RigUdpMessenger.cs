@@ -25,17 +25,15 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
-using JetBrains.Annotations;
 using log4net;
 
 namespace U2.MultiRig.Code.UDP
 {
     public sealed class RigUdpMessenger : IDisposable
     {
-        public readonly IPAddress MultiCastAddress = IPAddress.Parse("224.100.0.1");
+        public readonly IPAddress MultiCastAddress = IPAddress.Parse("224.5.11.71");
         public const int MessengerRxPort = 11501;
         public const int MessengerTxPort = 11502;
-        public const int ServerBufferSize = 8192;
 
         private readonly ushort _applicationId;
         private readonly CancellationToken _cancellationToken;
@@ -93,8 +91,6 @@ namespace U2.MultiRig.Code.UDP
         {
             UdpPacketReceived?.Invoke(this, eventArgs);
         }
-
-
 
         public void Dispose()
         {

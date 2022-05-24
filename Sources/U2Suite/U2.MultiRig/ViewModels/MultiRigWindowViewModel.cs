@@ -55,29 +55,29 @@ public class MultiRigWindowViewModel : WindowViewModelBase
     public ObservableCollection<RigSettings> AllRigs { get; }
     public ObservableCollection<string> AllCommands { get; }
     public ObservableCollection<ComPortInfo> AllPorts { get; } = new();
-    public ObservableCollection<int> AllBaudRates { get; } = new(Data.BaudRates);
+    public ObservableCollection<int> AllBaudRates { get; } = new(ComPortStuff.BaudRates);
 
-    public ObservableCollection<Data.Parity> AllParities { get; } = new(
+    public ObservableCollection<ComPortStuff.Parity> AllParities { get; } = new(
         new[]
         {
-                Data.Parity.None,
-                Data.Parity.Odd,
-                Data.Parity.Even,
-                Data.Parity.Mark,
-                Data.Parity.Space,
+                ComPortStuff.Parity.None,
+                ComPortStuff.Parity.Odd,
+                ComPortStuff.Parity.Even,
+                ComPortStuff.Parity.Mark,
+                ComPortStuff.Parity.Space,
         });
 
-    public ObservableCollection<int> AllDataBits { get; } = new(Data.DataBits);
-    public ObservableCollection<decimal> AllStopBits { get; } = new(Data.StopBits);
+    public ObservableCollection<int> AllDataBits { get; } = new(ComPortStuff.DataBits);
+    public ObservableCollection<decimal> AllStopBits { get; } = new(ComPortStuff.StopBits);
 
-    public ObservableCollection<Data.RtsMode> AllRtsModes { get; } = new(new[]
+    public ObservableCollection<ComPortStuff.RtsMode> AllRtsModes { get; } = new(new[]
     {
-            Data.RtsMode.High, Data.RtsMode.Low, Data.RtsMode.Handshake,
+            ComPortStuff.RtsMode.High, ComPortStuff.RtsMode.Low, ComPortStuff.RtsMode.Handshake,
         });
 
-    public ObservableCollection<Data.DtrMode> AllDtrModes { get; } = new(new[]
+    public ObservableCollection<ComPortStuff.DtrMode> AllDtrModes { get; } = new(new[]
     {
-            Data.DtrMode.High, Data.DtrMode.Low,
+            ComPortStuff.DtrMode.High, ComPortStuff.DtrMode.Low,
         });
 
     public int SelectedRigIndex { get; set; }

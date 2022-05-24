@@ -157,9 +157,9 @@ public abstract class CustomRig : IDisposable
     private SerialPortInput CreateSerialPort(RigSettings rigSettings)
     {
         return new SerialPortInput(_rigSettings.Port,
-            baudRate: Data.BaudRates[rigSettings.BaudRate],
+            baudRate: ComPortStuff.BaudRates[rigSettings.BaudRate],
             parity: Parities[rigSettings.Parity],
-            dataBits: Data.DataBits[rigSettings.DataBits],
+            dataBits: ComPortStuff.DataBits[rigSettings.DataBits],
             stopBits: StopBits[_rigSettings.StopBits],
             handshake: Handshake.None,
             isVirtualPort: false);
