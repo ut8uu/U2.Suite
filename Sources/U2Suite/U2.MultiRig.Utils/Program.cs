@@ -17,38 +17,36 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+using System.Net;
+using System.Net.Sockets;
+using System.Reactive.Joins;
 using System.Text;
 using DynamicData;
 using log4net;
+using SimpleUdp;
 using U2.Core;
 using U2.MultiRig;
 using U2.MultiRig.Code;
+using U2.MultiRig.Code.UDP;
 using U2.MultiRig.Utils;
 
-ConsoleKey startKey = ConsoleKey.D1;
+var startKey = ConsoleKey.D1;
 
-List<ConsoleManagementElement> mainMenu
-    = new List<ConsoleManagementElement>
+var mainMenu = new List<ConsoleManagementElement>
+{
+    new()
     {
-        new()
-        {
-            Function = PollIcom705,
-            Key = startKey++,
-            Title = "Poll Icom IC-705",
-        },
-        new()
-        {
-            Function = ManageIcom705,
-            Key = startKey++,
-            Title = "Manage Icom IC-705",
-        },
-        new()
-        {
-            Function = TestUdpClient,
-            Key = startKey++,
-            Title = "Test UDP client",
-        },
-    };
+        Function = PollIcom705,
+        Key = startKey++,
+        Title = "Poll Icom IC-705",
+    },
+    new()
+    {
+        Function = ManageIcom705,
+        Key = startKey++,
+        Title = "Manage Icom IC-705",
+    },
+};
 
 ManageFlow(mainMenu);
 
@@ -91,7 +89,7 @@ static bool ManageIcom705Port(params object[] parameters)
     Console.WriteLine("Polling the Icom IC-705");
     Console.Write("Select the COM port the device is connected to.");
 
-    var rig = GetIC705Rig(parameters);
+    var rig = GetIC705HostRig(parameters);
     rig.Start();
 
     Console.WriteLine("Press any key to abort.");
@@ -171,13 +169,19 @@ static bool PollIcom705Port(params object[] parameters)
 {
     Log("Entered PollIcom705()");
 
-    Console.WriteLine("Polling the Icom IC-705");
-    Console.Write("Select the COM port the device is connected to.");
+    Console.WriteLine(@"Polling the Icom IC-705");
+    Console.Write(@"Select the COM port the device is connected to.");
 
-    var rig = GetIC705Rig(parameters);
+    var rig = GetIC705HostRig(parameters);
     rig.Start();
 
-    Console.WriteLine("Press Enter to continue.");
+    var guest = new GuestRig(1, KnownIdentifiers.U2Logger);
+    guest.UdpPacketReceived += (sender, args) =>
+    {
+        Console.WriteLine($@"Received packet: {ByteFunctions.BytesToHex(args.Packet.GetBytes())}");
+    };
+
+    Console.WriteLine(@"Press Enter to continue.");
     Console.ReadLine();
 
     rig.Dispose();
@@ -185,7 +189,12 @@ static bool PollIcom705Port(params object[] parameters)
     return true;
 }
 
-static Rig GetIC705Rig(object[] parameters)
+static Rig GetIC705GuestRig(object[] parameters)
+{
+    throw new NotImplementedException();
+}
+
+static Rig GetIC705HostRig(object[] parameters)
 {
     var key = (ConsoleKey)parameters[0];
     var ports = ComPortHelper.EnumerateComPorts();
@@ -193,10 +202,10 @@ static Rig GetIC705Rig(object[] parameters)
     var settings = new RigSettings
     {
         Port = ports.ElementAt(index).Name,
-        BaudRate = Data.BaudRates.IndexOf(57600),
-        DataBits = Data.DataBits.IndexOf(8),
-        Parity = (int)Data.Parity.None,
-        StopBits = Data.StopBits.IndexOf(1m),
+        BaudRate = ComPortStuff.BaudRates.IndexOf(57600),
+        DataBits = ComPortStuff.DataBits.IndexOf(8),
+        Parity = (int)ComPortStuff.Parity.None,
+        StopBits = ComPortStuff.StopBits.IndexOf(1m),
         Enabled = true,
     };
 
@@ -209,77 +218,53 @@ static Rig GetIC705Rig(object[] parameters)
     }
 
     settings.Enabled = true;
-    var rig = new Rig(1, settings, rigCommands);
+    var rig = new HostRig(1, KnownIdentifiers.U2MultiRig, settings, rigCommands);
     rig.RigParameterChanged += (sender, number, parameter, value) =>
     {
-        Console.WriteLine($"RIG{number}: {parameter}={value}");
+        ReportParameter(number, parameter, value.ToString());
     };
 
     return rig;
 }
 
-static bool TestUdpClient(object[] parameters)
-{
-    var tokenSource = new CancellationTokenSource();
-    var client = new UdpClient(CancellationToken.None);
-    client.MessageReceived += ClientOnMessageReceived;
-    client.Start();
-
-    var server = new UdpServer(CancellationToken.None);
-    server.Start();
-
-    server.ComNotifySingleParameter(1, RigParameter.FreqA, 14100123);
-    
-    Console.WriteLine("Press x to finish.");
-
-    while (true)
-    {
-        var key = Console.Read();
-        if (key == 'x')
-        {
-            break;
-        }
-    }
-
-    client.Stop();
-    server.Stop();
-    return true;
-}
-
-static void ClientOnMessageReceived(object sender, string message)
-{
-    if (string.IsNullOrEmpty(message) || !message.StartsWith("MR", StringComparison.InvariantCultureIgnoreCase))
-    {
-        Console.WriteLine($"Received unknown UDP message: {message}");
-        return;
-    }
-
-    var chunks = message.Split('|', StringSplitOptions.RemoveEmptyEntries);
-    if (chunks.Length != 5)
-    {
-        Console.WriteLine($"Received invalid UDP message: {message}. Expected chunks: 5.");
-        return;
-    }
-
-    var rigNumber = int.Parse(chunks[1]);
-    var key = chunks[2];
-    var param1 = chunks[3];
-    var param2 = chunks[4];
-
-    switch (key)
-    {
-        case UdpMessageType.Parameter:
-            ReportParameter(rigNumber, param1, param2);
-            break;
-        default:
-            Console.WriteLine($@"{key} not recognized.");
-            break;
-    }
-}
-
-static void ReportParameter(int rigNumber, string paramId, string value)
+static void ReportParameter(int rigNumber, RigParameter paramId, string value)
 {
     var id = Convert.ToInt32(paramId);
-    var param = (RigParameter) id;
+    var param = (RigParameter)id;
     Console.WriteLine($@"{param}: {value}");
+}
+
+static RigUdpMessengerPacket CreateNewPacket(byte messageId,
+    ushort senderId, ushort receiverId, char messageType,
+    ushort commandId, ushort dataLength, byte[] data)
+{
+    var result = new RigUdpMessengerPacket
+    {
+        MagicNumber = new MagicNumberPacketChunk(),
+        Timestamp = new TimestampPacketChunk(DateTime.UtcNow),
+        MessageId = new MessageIdPacketChunk(messageId),
+        SenderId = new SenderIdPacketChunk(senderId),
+        ReceiverId = new ReceiverIdPacketChunk(receiverId),
+        MessageType = new MessageTypePacketChunk(messageType),
+        Checksum = new ChecksumPacketChunk(0),
+        CommandId = new CommandIdPacketChunk(commandId),
+        DataLength = new DataLengthPacketChunk(dataLength),
+        Data = DataPacketChunk.Create(data),
+    };
+
+    return result;
+}
+
+static void OnNewDataFromUdpServerArrived(object? sender, UdpDataReceivedEventArgs e)
+{
+    if (e.Data.Length == 0)
+    {
+        return;
+    }
+    var s = ByteFunctions.BytesToHex(e.Data);
+    if (!string.IsNullOrEmpty(s))
+    {
+        var ep = (IPEndPoint)e.EndPoint;
+        Console.WriteLine($"{ep.Address}:{ep.Port} {s}");
+    }
 }
