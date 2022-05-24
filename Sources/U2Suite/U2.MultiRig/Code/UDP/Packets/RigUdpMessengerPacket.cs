@@ -19,6 +19,7 @@
 
 namespace U2.MultiRig;
 
+#nullable disable
 public sealed class RigUdpMessengerPacket
 {
     public const int MagicNumberStart = 0;
@@ -43,16 +44,16 @@ public sealed class RigUdpMessengerPacket
 
     #region Properties
 
-    public MagicNumberPacketChunk? MagicNumber { get; init; }
-    public TimestampPacketChunk? Timestamp { get; init; }
-    public MessageIdPacketChunk? MessageId { get; init; }
-    public SenderIdPacketChunk? SenderId { get; set; }
-    public ReceiverIdPacketChunk? ReceiverId { get; set; }
-    public MessageTypePacketChunk? MessageType { get; set; }
-    public ChecksumPacketChunk? Checksum { get; set; }
-    public CommandIdPacketChunk? CommandId { get; set; }
-    public DataLengthPacketChunk? DataLength { get; set; }
-    public DataPacketChunk? Data { get; set; }
+    public MagicNumberPacketChunk MagicNumber { get; init; }
+    public TimestampPacketChunk Timestamp { get; init; }
+    public MessageIdPacketChunk MessageId { get; init; }
+    public SenderIdPacketChunk SenderId { get; set; }
+    public ReceiverIdPacketChunk ReceiverId { get; set; }
+    public MessageTypePacketChunk MessageType { get; set; }
+    public ChecksumPacketChunk Checksum { get; set; }
+    public CommandIdPacketChunk CommandId { get; set; }
+    public DataLengthPacketChunk DataLength { get; set; }
+    public DataPacketChunk Data { get; set; }
 
     #endregion
 

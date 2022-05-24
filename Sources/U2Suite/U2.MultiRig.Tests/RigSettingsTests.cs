@@ -121,7 +121,6 @@ public sealed class RigSettingsTests : IDisposable
     [Fact]
     public void LoadFromNonExistentFile_ShouldCreateOneDefaultSetting()
     {
-        var pathToFile = AllRigsSettings.PathToSettings;
         AllRigsSettings.LoadSettings();
         Assert.Single(AllRigsSettings.AllRigs);
     }

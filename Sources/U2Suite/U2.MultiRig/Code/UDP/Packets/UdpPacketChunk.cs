@@ -19,10 +19,10 @@
 
 using System;
 using System.Text;
-using JetBrains.Annotations;
 
 namespace U2.MultiRig;
 
+#nullable disable
 public abstract class UdpPacketChunk<T>
 {
     private readonly byte[] _data;
@@ -36,7 +36,7 @@ public abstract class UdpPacketChunk<T>
         Value = FromBytes(_data);
     }
 
-    protected T? FromBytes(byte[] data)
+    protected T FromBytes(byte[] data)
     {
         return GetValueFromBytes(data);
     }
@@ -59,7 +59,7 @@ public abstract class UdpPacketChunk<T>
         return data.Skip(start).Take(len).ToArray();
     }
 
-    internal virtual T? GetValueFromBytes(byte[] data)
+    internal virtual T GetValueFromBytes(byte[] data)
     {
         throw new NotImplementedException();
     }
@@ -73,11 +73,11 @@ public abstract class UdpPacketChunk<T>
     public int StartPosition { get; }
     public int ChunkSize { get; }
 
-    public T? Value { get; private set; }
+    public T Value { get; private set; }
 
     public virtual bool IsValid => true;
 
-    public void SetValue(T? value)
+    public void SetValue(T value)
     {
         Value = value;
     }

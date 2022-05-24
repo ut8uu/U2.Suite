@@ -145,10 +145,12 @@ public class RigCommandTestsStatusRecordsData : IEnumerable<object[]>
 
 public class StatusTestData
 {
+    #nullable disable
     public string Text { get; init; }
     public byte[] Command { get; init; }
     public int ReplyLength { get; init; }
     public byte[] Validate { get; init; }
     public BitMask[] Flags { get; init; }
     public ParameterValue ParameterValue { get; init; }
+    #nullable restore
 }

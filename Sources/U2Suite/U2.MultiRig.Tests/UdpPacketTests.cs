@@ -170,12 +170,24 @@ public class UdpPacketTests
     [Fact]
     public void EncodeDecodeUdpPacket()
     {
-        var expectedValue = 14246015;
+        const int expectedValue = 14246015;
         var packet1 = UdpPacketFactory.CreateSingleParameterReportingPacket(1,
             KnownIdentifiers.U2MultiRig, KnownIdentifiers.U2Logger,
             RigParameter.FreqB, expectedValue);
 
         var packet2 = RigUdpMessengerPacket.FromUdpPacket(packet1.GetBytes());
+
+        Assert.NotNull(packet2.MessageId);
+        Assert.NotNull(packet2.Checksum);
+        Assert.NotNull(packet2.MessageId);
+        Assert.NotNull(packet2.MessageType);
+        Assert.NotNull(packet2.ReceiverId);
+        Assert.NotNull(packet2.SenderId);
+        Assert.NotNull(packet2.CommandId);
+        Assert.NotNull(packet2.Data);
+        Assert.NotNull(packet2.DataLength);
+        Assert.NotNull(packet2.MagicNumber);
+        Assert.NotNull(packet2.Timestamp);
 
         Assert.Equal(packet1.Checksum.Value, packet2.Checksum.Value);
         Assert.Equal(packet1.Timestamp.Value, packet2.Timestamp.Value);
