@@ -35,25 +35,21 @@ namespace U2.MultiRig.Code.UDP
         public const int MessengerRxPort = 11501;
         public const int MessengerTxPort = 11502;
 
-        private readonly ushort _applicationId;
         private readonly CancellationToken _cancellationToken;
         private readonly ILog _log = LogManager.GetLogger(typeof(RigUdpMessenger));
         private readonly UdpMulticastSender _sender;
         private readonly UdpMulticastReceiver _receiver;
         private bool _disposed;
-        private readonly bool _isHost;
 
-        public event UdpPacketReceivedEventHandler UdpPacketReceived;
+        public event UdpPacketReceivedEventHandler? UdpPacketReceived;
 
-        public RigUdpMessenger(RigControlType rigControlType, ushort applicationId, 
-            CancellationToken cancellationToken)
+        public RigUdpMessenger(RigControlType rigControlType, CancellationToken cancellationToken)
         {
-            _applicationId = applicationId;
             _cancellationToken = cancellationToken;
 
-            _isHost = rigControlType == RigControlType.Guest;
-            var rxPort = _isHost ? MessengerRxPort : MessengerTxPort;
-            var txPort = _isHost ? MessengerTxPort : MessengerRxPort;
+            var isHost = rigControlType == RigControlType.Guest;
+            var rxPort = isHost ? MessengerRxPort : MessengerTxPort;
+            var txPort = isHost ? MessengerTxPort : MessengerRxPort;
             _sender = new UdpMulticastSender(MultiCastAddress, txPort, _cancellationToken);
             _receiver = new UdpMulticastReceiver(MultiCastAddress, rxPort, _cancellationToken);
             _receiver.MulticastDataReceived += ReceiverOnMulticastDataReceived;

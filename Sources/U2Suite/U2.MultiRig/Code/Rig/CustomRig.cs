@@ -95,7 +95,7 @@ public abstract class CustomRig : IDisposable
             DisableTimeoutTimer();
         }
 
-        _udpMessenger = new RigUdpMessenger(rigControlType, _applicationId, _cancellationTokenSource.Token);
+        _udpMessenger = new RigUdpMessenger(rigControlType, _cancellationTokenSource.Token);
     }
 
     public void Dispose()
@@ -583,12 +583,12 @@ public abstract class CustomRig : IDisposable
 
     private void EnableTimeoutTimer()
     {
-        _timeoutTimer.Change(TimeSpan.FromMilliseconds(_rigSettings.TimeoutMs), Timeout.InfiniteTimeSpan);
+        _timeoutTimer?.Change(TimeSpan.FromMilliseconds(_rigSettings.TimeoutMs), Timeout.InfiniteTimeSpan);
     }
 
     private void DisableTimeoutTimer()
     {
-        _timeoutTimer.Change(Timeout.InfiniteTimeSpan, Timeout.InfiniteTimeSpan);
+        _timeoutTimer?.Change(Timeout.InfiniteTimeSpan, Timeout.InfiniteTimeSpan);
     }
 
     private void ConnectivityTimerTick()
