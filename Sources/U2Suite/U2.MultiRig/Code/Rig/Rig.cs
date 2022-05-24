@@ -52,16 +52,23 @@ public abstract class Rig : CustomRig
     protected readonly ILog _logger = LogManager.GetLogger(typeof(Rig));
     protected readonly List<RigParameter> _changedParams = new();
 
-    protected Rig(RigControlType rigControlType, int rigNumber, RigSettings settings, RigCommands rigCommands) 
-        : base(rigControlType, rigNumber, settings, rigCommands)
+    protected Rig(RigControlType rigControlType, int rigNumber, ushort applicationId, 
+        RigSettings settings, RigCommands rigCommands) 
+        : base(rigControlType, rigNumber, applicationId, settings, rigCommands)
     {
+        _udpMessenger.UdpPacketReceived += UdpMessengerOnUdpPacketReceived;
     }
-
+    
     public event UdpPacketReceivedEventHandler UdpPacketReceived;
 
     protected virtual void OnUdpPacketReceived(RigUdpMessengerPacketEventArgs eventArgs)
     {
         UdpPacketReceived?.Invoke(this, eventArgs);
+    }
+
+    private void UdpMessengerOnUdpPacketReceived(object sender, RigUdpMessengerPacketEventArgs eventArgs)
+    {
+        OnUdpPacketReceived(eventArgs);
     }
 }
 

@@ -44,6 +44,7 @@ public abstract class CustomRig : IDisposable
     private static readonly object TimerTickLockObject = new();
     private static readonly object CheckQueueLockObject = new();
 
+    protected readonly ushort _applicationId;
     private readonly RigSettings _rigSettings;
     private readonly ILog _logger = LogManager.GetLogger(typeof(CustomRig));
     protected RigUdpMessenger _udpMessenger;
@@ -73,9 +74,11 @@ public abstract class CustomRig : IDisposable
 
     public event SerialPortInput.ConnectionStatusChangedEventHandler? ConnectionStatusChanged;
 
-    protected CustomRig(RigControlType rigControlType, int rigNumber, RigSettings rigSettings, RigCommands rigCommands)
+    protected CustomRig(RigControlType rigControlType, int rigNumber, ushort applicationId, 
+        RigSettings rigSettings, RigCommands rigCommands)
     {
         RigNumber = rigNumber;
+        _applicationId = applicationId;
         _rigSettings = rigSettings;
         _rigCommands = rigCommands;
         _queue = new CommandQueue();
@@ -92,7 +95,7 @@ public abstract class CustomRig : IDisposable
             DisableTimeoutTimer();
         }
 
-        _udpMessenger = new RigUdpMessenger(_cancellationTokenSource.Token);
+        _udpMessenger = new RigUdpMessenger(rigControlType, _applicationId, _cancellationTokenSource.Token);
     }
 
     public void Dispose()

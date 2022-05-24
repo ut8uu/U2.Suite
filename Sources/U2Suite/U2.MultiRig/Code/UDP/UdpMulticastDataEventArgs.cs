@@ -22,7 +22,7 @@ namespace U2.MultiRig.Code.UDP;
 
 public sealed class UdpMulticastDataEventArgs
 {
-    public UdpMulticastDataEventArgs(byte[] data, EndPoint endpoint)
+    public UdpMulticastDataEventArgs(byte[] data, IPEndPoint endpoint)
     {
         Data = data;
         SenderEndPoint = endpoint;
@@ -30,5 +30,5 @@ public sealed class UdpMulticastDataEventArgs
 
     public byte[] Data { get; set; }
 
-    public EndPoint SenderEndPoint { get; set; }
+    public IPEndPoint SenderEndPoint { get; set; }
 }

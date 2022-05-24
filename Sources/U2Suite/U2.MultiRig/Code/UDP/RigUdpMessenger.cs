@@ -37,6 +37,7 @@ namespace U2.MultiRig.Code.UDP
         public const int MessengerTxPort = 11502;
         public const int ServerBufferSize = 8192;
 
+        private readonly ushort _applicationId;
         private readonly CancellationToken _cancellationToken;
         private readonly ILog _log = LogManager.GetLogger(typeof(RigUdpMessenger));
         private readonly UdpMulticastSender _sender;
@@ -44,8 +45,12 @@ namespace U2.MultiRig.Code.UDP
         private bool _disposed;
         private readonly bool _isHost;
 
-        public RigUdpMessenger(RigControlType rigControlType, CancellationToken cancellationToken)
+        public event UdpPacketReceivedEventHandler UdpPacketReceived;
+
+        public RigUdpMessenger(RigControlType rigControlType, ushort applicationId, 
+            CancellationToken cancellationToken)
         {
+            _applicationId = applicationId;
             _cancellationToken = cancellationToken;
 
             _isHost = rigControlType == RigControlType.Guest;
@@ -71,13 +76,25 @@ namespace U2.MultiRig.Code.UDP
                     return;
                 }
 
-
+                var args = new RigUdpMessengerPacketEventArgs
+                {
+                    Packet = packet,
+                    RemoteEndpoint = eventArgs.SenderEndPoint,
+                };
+                OnUdpPacketReceived(args);
             }
             catch (UdpPacketException ex)
             {
                 _log.Error(ex.Message);
             }
         }
+
+        private void OnUdpPacketReceived(RigUdpMessengerPacketEventArgs eventArgs)
+        {
+            UdpPacketReceived?.Invoke(this, eventArgs);
+        }
+
+
 
         public void Dispose()
         {

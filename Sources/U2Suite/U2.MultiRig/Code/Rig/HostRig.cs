@@ -30,8 +30,8 @@ namespace U2.MultiRig;
 
 public sealed class HostRig : Rig
 {
-    public HostRig(int rigNumber, [NotNull] RigSettings settings, [NotNull] RigCommands rigCommands)
-        : base(RigControlType.Host, rigNumber, settings, rigCommands)
+    public HostRig(int rigNumber, ushort applictionId, [NotNull] RigSettings settings, [NotNull] RigCommands rigCommands)
+        : base(RigControlType.Host, rigNumber, applictionId, settings, rigCommands)
     {
     }
 
@@ -127,8 +127,7 @@ public sealed class HostRig : Rig
         if (_changedParams.Any())
         {
             var packet = UdpPacketFactory.CreateMultipleParametersReportingPacket(RigNumber,
-                senderId: KnownIdentifiers.U2MultiRig, receiverId: KnownIdentifiers.MultiCast,
-                _changedParams);
+                senderId: _applicationId, receiverId: KnownIdentifiers.MultiCast, _changedParams);
             _udpMessenger.SendMultiCastMessage(packet);
             _logger.Debug($"Multiple parameters changed. A multicast message sent: {ByteFunctions.BytesToHex(packet.GetBytes())}");
         }
@@ -347,7 +346,7 @@ public sealed class HostRig : Rig
         _changedParams.Add(parameter);
         _logger.DebugFormat("RIG{0} status changed: {1} = {2}", RigNumber, parameter.ToString(), Convert.ToString(parameterValue));
         var packet = UdpPacketFactory.CreateSingleParameterReportingPacket(RigNumber,
-            senderId: KnownIdentifiers.U2MultiRig, receiverId: KnownIdentifiers.MultiCast,
+            senderId: _applicationId, receiverId: KnownIdentifiers.MultiCast,
             parameter, parameterValue);
         _udpMessenger.SendMultiCastMessage(packet);
         //_logger.Debug($"A single parameter changed. A multicast message sent: {ByteFunctions.BytesToHex(packet.GetBytes())}");

@@ -37,6 +37,7 @@ namespace U2.MultiRig.Code.UDP
         private readonly CancellationToken _token;
         private readonly ILog _logger = LogManager.GetLogger(typeof(UdpMulticastReceiver));
         private readonly IPEndPoint _localEndPoint;
+        private bool _disposed;
 
         public UdpMulticastReceiver(IPAddress multicastAddress, int port, CancellationToken token)
         {
@@ -67,10 +68,21 @@ namespace U2.MultiRig.Code.UDP
             _logger.Info("UdpMulticastReceiver is running ...");
         }
 
+        public void Dispose()
+        {
+            _client.DropMulticastGroup(_multicastAddress);
+            _client.Dispose();
+            _disposed = true;
+        }
+
         public event MulticastDataReceivedEventHandler? MulticastDataReceived;
 
         private void DataReceived(IAsyncResult ar)
         {
+            if (_disposed)
+            {
+                return;
+            }
             Debug.Assert(ar.AsyncState != null);
             var state = (UdpState)ar.AsyncState;
             var client = state.Client;
@@ -91,12 +103,6 @@ namespace U2.MultiRig.Code.UDP
                 EndPoint = _localEndPoint,
             };
             _client.BeginReceive(DataReceived, state);
-        }
-
-        public void Dispose()
-        {
-            _client.DropMulticastGroup(_multicastAddress);
-            _client.Dispose();
         }
 
         private void OnMulticastDataReceived(UdpMulticastDataEventArgs eventArgs)

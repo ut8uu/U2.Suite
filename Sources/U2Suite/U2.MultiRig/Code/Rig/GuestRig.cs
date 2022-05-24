@@ -27,12 +27,9 @@ namespace U2.MultiRig;
 /// </summary>
 public sealed class GuestRig : Rig
 {
-    private readonly ushort _receiverId;
-
-    public GuestRig(int rigNumber, ushort receiverId)
-        : base(RigControlType.Guest, rigNumber, new RigSettings(), new RigCommands())
+    public GuestRig(int rigNumber, ushort applicationId)
+        : base(RigControlType.Guest, rigNumber, applicationId, new RigSettings(), new RigCommands())
     {
-        _receiverId = receiverId;
     }
 
     #region CustomRig members
@@ -70,7 +67,7 @@ public sealed class GuestRig : Rig
         }
 
         if (packet.ReceiverId.Value != KnownIdentifiers.MultiCast
-            && packet.ReceiverId.Value != _receiverId)
+            && packet.ReceiverId.Value != _applicationId)
         {
             return;
         }
@@ -95,7 +92,7 @@ public sealed class GuestRig : Rig
 
     private void ProcessAnswerPacket(RigUdpMessengerPacket packet)
     {
-        if (packet.ReceiverId.Value != _receiverId)
+        if (packet.ReceiverId.Value != _applicationId)
         {
             // an answer packet must be addressed only
             return;
