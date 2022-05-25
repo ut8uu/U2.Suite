@@ -8,7 +8,7 @@ public class HostRigValidateReplyTestData : IEnumerable<object[]>
 {
     public IEnumerator<object[]> GetEnumerator()
     {
-        var testData = new HostRigValidateReplyTestDataObject[]
+        var testData = new[]
         {
             DataTooShort(),
             DataTooLong(),
@@ -24,7 +24,8 @@ public class HostRigValidateReplyTestData : IEnumerable<object[]>
     {
         return new HostRigValidateReplyTestDataObject
         {
-            IsValid = true,
+            ExceptionIsExpected = false,
+            ExceptionType = null,
             Data = new byte[] { 0x04, 0x01, },
             BitMask = new BitMask
             {
@@ -39,7 +40,8 @@ public class HostRigValidateReplyTestData : IEnumerable<object[]>
     {
         return new HostRigValidateReplyTestDataObject
         {
-            IsValid = false,
+            ExceptionIsExpected = true,
+            ExceptionType = typeof(ValueValidationException),
             Data = new byte[] { 0x03, 0x01, },
             BitMask = new BitMask
             {
@@ -54,7 +56,8 @@ public class HostRigValidateReplyTestData : IEnumerable<object[]>
     {
         return new HostRigValidateReplyTestDataObject
         {
-            IsValid = false,
+            ExceptionIsExpected = true,
+            ExceptionType = typeof(ValueValidationException),
             Data = new byte[] { 0x00, 0x00, 0x00, },
             BitMask = new BitMask
             {
@@ -69,7 +72,8 @@ public class HostRigValidateReplyTestData : IEnumerable<object[]>
     {
         return new HostRigValidateReplyTestDataObject
         {
-            IsValid = false,
+            ExceptionIsExpected = true,
+            ExceptionType = typeof(ValueValidationException),
             Data = new byte[] {0x00},
             BitMask = new BitMask
             {
