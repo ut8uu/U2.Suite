@@ -22,6 +22,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using DeepEqual.Syntax;
 using U2.Core;
 using U2.Tests.Common;
 using Xunit;
@@ -299,6 +300,23 @@ namespace U2.MultiRig.Tests
                 RigParameter.FM,
             };
             Assert.Equal(parameters.Length, cmd.WriteCmd.Count);
+        }
+
+        [Theory]
+        [ClassData(typeof(RigCommandTestsParseValueTestData))]
+        public void ParseParameterValueString(RigCommandTestsParseValueTestDataObject testItem)
+        {
+            if (testItem.ExceptionIsExpected)
+            {
+                var exception = Assert.ThrowsAny<Exception>(() => RigCommandUtilities.ParseParameterValue(testItem.Value));
+                Assert.Equal(testItem.ExceptionType, exception.GetType());
+            }
+            else
+            {
+                var result = RigCommandUtilities.ParseParameterValue(testItem.Value);
+                result.ShouldDeepEqual(testItem.ExpectedParameterValue);
+            }
+
         }
     }
 }
