@@ -206,7 +206,7 @@ internal static class ConversionFunctions
         }
         catch (Exception ex)
         {
-            ClassLog.ErrorFormat("invalid BCD value: {0}. {1}", 
+            ClassLog.ErrorFormat("invalid BCD value: {0}. {1}",
                 ByteFunctions.BytesToHex(data), ex.Message);
             throw;
         }
@@ -237,15 +237,15 @@ internal static class ConversionFunctions
 
     public static int FromText(byte[] data)
     {
+        var s = Encoding.UTF8.GetString(data);
         try
         {
-            var s = Encoding.UTF8.GetString(data);
             return Convert.ToInt32(s);
         }
-        catch (Exception)
+        catch (Exception ex) when (ex is FormatException)
         {
             ClassLog.ErrorFormat("Invalid reply: {0}", ByteFunctions.BytesToHex(data));
-            throw;
+            throw new ValueConversionException(message: $"Cannot convert string {s} to int.");
         }
     }
 
@@ -294,17 +294,19 @@ internal static class ConversionFunctions
         }
     }
 
-    //bytes to value
-
-    ////////////////////////////////////////////////////////////////////////////////
-    //                                unformat
-    ////////////////////////////////////////////////////////////////////////////////
+    /// <summary>
+    /// Extract value from the source byte array.
+    /// </summary>
+    /// <param name="sourceData"></param>
+    /// <param name="info"></param>
+    /// <returns></returns>
+    /// <exception cref="ValueValidationException"></exception>
+    /// <exception cref="ArgumentOutOfRangeException"></exception>
     public static int UnformatValue(byte[] sourceData, ParameterValue info)
     {
         if (sourceData.Length < info.Start + info.Len)
         {
-            ClassLog.Error($"Reply too short.");
-            throw new AbortException();
+            throw new ValueValidationException("Reply too short");
         }
 
         var data = sourceData.Skip(info.Start).Take(info.Len).ToArray();
@@ -323,7 +325,7 @@ internal static class ConversionFunctions
             ValueFormat.Yaesu => FromYaesu(data),
             ValueFormat.None => 0,
             ValueFormat.TextUD => 0,
-            _ => throw new ArgumentOutOfRangeException($"Format {info.Format} not recognized.")
+            _ => throw new ArgumentOutOfRangeException($"Parameter {info.Format} not recognized.")
         };
     }
 
@@ -356,7 +358,7 @@ internal static class ConversionFunctions
         };
     }
 
-    //ASCII codes of digits
+    // ASCII codes of digits
 
     public static byte[] ToText(int value, int len)
     {
@@ -364,7 +366,7 @@ internal static class ConversionFunctions
         return Encoding.UTF8.GetBytes(s);
     }
 
-    //BCD big endian signed
+    // BCD big endian signed
     // ReSharper disable once InconsistentNaming
 
     public static byte[] ToBcdBS(int value, int len)
@@ -384,7 +386,7 @@ internal static class ConversionFunctions
 
     public static byte[] ToBcdBU(int value, int len)
     {
-        var chars = ToText(value, len*2);
+        var chars = ToText(value, len * 2);
         var result = new byte[len];
 
         for (var i = 0; i < len; i++)
@@ -397,7 +399,7 @@ internal static class ConversionFunctions
         return result;
     }
 
-    //BCD little endian signed; sign in high byte (00 or FF)
+    // BCD little endian signed; sign in high byte (00 or FF)
     // ReSharper disable once InconsistentNaming
 
     public static byte[] ToBcdLS(int value, int len)
@@ -412,7 +414,7 @@ internal static class ConversionFunctions
         return arr;
     }
 
-    //BCD little endian unsigned
+    // BCD little endian unsigned
     // ReSharper disable once InconsistentNaming
 
     public static byte[] ToBcdLU(int value, int len)
@@ -422,7 +424,7 @@ internal static class ConversionFunctions
         return arr;
     }
 
-    //integer, big endian
+    // integer, big endian
 
     public static byte[] ToBinB(int value, int len)
     {
@@ -431,7 +433,7 @@ internal static class ConversionFunctions
         return arr;
     }
 
-    //integer, little endian
+    // integer, little endian
 
     public static byte[] ToBinL(int value, int len)
     {
@@ -451,8 +453,8 @@ internal static class ConversionFunctions
         return Encoding.UTF8.GetBytes(s);
     }
 
-    //16 bits. high bit of the 1-st byte is sign,
-    //the rest is integer, absolute value, big endian (not complementary!)
+    // 16 bits. high bit of the 1-st byte is sign,
+    // the rest is integer, absolute value, big endian (not complementary!)
 
     public static byte[] ToYaesu(int value, int len)
     {
