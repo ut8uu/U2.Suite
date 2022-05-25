@@ -63,5 +63,21 @@ namespace U2.MultiRig.Tests
             var expectedResult = new byte[] {0xFF, 0x01, 0x23, 0x45};
             Assert.Equal(expectedResult, result);
         }
+
+        [Theory]
+        [ClassData(typeof(ConversionTestsUnformatValueTestData))]
+        public void UnformatValue(ConversionTestsUnformatValueTestDataObject testItem)
+        {
+            if (testItem.ExceptionIsExpected)
+            {
+                var exception = Assert.ThrowsAny<Exception>(() => ConversionFunctions.UnformatValue(testItem.Data, testItem.ParameterValue));
+                Assert.Equal(testItem.ExceptionType, exception.GetType());
+            }
+            else
+            {
+                var result = ConversionFunctions.UnformatValue(testItem.Data, testItem.ParameterValue);
+                Assert.Equal(testItem.ExpectedValue, result);
+            }
+        }
     }
 }
