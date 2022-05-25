@@ -13,16 +13,16 @@ License, v. 2.0. You can find the full text of the License in this repository
 ([LInk to the License](mpl.me)) or directly on the 
 [Mozilla.org site](http://mozilla.org/MPL/2.0/).
 
-The OmniRig is written in Object Pascal, which makes impossible to use them directly.
-It took some quite long time to port them to C#. To make the software to be
-crossplatform, the original inter-application approach was rejected. The more
+The OmniRig is written in Object Pascal, which makes impossible to use source codes directly.
+It took some quite long time to port OmniRig to C#. To make the software to be
+cross-platform, the original inter-application approach was rejected. The more
 modern approach based on the exchange of the UDP messages was used.
 
 ## Supported rigs
 
 Being based on the OmniRig, the U2.MultiRig software can use the INI files
 from the OmniRig without any change. If, for some reason, you cannot see your device
-in the dropdown list of the supported rigs, but OmniRig has it listed, please 
+in the drop-down list of the supported rigs, but OmniRig has it listed, please 
 report this using the GitHub ([link to the issue tracker](https://github.com/ut8uu/U2.Suite/issues)).
 
 ## The protocol
