@@ -29,6 +29,7 @@ using System.Threading.Tasks;
 using log4net;
 using SoftCircuits.IniFileParser;
 using U2.Core;
+using static System.Collections.Specialized.BitVector32;
 
 namespace U2.MultiRig;
 
@@ -542,80 +543,90 @@ internal static class RigCommandUtilities
     /// <param name="section"></param>
     /// <param name="settingName"></param>
     /// <returns></returns>
-    /// <exception cref="ValueLoadErrorException"></exception>
+    /// <exception cref="ValueLoadException"></exception>
     /// <example>Value=5|5|vfBcdL|1|0[|pmXXX]</example>
     internal static ParameterValue LoadValue(IniFile iniFile, string section, string settingName)
     {
         try
         {
-            var result = new ParameterValue();
             var value = ReadStringFromIni(iniFile, section, settingName, string.Empty);
-            if (string.IsNullOrEmpty(value))
-            {
-                return result;
-            }
-            var elements = value.Split(ConversionFunctions.Delimiter).ToList();
+            return ParseParameterValue(value);
+        }
+        catch (Exception ex) when (ex is not ValueLoadException)
+        {
+            throw new ValueLoadException(ex.Message);
+        }
+    }
 
-            switch (elements.Count)
-            {
-                case 0:
-                    return result;
+    /// <summary>
+    /// Parses the string value into the ParameterValue
+    /// </summary>
+    /// <param name="value"></param>
+    /// <returns></returns>
+    /// <exception cref="ValueLoadException"></exception>
+    /// <example>17|6|vfText|1|0|pmRitOffset</example>
+    internal static ParameterValue ParseParameterValue(string value)
+    {
+        if (string.IsNullOrEmpty(value))
+        {
+            return new ParameterValue();
+        }
+        var elements = value.Split(ConversionFunctions.Delimiter).ToList();
+        if (elements.Count == 0) // empty string?
+        {
+            return new ParameterValue();
+        }
+        else if (elements.Count != 5 && elements.Count != 6)
+        {
+            throw new ValueLoadException($"A value '{value}' has invalid syntax.");
+        }
 
-                case 5:
-                    break;
+        var result = new ParameterValue();
+        
+        if (elements.Count == 6)
+        {
+            result.Param = ConversionFunctions.StrToRigParameter(elements[5]);
+        }
 
-                case 6:
-                    result.Param = ConversionFunctions.StrToRigParameter(elements[5]);
-                    break;
+        try
+        {
+            result.Start = Convert.ToInt32(elements[0]);
+        }
+        catch (Exception)
+        {
+            throw new ValueLoadException($"invalid Start value in '{value}'");
+        }
 
-                default:
-                    throw new ValueLoadErrorException($"Invalid syntax in {section} value '{value}'");
-            }
+        try
+        {
+            result.Len = Convert.ToInt32(elements[1]);
+        }
+        catch (Exception)
+        {
+            throw new ValueLoadException($"Invalid Length value in '{value}'");
+        }
 
-            try
-            {
-                result.Start = Convert.ToInt32(elements[0]);
-            }
-            catch (Exception)
-            {
-                throw new ValueLoadErrorException($"invalid Start value in '{value}'");
-            }
+        result.Format = ConversionFunctions.StrToValueFormat(elements[2]);
 
-            try
-            {
-                result.Len = Convert.ToInt32(elements[1]);
-            }
-            catch (Exception)
-            {
-                throw new ValueLoadErrorException($"Invalid Length value in '{value}'");
-            }
-
-            result.Format = ConversionFunctions.StrToValueFormat(elements[2]);
-
-            try
-            {
-                result.Mult = Convert.ToDouble(elements[3], CultureInfo.InvariantCulture);
-            }
-            catch (Exception ex)
-            {
-                throw new ValueLoadErrorException($"invalid Multiplier value in '{value}'. {ex.Message}");
-            }
-
-            try
-            {
-                result.Add = Convert.ToDouble(elements[4], CultureInfo.InvariantCulture);
-            }
-            catch (Exception ex)
-            {
-                throw new ValueLoadErrorException($"invalid Add value in '{value}'. {ex.Message}");
-            }
-
-            return result;
+        try
+        {
+            result.Mult = Convert.ToDouble(elements[3], CultureInfo.InvariantCulture);
         }
         catch (Exception ex)
         {
-            throw new ValueLoadErrorException(ex.Message);
+            throw new ValueLoadException($"invalid Multiplier value in '{value}'. {ex.Message}");
         }
+
+        try
+        {
+            result.Add = Convert.ToDouble(elements[4], CultureInfo.InvariantCulture);
+        }
+        catch (Exception ex)
+        {
+            throw new ValueLoadException($"invalid Add value in '{value}'. {ex.Message}");
+        }
+
+        return result;
     }
 
     /// <summary>
@@ -716,7 +727,7 @@ internal static class RigCommandUtilities
 
             return true;
         }
-        catch (ValueLoadErrorException)
+        catch (ValueLoadException)
         {
             return false;
         }
