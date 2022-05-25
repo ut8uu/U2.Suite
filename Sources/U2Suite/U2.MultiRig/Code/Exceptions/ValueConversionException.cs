@@ -19,11 +19,9 @@
 
 namespace U2.MultiRig;
 
-[Serializable]
-public sealed class ValueLoadException : Exception
+internal class ValueConversionException : Exception
 {
-    public ValueLoadException(string message) : base(message)
+    public ValueConversionException(string message) : base(message)
     {
-        
     }
 }
