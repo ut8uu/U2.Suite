@@ -107,4 +107,42 @@ public static class UdpPacketFactory
 
         return packet;
     }
+
+    /// <summary>
+    /// Creates packet containing a request for setting the parameter.
+    /// </summary>
+    /// <param name="rigNumber"></param>
+    /// <param name="senderId"></param>
+    /// <param name="receiverId"></param>
+    /// <param name="rigParameter"></param>
+    /// <param name="value"></param>
+    /// <returns></returns>
+    public static RigUdpMessengerPacket CreateSetRigParameterPacket(
+        int rigNumber, ushort senderId, ushort receiverId, 
+        RigParameter rigParameter, long value)
+    {
+        var bytes = new List<byte>();
+        bytes.Add(16); // data length = 2x(int64)
+        bytes.AddRange(ByteFunctions.LongToBytes((long)rigParameter));
+        bytes.AddRange(ByteFunctions.LongToBytes(value));
+        var data = bytes.ToArray();
+        var dataChunk = new DataPacketChunk(data);
+
+        var packet = new RigUdpMessengerPacket
+        {
+            MagicNumber = new MagicNumberPacketChunk(),
+            Timestamp = new TimestampPacketChunk(DateTime.UtcNow),
+            MessageId = new MessageIdPacketChunk(GetNextMessageId()),
+            SenderId = new SenderIdPacketChunk(senderId),
+            ReceiverId = new ReceiverIdPacketChunk(receiverId),
+            MessageType = new MessageTypePacketChunk(MessageTypes.Status),
+            Checksum = new ChecksumPacketChunk(0),
+            CommandId = new CommandIdPacketChunk(CommandIdentifiers.SingleParameterChangeRequest),
+            DataLength = new DataLengthPacketChunk((ushort)data.Length),
+            Data = dataChunk,
+        };
+        packet.Checksum.SetValue(packet.GetCheckSum());
+
+        return packet;
+    }
 }

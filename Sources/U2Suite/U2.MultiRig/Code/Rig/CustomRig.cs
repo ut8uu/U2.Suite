@@ -110,17 +110,68 @@ public abstract class CustomRig : IDisposable
     public bool Enabled => _rigSettings.Enabled;
 
     public RigCtlStatus Status => GetStatus();
-    public int Freq { get; set; }
-    public int FreqA { get; set; }
-    public int FreqB { get; set; }
-    public int Pitch { get; set; }
-    public int RitOffset { get; set; }
-    public RigParameter Vfo { get; set; }
+
+    public int Freq
+    {
+        get => _freq;
+        set => SetFreq(value);
+    }
+
+    public int FreqA
+    {
+        get => _freqA;
+        set => SetFreqA(value);
+    }
+
+    public int FreqB
+    {
+        get => _freqB;
+        set => SetFreqB(value);
+    }
+
+    public int Pitch
+    {
+        get => _pitch;
+        set => SetPitch(value);
+    }
+
+    public int RitOffset
+    {
+        get => _ritOffset;
+        set => SetRitOffset(value);
+    }
+
+    public RigParameter Vfo
+    {
+        get => _vfo;
+        set => SetVfo(value);
+    }
+
     public RigParameter Split => GetSplit();
-    public RigParameter Rit { get; set; }
-    public RigParameter Xit { get; set; }
-    public RigParameter Tx { get; set; }
-    public RigParameter Mode { get; set; }
+
+    public RigParameter Rit
+    {
+        get => _rit;
+        set => SetRit(value);
+    }
+
+    public RigParameter Xit
+    {
+        get => _xit;
+        set => SetXit(value);
+    }
+
+    public RigParameter Tx
+    {
+        get => _tx;
+        set => SetTx(value);
+    }
+
+    public RigParameter Mode
+    {
+        get => _mode;
+        set => SetMode(value);
+    }
 
     private static readonly StopBits[] StopBits =
     {
@@ -157,6 +208,17 @@ public abstract class CustomRig : IDisposable
     }
 
     private readonly List<byte> _receiveQueue = new();
+    private int _freq;
+    private int _freqA;
+    private int _freqB;
+    private int _pitch;
+    private int _ritOffset;
+    private RigParameter _vfo;
+    private RigParameter _rit;
+    private RigParameter _xit;
+    private RigParameter _tx;
+    private RigParameter _mode;
+
     private void SerialPort_MessageReceived(object sender, MessageReceivedEventArgs args)
     {
         lock (MessageReceivedLockObject)
@@ -280,61 +342,34 @@ public abstract class CustomRig : IDisposable
 
     #region Setters
 
-    public void SetFreq(int value)
+    public virtual void SetFreq(int value)
     {
-        if (Enabled)
-        {
-            Freq = value;
-            AddWriteCommand(RigParameter.Freq, value);
-        }
+        _freq = value;
     }
 
-    public void SetFreqA(int value)
+    public virtual void SetFreqA(int value)
     {
-        if (Enabled && value != FreqA)
-        {
-            AddWriteCommand(RigParameter.FreqA, value);
-        }
+        _freqA = value;
     }
 
-    public void SetFreqB(int value)
+    public virtual void SetFreqB(int value)
     {
-        if (Enabled && (value != FreqB))
-        {
-            AddWriteCommand(RigParameter.FreqB, value);
-        }
+        _freqB = value;
     }
 
-    public void SetRitOffset(int value)
+    public virtual void SetRitOffset(int value)
     {
-        if (Enabled && (value != RitOffset))
-        {
-            AddWriteCommand(RigParameter.RitOffset, value);
-        }
+        _ritOffset = value;
     }
 
-    public void SetPitch(int value)
+    public virtual void SetPitch(int value)
     {
-        if (!Enabled)
-        {
-            return;
-        }
-
-        AddWriteCommand(RigParameter.Pitch, value);
-
-        //remember the pitch that we set if we cannot read it back from the rig
-        if (!RigCommands.ReadableParams.Contains(RigParameter.Pitch))
-        {
-            Pitch = value;
-        }
+        _pitch = value;
     }
 
-    public void SetVfo(RigParameter value)
+    public virtual void SetVfo(RigParameter value)
     {
-        if (Enabled && RigCommandUtilities.VfoParams.Contains(value) && value != Vfo)
-        {
-            AddWriteCommand(value);
-        }
+        _vfo = value;
     }
 
     public void SetSplit(RigParameter value)
@@ -374,38 +409,24 @@ public abstract class CustomRig : IDisposable
         }
     }
 
-    public void SetRit(RigParameter value)
+    public virtual void SetRit(RigParameter value)
     {
-        if (Enabled && RigCommandUtilities.RitOnParams.Contains(value) 
-                    && value != Rit)
-        {
-            AddWriteCommand(value);
-        }
+        _rit = value;
     }
 
-    public void SetXit(RigParameter value)
+    public virtual void SetXit(RigParameter value)
     {
-        if (Enabled && RigCommandUtilities.XitOnParams.Contains(value) 
-                    && value != Xit)
-        {
-            AddWriteCommand(value);
-        }
+        _xit = value;
     }
 
-    public void SetTx(RigParameter value)
+    public virtual void SetTx(RigParameter value)
     {
-        if (Enabled && (RigCommandUtilities.TxParams.Contains(value)))
-        {
-            AddWriteCommand(value);
-        }
+        _tx = value;
     }
 
-    public void SetMode(RigParameter value)
+    public virtual void SetMode(RigParameter value)
     {
-        if (Enabled && (RigCommandUtilities.ModeParams.Contains(value)))
-        {
-            AddWriteCommand(value);
-        }
+        _mode = value;
     }
 
     #endregion

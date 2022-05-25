@@ -32,6 +32,8 @@ public sealed class GuestRig : Rig
     {
     }
 
+    public ushort HostRigId = 0;
+
     #region CustomRig members
 
     internal override void AddCommands(IEnumerable<RigCommand> commands, CommandKind kind)
@@ -117,4 +119,121 @@ public sealed class GuestRig : Rig
     }
 
     #endregion
+
+    #region Setter overrides
+
+    private void SendSetRigParameterPacket(RigParameter rigParameter, int value)
+    {
+        var packet = UdpPacketFactory.CreateSetRigParameterPacket(RigNumber,
+            senderId: ApplicationId, receiverId: HostRigId, rigParameter, value);
+        UdpMessenger.SendMultiCastMessage(packet);
+    }
+
+    /// <summary>
+    /// Sets a frequency.
+    /// As a guest, sends a request to host for changing the Rig parameter Freq.
+    /// </summary>
+    /// <param name="value"></param>
+    public override void SetFreq(int value)
+    {
+        if (!Enabled || value == Freq)
+        {
+            return;
+        }
+        base.SetFreq(value);
+        SendSetRigParameterPacket(RigParameter.Freq, value);
+    }
+
+    public override void SetFreqA(int value)
+    {
+        if (!Enabled || value == FreqA)
+        {
+            return;
+        }
+        base.SetFreqA(value);
+        SendSetRigParameterPacket(RigParameter.FreqA, value);
+    }
+
+    public override void SetFreqB(int value)
+    {
+        if (!Enabled || value == FreqB)
+        {
+            return;
+        }
+        base.SetFreqB(value);
+        SendSetRigParameterPacket(RigParameter.FreqB, value);
+    }
+
+    public override void SetPitch(int value)
+    {
+        if (!Enabled || value == Pitch)
+        {
+            return;
+        }
+        base.SetPitch(value);
+        SendSetRigParameterPacket(RigParameter.Pitch, value);
+    }
+
+    public override void SetRitOffset(int value)
+    {
+        if (!Enabled || value == RitOffset)
+        {
+            return;
+        }
+        base.SetRitOffset(value);
+        SendSetRigParameterPacket(RigParameter.RitOffset, value);
+    }
+
+    public override void SetVfo(RigParameter value)
+    {
+        if (!Enabled || value == Vfo)
+        {
+            return;
+        }
+        base.SetVfo(value);
+        SendSetRigParameterPacket(value, 0);
+    }
+
+    public override void SetRit(RigParameter value)
+    {
+        if (!Enabled || value == Rit)
+        {
+            return;
+        }
+        base.SetRit(value);
+        SendSetRigParameterPacket(value, 0);
+    }
+
+    public override void SetXit(RigParameter value)
+    {
+        if (!Enabled || value == Xit)
+        {
+            return;
+        }
+        base.SetXit(value);
+        SendSetRigParameterPacket(value, 0);
+    }
+
+    public override void SetTx(RigParameter value)
+    {
+        if (!Enabled || value == Tx)
+        {
+            return;
+        }
+        base.SetTx(value);
+        SendSetRigParameterPacket(value, 0);
+    }
+
+    public override void SetMode(RigParameter value)
+    {
+        if (!Enabled || value == Mode)
+        {
+            return;
+        }
+        base.SetMode(value);
+        SendSetRigParameterPacket(value, 0);
+    }
+
+    #endregion
+
 }

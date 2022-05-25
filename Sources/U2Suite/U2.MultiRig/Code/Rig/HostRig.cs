@@ -384,5 +384,125 @@ public sealed class HostRig : Rig
     {
         RigParameterChanged?.Invoke(this, rigNumber, parameter, value);
     }
+
+    #region Setter overloads
+
+    public override void SetFreq(int value)
+    {
+        if (!Enabled || Freq == value)
+        {
+            return;
+        }
+
+        base.SetFreq(value);
+        AddWriteCommand(RigParameter.Freq, value);
+    }
+
+    public override void SetFreqA(int value)
+    {
+        if (!Enabled || value == FreqA)
+        {
+            return;
+        }
+
+        base.SetFreq(value);
+        AddWriteCommand(RigParameter.FreqA, value);
+    }
+
+    public override void SetFreqB(int value)
+    {
+        if (!Enabled || (value == FreqB))
+        {
+            return;
+        }
+
+        base.SetFreqB(value);
+        AddWriteCommand(RigParameter.FreqB, value);
+    }
+
+    public override void SetPitch(int value)
+    {
+        if (!Enabled || Pitch == value)
+        {
+            return;
+        }
+
+        //remember the pitch that we set if we cannot read it back from the rig
+        if (!RigCommands.ReadableParams.Contains(RigParameter.Pitch))
+        {
+            base.SetPitch(value);
+        }
+        AddWriteCommand(RigParameter.Pitch, value);
+    }
+
+    public override void SetRitOffset(int value)
+    {
+        if (!Enabled || RitOffset == value)
+        {
+            return;
+        }
+
+        base.SetRitOffset(value);
+        AddWriteCommand(RigParameter.RitOffset, value);
+    }
+
+    public override void SetVfo(RigParameter value)
+    {
+        if (!Enabled || Vfo == value || 
+            !RigCommandUtilities.VfoParams.Contains(value))
+        {
+            return;
+        }
+
+        base.SetVfo(value);
+        AddWriteCommand(value);
+    }
+
+    public override void SetRit(RigParameter value)
+    {
+        if (!Enabled || value == Rit || 
+            !RigCommandUtilities.RitOnParams.Contains(value))
+        {
+            return;
+        }
+
+        base.SetRit(value);
+        AddWriteCommand(value);
+    }
+
+    public override void SetXit(RigParameter value)
+    {
+        if (!Enabled || !RigCommandUtilities.XitOnParams.Contains(value) || value == Xit)
+        {
+            return;
+        }
+
+        base.SetRit(value);
+        AddWriteCommand(value);
+    }
+
+    public override void SetTx(RigParameter value)
+    {
+        if (!Enabled || (!RigCommandUtilities.TxParams.Contains(value)))
+        {
+            return;
+        }
+
+        base.SetTx(value);
+        AddWriteCommand(value);
+    }
+
+    public override void SetMode(RigParameter value)
+    {
+        if (!Enabled || !RigCommandUtilities.ModeParams.Contains(value))
+        {
+            return;
+        }
+
+        base.SetMode(value);
+        AddWriteCommand(value);
+    }
+
+    #endregion
 }
 #nullable restore

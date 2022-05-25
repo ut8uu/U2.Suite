@@ -202,4 +202,11 @@ public static class ByteFunctions
         Array.Reverse(data); // big endian is expected
         return data;
     }
+
+    public static byte[] LongToBytes(long input)
+    {
+        var data = BitConverter.GetBytes(input);
+        Array.Reverse(data); // big endian is expected
+        return data;
+    }
 }
