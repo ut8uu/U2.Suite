@@ -42,8 +42,9 @@ public sealed class GuestRig : Rig
     {
     }
 
-    internal override void ProcessStatusReply(int number, byte[] data)
+    internal override bool ProcessStatusReply(int number, byte[] data)
     {
+        return true;
     }
 
     internal override void ProcessWriteReply(RigParameter param, byte[] data)

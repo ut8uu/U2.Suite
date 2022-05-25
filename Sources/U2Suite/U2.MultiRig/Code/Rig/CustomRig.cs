@@ -446,7 +446,7 @@ public abstract class CustomRig : IDisposable
 
     internal abstract void ProcessInitReply(int number, byte[] data);
 
-    internal abstract void ProcessStatusReply(int number, byte[] data);
+    internal abstract bool ProcessStatusReply(int number, byte[] data);
 
     internal abstract void ProcessWriteReply(RigParameter param, byte[] data);
 

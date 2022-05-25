@@ -42,20 +42,28 @@ public sealed class HostRig : Rig
     ////////////////////////////////////////////////////////////////////////////////
     //                           interpret reply
     ////////////////////////////////////////////////////////////////////////////////
-    internal bool ValidateReply(byte[] inputData, BitMask mask)
+    /// <summary>
+    /// Validates a reply using the given Flags
+    /// </summary>
+    /// <param name="inputData"></param>
+    /// <param name="mask"></param>
+    /// <exception cref="ValueValidationException"></exception>
+    internal void ValidateReply(byte[] inputData, BitMask mask)
     {
-        if (inputData.Length == mask.Mask.Length
-            && inputData.Length == mask.Flags.Length)
+        if (inputData.Length != mask.Flags.Length)
         {
-            var data = ByteFunctions.BytesAnd(inputData, mask.Mask);
-            if (data.SequenceEqual(mask.Flags))
-            {
-                return true;
-            }
+            throw new ValueValidationException($"Incorrect input data length. Expected {mask.Flags.Length}, actual {inputData.Length}.");
         }
 
-        Logger.Error($"RIG{RigNumber} reply validation failed.");
-        return false;
+        var data = ByteFunctions.BytesAnd(inputData, mask.Mask);
+        if (data.SequenceEqual(mask.Flags))
+        {
+            return;
+        }
+
+        var expectedString = ByteFunctions.BytesToHex(mask.Flags);
+        var actualString = ByteFunctions.BytesToHex(inputData);
+        throw new ValueValidationException($"Invalid input data. Expected {expectedString}, actual {actualString}.");
     }
 
     ////////////////////////////////////////////////////////////////////////////////
@@ -77,27 +85,40 @@ public sealed class HostRig : Rig
         }
     }
 
-    internal override void ProcessInitReply(int number, byte[] data)
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="initCommandIndex"></param>
+    /// <param name="data"></param>
+    /// <returns></returns>
+    /// <exception cref="ValueValidationException">Is thrown when input data do not match the validation Flags</exception>
+    internal override void ProcessInitReply(int initCommandIndex, byte[] data)
     {
-        ValidateReply(data, RigCommands.InitCmd[number].Validation);
+        ValidateReply(data, RigCommands.InitCmd[initCommandIndex].Validation);
     }
 
-    internal override void ProcessStatusReply(int number, byte[] data)
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="statusCommandIndex"></param>
+    /// <param name="data"></param>
+    /// <returns></returns>
+    /// <exception cref="ValueValidationException">Is thrown when input data do not match the validation Flags</exception>
+    /// <exception cref="ArgumentOutOfRangeException"></exception>
+    internal override bool ProcessStatusReply(int statusCommandIndex, byte[] data)
     {
         //validate reply
-        var cmd = RigCommands.StatusCmd[number];
+        var cmd = RigCommands.StatusCmd[statusCommandIndex];
 
-        if (!ValidateReply(data, cmd.Validation))
-        {
-            return;
-        }
+        ValidateReply(data, cmd.Validation);
 
         //extract numeric values
         for (var index = 0; index <= cmd.Values.Count - 1; index++)
         {
             try
             {
-                StoreParam(cmd.Values[index].Param, ConversionFunctions.UnformatValue(data, cmd.Values[index]));
+                var value = ConversionFunctions.UnformatValue(data, cmd.Values[index]);
+                StoreParam(cmd.Values[index].Param, value);
             }
             catch (Exception ex)
             {
@@ -135,6 +156,8 @@ public sealed class HostRig : Rig
         }
         ReportChangedParameters(_changedParams);
         _changedParams.Clear();
+
+        return true;
     }
 
     private void ReportChangedParameters(IEnumerable<RigParameter> parameters)
@@ -290,7 +313,7 @@ public sealed class HostRig : Rig
 
         field.SetValue(this, parameter);
 
-        ReportChangedParameters(new []{parameter});
+        ReportChangedParameters(new[] { parameter });
 
         //unsolved problem:
         //there is no command to read the mode of the other VFO,
@@ -306,7 +329,13 @@ public sealed class HostRig : Rig
         return true;
     }
 
-    private void StoreParam(RigParameter parameter, int parameterValue)
+    /// <summary>
+    /// Stores given value into specified parameter.
+    /// </summary>
+    /// <param name="parameter">A parameter to store to</param>
+    /// <param name="parameterValue">A parameter value</param>
+    /// <exception cref="ArgumentOutOfRangeException">Is thrown when passed not supported parameter.</exception>
+    internal void StoreParam(RigParameter parameter, int parameterValue)
     {
         FieldInfo field;
 
@@ -333,7 +362,7 @@ public sealed class HostRig : Rig
                 break;
 
             default:
-                return;
+                throw new ArgumentOutOfRangeException($"Parameter {parameter} not supported.");
         }
 
         var fieldValue = field.GetValue(this);
