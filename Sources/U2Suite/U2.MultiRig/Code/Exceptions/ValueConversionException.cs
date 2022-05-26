@@ -19,7 +19,7 @@
 
 namespace U2.MultiRig;
 
-internal class ValueConversionException : Exception
+public class ValueConversionException : Exception
 {
     public ValueConversionException(string message) : base(message)
     {

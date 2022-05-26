@@ -32,7 +32,7 @@ public sealed class GuestRig : Rig
     {
     }
 
-    public ushort HostRigId = 0;
+    public ushort HostRigId { get; set; } = 0;
 
     #region CustomRig members
 

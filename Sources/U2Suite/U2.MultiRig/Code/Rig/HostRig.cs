@@ -219,8 +219,12 @@ public sealed class HostRig : Rig
             return;
         }
 
-        var cmd = RigCommands.WriteCmd[(int)param];
+        if (!RigCommands.WriteCmd.ContainsKey((int) param))
+        {
+            throw new ArgumentException($"A parameter {param} does not support writing to the RIG.", nameof(param));
+        }
 
+        var cmd = RigCommands.WriteCmd[(int)param];
         if (cmd.Code == null)
         {
             Logger.ErrorFormat("RIG{0} Write command not supported for {1}", RigNumber, param);
