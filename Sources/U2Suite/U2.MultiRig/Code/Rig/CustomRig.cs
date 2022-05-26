@@ -53,7 +53,6 @@ public abstract class CustomRig : IDisposable
     private readonly Timer _timeoutTimer;
     private CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
     private readonly RigCommands _rigCommands;
-    private readonly SerialPortInput _serialPort;
     private readonly CommandQueue _queue;
     private bool _online = false;
     protected RigParameter LastWrittenMode = RigParameter.None;
@@ -76,14 +75,7 @@ public abstract class CustomRig : IDisposable
 
         if (rigControlType == RigControlType.Host)
         {
-            _serialPort = CreateSerialPort(_rigSettings);
-            _serialPort.ConnectionStatusChanged += SerialPort_ConnectionStatusChanged;
-            _serialPort.MessageReceived += SerialPort_MessageReceived;
 
-            _connectivityTimer = new Timer(ConnectivityTimerCallbackFunc);
-            DisableConnectivityTimer();
-            _timeoutTimer = new Timer(TimeoutTimerCallbackFunc);
-            DisableTimeoutTimer();
         }
 
         UdpMessenger = new RigUdpMessenger(rigControlType, _cancellationTokenSource.Token);
@@ -465,9 +457,9 @@ public abstract class CustomRig : IDisposable
         _queue.AddBeforeStatusCommands(commandQueueItem);
     }
 
-    internal abstract void ProcessInitReply(int number, byte[] data);
+    internal abstract void ProcessInitReply(int initCommandIndex, byte[] data);
 
-    internal abstract bool ProcessStatusReply(int number, byte[] data);
+    internal abstract bool ProcessStatusReply(int statusCommandIndex, byte[] data);
 
     internal abstract void ProcessWriteReply(RigParameter param, byte[] data);
 
