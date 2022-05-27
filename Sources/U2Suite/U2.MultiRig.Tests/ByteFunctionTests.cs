@@ -104,5 +104,18 @@ namespace U2.MultiRig.Tests
             Assert.Equal(unixEpochBytes, bytes);
             Assert.Equal(timestamp, decodedTimestamp);
         }
+
+        [Theory]
+        [InlineData("0000000000000002.0304", RigParameter.FreqA, 772)]
+        [InlineData("0000000000000002.00000304", RigParameter.FreqA, 772)]
+        [InlineData("0000000000000002.0000000000000304", RigParameter.FreqA, 772)]
+        public void BytesToRigParameterValue(string hex, RigParameter expectedRigParameter, 
+            long expectedValue)
+        {
+            var data = ByteFunctions.HexStrToBytes(hex);
+            var (parameter, value) = ByteFunctions.BytesToRigParameterValue(data);
+            Assert.Equal(expectedRigParameter, parameter);
+            Assert.Equal(expectedValue, value);
+        }
     }
 }

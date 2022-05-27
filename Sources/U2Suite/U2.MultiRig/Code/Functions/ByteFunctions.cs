@@ -20,6 +20,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.ServiceModel.Channels;
 using System.Text;
@@ -121,6 +122,11 @@ public static class ByteFunctions
         }
     }
 
+    public static byte[] RigParameterToBytes(RigParameter parameter)
+    {
+        return UlongToBytes((ulong)parameter);
+    }
+
     public static byte[] TimestampToBytes(DateTime timestamp)
     {
         return BitConverter.GetBytes(timestamp.ToBinary());
@@ -132,7 +138,21 @@ public static class ByteFunctions
         return res;
     }
 
-    private static byte[] UshortToBytes(ushort input)
+    public static byte[] UshortToBytes(ushort input)
+    {
+        var data = BitConverter.GetBytes(input);
+        Array.Reverse(data); // big endian is expected
+        return data;
+    }
+
+    public static byte[] IntToBytes(int input)
+    {
+        var data = BitConverter.GetBytes(input);
+        Array.Reverse(data); // big endian is expected
+        return data;
+    }
+
+    private static byte[] ULongToBytes(ulong input)
     {
         var data = BitConverter.GetBytes(input);
         Array.Reverse(data); // big endian is expected
@@ -144,6 +164,34 @@ public static class ByteFunctions
         var arr = data.ToArray();
         Array.Reverse(arr); // big endian is expected
         return BitConverter.ToUInt16(arr);
+    }
+
+    private static ulong BytesToUlong(byte[] data)
+    {
+        var arr = data.ToArray();
+        Array.Reverse(arr); // big endian is expected
+        return BitConverter.ToUInt64(arr);
+    }
+
+    private static short BytesToShort(byte[] data)
+    {
+        var arr = data.ToArray();
+        Array.Reverse(arr); // big endian is expected
+        return BitConverter.ToInt16(arr);
+    }
+
+    private static int BytesToInt(byte[] data)
+    {
+        var arr = data.ToArray();
+        Array.Reverse(arr); // big endian is expected
+        return BitConverter.ToInt32(arr);
+    }
+
+    private static long BytesToLong(byte[] data)
+    {
+        var arr = data.ToArray();
+        Array.Reverse(arr); // big endian is expected
+        return BitConverter.ToInt64(arr);
     }
 
     public static byte[] MessageIdToBytes(byte messageId)
@@ -208,5 +256,37 @@ public static class ByteFunctions
         var data = BitConverter.GetBytes(input);
         Array.Reverse(data); // big endian is expected
         return data;
+    }
+
+    public static RigParameter BytesToRigParameter(byte[] data)
+    {
+        Debug.Assert(data.Length == 8); // 64-bit value
+        return (RigParameter)BytesToUlong(data);
+    }
+
+    public static (RigParameter, long) BytesToRigParameterValue(byte[] data)
+    {
+        if (data.Length == 0)
+        {
+            return (RigParameter.None, 0);
+        }
+ 
+        var parameter = (RigParameter)BytesToLong(data.Take(8).ToArray());
+        long value = 0;
+
+        var valueBytes = data.Skip(8).ToArray();
+        if (valueBytes.Length == 2)
+        {
+            value = Convert.ToInt64(BytesToShort(valueBytes));
+        }
+        else if (valueBytes.Length == 4)
+        {
+            value = Convert.ToInt64(BytesToInt(valueBytes));
+        }
+        else if (valueBytes.Length == 8)
+        {
+            value = BytesToLong(valueBytes);
+        }
+        return (parameter, value);
     }
 }
