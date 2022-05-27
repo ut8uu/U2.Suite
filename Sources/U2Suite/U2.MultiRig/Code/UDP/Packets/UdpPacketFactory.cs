@@ -43,20 +43,26 @@ public static class UdpPacketFactory
             throw new ArgumentNullException(nameof(parameterValue));
         }
 
-        var data = Array.Empty<byte>();
+        var data = new List<byte>(ByteFunctions.RigParameterToBytes(parameter));
         if (parameterValue is string stringValue)
         {
-            data = Encoding.UTF8.GetBytes(stringValue);
+            data.AddRange(Encoding.UTF8.GetBytes(stringValue));
         }
         else if (parameterValue is int intValue)
         {
-            data = BitConverter.GetBytes(intValue);
-            Array.Reverse(data); // big endian
+            data.AddRange(ByteFunctions.IntToBytes(intValue));
         }
         else if (parameterValue is ushort ushortValue)
         {
-            data = ByteFunctions.CommandIdToBytes(ushortValue);
+            data.AddRange(ByteFunctions.UshortToBytes(ushortValue));
         }
+        else if (parameterValue is ulong uLongValue)
+        {
+            data.AddRange(ByteFunctions.UlongToBytes(uLongValue));
+        }
+
+        var dataArray = data.ToArray();
+        
         var packet = new RigUdpMessengerPacket
         {
             MagicNumber = new MagicNumberPacketChunk(),
@@ -67,8 +73,8 @@ public static class UdpPacketFactory
             MessageType = new MessageTypePacketChunk(MessageTypes.Status),
             Checksum = new ChecksumPacketChunk(0),
             CommandId = new CommandIdPacketChunk(CommandIdentifiers.SingleParameterChangedNotification),
-            DataLength = new DataLengthPacketChunk((ushort)data.Length),
-            Data = new DataPacketChunk(data),
+            DataLength = new DataLengthPacketChunk((ushort)dataArray.Length),
+            Data = new DataPacketChunk(dataArray),
         };
         packet.Checksum.SetValue(packet.GetCheckSum());
 
