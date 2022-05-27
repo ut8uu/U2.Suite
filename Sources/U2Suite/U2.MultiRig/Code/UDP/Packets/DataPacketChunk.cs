@@ -43,7 +43,7 @@ public sealed class DataPacketChunk : UdpPacketChunk<byte[]>
 
     internal override byte[] GetValueFromBytes(byte[] data)
     {
-        return Value ?? Array.Empty<byte>();
+        return data ?? Array.Empty<byte>();
     }
 
     public static DataPacketChunk Create(byte[] data)
