@@ -17,31 +17,150 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+using ColorTextBlock.Avalonia;
+using log4net;
+using MonoSerialPort;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO.Ports;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+using U2.MultiRig.Code;
 
 namespace U2.MultiRig;
 
 #nullable disable
 public sealed class HostRig : Rig
 {
-    private readonly List<RigParameter> _changedParams = new();
+    private static readonly object LockStart = new();
+    private static readonly object StopLockObject = new();
+    private static readonly object TimerTickLockObject = new();
+    private static readonly object CheckQueueLockObject = new();
 
-    public HostRig(int rigNumber, ushort applicationId, RigSettings settings, RigCommands rigCommands)
-        : base(RigControlType.Host, rigNumber, applicationId, settings, rigCommands)
+    private readonly List<RigParameter> _changedParams = new();
+    private static readonly object MessageReceivedLockObject = new();
+    private readonly List<byte> _receiveQueue = new();
+    private readonly CommandQueue _queue = new();
+    private readonly RigSettings _rigSettings;
+    private readonly RigCommands _rigCommands;
+    private readonly Timer _connectivityTimer;
+    private readonly Timer _timeoutTimer;
+    private readonly ILog _logger = LogManager.GetLogger(typeof(HostRig));
+
+    public HostRig(int rigNumber, ushort applicationId, RigSettings rigSettings, RigCommands rigCommands)
+        : base(RigControlType.Host, rigNumber, applicationId)
     {
+        _rigSettings = rigSettings;
+        _rigCommands = rigCommands;
+        _connectivityTimer = new Timer(ConnectivityTimerCallbackFunc);
+        DisableConnectivityTimer();
+        _timeoutTimer = new Timer(TimeoutTimerCallbackFunc);
+        DisableTimeoutTimer();
+
+        _rigSerialPort = new RigSerialPort();
+        _rigSerialPort.RigSettings = _rigSettings;
+        _rigSerialPort.SerialPortMessageReceived += RigSerialPortOnSerialPortMessageReceived;
+    }
+
+    private void RigSerialPortOnSerialPortMessageReceived(object sender, SerialPortMessageReceivedEventArgs eventargs)
+    {
+        lock (MessageReceivedLockObject)
+        {
+            var receivedData = eventargs.Data;
+            _receiveQueue.AddRange(receivedData);
+
+            //some COM ports do not send EV_TXEMPTY
+            if (_queue.Phase == ExchangePhase.Sending)
+            {
+                _queue.Phase = ExchangePhase.Receiving;
+                _logger.Error("RIG: Data received from radio while receiving is not expected. Switched to receiving.");
+            }
+
+            if (_queue.Phase != ExchangePhase.Receiving)
+            {
+                _logger.ErrorFormat("RIG: received data when not in the receiving state: {0} ({1} bytes)",
+                    ByteFunctions.BytesToHex(receivedData), receivedData.Length);
+                return;
+            }
+
+            //are we in the right state?
+            if (_queue.Count == 0)
+            {
+                _logger.Error("RIG: Data received, but the queue is empty.");
+                return;
+            }
+
+            var currentCommand = _queue.CurrentCmd;
+            Debug.Assert(currentCommand != null);
+
+            if (currentCommand.NeedsReply
+                && currentCommand.ReplyLength > _receiveQueue.Count)
+            {
+                return;
+            }
+
+            //process data
+            try
+            {
+                DisableTimeoutTimer();
+
+                var data = _receiveQueue.Take(currentCommand.ReplyLength).ToArray();
+                var theTail = _receiveQueue.Skip(currentCommand.ReplyLength);
+                _receiveQueue.Clear();
+                _receiveQueue.AddRange(theTail);
+                switch (currentCommand.Kind)
+                {
+                    case CommandKind.Init:
+                        ProcessInitReply(currentCommand.Number, data);
+                        break;
+
+                    case CommandKind.Write:
+                        ProcessWriteReply(currentCommand.Param, data);
+                        break;
+
+                    case CommandKind.Status:
+                        ProcessStatusReply(currentCommand.Number, data);
+                        break;
+
+                    case CommandKind.Custom:
+#warning TODO Check if Custom command is required
+                        _logger.Error($"A custom command is not handled.");
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException($"A command kind {currentCommand.Kind} not recognized.", nameof(currentCommand.Kind));
+                }
+            }
+            catch (Exception e)
+            {
+                _logger.ErrorFormat("RIG{0}: Error during processing reply: {1}", RigNumber, e.Message);
+            }
+
+            //we are receiving data, therefore we are online
+            if (!_online)
+            {
+                _online = true;
+                UdpMessenger.SendMultiCastMessage(UdpPacketFactory.CreateHeartbeatPacket(RigNumber, ApplicationId));
+            }
+
+            //send next command if queue not empty
+            _queue.RemoveAt(0);
+            _queue.Phase = ExchangePhase.Idle;
+            if (_queue.Count > 0)
+            {
+                CheckQueue();
+            }
+        }
+
     }
 
     public event RigParameterChangedEventHandler RigParameterChanged;
 
-    ////////////////////////////////////////////////////////////////////////////////
-    //                           interpret reply
-    ////////////////////////////////////////////////////////////////////////////////
     /// <summary>
     /// Validates a reply using the given Flags
     /// </summary>
@@ -66,25 +185,6 @@ public sealed class HostRig : Rig
         throw new ValueValidationException($"Invalid input data. Expected {expectedString}, actual {actualString}.");
     }
 
-    ////////////////////////////////////////////////////////////////////////////////
-    //                          add command to queue
-    ////////////////////////////////////////////////////////////////////////////////
-    internal override void AddCommands(IEnumerable<RigCommand> commands, CommandKind kind)
-    {
-        var index = 0;
-        foreach (var command in commands)
-        {
-            AddCommand(new QueueItem
-            {
-                Code = command.Code,
-                Number = index++,
-                ReplyLength = command.ReplyLength,
-                ReplyEnd = ByteFunctions.BytesToStr(command.ReplyEnd),
-                Kind = kind,
-            });
-        }
-    }
-
     /// <summary>
     /// 
     /// </summary>
@@ -92,9 +192,9 @@ public sealed class HostRig : Rig
     /// <param name="data"></param>
     /// <returns></returns>
     /// <exception cref="ValueValidationException">Is thrown when input data do not match the validation Flags</exception>
-    internal override void ProcessInitReply(int initCommandIndex, byte[] data)
+    internal void ProcessInitReply(int initCommandIndex, byte[] data)
     {
-        ValidateReply(data, RigCommands.InitCmd[initCommandIndex].Validation);
+        ValidateReply(data, _rigCommands.InitCmd[initCommandIndex].Validation);
     }
 
     /// <summary>
@@ -105,10 +205,10 @@ public sealed class HostRig : Rig
     /// <returns></returns>
     /// <exception cref="ValueValidationException">Is thrown when input data do not match the validation Flags</exception>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
-    internal override bool ProcessStatusReply(int statusCommandIndex, byte[] data)
+    internal bool ProcessStatusReply(int statusCommandIndex, byte[] data)
     {
         //validate reply
-        var cmd = RigCommands.StatusCmd[statusCommandIndex];
+        var cmd = _rigCommands.StatusCmd[statusCommandIndex];
 
         ValidateReply(data, cmd.Validation);
 
@@ -204,27 +304,27 @@ public sealed class HostRig : Rig
         }
     }
 
-    internal override void ProcessWriteReply(RigParameter param, byte[] data)
+    internal void ProcessWriteReply(RigParameter param, byte[] data)
     {
-        ValidateReply(data, RigCommands.WriteCmd[(int)param].Validation);
+        ValidateReply(data, _rigCommands.WriteCmd[(int)param].Validation);
     }
 
-    internal override void AddWriteCommand(RigParameter param, int value = 0)
+    internal void AddWriteCommand(RigParameter param, int value = 0)
     {
         Logger.DebugFormat("RIG{0} Generating Write command for {1}", RigNumber, param);
 
         //is cmd supported?
-        if (RigCommands == null)
+        if (_rigCommands == null)
         {
             return;
         }
 
-        if (!RigCommands.WriteCmd.ContainsKey((int) param))
+        if (!_rigCommands.WriteCmd.ContainsKey((int)param))
         {
             throw new ArgumentException($"A parameter {param} does not support writing to the RIG.", nameof(param));
         }
 
-        var cmd = RigCommands.WriteCmd[(int)param];
+        var cmd = _rigCommands.WriteCmd[(int)param];
         if (cmd.Code == null)
         {
             Logger.ErrorFormat("RIG{0} Write command not supported for {1}", RigNumber, param);
@@ -267,55 +367,73 @@ public sealed class HostRig : Rig
         CheckQueue();
     }
 
-    private static FieldInfo GetFieldInfo(string name)
+    private static PropertyInfo GetPropertyInfo(string name)
     {
-        var result = typeof(Rig).GetField(name, BindingFlags.NonPublic | BindingFlags.Instance);
-        Debug.Assert(result != null, $"Field {name} not found in Rig.");
-        return result;
+        var property = typeof(CustomRig).GetProperty(name);
+        Debug.Assert(property != null, $"Property {name} not found in Rig");
+        return property;
     }
 
-    ////////////////////////////////////////////////////////////////////////////////
-    //                         store extracted param
-    ////////////////////////////////////////////////////////////////////////////////
+    /// <summary>
+    /// Stores given parameter to a variable.
+    /// </summary>
+    /// <param name="parameter"></param>
+    /// <returns>Returns <see langword="true"/> if new value was applied, otherwise <see langword="false"/>.</returns>
     private bool StoreParam(RigParameter parameter)
     {
-        FieldInfo field;
         if (RigCommandUtilities.VfoParams.Contains(parameter))
         {
-            field = GetFieldInfo(nameof(Vfo));
+            if (Vfo == parameter)
+            {
+                return false;
+            }
+            Vfo = parameter;
         }
         else if (RigCommandUtilities.SplitParams.Contains(parameter))
         {
-            field = GetFieldInfo(nameof(Split));
+            if (Split == parameter)
+            {
+                return false;
+            }
+            Split = parameter;
         }
         else if (RigCommandUtilities.RitOnParams.Contains(parameter))
         {
-            field = GetFieldInfo(nameof(Rit));
+            if (Rit == parameter)
+            {
+                return false;
+            }
+            Rit = parameter;
         }
         else if (RigCommandUtilities.XitOnParams.Contains(parameter))
         {
-            field = GetFieldInfo(nameof(Xit));
+            if (Xit == parameter)
+            {
+                return false;
+            }
+            Xit = parameter;
+            return false;
         }
         else if (RigCommandUtilities.TxParams.Contains(parameter))
         {
-            field = GetFieldInfo(nameof(Tx));
+            if (Tx == parameter)
+            {
+                return false;
+            }
+            Tx = parameter;
         }
         else if (RigCommandUtilities.ModeParams.Contains(parameter))
         {
-            field = GetFieldInfo(nameof(Mode));
+            if (Mode == parameter)
+            {
+                return false;
+            }
+            Mode = parameter;
         }
         else
         {
             return false;
         }
-
-        var fieldValue = field.GetValue(this);
-        if (fieldValue == null || parameter == (RigParameter)fieldValue)
-        {
-            return false;
-        }
-
-        field.SetValue(this, parameter);
 
         ReportChangedParameters(new[] { parameter });
 
@@ -341,41 +459,41 @@ public sealed class HostRig : Rig
     /// <exception cref="ArgumentOutOfRangeException">Is thrown when passed not supported parameter.</exception>
     internal void StoreParam(RigParameter parameter, int parameterValue)
     {
-        FieldInfo field;
+        PropertyInfo property;
 
         switch (parameter)
         {
             case RigParameter.FreqA:
-                field = GetFieldInfo(nameof(FreqA));
+                property = GetPropertyInfo(nameof(FreqA));
                 break;
 
             case RigParameter.FreqB:
-                field = GetFieldInfo(nameof(FreqB));
+                property = GetPropertyInfo(nameof(FreqB));
                 break;
 
             case RigParameter.Freq:
-                field = GetFieldInfo(nameof(Freq));
+                property = GetPropertyInfo(nameof(Freq));
                 break;
 
             case RigParameter.Pitch:
-                field = GetFieldInfo(nameof(Pitch));
+                property = GetPropertyInfo(nameof(Pitch));
                 break;
 
             case RigParameter.RitOffset:
-                field = GetFieldInfo(nameof(RitOffset));
+                property = GetPropertyInfo(nameof(RitOffset));
                 break;
 
             default:
                 throw new ArgumentOutOfRangeException($"Parameter {parameter} not supported.");
         }
 
-        var fieldValue = field.GetValue(this);
+        var fieldValue = property.GetValue(this);
         if (fieldValue == null || parameterValue == (int)fieldValue)
         {
             return;
         }
 
-        field.SetValue(this, parameterValue);
+        property.SetValue(this, parameterValue);
         _changedParams.Add(parameter);
         Logger.DebugFormat("RIG{0} status changed: {1} = {2}", RigNumber, parameter.ToString(), Convert.ToString(parameterValue));
         var packet = UdpPacketFactory.CreateSingleParameterReportingPacket(RigNumber,
@@ -409,7 +527,7 @@ public sealed class HostRig : Rig
             return;
         }
 
-        base.SetFreq(value);
+        base.SetFreqA(value);
         AddWriteCommand(RigParameter.FreqA, value);
     }
 
@@ -432,7 +550,7 @@ public sealed class HostRig : Rig
         }
 
         //remember the pitch that we set if we cannot read it back from the rig
-        if (!RigCommands.ReadableParams.Contains(RigParameter.Pitch))
+        if (!_rigCommands.ReadableParams.Contains(RigParameter.Pitch))
         {
             base.SetPitch(value);
         }
@@ -452,7 +570,7 @@ public sealed class HostRig : Rig
 
     public override void SetVfo(RigParameter value)
     {
-        if (!Enabled || Vfo == value || 
+        if (!Enabled || Vfo == value ||
             !RigCommandUtilities.VfoParams.Contains(value))
         {
             return;
@@ -464,7 +582,7 @@ public sealed class HostRig : Rig
 
     public override void SetRit(RigParameter value)
     {
-        if (!Enabled || value == Rit || 
+        if (!Enabled || value == Rit ||
             !RigCommandUtilities.RitOnParams.Contains(value))
         {
             return;
@@ -481,7 +599,7 @@ public sealed class HostRig : Rig
             return;
         }
 
-        base.SetRit(value);
+        base.SetXit(value);
         AddWriteCommand(value);
     }
 
@@ -507,6 +625,236 @@ public sealed class HostRig : Rig
         AddWriteCommand(value);
     }
 
+    public override void SetSplit(RigParameter value)
+    {
+        if (!Enabled && !RigCommandUtilities.SplitParams.Contains(value))
+        {
+            return;
+        }
+
+        if (_rigCommands.WriteableParams.Contains(value) && value != Split)
+        {
+            AddWriteCommand(value);
+        }
+        else if (value == RigParameter.SplitOn)
+        {
+            switch (Vfo)
+            {
+                case RigParameter.VfoAA:
+                    SetVfo(RigParameter.VfoAB);
+                    break;
+                case RigParameter.VfoBB:
+                    SetVfo(RigParameter.VfoBA);
+                    break;
+            }
+        }
+        else
+        {
+            switch (Vfo)
+            {
+                case RigParameter.VfoAB:
+                    SetVfo(RigParameter.VfoAA);
+                    break;
+                case RigParameter.VfoBA:
+                    SetVfo(RigParameter.VfoBB);
+                    break;
+            }
+        }
+
+        base.SetSplit(value);
+    }
+
     #endregion
+
+    #region Timer related methods
+
+    private void EnableConnectivityTimer()
+    {
+        var interval = TimeSpan.FromMilliseconds(_rigSettings.PollMs);
+        _connectivityTimer.Change(interval, interval);
+    }
+
+    private void DisableConnectivityTimer()
+    {
+        _connectivityTimer.Change(Timeout.Infinite, Timeout.Infinite);
+    }
+
+    private void ConnectivityTimerCallbackFunc(object state)
+    {
+        if (!_rigSettings.Enabled || _queue.Phase != ExchangePhase.Idle)
+        {
+            return;
+        }
+
+        var hasLock = false;
+
+        try
+        {
+            Monitor.TryEnter(TimerTickLockObject, ref hasLock);
+            if (!hasLock)
+            {
+                return;
+            }
+
+            DisableConnectivityTimer();
+
+            ConnectivityTimerTick();
+        }
+        finally
+        {
+            if (hasLock)
+            {
+                Monitor.Exit(TimerTickLockObject);
+                EnableConnectivityTimer();
+            }
+        }
+    }
+
+    private void EnableTimeoutTimer()
+    {
+        _timeoutTimer?.Change(TimeSpan.FromMilliseconds(_rigSettings.TimeoutMs), Timeout.InfiniteTimeSpan);
+    }
+
+    private void DisableTimeoutTimer()
+    {
+        _timeoutTimer?.Change(Timeout.InfiniteTimeSpan, Timeout.InfiniteTimeSpan);
+    }
+    private void ConnectivityTimerTick()
+    {
+        if (!Enabled)
+        {
+            return;
+        }
+
+        var connected = _rigSerialPort.IsConnected;
+        if (!connected)
+        {
+            _logger.Debug("RIG is not connected. (Re)Connecting.");
+            connected = _rigSerialPort.Connect();
+        }
+
+        if (!connected)
+        {
+            _logger.Error("Failed to connect to the RIG.");
+            return;
+        }
+
+        if (!_queue.HasStatusCommands)
+        {
+            AddCommands(_rigCommands.StatusCmd, CommandKind.Status);
+        }
+
+        CheckQueue();
+    }
+
+    private void TimeoutTimerCallbackFunc(object state)
+    {
+        _logger.Debug("RIG: A timeout occurred.");
+        _queue.Phase = ExchangePhase.Idle;
+    }
+
+    #endregion
+
+    #region Commands
+
+    internal void AddBeforeStatus(QueueItem commandQueueItem)
+    {
+        _queue.AddBeforeStatusCommands(commandQueueItem);
+    }
+
+    public void AddCommands(IEnumerable<RigCommand> commands, CommandKind kind)
+    {
+        var index = 0;
+        foreach (var command in commands)
+        {
+            AddCommand(new QueueItem
+            {
+                Code = command.Code,
+                Number = index++,
+                ReplyLength = command.ReplyLength,
+                ReplyEnd = ByteFunctions.BytesToStr(command.ReplyEnd),
+                Kind = kind,
+            });
+        }
+    }
+
+    internal void AddCommand(QueueItem commandQueueItem)
+    {
+        _queue.Add(commandQueueItem);
+    }
+
+    public void CheckQueue()
+    {
+        lock (CheckQueueLockObject)
+        {
+            if (!Enabled
+                            || !_rigSerialPort.IsConnected
+                            || _queue.Phase != ExchangePhase.Idle
+                            || _queue.Count == 0)
+            {
+                return;
+            }
+
+            //send command
+            _rigSerialPort.SendMessage(_queue.CurrentCmd.Code);
+
+            if (_queue.CurrentCmd.NeedsReply)
+            {
+                _queue.Phase = ExchangePhase.Receiving;
+                EnableTimeoutTimer();
+            }
+            else
+            {
+                _queue.RemoveAt(0);
+            }
+        }
+    }
+
+    #endregion
+
+    #region Start/stop
+
+    public override void Start()
+    {
+        if (_rigCommands == null)
+        {
+            return;
+        }
+
+        _logger.Info($"Starting RIG{RigNumber}");
+        lock (LockStart)
+        {
+            if (!_rigSettings.Enabled)
+            {
+                return;
+            }
+
+            _cancellationTokenSource = new CancellationTokenSource();
+            _queue.Clear();
+            _queue.Phase = ExchangePhase.Idle;
+
+            AddCommands(_rigCommands.InitCmd, CommandKind.Init);
+            AddCommands(_rigCommands.StatusCmd, CommandKind.Status);
+        }
+
+        _rigSerialPort.Start();
+        EnableConnectivityTimer();
+    }
+
+    public override void Stop()
+    {
+        _logger.Debug($"Stopping RIG{RigNumber}");
+
+        lock (StopLockObject)
+        {
+            _cancellationTokenSource.Cancel();
+            _online = false;
+            _rigSerialPort.Stop();
+        }
+    }
+
+    #endregion
+
+
 }
 #nullable restore

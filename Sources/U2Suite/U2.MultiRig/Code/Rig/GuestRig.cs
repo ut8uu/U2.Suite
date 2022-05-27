@@ -28,36 +28,11 @@ namespace U2.MultiRig;
 public sealed class GuestRig : Rig
 {
     public GuestRig(int rigNumber, ushort applicationId)
-        : base(RigControlType.Guest, rigNumber, applicationId, new RigSettings(), new RigCommands())
+        : base(RigControlType.Guest, rigNumber, applicationId)
     {
     }
 
     public ushort HostRigId { get; set; } = 0;
-
-    #region CustomRig members
-
-    internal override void AddCommands(IEnumerable<RigCommand> commands, CommandKind kind)
-    {
-    }
-
-    internal override void ProcessInitReply(int number, byte[] data)
-    {
-    }
-
-    internal override bool ProcessStatusReply(int number, byte[] data)
-    {
-        return true;
-    }
-
-    internal override void ProcessWriteReply(RigParameter param, byte[] data)
-    {
-    }
-
-    internal override void AddWriteCommand(RigParameter param, int value = 0)
-    {
-    }
-
-    #endregion
 
     #region Rig members
 
@@ -116,6 +91,27 @@ public sealed class GuestRig : Rig
     private void ProcessStatusPacket(RigUdpMessengerPacket packet)
     {
         Logger.Debug($"A status packet received: {ByteFunctions.BytesToHex(packet.GetBytes())}");
+
+        var commandId = packet.CommandId;
+        switch (commandId.Value)
+        {
+            case CommandIdentifiers.Heartbeat:
+                return;
+            case CommandIdentifiers.Information:
+                return;
+            case CommandIdentifiers.SingleParameterChangeRequest:
+                // processed on HostRig only
+                return;
+            case CommandIdentifiers.SingleParameterChangedNotification:
+                var (parameter, value) = ByteFunctions.BytesToRigParameterValue(packet.Data.Value);
+                Logger.Debug($"Received RigParameter change: {parameter}={value}");
+                return;
+            case CommandIdentifiers.MultipleParametersChangeRequest:
+                // processed on HostRig only
+                return;
+            case CommandIdentifiers.MultipleParametersChangedNotification:
+                return;
+        }
     }
 
     #endregion
@@ -232,6 +228,14 @@ public sealed class GuestRig : Rig
         }
         base.SetMode(value);
         SendSetRigParameterPacket(value, 0);
+    }
+
+    public override void Start()
+    {
+    }
+
+    public override void Stop()
+    {
     }
 
     #endregion

@@ -40,43 +40,23 @@ public enum RigCtlStatus
 #nullable disable
 public abstract class CustomRig : IDisposable
 {
-    private static readonly object LockStart = new();
-    private static readonly object StopLockObject = new();
-    private static readonly object TimerTickLockObject = new();
-    private static readonly object CheckQueueLockObject = new();
 
     protected readonly ushort ApplicationId;
-    private readonly RigSettings _rigSettings;
     private readonly ILog _logger = LogManager.GetLogger(typeof(CustomRig));
     protected RigUdpMessenger UdpMessenger;
-    private readonly Timer _connectivityTimer;
-    private readonly Timer _timeoutTimer;
-    private CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
-    private readonly RigCommands _rigCommands;
-    private readonly CommandQueue _queue;
-    private bool _online = false;
+    protected CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
+    protected bool _online = false;
     protected RigParameter LastWrittenMode = RigParameter.None;
+    protected IRigSerialPort _rigSerialPort;
 
     private static readonly object GetStatusLockObject = new();
-    private static readonly object MessageReceivedLockObject = new();
 
     public int RigNumber { get; set; } = 0;
 
-    public event SerialPortInput.ConnectionStatusChangedEventHandler ConnectionStatusChanged;
-
-    protected CustomRig(RigControlType rigControlType, int rigNumber, ushort applicationId, 
-        RigSettings rigSettings, RigCommands rigCommands)
+    protected CustomRig(RigControlType rigControlType, int rigNumber, ushort applicationId)
     {
         RigNumber = rigNumber;
         ApplicationId = applicationId;
-        _rigSettings = rigSettings;
-        _rigCommands = rigCommands;
-        _queue = new CommandQueue();
-
-        if (rigControlType == RigControlType.Host)
-        {
-
-        }
 
         UdpMessenger = new RigUdpMessenger(rigControlType, _cancellationTokenSource.Token);
     }
@@ -98,8 +78,7 @@ public abstract class CustomRig : IDisposable
 
     #region Properties
 
-    public RigCommands RigCommands => _rigCommands;
-    public bool Enabled => _rigSettings.Enabled;
+    public bool Enabled { get; set; }
 
     public RigCtlStatus Status => GetStatus();
 
@@ -139,7 +118,11 @@ public abstract class CustomRig : IDisposable
         set => SetVfo(value);
     }
 
-    public RigParameter Split => GetSplit();
+    public RigParameter Split
+    {
+        get => GetSplit();
+        set => SetSplit(value);
+    }
 
     public RigParameter Rit
     {
@@ -165,41 +148,8 @@ public abstract class CustomRig : IDisposable
         set => SetMode(value);
     }
 
-    private static readonly StopBits[] StopBits =
-    {
-        MonoSerialPort.Port.StopBits.One,
-        MonoSerialPort.Port.StopBits.OnePointFive,
-        MonoSerialPort.Port.StopBits.Two
-    };
-    private static readonly Parity[] Parities =
-    {
-        Parity.None,
-        Parity.Odd,
-        Parity.Even,
-        Parity.Mark,
-        Parity.Space
-    };
-
     #endregion
 
-    private void TimeoutTimerCallbackFunc(object state)
-    {
-        _logger.Debug($"RIG{RigNumber}: A timeout occurred.");
-        _queue.Phase = ExchangePhase.Idle;
-    }
-
-    private SerialPortInput CreateSerialPort(RigSettings rigSettings)
-    {
-        return new SerialPortInput(_rigSettings.Port,
-            baudRate: ComPortStuff.BaudRates[rigSettings.BaudRate],
-            parity: Parities[rigSettings.Parity],
-            dataBits: ComPortStuff.DataBits[rigSettings.DataBits],
-            stopBits: StopBits[_rigSettings.StopBits],
-            handshake: Handshake.None,
-            isVirtualPort: false);
-    }
-
-    private readonly List<byte> _receiveQueue = new();
     private int _freq;
     private int _freqA;
     private int _freqB;
@@ -210,104 +160,7 @@ public abstract class CustomRig : IDisposable
     private RigParameter _xit;
     private RigParameter _tx;
     private RigParameter _mode;
-
-    private void SerialPort_MessageReceived(object sender, MessageReceivedEventArgs args)
-    {
-        lock (MessageReceivedLockObject)
-        {
-            var receivedData = args.Data;
-            _receiveQueue.AddRange(receivedData);
-
-            //some COM ports do not send EV_TXEMPTY
-            if (_queue.Phase == ExchangePhase.Sending)
-            {
-                _queue.Phase = ExchangePhase.Receiving;
-                _logger.Error($"RIG{RigNumber}: Data received from radio while receiving is not expected. Switched to receiving.");
-            }
-
-            if (_queue.Phase != ExchangePhase.Receiving)
-            {
-                _logger.ErrorFormat("RIG{0}: received data when not in the receiving state: {1} ({2} bytes)",
-                    RigNumber, ByteFunctions.BytesToHex(receivedData), receivedData.Length);
-                return;
-            }
-
-            //are we in the right state?
-            if (_queue.Count == 0)
-            {
-                _logger.Error($"RIG{RigNumber}: Data received, but the queue is empty.");
-                return;
-            }
-
-            var currentCommand = _queue.CurrentCmd;
-            Debug.Assert(currentCommand != null);
-
-            if (currentCommand.NeedsReply
-                && currentCommand.ReplyLength > _receiveQueue.Count)
-            {
-                return;
-            }
-
-            //process data
-            try
-            {
-                DisableTimeoutTimer();
-
-                var data = _receiveQueue.Take(currentCommand.ReplyLength).ToArray();
-                var theTail = _receiveQueue.Skip(currentCommand.ReplyLength);
-                _receiveQueue.Clear();
-                _receiveQueue.AddRange(theTail);
-                switch (currentCommand.Kind)
-                {
-                    case CommandKind.Init:
-                        ProcessInitReply(currentCommand.Number, data);
-                        break;
-
-                    case CommandKind.Write:
-                        ProcessWriteReply(currentCommand.Param, data);
-                        break;
-
-                    case CommandKind.Status:
-                        ProcessStatusReply(currentCommand.Number, data);
-                        break;
-
-                    case CommandKind.Custom:
-                        #warning TODO Check if Custom command is required
-                        _logger.Error($"A custom command is not handled.");
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException($"A command kind {currentCommand.Kind} not recognized.", nameof(currentCommand.Kind));
-                }
-            }
-            catch (Exception e)
-            {
-                _logger.ErrorFormat("RIG{0}: Error during processing reply: {1}", RigNumber, e.Message);
-            }
-
-            //we are receiving data, therefore we are online
-            if (!_online)
-            {
-                _online = true;
-                UdpMessenger.SendMultiCastMessage(UdpPacketFactory.CreateHeartbeatPacket(RigNumber, ApplicationId));
-            }
-
-            //send next command if queue not empty
-            _queue.RemoveAt(0);
-            _queue.Phase = ExchangePhase.Idle;
-            if (_queue.Count > 0)
-            {
-                CheckQueue();
-            }
-        }
-    }
-
-    private void SerialPort_ConnectionStatusChanged(object sender, ConnectionStatusChangedEventArgs args)
-    {
-        var state = args.Connected ? "Connected" : "Disconnected";
-        _logger.Info($"Connection state changed to: {state}");
-
-        OnConnectionStatusChanged(args);
-    }
+    private RigParameter _split;
 
     ////////////////////////////////////////////////////////////////////////////////
     //                                 status
@@ -316,11 +169,11 @@ public abstract class CustomRig : IDisposable
     {
         lock (GetStatusLockObject)
         {
-            if (!_rigSettings.Enabled)
+            if (!Enabled)
             {
                 return RigCtlStatus.Disabled;
             }
-            if (_serialPort is {IsConnected: false})
+            if (!_rigSerialPort.IsConnected)
             {
                 return RigCtlStatus.PortBusy;
             }
@@ -364,41 +217,9 @@ public abstract class CustomRig : IDisposable
         _vfo = value;
     }
 
-    public void SetSplit(RigParameter value)
+    public virtual void SetSplit(RigParameter value)
     {
-        if (!(Enabled && RigCommandUtilities.SplitParams.Contains(value)))
-        {
-            return;
-        }
-
-        if (RigCommands.WriteableParams.Contains(value) && value != Split)
-        {
-            AddWriteCommand(value);
-        }
-        else if (value == RigParameter.SplitOn)
-        {
-            switch (Vfo)
-            {
-                case RigParameter.VfoAA:
-                    SetVfo(RigParameter.VfoAB);
-                    break;
-                case RigParameter.VfoBB:
-                    SetVfo(RigParameter.VfoBA);
-                    break;
-            }
-        }
-        else
-        {
-            switch (Vfo)
-            {
-                case RigParameter.VfoAB:
-                    SetVfo(RigParameter.VfoAA);
-                    break;
-                case RigParameter.VfoBA:
-                    SetVfo(RigParameter.VfoBB);
-                    break;
-            }
-        }
+        _split = value;   
     }
 
     public virtual void SetRit(RigParameter value)
@@ -425,201 +246,24 @@ public abstract class CustomRig : IDisposable
 
     private RigParameter GetSplit()
     {
-        var getSplitResult = Split;
-
-        if (getSplitResult != RigParameter.None)
+        if (_split != RigParameter.None)
         {
-            return getSplitResult;
+            return _split;
         }
         if (new[] { RigParameter.VfoAA, RigParameter.VfoBB }.Contains(Vfo))
         {
-            getSplitResult = RigParameter.SplitOff;
+            _split = RigParameter.SplitOff;
         }
         else if (new[] { RigParameter.VfoAB, RigParameter.VfoBA }.Contains(Vfo))
         {
-            getSplitResult = RigParameter.SplitOn;
+            _split = RigParameter.SplitOn;
         }
-        return getSplitResult;
+        return _split;
     }
 
-    //these commands are implemented in the descendant class,
-    //just to keep them in a separate file
+    public abstract void Start();
 
-    internal abstract void AddCommands(IEnumerable<RigCommand> commands, CommandKind kind);
+    public abstract void Stop();
 
-    internal void AddCommand(QueueItem commandQueueItem)
-    {
-        _queue.Add(commandQueueItem);
-    }
-
-    internal void AddBeforeStatus(QueueItem commandQueueItem)
-    {
-        _queue.AddBeforeStatusCommands(commandQueueItem);
-    }
-
-    internal abstract void ProcessInitReply(int initCommandIndex, byte[] data);
-
-    internal abstract bool ProcessStatusReply(int statusCommandIndex, byte[] data);
-
-    internal abstract void ProcessWriteReply(RigParameter param, byte[] data);
-
-    internal abstract void AddWriteCommand(RigParameter param, int value = 0);
-
-    public void Start()
-    {
-        if (RigCommands == null)
-        {
-            return;
-        }
-
-        _logger.Info($"Starting RIG{RigNumber}");
-        lock (LockStart)
-        {
-            if (!_rigSettings.Enabled)
-            {
-                return;
-            }
-
-            _cancellationTokenSource = new CancellationTokenSource();
-            _queue.Clear();
-            _queue.Phase = ExchangePhase.Idle;
-            AddCommands(RigCommands.InitCmd, CommandKind.Init);
-            AddCommands(RigCommands.StatusCmd, CommandKind.Status);
-        }
-
-        EnableConnectivityTimer();
-    }
-
-    public void Stop()
-    {
-        if (!_rigSettings.Enabled)
-        {
-            return;
-        }
-
-        _logger.Debug($"Stopping RIG{RigNumber}");
-
-        lock (StopLockObject)
-        {
-            _cancellationTokenSource.Cancel();
-            DisableConnectivityTimer();
-            _online = false;
-            _queue.Clear();
-            _queue.Phase = ExchangePhase.Idle;
-            _serialPort.Disconnect();
-            UdpMessenger.Dispose();
-        }
-    }
-
-    #region Timer related methods
-
-    private void EnableConnectivityTimer()
-    {
-        var interval = TimeSpan.FromMilliseconds(_rigSettings.PollMs);
-        _connectivityTimer.Change(interval, interval);
-    }
-
-    private void DisableConnectivityTimer()
-    {
-        _connectivityTimer.Change(Timeout.Infinite, Timeout.Infinite);
-    }
-
-    private void ConnectivityTimerCallbackFunc(object state)
-    {
-        if (!_rigSettings.Enabled || _queue.Phase != ExchangePhase.Idle)
-        {
-            return;
-        }
-
-        var hasLock = false;
-
-        try
-        {
-            Monitor.TryEnter(TimerTickLockObject, ref hasLock);
-            if (!hasLock)
-            {
-                return;
-            }
-
-            DisableConnectivityTimer();
-
-            ConnectivityTimerTick();
-        }
-        finally
-        {
-            if (hasLock)
-            {
-                Monitor.Exit(TimerTickLockObject);
-                EnableConnectivityTimer();
-            }
-        }
-    }
-
-    private void EnableTimeoutTimer()
-    {
-        _timeoutTimer?.Change(TimeSpan.FromMilliseconds(_rigSettings.TimeoutMs), Timeout.InfiniteTimeSpan);
-    }
-
-    private void DisableTimeoutTimer()
-    {
-        _timeoutTimer?.Change(Timeout.InfiniteTimeSpan, Timeout.InfiniteTimeSpan);
-    }
-
-    private void ConnectivityTimerTick()
-    {
-        var connected = _serialPort.IsConnected;
-        if (!connected)
-        {
-            _logger.Debug($"RIG{RigNumber} is not connected. (Re)Connecting.");
-            connected = _serialPort.Connect();
-        }
-
-        if (!connected)
-        {
-            _logger.Error("Failed to connect to the RIG.");
-            return;
-        }
-
-        if (!_queue.HasStatusCommands)
-        {
-            AddCommands(RigCommands.StatusCmd, CommandKind.Status);
-        }
-
-        CheckQueue();
-    }
-
-    #endregion
-
-    public void CheckQueue()
-    {
-        lock (CheckQueueLockObject)
-        {
-            if (!Enabled
-                || !_serialPort.IsConnected
-                || _queue.Phase != ExchangePhase.Idle
-                || _queue.Count == 0)
-            {
-                return;
-            }
-
-            //send command
-            _serialPort.SendMessage(_queue.CurrentCmd.Code);
-
-            if (_queue.CurrentCmd.NeedsReply)
-            {
-                _queue.Phase = ExchangePhase.Receiving;
-                EnableTimeoutTimer();
-            }
-            else
-            {
-                _queue.RemoveAt(0);
-            }
-        }
-    }
-
-    protected virtual void OnConnectionStatusChanged(ConnectionStatusChangedEventArgs args)
-    {
-        ConnectionStatusChanged?.Invoke(this, args);
-    }
 }
 #nullable restore

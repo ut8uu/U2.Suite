@@ -48,9 +48,8 @@ public abstract class Rig : CustomRig
 {
     protected readonly ILog Logger = LogManager.GetLogger(typeof(Rig));
 
-    protected Rig(RigControlType rigControlType, int rigNumber, ushort applicationId, 
-        RigSettings settings, RigCommands rigCommands) 
-        : base(rigControlType, rigNumber, applicationId, settings, rigCommands)
+    protected Rig(RigControlType rigControlType, int rigNumber, ushort applicationId) 
+        : base(rigControlType, rigNumber, applicationId)
     {
         UdpMessenger.UdpPacketReceived += UdpMessengerOnUdpPacketReceived;
     }
