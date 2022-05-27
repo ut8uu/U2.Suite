@@ -27,4 +27,17 @@ namespace U2.MultiRig.Code;
 
 public interface IRigSerialPort
 {
+    /// <summary>
+    /// Indicates whether the COM port is alive and connected.
+    /// </summary>
+    bool IsConnected { get; }
+    RigSettings RigSettings { get; set; }
+
+    event SerialPortMessageReceivedEventHandler SerialPortMessageReceived;
+
+    void Start();
+    void Stop();
+
+    bool Connect();
+    void SendMessage(byte[] data);
 }

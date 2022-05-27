@@ -17,24 +17,123 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+using ColorTextBlock.Avalonia;
+using log4net;
 using MonoSerialPort;
+using MonoSerialPort.Port;
+using System.Diagnostics;
 
 namespace U2.MultiRig.Code;
 
+public delegate void SerialPortMessageReceivedEventHandler(object sender, SerialPortMessageReceivedEventArgs eventArgs);
+
+public class SerialPortMessageReceivedEventArgs
+{
+    public SerialPortMessageReceivedEventArgs(byte[] data)
+    {
+        Data = data;
+    }
+
+    public byte[] Data { get; private set; }
+}
+
 public sealed class RigSerialPort : IRigSerialPort
 {
-    private readonly SerialPortInput _serialPort;
+    private RigSettings _rigSettings;
+    private SerialPortInput _serialPort;
+    private readonly ILog _logger = LogManager.GetLogger(typeof(RigSerialPort));
+
+    public event SerialPortMessageReceivedEventHandler SerialPortMessageReceived;
+
+    private static readonly StopBits[] StopBits =
+    {
+        MonoSerialPort.Port.StopBits.One,
+        MonoSerialPort.Port.StopBits.OnePointFive,
+        MonoSerialPort.Port.StopBits.Two
+    };
+    private static readonly Parity[] Parities =
+    {
+        Parity.None,
+        Parity.Odd,
+        Parity.Even,
+        Parity.Mark,
+        Parity.Space
+    };
 
     public RigSerialPort()
     {
+    }
+
+    public event SerialPortInput.ConnectionStatusChangedEventHandler ConnectionStatusChanged;
+
+    public RigSettings RigSettings
+    {
+        get => _rigSettings;
+        set
+        {
+            _rigSettings = value;
             _serialPort = CreateSerialPort(_rigSettings);
             _serialPort.ConnectionStatusChanged += SerialPort_ConnectionStatusChanged;
             _serialPort.MessageReceived += SerialPort_MessageReceived;
+        }
+    }
 
-            _connectivityTimer = new Timer(ConnectivityTimerCallbackFunc);
-            DisableConnectivityTimer();
-            _timeoutTimer = new Timer(TimeoutTimerCallbackFunc);
-            DisableTimeoutTimer();
+    public bool IsConnected => _serialPort?.IsConnected ?? false;
+    public void Start()
+    {
+    }
 
+    public void Stop()
+    {
+        _serialPort.Disconnect();
+    }
+
+    public bool Connect()
+    {
+        return _serialPort.Connect();
+    }
+
+    public void SendMessage(byte[] data)
+    {
+        _serialPort.SendMessage(data);
+    }
+
+    private SerialPortInput CreateSerialPort(RigSettings rigSettings)
+    {
+        return new SerialPortInput(_rigSettings.Port,
+            baudRate: ComPortStuff.BaudRates[rigSettings.BaudRate],
+            parity: Parities[rigSettings.Parity],
+            dataBits: ComPortStuff.DataBits[rigSettings.DataBits],
+            stopBits: StopBits[_rigSettings.StopBits],
+            handshake: Handshake.None,
+            isVirtualPort: false);
+    }
+
+    #region Event handlers
+
+    private void SerialPort_MessageReceived(object sender, MessageReceivedEventArgs args)
+    {
+        OnSerialPortMessageReceived(new SerialPortMessageReceivedEventArgs(args.Data));
+    }
+
+    private void SerialPort_ConnectionStatusChanged(object sender, ConnectionStatusChangedEventArgs args)
+    {
+        var state = args.Connected ? "Connected" : "Disconnected";
+        _logger.Info($"Connection state changed to: {state}");
+
+        OnConnectionStatusChanged(args);
+    }
+
+    void OnConnectionStatusChanged(ConnectionStatusChangedEventArgs args)
+    {
+        ConnectionStatusChanged?.Invoke(this, args);
+    }
+
+
+    #endregion
+
+    private void OnSerialPortMessageReceived(SerialPortMessageReceivedEventArgs eventargs)
+    {
+        SerialPortMessageReceived?.Invoke(this, eventargs);
     }
 }
