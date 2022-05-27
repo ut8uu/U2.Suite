@@ -172,19 +172,28 @@ static bool PollIcom705Port(params object[] parameters)
     Console.WriteLine(@"Polling the Icom IC-705");
     Console.Write(@"Select the COM port the device is connected to.");
 
-    var rig = GetIC705HostRig(parameters);
-    rig.Start();
+    var host = GetIC705HostRig(parameters);
+    host.Enabled = true;
+    host.Start();
 
     var guest = new GuestRig(1, KnownIdentifiers.U2Logger);
     guest.UdpPacketReceived += (sender, args) =>
     {
         Console.WriteLine($@"Received packet: {ByteFunctions.BytesToHex(args.Packet.GetBytes())}");
     };
+    guest.Enabled = true;
+    guest.Start();
 
     Console.WriteLine(@"Press Enter to continue.");
     Console.ReadLine();
 
-    rig.Dispose();
+    guest.Stop();
+    guest.Enabled = false;
+    guest.Dispose();
+
+    host.Stop();
+    host.Enabled = false;
+    host.Dispose();
 
     return true;
 }
