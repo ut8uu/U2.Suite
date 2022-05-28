@@ -25,8 +25,6 @@ using System.Diagnostics;
 using System.Linq;
 using System.Net.Sockets;
 using log4net;
-using MonoSerialPort;
-using MonoSerialPort.Port;
 using U2.MultiRig.Code;
 using U2.MultiRig.Code.UDP;
 
@@ -40,14 +38,14 @@ public enum RigCtlStatus
 #nullable disable
 public abstract class CustomRig : IDisposable
 {
-
+    private readonly RigControlType _rigControlType;
     protected readonly ushort ApplicationId;
     private readonly ILog _logger = LogManager.GetLogger(typeof(CustomRig));
     protected RigUdpMessenger UdpMessenger;
     protected CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
     protected bool _online = false;
     protected RigParameter LastWrittenMode = RigParameter.None;
-    protected IRigSerialPort _rigSerialPort;
+    private bool _logDebugEnabled = true;
 
     private static readonly object GetStatusLockObject = new();
 
@@ -56,6 +54,7 @@ public abstract class CustomRig : IDisposable
     protected CustomRig(RigControlType rigControlType, int rigNumber, ushort applicationId)
     {
         RigNumber = rigNumber;
+        _rigControlType = rigControlType;
         ApplicationId = applicationId;
 
         UdpMessenger = new RigUdpMessenger(rigControlType, _cancellationTokenSource.Token);
@@ -69,7 +68,7 @@ public abstract class CustomRig : IDisposable
 
     protected virtual void Dispose(bool disposing)
     {
-        _logger.Debug("Disposing");
+        LogDebug("Disposing");
 
         Stop();
 
@@ -162,18 +161,19 @@ public abstract class CustomRig : IDisposable
     private RigParameter _mode;
     private RigParameter _split;
 
-    ////////////////////////////////////////////////////////////////////////////////
-    //                                 status
-    ////////////////////////////////////////////////////////////////////////////////
     private RigCtlStatus GetStatus()
     {
         lock (GetStatusLockObject)
         {
+            if (_rigControlType == RigControlType.Guest)
+            {
+                return RigCtlStatus.OnLine;
+            }
             if (!Enabled)
             {
                 return RigCtlStatus.Disabled;
             }
-            if (!_rigSerialPort.IsConnected)
+            if (!IsConnected())
             {
                 return RigCtlStatus.PortBusy;
             }
@@ -183,6 +183,11 @@ public abstract class CustomRig : IDisposable
             }
             return RigCtlStatus.OnLine;
         }
+    }
+
+    protected virtual bool IsConnected()
+    {
+        return false;
     }
 
     #region Setters
@@ -264,6 +269,19 @@ public abstract class CustomRig : IDisposable
     public abstract void Start();
 
     public abstract void Stop();
+
+    protected virtual ILog GetLogger()
+    {
+        return LogManager.GetLogger(typeof(CustomRig));
+    }
+
+    private void LogDebug(string message)
+    {
+        if (_logDebugEnabled)
+        {
+            GetLogger().Debug(message);
+        }
+    }
 
 }
 #nullable restore
