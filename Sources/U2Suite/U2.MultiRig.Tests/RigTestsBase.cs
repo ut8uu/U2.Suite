@@ -28,6 +28,8 @@ public abstract class RigTestsBase
         MultiRigApplicationContext.Instance.Builder
             .Register(c => new IcomIC705SerialPortEmulator())
             .As<IRigSerialPort>();
+
+        MultiRigApplicationContext.Instance.BuildContainer();
     }
 
     public void Dispose()
@@ -36,7 +38,7 @@ public abstract class RigTestsBase
         FileSystemHelper.GetLocalFolderFunc = null;
     }
 
-    private void InitTestFolder()
+    protected void InitTestFolder()
     {
         if (Directory.Exists(TestsDirectory))
         {
@@ -47,7 +49,7 @@ public abstract class RigTestsBase
         PrepareIniFiles();
     }
 
-    private void PrepareIniFiles()
+    protected void PrepareIniFiles()
     {
         var currentDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
         Assert.NotNull(currentDirectory);
@@ -66,13 +68,18 @@ public abstract class RigTestsBase
         Assert.Equal(expectedCount, actualCount);
     }
 
-    private RigCommands LoadIni(string iniFile)
+    protected RigCommands LoadIni(string iniFile)
     {
         var file = Path.Combine(IniDirectory, iniFile);
         var cmd = RigCommandUtilities.LoadRigCommands(file);
         Assert.NotNull(cmd);
 
         return cmd;
+    }
+
+    protected RigCommands LoadIC705Ini()
+    {
+        return LoadIni("IC-705.ini");
     }
 
     protected HostRig GetHostRig()
