@@ -22,6 +22,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\U2.Core\U2.Core.csproj" />
+    <ProjectReference Include="..\U2.MultiRig.Utils\U2.MultiRig.Utils.csproj" />
     <ProjectReference Include="..\U2.MultiRig\U2.MultiRig.csproj" />
     <ProjectReference Include="..\U2.Tests.Common\U2.Tests.Common.csproj" />
   </ItemGroup>

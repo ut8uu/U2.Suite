@@ -5,7 +5,10 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using Autofac;
 using U2.Core;
+using U2.MultiRig.Code;
+using U2.MultiRig.Utils;
 using U2.Tests.Common;
 using Xunit;
 
@@ -21,6 +24,10 @@ public abstract class RigTestsBase
     {
         FileSystemHelper.GetLocalFolderFunc = () => TestsDirectory;
         InitTestFolder();
+
+        MultiRigApplicationContext.Instance.Builder
+            .Register(c => new IcomIC705SerialPortEmulator())
+            .As<IRigSerialPort>();
     }
 
     public void Dispose()
