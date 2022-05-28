@@ -21,6 +21,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Reactive.Joins;
 using System.Text;
+using Autofac;
 using DynamicData;
 using log4net;
 using SimpleUdp;
@@ -31,6 +32,12 @@ using U2.MultiRig.Code.UDP;
 using U2.MultiRig.Utils;
 
 var startKey = ConsoleKey.D1;
+
+MultiRigApplicationContext.Instance.Builder
+    .Register(c => new RigSerialPort())
+    .As<IRigSerialPort>();
+
+MultiRigApplicationContext.Instance.BuildContainer();
 
 var mainMenu = new List<ConsoleManagementElement>
 {

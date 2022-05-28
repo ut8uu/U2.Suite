@@ -30,6 +30,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Autofac;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using U2.MultiRig.Code;
 
@@ -52,8 +53,10 @@ public sealed class HostRig : Rig
     private readonly Timer _connectivityTimer;
     private readonly Timer _timeoutTimer;
     private readonly ILog _logger = LogManager.GetLogger(typeof(HostRig));
+    private readonly IRigSerialPort _rigSerialPort;
 
-    public HostRig(int rigNumber, ushort applicationId, RigSettings rigSettings, RigCommands rigCommands)
+    public HostRig(int rigNumber, ushort applicationId, 
+        RigSettings rigSettings, RigCommands rigCommands)
         : base(RigControlType.Host, rigNumber, applicationId)
     {
         _rigSettings = rigSettings;
@@ -63,7 +66,8 @@ public sealed class HostRig : Rig
         _timeoutTimer = new Timer(TimeoutTimerCallbackFunc);
         DisableTimeoutTimer();
 
-        _rigSerialPort = new RigSerialPort();
+        _rigSerialPort = MultiRigApplicationContext.Instance.Container.Resolve<IRigSerialPort>();
+        Debug.Assert(_rigSerialPort != null, "A RigSerialPort not resolved.");
         _rigSerialPort.RigSettings = _rigSettings;
         _rigSerialPort.SerialPortMessageReceived += RigSerialPortOnSerialPortMessageReceived;
     }
@@ -855,6 +859,14 @@ public sealed class HostRig : Rig
 
     #endregion
 
+    protected override ILog GetLogger()
+    {
+        return LogManager.GetLogger("HostRig");
+    }
 
+    protected override bool IsConnected()
+    {
+        return _rigSerialPort?.IsConnected ?? false;
+    }
 }
 #nullable restore
