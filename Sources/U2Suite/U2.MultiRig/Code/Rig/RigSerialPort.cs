@@ -21,7 +21,6 @@ using ColorTextBlock.Avalonia;
 using log4net;
 using MonoSerialPort;
 using MonoSerialPort.Port;
-using System.Diagnostics;
 
 namespace U2.MultiRig.Code;
 
@@ -42,6 +41,7 @@ public sealed class RigSerialPort : IRigSerialPort
     private RigSettings _rigSettings;
     private SerialPortInput _serialPort;
     private readonly ILog _logger = LogManager.GetLogger(typeof(RigSerialPort));
+    private bool _logDebugEnabled = true;
 
     public event SerialPortMessageReceivedEventHandler SerialPortMessageReceived;
 
@@ -95,6 +95,7 @@ public sealed class RigSerialPort : IRigSerialPort
 
     public void SendMessage(byte[] data)
     {
+        LogDebug($"Sending data to rig: {ByteFunctions.BytesToHex(data)}");
         _serialPort.SendMessage(data);
     }
 
@@ -113,6 +114,7 @@ public sealed class RigSerialPort : IRigSerialPort
 
     private void SerialPort_MessageReceived(object sender, MessageReceivedEventArgs args)
     {
+        LogDebug($"Received message: {ByteFunctions.BytesToHex(args.Data)}");
         OnSerialPortMessageReceived(new SerialPortMessageReceivedEventArgs(args.Data));
     }
 
@@ -135,5 +137,13 @@ public sealed class RigSerialPort : IRigSerialPort
     private void OnSerialPortMessageReceived(SerialPortMessageReceivedEventArgs eventargs)
     {
         SerialPortMessageReceived?.Invoke(this, eventargs);
+    }
+
+    private void LogDebug(string message)
+    {
+        if (_logDebugEnabled)
+        {
+            _logger.Debug(message);
+        }
     }
 }
