@@ -14,22 +14,31 @@ namespace U2.MultiRig.Utils
         public event SerialPortMessageReceivedEventHandler SerialPortMessageReceived;
         public void Start()
         {
-            throw new NotImplementedException();
         }
 
         public void Stop()
         {
-            throw new NotImplementedException();
         }
 
         public bool Connect()
         {
-            throw new NotImplementedException();
+            return true;
         }
 
         public void SendMessage(byte[] data)
         {
-            throw new NotImplementedException();
+            var str = ByteFunctions.BytesToHex(data);
+            // init1
+            if (str == "FEFEA4E01A05013201FD")
+            {
+                ReportMessageReceived("FEFEA4E01A05013201FD.FEFEE0A4FBFD");
+            }
+        }
+
+        private void ReportMessageReceived(string hexMessage)
+        {
+            var data = ByteFunctions.HexStrToBytes(hexMessage);
+            OnSerialPortMessageReceived(new SerialPortMessageReceivedEventArgs(data));
         }
 
         private void OnSerialPortMessageReceived(SerialPortMessageReceivedEventArgs eventargs)
