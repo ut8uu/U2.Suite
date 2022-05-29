@@ -104,7 +104,7 @@ public static class ByteFunctions
         return Array.Empty<byte>();
     }
 
-    internal static byte[] HexStrToBytes(string s)
+    public static byte[] HexStrToBytes(string s)
     {
         var preparedString = RegularExpressionHelper.ReplaceRegExpr("[^a-f0-9]", string.Empty, s);
         if (preparedString.Length % 2 != 0)
