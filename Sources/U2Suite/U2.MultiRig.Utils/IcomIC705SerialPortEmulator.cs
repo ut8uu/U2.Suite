@@ -12,6 +12,14 @@ namespace U2.MultiRig.Utils
         public bool IsConnected { get; }
         public RigSettings RigSettings { get; set; }
         public event SerialPortMessageReceivedEventHandler SerialPortMessageReceived;
+        private RigCommands _rigCommands;
+
+        public IcomIC705SerialPortEmulator()
+        {
+            var stream = new MemoryStream(Encoding.UTF8.GetBytes(Resources.IC_705));
+            _rigCommands = RigCommandUtilities.LoadRigCommands(stream);
+        }
+
         public void Start()
         {
         }

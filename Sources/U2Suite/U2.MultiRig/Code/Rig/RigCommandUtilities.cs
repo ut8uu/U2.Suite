@@ -33,7 +33,7 @@ using static System.Collections.Specialized.BitVector32;
 
 namespace U2.MultiRig;
 
-internal static class RigCommandUtilities
+public static class RigCommandUtilities
 {
     public const string ReplyLength = nameof(ReplyLength);
     public const string ReplyEnd = nameof(ReplyEnd);
@@ -117,6 +117,11 @@ internal static class RigCommandUtilities
     public static RigCommands LoadRigCommands(string pathToIniFile)
     {
         using var stream = File.OpenRead(pathToIniFile);
+        return LoadRigCommands(stream);
+    }
+
+    public static RigCommands LoadRigCommands(Stream stream)
+    {
         using var streamReader = new StreamReader(stream);
         var iniFile = new IniFile(StringComparer.CurrentCultureIgnoreCase);
         iniFile.Load(streamReader);
