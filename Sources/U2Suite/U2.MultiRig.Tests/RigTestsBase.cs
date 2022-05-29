@@ -1,4 +1,23 @@
-﻿using System;
+﻿/* 
+ * This file is part of the U2.Suite distribution
+ * (https://github.com/ut8uu/U2.Suite).
+ * 
+ * Copyright (c) 2022 Sergey Usmanov, UT8UU.
+ * 
+ * This program is free software: you can redistribute it and/or modify  
+ * it under the terms of the GNU General Public License as published by  
+ * the Free Software Foundation, version 3.
+ *
+ * This program is distributed in the hope that it will be useful, but 
+ * WITHOUT ANY WARRANTY; without even the implied warranty of 
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU 
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License 
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
+
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -8,6 +27,7 @@ using System.Threading.Tasks;
 using Autofac;
 using U2.Core;
 using U2.MultiRig.Code;
+using U2.MultiRig.Emulators;
 using U2.MultiRig.Utils;
 using U2.Tests.Common;
 using Xunit;
@@ -20,16 +40,14 @@ public abstract class RigTestsBase
     private static readonly string TestsDirectory = Path.Combine(TempPath, nameof(RigTestsBase));
     private static readonly string IniDirectory = Path.Combine(TempPath, nameof(RigTestsBase), "INI");
 
+    protected IC705Emulator Emulator;
+
     protected RigTestsBase()
     {
         FileSystemHelper.GetLocalFolderFunc = () => TestsDirectory;
         InitTestFolder();
 
-        MultiRigApplicationContext.Instance.Builder
-            .Register(c => new IcomIC705SerialPortEmulator())
-            .As<IRigSerialPort>();
-
-        MultiRigApplicationContext.Instance.BuildContainer();
+        Emulator = new IC705Emulator();
     }
 
     public void Dispose()

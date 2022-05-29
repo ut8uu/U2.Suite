@@ -117,10 +117,11 @@ public static class RigCommandUtilities
     public static RigCommands LoadRigCommands(string pathToIniFile)
     {
         using var stream = File.OpenRead(pathToIniFile);
-        return LoadRigCommands(stream);
+        var rigType = Path.GetFileNameWithoutExtension(pathToIniFile);
+        return LoadRigCommands(stream, rigType);
     }
 
-    public static RigCommands LoadRigCommands(Stream stream)
+    public static RigCommands LoadRigCommands(Stream stream, string rigType)
     {
         using var streamReader = new StreamReader(stream);
         var iniFile = new IniFile(StringComparer.CurrentCultureIgnoreCase);
@@ -128,7 +129,6 @@ public static class RigCommandUtilities
 
         try
         {
-            var rigType = Path.GetFileNameWithoutExtension(pathToIniFile);
             var result = new RigCommands
             {
                 InitCmd = LoadInitCommands(iniFile),

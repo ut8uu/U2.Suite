@@ -22,26 +22,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Autofac;
-using U2.MultiRig.Code;
-using U2.MultiRig.Emulators;
-using U2.MultiRig.Utils;
-using Xunit;
 
-namespace U2.MultiRig.Tests;
-public class IoCTests
+namespace U2.MultiRig.Emulators;
+
+public sealed class IC705Emulator : EmulatorBase
 {
-    [Fact]
-    public void TestRegistration()
+    public IC705Emulator() : base(EmulatorResources.IC_705)
     {
-        var builder = new ContainerBuilder();
-        builder.Register(c => new IcomIC705SerialPortEmulator())
-            .As<IRigSerialPort>();
-
-        var container = builder.Build();
-
-        var serialPort = container.Resolve<IRigSerialPort>();
-        Assert.NotNull(serialPort);
-        Assert.Equal(typeof(IcomIC705SerialPortEmulator), serialPort.GetType());
+        SerialPortEmulator = new IcomIC705SerialPortEmulator();
     }
 }

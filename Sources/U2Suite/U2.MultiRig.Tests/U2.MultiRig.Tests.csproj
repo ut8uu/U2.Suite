@@ -21,6 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\U2.MultiRig.Emulators\U2.MultiRig.Emulators.csproj" />
     <ProjectReference Include="..\U2.Core\U2.Core.csproj" />
     <ProjectReference Include="..\U2.MultiRig.Utils\U2.MultiRig.Utils.csproj" />
     <ProjectReference Include="..\U2.MultiRig\U2.MultiRig.csproj" />
@@ -31,6 +32,21 @@
     <None Update="TestData\RigCommand\INI\*">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
 
 </Project>
