@@ -30,66 +30,11 @@ using Assert = Xunit.Assert;
 
 namespace U2.MultiRig.Tests
 {
-    public class RigCommandTests : IDisposable
+    public class RigCommandTests : RigTestsBase, IDisposable
     {
         private static readonly string TempPath = TestHelpers.GetLocalTempPath();
         private static readonly string TestsDirectory = Path.Combine(TempPath, nameof(RigCommandTests));
         private static readonly string IniDirectory = Path.Combine(TempPath, nameof(RigCommandTests), "INI");
-
-        public RigCommandTests()
-        {
-            FileSystemHelper.GetLocalFolderFunc = () => TestsDirectory;
-            InitTestFolder();
-        }
-
-        public void Dispose()
-        {
-            InitTestFolder();
-            FileSystemHelper.GetLocalFolderFunc = null;
-        }
-
-        #region Private methods
-
-        private void InitTestFolder()
-        {
-            if (Directory.Exists(TestsDirectory))
-            {
-                Directory.Delete(TestsDirectory, recursive: true);
-            }
-
-            Directory.CreateDirectory(TestsDirectory);
-            PrepareIniFiles();
-        }
-
-        private void PrepareIniFiles()
-        {
-            var currentDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            Assert.NotNull(currentDirectory);
-            var sourceDirectory = Path.Combine(currentDirectory, "TestData", "RigCommand", "INI");
-            Directory.CreateDirectory(IniDirectory);
-
-            var sourceFiles = Directory.EnumerateFiles(sourceDirectory);
-            foreach (var file in sourceFiles)
-            {
-                var destinationFileName = Path.Combine(IniDirectory, Path.GetFileName(file));
-                File.Copy(file, destinationFileName, overwrite: true);
-            }
-
-            var expectedCount = Directory.EnumerateFiles(sourceDirectory).Count();
-            var actualCount = Directory.EnumerateFiles(IniDirectory).Count();
-            Assert.Equal(expectedCount, actualCount);
-        }
-
-        private RigCommands LoadIni(string iniFile)
-        {
-            var file = Path.Combine(IniDirectory, iniFile);
-            var cmd = RigCommandUtilities.LoadRigCommands(file);
-            Assert.NotNull(cmd);
-
-            return cmd;
-        }
-
-        #endregion
 
         [Fact]
         public void AllRigCommands()
@@ -101,10 +46,8 @@ namespace U2.MultiRig.Tests
         [Fact]
         public void Status3()
         {
-            var file = Path.Combine(IniDirectory, "Status3.ini");
-            var cmd = RigCommandUtilities.LoadRigCommands(file);
+            var cmd = LoadIni("Status3.ini");
             Assert.NotNull(cmd);
-            //Assert.True(AllRigCommands.TryLoadRigCommands(file, out var cmd));
             Assert.Equal(3, cmd.StatusCmd.Count);
         }
 

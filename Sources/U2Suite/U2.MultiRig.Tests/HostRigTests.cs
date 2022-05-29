@@ -17,15 +17,14 @@ namespace U2.MultiRig.Tests
         [ClassData(typeof(HostRigValidateReplyTestData))]
         public void ValidateReply(HostRigValidateReplyTestDataObject testItem)
         {
-            var rig = GetHostRig();
             if (testItem.ExceptionIsExpected)
             {
-                var exception = Assert.ThrowsAny<Exception>(() => rig.ValidateReply(testItem.Data, testItem.BitMask));
+                var exception = Assert.ThrowsAny<Exception>(() => HostRig.ValidateReply(testItem.Data, testItem.BitMask));
                 Assert.Equal(testItem.ExceptionType, exception.GetType());
             }
             else
             {
-                rig.ValidateReply(testItem.Data, testItem.BitMask);
+                HostRig.ValidateReply(testItem.Data, testItem.BitMask);
             }
             
         }

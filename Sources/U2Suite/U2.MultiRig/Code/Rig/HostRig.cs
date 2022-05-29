@@ -171,7 +171,7 @@ public sealed class HostRig : Rig
     /// <param name="inputData"></param>
     /// <param name="mask"></param>
     /// <exception cref="ValueValidationException"></exception>
-    internal void ValidateReply(byte[] inputData, BitMask mask)
+    internal static void ValidateReply(byte[] inputData, BitMask mask)
     {
         if (inputData.Length != mask.Flags.Length)
         {
