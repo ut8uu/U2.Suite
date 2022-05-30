@@ -35,13 +35,13 @@ public class IoCTests
     public void TestRegistration()
     {
         var builder = new ContainerBuilder();
-        builder.Register(c => new IcomIC705SerialPortEmulator())
+        builder.Register(c => new IC705SerialPortEmulator())
             .As<IRigSerialPort>();
 
         var container = builder.Build();
 
         var serialPort = container.Resolve<IRigSerialPort>();
         Assert.NotNull(serialPort);
-        Assert.Equal(typeof(IcomIC705SerialPortEmulator), serialPort.GetType());
+        Assert.Equal(typeof(IC705SerialPortEmulator), serialPort.GetType());
     }
 }

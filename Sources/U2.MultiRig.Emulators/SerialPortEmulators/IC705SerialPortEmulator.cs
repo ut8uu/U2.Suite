@@ -28,13 +28,13 @@ using U2.MultiRig.Code;
 
 namespace U2.MultiRig.Emulators
 {
-    public sealed class IcomIC705SerialPortEmulator : RigSerialPortEmulatorBase
+    public sealed class IC705SerialPortEmulator : RigSerialPortEmulatorBase
     {
-        public IcomIC705SerialPortEmulator() 
+        public IC705SerialPortEmulator() 
             : base(EmulatorResources.IC_705)
         {
             MultiRigApplicationContext.Instance.Builder
-                .Register(c => new IcomIC705SerialPortEmulator())
+                .Register(c => new IC705SerialPortEmulator())
                 .As<IRigSerialPort>();
         }
     }
