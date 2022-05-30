@@ -118,7 +118,493 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="ADT_200A" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\adt-200a.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="AORAR5000" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\aorar5000.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="AR8600" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ar8600.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Bearcat996x" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\bearcat996x.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="CODAN" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\codan.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="CODAN_Comments" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\codan-comments.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="DX_77" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\dx-77.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="DX_77_Comments" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\dx-77-comments.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Elad_FDMSW2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\elad-fdmsw2.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Elecraft_K2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\elecraft k2.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Elecraft_K3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\elecraft k3.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Elecraft_K4" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\elecraft k4.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Elecraft_KX2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\elecraft kx2.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="Elecraft_KX3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\elecraft kx3.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="ExpertSDR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\expertsdr.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="FRG_100" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\frg-100.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="FTDX10" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ftdx10.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="FTDX101D" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ftdx101d.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="FTDX_1200" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ftdx-1200.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="FTDX_1200_DATA" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ftdx-1200-data.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="FTDX_3000" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ftdx-3000.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="FTDX_3000_DATA" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ftdx-3000-data.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="FTDX_5000BETA" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ftdx_5000beta.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="FTDX_5000MP" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ftdx-5000mp.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="FTDX_5000MP_DATA" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ftdx-5000mp-data.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="FTDX_9000" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ftdx-9000.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="FT_1000" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ft-1000.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="FT_1000_MP" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ft-1000 mp.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="FT_100_D" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ft-100 d.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="FT_2000" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ft-2000.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="FT_2000PEPV3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ft-2000pepv3.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="FT_2KAFSKPEPV3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ft-2kafskpepv3.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="FT_2KFSKPEPV3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ft-2kfskpepv3.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="FT_2K_Readme" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ft-2k_readme.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="FT_450" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ft-450.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="FT_450Dmod" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ft-450dmod.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="FT_747" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ft-747.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="FT_747GX" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ft-747gx.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="FT_747GX1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ft-747gx1.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="FT_747GX2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ft-747gx2.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="FT_757GXII" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ft-757gxii.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="FT_817" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ft-817.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="FT_840" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ft-840.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="FT_847" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ft-847.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="FT_857" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ft-857.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="FT_891" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ft-891.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="FT_897" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ft-897.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="FT_900" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ft-900.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="FT_920" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ft-920.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="FT_950" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ft-950.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="FT_990" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ft-990.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="FT_991" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ft-991.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="FT_991_DATA" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ft-991-data.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="HRD" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\hrd.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="IC_275H" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ic-275h.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="IC_7000" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ic-7000.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="IC_7000v2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ic-7000v2.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="IC_703" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ic-703.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="IC_703a" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ic-703a.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
   <data name="IC_705" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\ic-705.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="IC_705_DATA" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ic-705-data.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="IC_706" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ic-706.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="IC_706_MKII" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ic-706 mkii.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="IC_706_MKIIG" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ic-706 mkiig.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="IC_707" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ic-707.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="IC_7100" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ic-7100.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="IC_7100e4" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ic-7100e4.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="IC_7100e4_DATA" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ic-7100e4-data.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="IC_7100_DATA_FIL1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ic-7100-data-fil1.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="IC_718" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ic-718.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="IC_7200" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ic-7200.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="IC_7200v2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ic-7200v2.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="IC_7200v2_2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ic-7200v2_2.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="IC_725" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ic-725.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="IC_725a" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ic-725a.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="IC_726" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ic-726.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="IC_728" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ic-728.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="IC_7300" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ic-7300.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="IC_7300_DATA" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ic-7300-data.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="IC_7315" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ic-7315.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="IC_735" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ic-735.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="IC_736__untested_" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ic-736 (untested).ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="IC_737" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ic-737.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="IC_738" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ic-738.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="IC_7410" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ic-7410.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="IC_7410v2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ic-7410v2.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="IC_7410__1_" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ic-7410 (1).ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="IC_746" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ic-746.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="IC_746_Pro" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ic-746 pro.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="IC_751" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ic-751.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="IC_756" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ic-756.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="IC_756_Pro" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ic-756 pro.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="IC_756_Pro_II" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ic-756 pro ii.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="IC_756_Pro_III" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ic-756 pro iii.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="IC_756_Pro_II_LSB" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ic-756 pro ii_lsb.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="IC_756_Pro_ini_comments" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ic-756 pro ini comments.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="IC_7600" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ic-7600.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="IC_7600v2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ic-7600v2.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="IC_7600v2_DATA" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ic-7600v2-data.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="IC_761" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ic-761.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="IC_7610" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ic-7610.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="IC_7610_DATA" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ic-7610-data.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="IC_7610_DATA_FIL1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ic-7610-data-fil1.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="IC_765" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ic-765.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="IC_77" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ic-77.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="IC_7700" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ic-7700.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="IC_7700v2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ic-7700v2.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="IC_7700v2_DATA" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ic-7700v2-data.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="IC_775" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ic-775.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="IC_78" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ic-78.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="IC_7800" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ic-7800.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="IC_7800v3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ic-7800v3.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="IC_7800v3_DATA" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ic-7800v3-data.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="IC_781" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ic-781.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="IC_781_2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ic-781_2.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="IC_7850" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ic-7850.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="IC_7850_DATA" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ic-7850-data.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="IC_7850_DATA_FIL1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ic-7850-data-fil1.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="IC_7851" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ic-7851.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="IC_7851_DATA" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ic-7851-data.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="IC_7851_DATA_FIL1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ic-7851-data-fil1.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="IC_821PST" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ic-821pst.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="IC_910" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ic-910.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="IC_9100" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ic-9100.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-16</value>
+  </data>
+  <data name="IC_9100v2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ic-9100v2.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="IC_9700" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ic-9700.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="IC_9700_DATA" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ic-9700-data.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="IC_9700_SAT" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ic-9700-sat.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="IC_M710" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ic-m710.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="IC_R75" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ic-r75.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="IC_R75_chromos" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ic-r75-chromos.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="IC_R8500" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ic-r8500.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="IC_R9000" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ic-r9000.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="IC_R9500" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ic-r9500.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="IC__820" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ic- 820.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="IC__821" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ic- 821.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="IC__970D" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ic- 970d.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="ID_5100A" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\id-5100a.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="JST_245" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\jst-245.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="JST_245n" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\jst-245n.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Kenwood" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\kenwood.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="NRD_535DG" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\nrd-535dg.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Perseus" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\perseus.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="PowerRX2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\powerrx2.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="PowerSDR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\powersdr.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="SmartSDR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\smartsdr.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="TenTec_Eagle" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\tentec eagle.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="TenTec_Jupiter" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\tentec jupiter.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="TenTec_Omni_VII" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\tentec omni vii.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="TenTec_Omni_VI_plus" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\tentec omni vi_plus.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="TenTec_Orion" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\tentec orion.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="TenTec_Paragon_II" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\tentec paragon ii.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="TenTec_RX_350" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\tentec rx-350.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="TH_F6A" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\th-f6a.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="TH_F7E" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\th-f7e.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="TS_2000" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ts-2000.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="TS_440" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ts-440.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="TS_480" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ts-480.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="TS_590" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ts-590.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="TS_690" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ts-690.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="TS_870" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ts-870.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="TS_930" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ts-930.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="ZS_1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\zs-1.ini;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
 </root>
