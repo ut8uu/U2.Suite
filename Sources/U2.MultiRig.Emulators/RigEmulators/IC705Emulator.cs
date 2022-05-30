@@ -29,6 +29,6 @@ public sealed class IC705Emulator : EmulatorBase
 {
     public IC705Emulator() : base(EmulatorResources.IC_705)
     {
-        SerialPortEmulator = new IcomIC705SerialPortEmulator();
+        SerialPortEmulator = new IC705SerialPortEmulator();
     }
 }
