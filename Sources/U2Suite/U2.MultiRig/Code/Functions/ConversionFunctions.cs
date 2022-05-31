@@ -30,7 +30,7 @@ using U2.MultiRig.Code;
 
 namespace U2.MultiRig;
 
-internal static class ConversionFunctions
+public static class ConversionFunctions
 {
     internal static readonly char[] Delimiter = { '|' };
 
