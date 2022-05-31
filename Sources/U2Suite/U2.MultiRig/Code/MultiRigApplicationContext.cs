@@ -9,6 +9,8 @@ namespace U2.MultiRig.Code
 {
     public sealed class MultiRigApplicationContext
     {
+        private IContainer _container;
+
         static MultiRigApplicationContext()
         {
             Instance = new MultiRigApplicationContext();
@@ -22,11 +24,16 @@ namespace U2.MultiRig.Code
         public static MultiRigApplicationContext Instance { get; set; }
 
         public ContainerBuilder Builder { get; }
-        public IContainer Container { get; private set; }
+
+        public IContainer Container
+        {
+            get => _container ??= Builder.Build();
+            private set => _container = value;
+        }
 
         public void BuildContainer()
         {
-            Container = Builder.Build();
+            Container ??= Builder.Build();
         }
     }
 }
