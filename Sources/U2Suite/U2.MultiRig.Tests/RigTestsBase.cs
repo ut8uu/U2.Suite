@@ -40,14 +40,16 @@ public abstract class RigTestsBase
     private static readonly string TestsDirectory = Path.Combine(TempPath, nameof(RigTestsBase));
     private static readonly string IniDirectory = Path.Combine(TempPath, nameof(RigTestsBase), "INI");
 
-    protected IC705Emulator Emulator;
+    protected IRigEmulator Emulator;
 
     protected RigTestsBase()
     {
         FileSystemHelper.GetLocalFolderFunc = () => TestsDirectory;
         InitTestFolder();
 
-        Emulator = new IC705Emulator();
+        IC705Emulator.Register();
+        MultiRigApplicationContext.Instance.BuildContainer();
+        Emulator = RigEmulatorBase.Instance;
     }
 
     public void Dispose()
