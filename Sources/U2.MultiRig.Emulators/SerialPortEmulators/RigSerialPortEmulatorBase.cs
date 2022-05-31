@@ -19,76 +19,107 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Autofac;
 using U2.MultiRig.Code;
 
-namespace U2.MultiRig.Emulators
+namespace U2.MultiRig.Emulators;
+
+public abstract class RigSerialPortEmulatorBase : IRigSerialPort
 {
-    public abstract class RigSerialPortEmulatorBase : IRigSerialPort
+    public event SerialPortMessageReceivedEventHandler SerialPortMessageReceived;
+    private readonly RigCommands _rigCommands;
+    private IRigEmulator _rigEmulator;
+
+    protected RigSerialPortEmulatorBase(string iniFileContent)
     {
-        public bool IsConnected { get; }
-        public RigSettings RigSettings { get; set; }
-        public event SerialPortMessageReceivedEventHandler SerialPortMessageReceived;
-        private RigCommands _rigCommands;
+        var stream = new MemoryStream(Encoding.UTF8.GetBytes(iniFileContent));
+        _rigCommands = RigCommandUtilities.LoadRigCommands(stream, "IC-705");
+    }
 
-        public RigSerialPortEmulatorBase(string iniFileContent)
+    public bool IsConnected { get; }
+    public RigSettings RigSettings { get; set; }
+
+    public IRigEmulator RigEmulator
+    {
+        get
         {
-            var stream = new MemoryStream(Encoding.UTF8.GetBytes(iniFileContent));
-            _rigCommands = RigCommandUtilities.LoadRigCommands(stream, "IC-705");
-        }
-
-        public void Start()
-        {
-        }
-
-        public void Stop()
-        {
-        }
-
-        public bool Connect()
-        {
-            return true;
-        }
-
-        public void SendMessage(byte[] data)
-        {
-            var str = ByteFunctions.BytesToHex(data);
-
-            foreach (var command in _rigCommands.InitCmd)
+            if (_rigEmulator == null)
             {
-                if (command.Code.SequenceEqual(data))
-                {
-                    ReportMessageReceived(ByteFunctions.BytesToHex(command.Validation.Flags));
-                    return;
-                }
+                _rigEmulator = MultiRigApplicationContext.Instance.Container.Resolve<IRigEmulator>();
+                Debug.Assert(_rigEmulator != null, "Cannot resolve IRigEmulator instance.");
             }
+            return _rigEmulator;
+        }
+        set =>_rigEmulator = value;
+    }
 
-            foreach (var command in _rigCommands.StatusCmd)
+    public void Start()
+    {
+    }
+
+    public void Stop()
+    {
+    }
+
+    public bool Connect()
+    {
+        return true;
+    }
+
+    public void SendMessage(byte[] data)
+    {
+        var str = ByteFunctions.BytesToHex(data);
+
+        // Init commands
+        foreach (var command in _rigCommands.InitCmd)
+        {
+            if (command.Code.SequenceEqual(data))
             {
-                if (command.Code.SequenceEqual(data))
-                {
-                    var resultData = command.Validation.Flags;
-                    // inject the actual value here
-
-                    ReportMessageReceived(ByteFunctions.BytesToHex(resultData));
-                    return;
-                }
+                ReportMessageReceived(ByteFunctions.BytesToHex(command.Validation.Flags));
+                return;
             }
-
-            throw new ArgumentException($"A message '{str}' was not recognized.");
         }
 
-        private void ReportMessageReceived(string hexMessage)
+        // Status commands
+        var statusCommand = _rigCommands.StatusCmd
+            .FirstOrDefault(c => c.Code.SequenceEqual(data));
+
+        if (statusCommand != null)
         {
-            var data = ByteFunctions.HexStrToBytes(hexMessage);
-            OnSerialPortMessageReceived(new SerialPortMessageReceivedEventArgs(data));
+            // in the case of the Status command we have to inject
+            // the actual value of the parameter
+            if (RigEmulator.TryPrepareResponse(statusCommand, out var response))
+            {
+                ReportMessageReceived(ByteFunctions.BytesToHex(response));
+                return;
+            }
+            Debug.Fail($"Processing the status command for {statusCommand.Values[0].Param} failed.");
         }
 
-        private void OnSerialPortMessageReceived(SerialPortMessageReceivedEventArgs eventargs)
+        // Write commands
+        foreach (var writeCommand in _rigCommands.WriteCmd)
         {
-            SerialPortMessageReceived?.Invoke(this, eventargs);
+            if (RigEmulator.TryExtractValue(_rigCommands, request: data))
+            {
+                return;
+            }
         }
+
+        throw new ArgumentException($"A message '{str}' was not recognized.");
+    }
+
+    private void ReportMessageReceived(string hexMessage)
+    {
+        var data = ByteFunctions.HexStrToBytes(hexMessage);
+        OnSerialPortMessageReceived(new SerialPortMessageReceivedEventArgs(data));
+    }
+
+    private void OnSerialPortMessageReceived(SerialPortMessageReceivedEventArgs eventargs)
+    {
+        SerialPortMessageReceived?.Invoke(this, eventargs);
     }
 }
