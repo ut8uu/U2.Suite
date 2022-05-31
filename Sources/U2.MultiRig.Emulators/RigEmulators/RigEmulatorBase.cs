@@ -17,12 +17,14 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+using System.Diagnostics;
 using System.Text;
+using Autofac;
 using U2.MultiRig.Code;
 
 namespace U2.MultiRig.Emulators;
 
-public abstract class EmulatorBase
+public abstract class RigEmulatorBase : IRigEmulator
 {
     private int _freq;
     private int _freqA;
@@ -39,11 +41,26 @@ public abstract class EmulatorBase
     protected RigSerialPortEmulatorBase SerialPortEmulator;
 
     protected RigCommands RigCommands;
+    private static IRigEmulator _instance;
 
-    protected EmulatorBase(string iniFileContent)
+    protected RigEmulatorBase(string iniFileContent)
     {
         var stream = new MemoryStream(Encoding.ASCII.GetBytes(iniFileContent));
         RigCommands = RigCommandUtilities.LoadRigCommands(stream, "IC-705");
+    }
+
+    public static IRigEmulator Instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                _instance = MultiRigApplicationContext.Instance.Container.Resolve<IRigEmulator>();
+                Debug.Assert(_instance != null, "Cannot resolve a RigEmulator instance.");
+            }
+            return _instance;
+        }
+        set => _instance = value;
     }
 
     public int Freq
@@ -110,5 +127,49 @@ public abstract class EmulatorBase
     {
         get => _split;
         set => _split = value;
+    }
+
+    public bool TryPrepareResponse(RigCommand command, out byte[] response)
+    {
+        response = command.Validation.Flags;
+
+        switch (command.Values.First().Param)
+        {
+            case RigParameter.Freq:
+                return TryInjectValue(command, Freq, out response);
+            case RigParameter.FreqA:
+                return TryInjectValue(command, FreqA, out response);
+            case RigParameter.FreqB:
+                return TryInjectValue(command, FreqB, out response);
+            case RigParameter.Pitch:
+                return TryInjectValue(command, Pitch, out response);
+            case RigParameter.RitOffset:
+                return TryInjectValue(command, RitOffset, out response);
+            default:
+                Debug.Fail($"Parameter {command.Value.Param} not supported.");
+                return false;
+        }
+    }
+
+    private bool TryInjectValue(RigCommand command, int value, out byte[] response)
+    {
+        response = command.Validation.Flags;
+
+        var info = command.Values[0];
+        var bytes = ConversionFunctions.FormatValue(value, info);
+        if (bytes.Length == 0)
+        {
+            return false;
+        }
+
+        Debug.Assert(bytes.Length == info.Len,
+            $"A formatted value {ByteFunctions.BytesToHex(bytes)} has incorrect length.");
+        Array.Copy(bytes, 0, response, info.Start, info.Len);
+        return true;
+    }
+
+    public bool TryExtractValue(RigCommands rigCommands, byte[] request)
+    {
+        throw new NotImplementedException();
     }
 }
