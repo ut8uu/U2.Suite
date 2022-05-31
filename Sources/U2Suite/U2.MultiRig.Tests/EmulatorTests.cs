@@ -15,12 +15,14 @@ namespace U2.MultiRig.Tests;
 
 public sealed class EmulatorTests : IDisposable
 {
-    private readonly IC705Emulator _emulator = new();
+    private readonly IRigEmulator _emulator;
     private readonly RigCommands _rigCommands;
 
     public EmulatorTests()
     {
+        IC705Emulator.Register();
         MultiRigApplicationContext.Instance.BuildContainer();
+        _emulator = RigEmulatorBase.Instance;
 
         var stream = new MemoryStream(Encoding.ASCII.GetBytes(Resources.IC_705));
         _rigCommands = RigCommandUtilities.LoadRigCommands(stream, "IC-705");
@@ -28,21 +30,29 @@ public sealed class EmulatorTests : IDisposable
 
     private IRigSerialPort GetSerialPort()
     {
-        return MultiRigApplicationContext.Instance.Container
+        var serialPort = MultiRigApplicationContext.Instance.Container
             .Resolve<IRigSerialPort>();
+        Assert.NotNull(serialPort);
+
+        var result = (RigSerialPortEmulatorBase) serialPort;
+        result.RigEmulator = RigEmulatorBase.Instance;
+        return result;
     }
 
     public void Dispose()
     {
     }
 
-    [Fact]
-    public void CanSetFreqA()
+    [Theory]
+    [InlineData(RigParameter.FreqA, 14101500)]
+    [InlineData(RigParameter.FreqB, 14101500)]
+    public void CanSetRigParameter(RigParameter parameter, int value)
     {
         var responseReceived = false;
         byte[] lastReceivedMessage = null;
         var serialPort = GetSerialPort();
-        var statusCommand = _rigCommands.StatusCmd[0];
+        var statusCommand = _rigCommands.StatusCmd.
+            FirstOrDefault(c => c.Values.Any(x => x.Param == parameter));
         Assert.NotNull(statusCommand);
 
         int actualValue = 0;
@@ -55,7 +65,17 @@ public sealed class EmulatorTests : IDisposable
             lastReceivedMessage = args.Data;
         };
 
-        _emulator.FreqA = 14101500;
+        switch (parameter)
+        {
+            case RigParameter.FreqA:
+                _emulator.FreqA = value;
+                break;
+            case RigParameter.FreqB:
+                _emulator.FreqB = value;
+                break;
+            default:
+                throw new ArgumentOutOfRangeException($"Parameter {parameter} is out of range.");
+        }
 
         serialPort.SendMessage(statusCommand.Code);
 
@@ -65,6 +85,6 @@ public sealed class EmulatorTests : IDisposable
             Thread.Sleep(timeSpan);
         }
 
-        Assert.Equal(_emulator.FreqA, actualValue);
+        Assert.Equal(value, actualValue);
     }
 }
