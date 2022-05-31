@@ -22,13 +22,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Autofac;
+using U2.MultiRig.Code;
 
 namespace U2.MultiRig.Emulators;
 
-public sealed class IC705Emulator : EmulatorBase
+public sealed class IC705Emulator : RigEmulatorBase
 {
     public IC705Emulator() : base(EmulatorResources.IC_705)
     {
-        SerialPortEmulator = new IC705SerialPortEmulator();
+    }
+
+    public static void Register()
+    {
+        MultiRigApplicationContext.Instance.Builder
+            .Register(c => new IC705Emulator())
+            .As<IRigEmulator>();
+        MultiRigApplicationContext.Instance.Builder
+            .Register(c => new IC705SerialPortEmulator())
+            .As<IRigSerialPort>();
     }
 }
