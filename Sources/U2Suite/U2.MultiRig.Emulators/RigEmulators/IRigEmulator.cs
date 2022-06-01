@@ -45,4 +45,10 @@ public interface IRigEmulator
     int FreqB { get; set; }
     int Pitch { get; set; }
     int RitOffset { get; set; }
+    RigParameter Mode { get; set; }
+    RigParameter Rit { get; set; }
+    RigParameter Tx { get; set; }
+    RigParameter Vfo { get; set; }
+    RigParameter Xit { get; set; }
+    RigParameter Split { get; set; }
 }
