@@ -20,6 +20,7 @@
 using System.Diagnostics;
 using System.Text;
 using Autofac;
+using DynamicData;
 using U2.MultiRig.Code;
 
 namespace U2.MultiRig.Emulators;
@@ -133,7 +134,7 @@ public abstract class RigEmulatorBase : IRigEmulator
     {
         response = command.Validation.Flags;
 
-        switch (command.Values.First().Param)
+        switch (command.Values.FirstOrDefault().Param)
         {
             case RigParameter.Freq:
                 return TryInjectValue(command, Freq, out response);
@@ -146,9 +147,34 @@ public abstract class RigEmulatorBase : IRigEmulator
             case RigParameter.RitOffset:
                 return TryInjectValue(command, RitOffset, out response);
             default:
-                Debug.Fail($"Parameter {command.Value.Param} not supported.");
-                return false;
+                break;
         }
+
+        var allParameters = new[] { Mode, Vfo, Rit, Xit, Tx, Split };
+
+        foreach (var parameter in allParameters)
+        {
+            if (parameter == RigParameter.None)
+            {
+                continue;
+            }
+
+            var modeFlag = command.Flags.FirstOrDefault(f => f.Param == parameter);
+            if (modeFlag.Flags == null || modeFlag.Flags.Length == 0)
+            {
+                continue;
+            }
+            var flags = command.Flags.FirstOrDefault(f => f.Param == parameter).Flags;
+            for (var i = 0; i < flags.Length; i++)
+            {
+                response[i] |= flags[i];
+            }
+
+            return true;
+        }
+
+        Debug.Fail($"Parameter {command.Value.Param} not supported.");
+        return false;
     }
 
     private bool TryInjectValue(RigCommand command, int value, out byte[] response)
