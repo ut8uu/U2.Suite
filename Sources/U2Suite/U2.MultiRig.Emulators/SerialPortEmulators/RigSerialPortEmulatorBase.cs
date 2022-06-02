@@ -32,7 +32,7 @@ public abstract class RigSerialPortEmulatorBase : IRigSerialPort
 {
     public event SerialPortMessageReceivedEventHandler SerialPortMessageReceived;
     private readonly RigCommands _rigCommands;
-    private IRigEmulator _rigEmulator;
+    private readonly Queue<string> _reportQueue = new();
 
     protected RigSerialPortEmulatorBase(string iniFileContent)
     {
@@ -40,22 +40,8 @@ public abstract class RigSerialPortEmulatorBase : IRigSerialPort
         _rigCommands = RigCommandUtilities.LoadRigCommands(stream, "IC-705");
     }
 
-    public bool IsConnected { get; }
+    public bool IsConnected { get; private set; }
     public RigSettings RigSettings { get; set; }
-
-    public IRigEmulator RigEmulator
-    {
-        get
-        {
-            if (_rigEmulator == null)
-            {
-                _rigEmulator = MultiRigApplicationContext.Instance.Container.Resolve<IRigEmulator>();
-                Debug.Assert(_rigEmulator != null, "Cannot resolve IRigEmulator instance.");
-            }
-            return _rigEmulator;
-        }
-        set =>_rigEmulator = value;
-    }
 
     public void Start()
     {
@@ -63,23 +49,26 @@ public abstract class RigSerialPortEmulatorBase : IRigSerialPort
 
     public void Stop()
     {
+        IsConnected = false;
     }
 
     public bool Connect()
     {
+        IsConnected = true;
         return true;
     }
 
     public void SendMessage(byte[] data)
     {
         var str = ByteFunctions.BytesToHex(data);
+        Console.WriteLine($"Sending message: {str}");
 
         // Init commands
         foreach (var command in _rigCommands.InitCmd)
         {
             if (command.Code.SequenceEqual(data))
             {
-                ReportMessageReceived(ByteFunctions.BytesToHex(command.Validation.Flags));
+                ReportMessageReceivedAsync(ByteFunctions.BytesToHex(command.Validation.Flags));
                 return;
             }
         }
@@ -92,9 +81,9 @@ public abstract class RigSerialPortEmulatorBase : IRigSerialPort
         {
             // in the case of the Status command we have to inject
             // the actual value of the parameter
-            if (RigEmulator.TryPrepareResponse(statusCommand, out var response))
+            if (RigEmulatorBase.Instance.TryPrepareResponse(statusCommand, out var response))
             {
-                ReportMessageReceived(ByteFunctions.BytesToHex(response));
+                ReportMessageReceivedAsync(ByteFunctions.BytesToHex(response));
                 return;
             }
             Debug.Fail($"Processing the status command for {statusCommand.Values[0].Param} failed.");
@@ -103,18 +92,28 @@ public abstract class RigSerialPortEmulatorBase : IRigSerialPort
         // Write commands
         foreach (var writeCommand in _rigCommands.WriteCmd)
         {
-            if (RigEmulator.TryExtractValue(_rigCommands, request: data))
+            if (RigEmulatorBase.Instance.TryExtractValue(_rigCommands, request: data))
             {
-                return;
+                var parameter = (RigParameter) writeCommand.Key;
+                if (RigEmulatorBase.Instance.TryPrepareWriteCommandResponse(parameter, writeCommand.Value, out var response))
+                {
+                    ReportMessageReceivedAsync(ByteFunctions.BytesToHex(response));
+                    return;
+                }
+                Debug.Fail($"Processing the write command for {writeCommand.Value.Values[0].Param} failed.");
             }
         }
 
-        throw new ArgumentException($"A message '{str}' was not recognized.");
+        Console.WriteLine($"A message {str} not recognized.");
+        //throw new ArgumentException($"A message '{str}' was not recognized.");
     }
 
-    private void ReportMessageReceived(string hexMessage)
+    private async Task ReportMessageReceivedAsync(string hexMessage)
     {
+        await Task.Delay(TimeSpan.FromMilliseconds(100));
+
         var data = ByteFunctions.HexStrToBytes(hexMessage);
+        Console.WriteLine($"Reporting {hexMessage} back.");
         OnSerialPortMessageReceived(new SerialPortMessageReceivedEventArgs(data));
     }
 

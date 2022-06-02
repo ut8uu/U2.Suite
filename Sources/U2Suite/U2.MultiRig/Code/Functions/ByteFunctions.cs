@@ -30,6 +30,7 @@ using U2.Core;
 
 namespace U2.MultiRig;
 
+[DebuggerStepThrough]
 public static class ByteFunctions
 {
     public static byte[] BytesAnd(byte[] arr1, byte[] arr2)
@@ -51,6 +52,7 @@ public static class ByteFunctions
         return Encoding.UTF8.GetString(bytes);
     }
 
+    [DebuggerStepThrough]
     public static string BytesToHex(byte[] bytes)
     {
         var stringBuilder = new StringBuilder();

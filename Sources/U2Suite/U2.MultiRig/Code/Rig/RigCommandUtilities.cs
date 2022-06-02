@@ -201,26 +201,33 @@ public static class RigCommandUtilities
                 ValidateWriteCommandEntries(iniFile, section);
 
                 var cmd = LoadCommon(iniFile, section);
-                cmd.Value = LoadValue(iniFile, section, Value);
-                ValidateValue(cmd.Value, cmd.Code.Length);
+                var parameterValue = LoadValue(iniFile, section, Value);
+                ValidateValue(parameterValue, cmd.Code.Length);
 
-                if (cmd.Value.Param != RigParameter.None)
+                if (parameterValue.Param != RigParameter.None)
                 {
                     throw new LoadWriteCommandException("parameter name is not allowed");
                 }
 
                 var param = ConversionFunctions.StrToRigParameter(section);
-                if (NumericParameters.Contains(param) && cmd.Value.Len == 0)
+
+                if (parameterValue.Param == RigParameter.None)
+                { 
+                    parameterValue.Param = param;
+                }
+
+                if (NumericParameters.Contains(param) && parameterValue.Len == 0)
                 {
                     throw new LoadWriteCommandException("Value is missing");
                 }
 
-                if (!NumericParameters.Contains(param) && cmd.Value.Len > 0)
+                if (!NumericParameters.Contains(param) && parameterValue.Len > 0)
                 {
                     throw new LoadWriteCommandException("parameter does not require a value");
                 }
 
                 var id = (int)Enum.Parse<RigParameter>(section.Replace("pm", ""));
+                cmd.Value = parameterValue;
                 result[id] = cmd;
             }
             catch (Exception ex) when (ex is not LoadWriteCommandException)

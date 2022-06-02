@@ -17,10 +17,11 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Text;
 using Autofac;
-using DynamicData;
 using U2.MultiRig.Code;
 
 namespace U2.MultiRig.Emulators;
@@ -39,9 +40,6 @@ public abstract class RigEmulatorBase : IRigEmulator
     private RigParameter _mode;
     private RigParameter _split;
 
-    protected RigSerialPortEmulatorBase SerialPortEmulator;
-
-    protected RigCommands RigCommands;
     private static IRigEmulator _instance;
 
     protected RigEmulatorBase(string iniFileContent)
@@ -63,6 +61,8 @@ public abstract class RigEmulatorBase : IRigEmulator
         }
         set => _instance = value;
     }
+
+    public RigCommands RigCommands { get; set; }
 
     public int Freq
     {
@@ -177,6 +177,52 @@ public abstract class RigEmulatorBase : IRigEmulator
         return false;
     }
 
+    public bool TryPrepareWriteCommandResponse(RigParameter parameter, RigCommand command, out byte[] response)
+    {
+        response = command.Validation.Flags;
+
+        var parametersWithValues = new[]
+        {
+            RigParameter.Freq,
+            RigParameter.FreqA,
+            RigParameter.FreqB,
+            RigParameter.Pitch,
+            RigParameter.RitOffset,
+        };
+
+        if (parametersWithValues.Contains(parameter))
+        {
+            return true;
+        }
+
+        var onOffParameters = new[]
+        {
+            RigParameter.AM,
+            RigParameter.FM,
+            RigParameter.CW_L,
+            RigParameter.CW_U,
+            RigParameter.SSB_L,
+            RigParameter.SSB_U,
+            RigParameter.DIG_L,
+            RigParameter.DIG_U,
+            RigParameter.Tx,
+            RigParameter.Rx,
+            RigParameter.XitOff,
+            RigParameter.XitOn,
+            RigParameter.RitOff,
+            RigParameter.RitOn,
+            RigParameter.SplitOff,
+            RigParameter.SplitOn,
+        };
+
+        if (onOffParameters.Contains(parameter))
+        {
+            return true;
+        }
+
+        return false;
+    }
+
     private bool TryInjectValue(RigCommand command, int value, out byte[] response)
     {
         response = command.Validation.Flags;
@@ -196,6 +242,109 @@ public abstract class RigEmulatorBase : IRigEmulator
 
     public bool TryExtractValue(RigCommands rigCommands, byte[] request)
     {
-        throw new NotImplementedException();
+        var requestHex = ByteFunctions.BytesToHex(request);
+
+        foreach (var (rigParameter, command) in rigCommands.WriteCmd)
+        {
+            if (command.Code.Length != request.Length)
+            {
+                continue;
+            }
+
+            if (command.Code.SequenceEqual(request))
+            {
+                var parameter = (RigParameter)rigParameter;
+                switch (parameter)
+                {
+                    case RigParameter.AM:
+                    case RigParameter.FM:
+                    case RigParameter.CW_L:
+                    case RigParameter.CW_U:
+                    case RigParameter.SSB_L:
+                    case RigParameter.SSB_U:
+                    case RigParameter.DIG_L:
+                    case RigParameter.DIG_U:
+                        Mode = parameter;
+                        break;
+                    case RigParameter.Tx:
+                    case RigParameter.Rx:
+                        Tx = parameter;
+                        break;
+                    case RigParameter.XitOff:
+                    case RigParameter.XitOn:
+                        Xit = parameter;
+                        break;
+                    case RigParameter.RitOff:
+                    case RigParameter.RitOn:
+                        Rit = parameter;
+                        break;
+                    case RigParameter.SplitOff:
+                    case RigParameter.SplitOn:
+                        Split = parameter;
+                        break;
+                    case RigParameter.Pitch:
+                        var info = new ParameterValue();
+                        if (command.Value.Param == parameter)
+                        {
+                            info = command.Value;
+                        }
+                        else if (command.Values.FirstOrDefault().Param == parameter)
+                        {
+                            info = command.Values.FirstOrDefault();
+                        }
+
+                        if (info.Param != RigParameter.Pitch)
+                        {
+                            break;
+                        }
+                        Pitch = ConversionFunctions.UnformatValue(request, info);
+                        break;
+                    default:
+                        //throw new ArgumentOutOfRangeException($"Parameter {parameter} not supported.");
+                        Console.WriteLine($"Parameter {parameter} not supported.");
+                        break;
+                }
+
+                return true;
+            }
+            else if (command.Value.Param != RigParameter.None)
+            {
+                // Freq, FreqA, FreqB, Pitch
+                if (command.Code.Length == request.Length)
+                {
+                    var clearRequest = request.ToArray();
+                    var cnt = 0;
+                    for (var i = command.Value.Start; cnt < command.Value.Len; cnt++)
+                    {
+                        clearRequest[i + cnt] = 0;
+                    }
+
+                    if (command.Code.SequenceEqual(clearRequest))
+                    {
+                        var value = ConversionFunctions.UnformatValue(request, command.Value);
+                        switch (command.Value.Param)
+                        {
+                            case RigParameter.Freq:
+                                Freq = value;
+                                break;
+                            case RigParameter.FreqA:
+                                FreqA = value;
+                                break;
+                            case RigParameter.FreqB:
+                                FreqB = value;
+                                break;
+                            case RigParameter.Pitch:
+                                Pitch = value;
+                                break;
+                            default:
+                                throw new NotSupportedException($"Parameter {command.Value.Param} not supported.");
+                        }
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return false;
     }
 }

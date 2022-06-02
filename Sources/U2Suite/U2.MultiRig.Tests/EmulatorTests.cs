@@ -36,7 +36,6 @@ public sealed class EmulatorTests : IDisposable
         Assert.NotNull(serialPort);
 
         var result = (RigSerialPortEmulatorBase) serialPort;
-        result.RigEmulator = RigEmulatorBase.Instance;
         return result;
     }
 

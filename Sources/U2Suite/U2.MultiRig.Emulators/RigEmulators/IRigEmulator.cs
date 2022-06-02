@@ -33,6 +33,15 @@ public interface IRigEmulator
     bool TryPrepareResponse(RigCommand command, out byte[] response);
 
     /// <summary>
+    /// Prepares data for a write command for sending to the calling party.
+    /// </summary>
+    /// <param name="parameter">A parameter the data are prepared for.</param>
+    /// <param name="command">A command the data are prepared for.</param>
+    /// <param name="response">A resulting array of bytes.</param>
+    /// <returns>Returns <see langword="true"/> if request was resolved, <see langword="false"/> otherwise.</returns>
+    bool TryPrepareWriteCommandResponse(RigParameter parameter, RigCommand command, out byte[] response);
+
+    /// <summary>
     /// Performs an attempt to extract value from the given request.
     /// </summary>
     /// <param name="commands">All known rig commands.</param>
@@ -40,6 +49,7 @@ public interface IRigEmulator
     /// <returns>Returns <see langword="true"/> if request is resolved, <see langword="false"/> otherwise.</returns>
     bool TryExtractValue(RigCommands commands, byte[] request);
 
+    RigCommands RigCommands { get; set; }
     int Freq { get; set; }
     int FreqA { get; set; }
     int FreqB { get; set; }

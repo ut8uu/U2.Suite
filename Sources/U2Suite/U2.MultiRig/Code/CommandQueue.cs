@@ -52,7 +52,7 @@ public sealed class QueueItem
 
 public sealed class CommandQueue : Collection<QueueItem>
 {
-    public ExchangePhase Phase;
+    public ExchangePhase Phase { get; set; }
 
     public QueueItem Add()
     {

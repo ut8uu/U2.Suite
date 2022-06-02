@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\U2.MultiRig.Emulators\U2.MultiRig.Emulators.csproj" />
     <ProjectReference Include="..\U2.MultiRig\U2.MultiRig.csproj" />
   </ItemGroup>
 

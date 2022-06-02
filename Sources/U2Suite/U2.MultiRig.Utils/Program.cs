@@ -29,15 +29,10 @@ using U2.Core;
 using U2.MultiRig;
 using U2.MultiRig.Code;
 using U2.MultiRig.Code.UDP;
+using U2.MultiRig.Emulators;
 using U2.MultiRig.Utils;
 
 var startKey = ConsoleKey.D1;
-
-MultiRigApplicationContext.Instance.Builder
-    .Register(c => new RigSerialPort())
-    .As<IRigSerialPort>();
-
-MultiRigApplicationContext.Instance.BuildContainer();
 
 var mainMenu = new List<ConsoleManagementElement>
 {
@@ -52,6 +47,12 @@ var mainMenu = new List<ConsoleManagementElement>
         Function = ManageIcom705,
         Key = startKey++,
         Title = "Manage Icom IC-705",
+    },
+    new()
+    {
+        Function = TestIc705Emulator,
+        Key = startKey++,
+        Title = "Test Icom IC-705 emulator",
     },
 };
 
@@ -283,4 +284,67 @@ static void OnNewDataFromUdpServerArrived(object sender, UdpDataReceivedEventArg
         var ep = (IPEndPoint)e.EndPoint;
         Console.WriteLine($"{ep.Address}:{ep.Port} {s}");
     }
+}
+
+static bool TestIc705Emulator(object[] parameters)
+{
+    // prepare the stuff
+    IC705Emulator.Register();
+    MultiRigApplicationContext.Instance.BuildContainer();
+    var emulator = RigEmulatorBase.Instance;
+
+    emulator.Mode = RigParameter.FM;
+    emulator.FreqA = 145500000;
+    emulator.Tx = RigParameter.Rx;
+    emulator.Xit = RigParameter.XitOff;
+    emulator.Rit = RigParameter.RitOff;
+    emulator.Split = RigParameter.SplitOff;
+
+    var hostRig = new HostRig(1, KnownIdentifiers.U2MultiRigDemo,
+        new RigSettings(), emulator.RigCommands);
+    hostRig.Enabled = true;
+    hostRig.Start();
+
+    var guest = new GuestRig(1, KnownIdentifiers.U2Logger);
+    guest.UdpPacketReceived += (sender, args) =>
+    {
+        Console.WriteLine($@"Received packet: {ByteFunctions.BytesToHex(args.Packet.GetBytes())}");
+    };
+    guest.Enabled = true;
+    guest.Start();
+
+    Thread.Sleep(1000);
+    Console.WriteLine("Switching to AM");
+    hostRig.Mode = RigParameter.AM;
+
+    //Thread.Sleep(1000);
+    //Console.WriteLine("Changing the frequency to 28.145 MHz.");
+    //hostRig.FreqA = 28145000;
+
+    Thread.Sleep(1000);
+    Console.WriteLine("Turning the TX on.");
+    hostRig.Tx = RigParameter.Tx;
+
+    Thread.Sleep(1000);
+    Console.WriteLine("Turning the TX off.");
+    hostRig.Tx = RigParameter.Rx;
+
+    Thread.Sleep(1000);
+    Console.WriteLine("Turning split on.");
+    hostRig.Split = RigParameter.SplitOn;
+
+    Thread.Sleep(1000);
+
+    Console.WriteLine("Press Enter to continue.");
+    Console.ReadLine();
+
+    guest.Enabled = false;
+    guest.Stop();
+    guest.Dispose();
+
+    hostRig.Enabled = false;
+    hostRig.Stop();
+    hostRig.Dispose();
+    
+    return true;
 }
