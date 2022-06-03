@@ -293,6 +293,10 @@ static bool TestIc705Emulator(object[] parameters)
     MultiRigApplicationContext.Instance.BuildContainer();
     var emulator = RigEmulatorBase.Instance;
 
+    emulator.MessageDisplayModes = MessageDisplayModes.Error
+                                   | MessageDisplayModes.Warning
+                                   | MessageDisplayModes.Info;
+
     emulator.Mode = RigParameter.FM;
     emulator.FreqA = 145500000;
     emulator.Tx = RigParameter.Rx;
@@ -302,6 +306,12 @@ static bool TestIc705Emulator(object[] parameters)
 
     var hostRig = new HostRig(1, KnownIdentifiers.U2MultiRigDemo,
         new RigSettings(), emulator.RigCommands);
+    hostRig.MessageDisplayModes = MessageDisplayModes.Error
+                                  | MessageDisplayModes.Warning
+                                  | MessageDisplayModes.Info
+                                  | MessageDisplayModes.Diagnostics2
+                                  //| MessageDisplayModes.Diagnostics3
+                                  ;
     hostRig.Enabled = true;
     hostRig.Start();
 
@@ -310,6 +320,12 @@ static bool TestIc705Emulator(object[] parameters)
     {
         Console.WriteLine($@"Received packet: {ByteFunctions.BytesToHex(args.Packet.GetBytes())}");
     };
+    guest.MessageDisplayModes = MessageDisplayModes.Error
+                                  | MessageDisplayModes.Warning
+                                  | MessageDisplayModes.Info
+                                  | MessageDisplayModes.Diagnostics2
+                                  //| MessageDisplayModes.Diagnostics3
+                                  ;
     guest.Enabled = true;
     guest.Start();
 
@@ -333,7 +349,14 @@ static bool TestIc705Emulator(object[] parameters)
     Console.WriteLine("Turning split on.");
     hostRig.Split = RigParameter.SplitOn;
 
-    Thread.Sleep(1000);
+    Console.WriteLine("Increasing FreqA 30 times from 28145000 every 5 seconds.");
+
+    for (int i = 1; i < 30; i++)
+    {
+        Thread.Sleep(5000);
+        hostRig.FreqA = 28145000 + i;
+        Console.WriteLine($"Changing the frequency to {hostRig.FreqA}.");
+    }
 
     Console.WriteLine("Press Enter to continue.");
     Console.ReadLine();

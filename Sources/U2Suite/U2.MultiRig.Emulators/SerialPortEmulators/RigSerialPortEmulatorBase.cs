@@ -24,6 +24,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Autofac;
+using U2.Core;
 using U2.MultiRig.Code;
 
 namespace U2.MultiRig.Emulators;
@@ -42,6 +43,15 @@ public abstract class RigSerialPortEmulatorBase : IRigSerialPort
 
     public bool IsConnected { get; private set; }
     public RigSettings RigSettings { get; set; }
+    public MessageDisplayModes MessageDisplayModes { get; set; }
+
+    private void DisplayMessage(MessageDisplayModes messageMode, string message)
+    {
+        if (MessageDisplayModes.HasFlag(messageMode))
+        {
+            Console.WriteLine(message);
+        }
+    }
 
     public void Start()
     {
@@ -61,7 +71,7 @@ public abstract class RigSerialPortEmulatorBase : IRigSerialPort
     public void SendMessage(byte[] data)
     {
         var str = ByteFunctions.BytesToHex(data);
-        Console.WriteLine($"Sending message: {str}");
+        DisplayMessage(MessageDisplayModes.Debug, $"Sending message: {str}");
 
         // Init commands
         foreach (var command in _rigCommands.InitCmd)
@@ -104,7 +114,7 @@ public abstract class RigSerialPortEmulatorBase : IRigSerialPort
             }
         }
 
-        Console.WriteLine($"A message {str} not recognized.");
+        DisplayMessage(MessageDisplayModes.Error, $"A message {str} not recognized.");
         //throw new ArgumentException($"A message '{str}' was not recognized.");
     }
 
@@ -113,7 +123,7 @@ public abstract class RigSerialPortEmulatorBase : IRigSerialPort
         await Task.Delay(TimeSpan.FromMilliseconds(100));
 
         var data = ByteFunctions.HexStrToBytes(hexMessage);
-        Console.WriteLine($"Reporting {hexMessage} back.");
+        DisplayMessage(MessageDisplayModes.Diagnostics3, $"Reporting {hexMessage} back.");
         OnSerialPortMessageReceived(new SerialPortMessageReceivedEventArgs(data));
     }
 

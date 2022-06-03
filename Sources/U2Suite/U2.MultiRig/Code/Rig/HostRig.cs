@@ -32,6 +32,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Autofac;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using U2.Core;
 using U2.MultiRig.Code;
 
 namespace U2.MultiRig;
@@ -198,6 +199,7 @@ public sealed class HostRig : Rig
     /// <exception cref="ValueValidationException">Is thrown when input data do not match the validation Flags</exception>
     internal void ProcessInitReply(int initCommandIndex, byte[] data)
     {
+        DisplayMessage(MessageDisplayModes.Diagnostics3, $"Processing the Init reply: {ByteFunctions.BytesToHex(data)}");
         ValidateReply(data, _rigCommands.InitCmd[initCommandIndex].Validation);
     }
 
@@ -213,6 +215,9 @@ public sealed class HostRig : Rig
     {
         //validate reply
         var cmd = _rigCommands.StatusCmd[statusCommandIndex];
+
+        DisplayMessage(MessageDisplayModes.Diagnostics3,
+            $"Processing the Status ({cmd.Value.Param}) reply: {ByteFunctions.BytesToHex(data)}");
 
         ValidateReply(data, cmd.Validation);
 
@@ -243,6 +248,7 @@ public sealed class HostRig : Rig
                 var parameter = cmd.Flags[index].Param;
                 if (StoreParam(parameter))
                 {
+                    DisplayMessage(MessageDisplayModes.Diagnostics2, $"Found changed parameter: {parameter}");
                     _changedParams.Add(parameter);
                 }
             }
@@ -310,6 +316,7 @@ public sealed class HostRig : Rig
 
     internal void ProcessWriteReply(RigParameter param, byte[] data)
     {
+        DisplayMessage(MessageDisplayModes.Diagnostics3, $"Processing the Write reply: {ByteFunctions.BytesToHex(data)}");
         ValidateReply(data, _rigCommands.WriteCmd[(int)param].Validation);
     }
 
@@ -508,6 +515,7 @@ public sealed class HostRig : Rig
 
     private void OnRigParameterChanged(int rigNumber, RigParameter parameter, object value)
     {
+        DisplayMessage(MessageDisplayModes.Diagnostics2, $"Found changed parameter: {parameter}. New value: {value}");
         RigParameterChanged?.Invoke(this, rigNumber, parameter, value);
     }
 

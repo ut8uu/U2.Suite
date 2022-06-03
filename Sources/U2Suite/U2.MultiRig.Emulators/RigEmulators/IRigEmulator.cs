@@ -17,6 +17,8 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+using U2.Core;
+
 namespace U2.MultiRig.Emulators;
 
 public interface IRigEmulator
@@ -49,6 +51,7 @@ public interface IRigEmulator
     /// <returns>Returns <see langword="true"/> if request is resolved, <see langword="false"/> otherwise.</returns>
     bool TryExtractValue(RigCommands commands, byte[] request);
 
+    MessageDisplayModes MessageDisplayModes { get; set; }
     RigCommands RigCommands { get; set; }
     int Freq { get; set; }
     int FreqA { get; set; }

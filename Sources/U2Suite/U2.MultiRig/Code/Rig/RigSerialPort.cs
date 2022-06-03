@@ -21,6 +21,7 @@ using ColorTextBlock.Avalonia;
 using log4net;
 using MonoSerialPort;
 using MonoSerialPort.Port;
+using U2.Core;
 
 namespace U2.MultiRig.Code;
 
@@ -62,6 +63,7 @@ public sealed class RigSerialPort : IRigSerialPort
 
     public RigSerialPort()
     {
+        MessageDisplayModes = MessageDisplayModes.All;
     }
 
     public event SerialPortInput.ConnectionStatusChangedEventHandler ConnectionStatusChanged;
@@ -78,6 +80,7 @@ public sealed class RigSerialPort : IRigSerialPort
         }
     }
 
+    public MessageDisplayModes MessageDisplayModes { get; set; }
     public bool IsConnected => _serialPort?.IsConnected ?? false;
     public void Start()
     {
@@ -95,7 +98,7 @@ public sealed class RigSerialPort : IRigSerialPort
 
     public void SendMessage(byte[] data)
     {
-        LogDebug($"Sending data to rig: {ByteFunctions.BytesToHex(data)}");
+        DisplayMessage(MessageDisplayModes.Debug, $"Sending data to rig: {ByteFunctions.BytesToHex(data)}");
         _serialPort.SendMessage(data);
     }
 
@@ -114,7 +117,7 @@ public sealed class RigSerialPort : IRigSerialPort
 
     private void SerialPort_MessageReceived(object sender, MessageReceivedEventArgs args)
     {
-        LogDebug($"Received message: {ByteFunctions.BytesToHex(args.Data)}");
+        DisplayMessage(MessageDisplayModes.Debug, $"Received message: {ByteFunctions.BytesToHex(args.Data)}");
         OnSerialPortMessageReceived(new SerialPortMessageReceivedEventArgs(args.Data));
     }
 
@@ -144,6 +147,14 @@ public sealed class RigSerialPort : IRigSerialPort
         if (_logDebugEnabled)
         {
             _logger.Debug(message);
+        }
+    }
+
+    private void DisplayMessage(MessageDisplayModes messageMode, string message)
+    {
+        if (MessageDisplayModes.HasFlag(messageMode))
+        {
+            Console.WriteLine(message);
         }
     }
 }

@@ -25,6 +25,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Net.Sockets;
 using log4net;
+using U2.Core;
 using U2.MultiRig.Code;
 using U2.MultiRig.Code.UDP;
 
@@ -76,6 +77,8 @@ public abstract class CustomRig : IDisposable
     }
 
     #region Properties
+
+    public MessageDisplayModes MessageDisplayModes { get; set; }
 
     public bool Enabled { get; set; }
 
@@ -160,6 +163,14 @@ public abstract class CustomRig : IDisposable
     private RigParameter _tx;
     private RigParameter _mode;
     private RigParameter _split;
+
+    protected void DisplayMessage(MessageDisplayModes messageMode, string message)
+    {
+        if (MessageDisplayModes.HasFlag(messageMode))
+        {
+            Console.WriteLine(message);
+        }
+    }
 
     private RigCtlStatus GetStatus()
     {

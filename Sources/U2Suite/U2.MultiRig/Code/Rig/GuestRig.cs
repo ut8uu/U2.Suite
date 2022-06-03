@@ -17,6 +17,8 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+using U2.Core;
+
 namespace U2.MultiRig;
 
 /// <summary>
@@ -39,6 +41,8 @@ public sealed class GuestRig : Rig
     protected override void OnUdpPacketReceived(RigUdpMessengerPacketEventArgs eventArgs)
     {
         var packet = eventArgs.Packet;
+        DisplayMessage(MessageDisplayModes.Diagnostics1, $"Received UdpPacket: {ByteFunctions.BytesToHex(packet.GetBytes())}");
+
         if (!packet.IsValid)
         {
             return;

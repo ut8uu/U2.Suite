@@ -22,6 +22,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using Autofac;
+using U2.Core;
 using U2.MultiRig.Code;
 
 namespace U2.MultiRig.Emulators;
@@ -63,6 +64,8 @@ public abstract class RigEmulatorBase : IRigEmulator
     }
 
     public RigCommands RigCommands { get; set; }
+
+    public MessageDisplayModes MessageDisplayModes { get; set; }
 
     public int Freq
     {
@@ -128,6 +131,14 @@ public abstract class RigEmulatorBase : IRigEmulator
     {
         get => _split;
         set => _split = value;
+    }
+
+    private void DisplayMessage(MessageDisplayModes messageMode, string message)
+    {
+        if (MessageDisplayModes.HasFlag(messageMode))
+        {
+            Console.WriteLine(message);
+        }
     }
 
     public bool TryPrepareResponse(RigCommand command, out byte[] response)
@@ -299,9 +310,13 @@ public abstract class RigEmulatorBase : IRigEmulator
                         }
                         Pitch = ConversionFunctions.UnformatValue(request, info);
                         break;
+                    case RigParameter.VfoAA:
+                    case RigParameter.VfoAB:
+                        DisplayMessage(MessageDisplayModes.Debug, $"Parameter {parameter} supported, but not implemented yet.");
+                        break;
                     default:
                         //throw new ArgumentOutOfRangeException($"Parameter {parameter} not supported.");
-                        Console.WriteLine($"Parameter {parameter} not supported.");
+                        DisplayMessage(MessageDisplayModes.Error, $"Parameter {parameter} not supported.");
                         break;
                 }
 

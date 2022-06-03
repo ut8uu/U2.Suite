@@ -18,28 +18,21 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using U2.Core;
 
-namespace U2.MultiRig.Code;
+namespace U2.Core;
 
-public interface IRigSerialPort
+[Flags]
+public enum MessageDisplayModes
 {
-    /// <summary>
-    /// Indicates whether the COM port is alive and connected.
-    /// </summary>
-    bool IsConnected { get; }
-    RigSettings RigSettings { get; set; }
-    MessageDisplayModes MessageDisplayModes { get; set; }
+    Nothing = 0,
+    Info = 1,
+    Warning = 2,
+    Error = 4,
+    Diagnostics1 = 8,
+    Diagnostics2 = 16,
+    Diagnostics3 = 32,
+    
+    Debug = 128,
 
-    event SerialPortMessageReceivedEventHandler SerialPortMessageReceived;
-
-    void Start();
-    void Stop();
-
-    bool Connect();
-    void SendMessage(byte[] data);
+    All = 65535,
 }
