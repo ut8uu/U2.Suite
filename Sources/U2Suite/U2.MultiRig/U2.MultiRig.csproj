@@ -1,0 +1,70 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+    <AssemblyVersion>1.0.0</AssemblyVersion>
+    <FileVersion>1.0.0</FileVersion>
+    <OutputType>WinExe</OutputType>
+    <ApplicationIcon>Assets\multirig.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <AvaloniaXaml Remove="Libraries\**" />
+    <Compile Remove="Libraries\**" />
+    <EmbeddedResource Remove="Libraries\**" />
+    <None Remove="Libraries\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Assets\refresh.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AvaloniaResource Include="Assets\multirig.ico" />
+    <AvaloniaResource Include="Assets\refresh.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\U2.CommonControls\U2.CommonControls.csproj" />
+    <ProjectReference Include="..\U2.Core\U2.Core.csproj" />
+    <ProjectReference Include="..\U2.Resources\U2.Resources.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Autofac" Version="6.4.0" />
+    <PackageReference Include="CommandLineArgumentsParser" Version="3.0.22" />
+    <PackageReference Include="IPAddressRange" Version="4.2.0" />
+    <PackageReference Include="log4net" Version="2.0.14" />
+    <PackageReference Include="MonoSerialPort" Version="1.0.15" />
+    <PackageReference Include="PropertyChanged.Fody" Version="3.4.0" />
+    <PackageReference Include="SimpleUdp" Version="1.2.0" />
+    <PackageReference Include="SoftCircuits.IniFileParser" Version="2.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="App.axaml.cs">
+      <DependentUpon>%(Filename)</DependentUpon>
+    </Compile>
+    <Compile Update="MultiRigResources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>MultiRigResources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="MultiRigResources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>MultiRigResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Ini\*">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

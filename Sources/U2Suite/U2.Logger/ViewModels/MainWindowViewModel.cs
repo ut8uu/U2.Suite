@@ -30,6 +30,7 @@ using Avalonia.Controls;
 using GalaSoft.MvvmLight.Messaging;
 using log4net;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 using U2.CommonControls;
 using U2.Core;
 using U2.Core.Models;
@@ -80,6 +81,8 @@ namespace U2.Logger
 
         public string ImportFromAdifTitle { get; set; } = "Import ADIF from file";
         public string ExportToAdifTitle { get; set; } = "Export to ADIF file";
+        public string ConfigMenuTitle { get; set; } = Resources.ConfigMenuTitle;
+        public string ConfigCatMenuTitle { get; set; } = Resources.ConfigCatMenuTitle;
 
         private void AcceptButtonClickedMessage(ButtonClickedMessage message)
         {
@@ -209,6 +212,8 @@ namespace U2.Logger
 
         }
 
+        #region Action handlers
+
         public async Task NewLog()
         {
             var form = new LogInfoWindow(CommandToExecute.CreateLog);
@@ -259,5 +264,18 @@ namespace U2.Logger
                 MessageBoxHelper.ShowMessageBox("Error", Resources.ExportToAdifFailedMessage);
             }
         }
+
+        public void ExecuteCatControlConfig()
+        {
+            var form = new ConfigureCatControlWindow();
+            form.ShowDialog(this.Owner);
+        }
+
+        #endregion
+    }
+
+    public sealed class DesignMainWindowViewModel : MainWindowViewModel
+    {
+
     }
 }

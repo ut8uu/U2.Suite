@@ -1,0 +1,125 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:multiRig="clr-namespace:U2.MultiRig"
+        xmlns:commonControls="clr-namespace:U2.CommonControls;assembly=U2.CommonControls"
+        xmlns:viewModels="clr-namespace:U2.MultiRig.ViewModels"
+        mc:Ignorable="d" d:DesignWidth="420" d:DesignHeight="600"
+        MinWidth="300" Width="420" Height="600"
+        x:Class="U2.MultiRig.MultiRigWindow"
+        CanResize="False"
+        ShowInTaskbar="True"
+        SystemDecorations="Full"
+        Icon="/Assets/multirig.ico"
+        Title="MultiRigWindow">
+
+	<Design.DataContext>
+		<viewModels:DesignMultiRigWindowViewModel/>
+	</Design.DataContext>
+
+	<DockPanel>
+		<commonControls:OkCancelButtonsUserControl DockPanel.Dock="Bottom"></commonControls:OkCancelButtonsUserControl>
+
+		<Border Classes="Card" DockPanel.Dock="Top">
+			<StackPanel Orientation="Horizontal">
+				<TextBlock Text="{Binding SelectRigTitle}" Padding="10"></TextBlock>
+				<Panel Width="10"></Panel>
+				<ComboBox Name="RigSelector"
+                          Items="{Binding Path=AllRigs, Mode=TwoWay}"
+                          SelectedIndex="{Binding SelectedRigIndex, Mode=TwoWay}">
+					<ComboBox.ItemTemplate>
+						<DataTemplate>
+							<TextBlock Text="{Binding RigId}" Margin="5 0"></TextBlock>
+						</DataTemplate>
+					</ComboBox.ItemTemplate>
+				</ComboBox>
+			</StackPanel>
+		</Border>
+		<Border Classes="Card">
+			<Grid ColumnDefinitions="Auto,Auto" RowDefinitions="*,*,*,*,*,*,*,*,*,*,*">
+				<CheckBox Grid.Column="1" Grid.Row="0" x:Name="RigEnabled"
+                          IsChecked="{Binding SelectedRig.Enabled}"
+                          Content="{Binding EnabledTitle}"></CheckBox>
+
+				<TextBlock Grid.Column="0" Grid.Row="1" Margin="12"
+                           Text="{Binding RigTypeTitle}"></TextBlock>
+				<ComboBox Grid.Column="1" Grid.Row="1" Name="RigTypeSelector"
+                          Items="{Binding Path=AllCommands, Mode=TwoWay}"
+                          SelectedItem="{Binding SelectedRigType, Mode=TwoWay}">
+				</ComboBox>
+
+				<TextBlock Grid.Column="0" Grid.Row="2" Margin="12"
+                           Text="{Binding PortTitle}"></TextBlock>
+				<StackPanel Grid.Column="1" Grid.Row="2" Orientation="Horizontal"
+                            >
+					<ComboBox Name="PortSelector" Width="230"
+                              SelectedItem="{Binding SelectedPort, Mode=TwoWay}"
+                              Items="{Binding AllPorts, Mode=OneWay}">
+						<ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Description}" Margin="5 0"></TextBlock>
+                            </DataTemplate>
+						</ComboBox.ItemTemplate>
+                    </ComboBox>
+					<Button x:Name="RefreshComPorts" Command="{Binding ExecuteRefreshComPortsAction}">
+						<Image Source="../Assets/refresh.png"></Image>
+					</Button>
+
+				</StackPanel>
+
+				<TextBlock Grid.Column="0" Grid.Row="3" Margin="12"
+                           Text="{Binding BaudRateTitle}"></TextBlock>
+				<ComboBox Name="BaudRateSelector" Grid.Column="1" Grid.Row="3"
+                          SelectedIndex="{Binding SelectedRig.BaudRate, Mode=TwoWay}"
+                          Items="{Binding AllBaudRates, Mode=OneWay}">
+				</ComboBox>
+
+				<TextBlock Grid.Column="0" Grid.Row="4" Margin="12"
+                           Text="{Binding DataBitsTitle}"></TextBlock>
+				<ComboBox Name="DataBitsSelector" Grid.Column="1" Grid.Row="4"
+                          SelectedIndex="{Binding SelectedRig.DataBits, Mode=TwoWay}"
+                          Items="{Binding AllDataBits, Mode=OneWay}">
+				</ComboBox>
+
+				<TextBlock Grid.Column="0" Grid.Row="5" Margin="12"
+                           Text="{Binding StopBitsTitle}"></TextBlock>
+				<ComboBox Name="StopBitsSelector" Grid.Column="1" Grid.Row="5"
+                          SelectedIndex="{Binding SelectedRig.StopBits, Mode=TwoWay}"
+                          Items="{Binding AllStopBits, Mode=OneWay}">
+				</ComboBox>
+
+				<TextBlock Grid.Column="0" Grid.Row="6" Margin="12"
+                           Text="{Binding ParityTitle}"></TextBlock>
+				<ComboBox Name="ParitySelector" Grid.Column="1" Grid.Row="6"
+                          SelectedIndex="{Binding SelectedRig.Parity, Mode=TwoWay}"
+                          Items="{Binding AllParities, Mode=OneWay}">
+				</ComboBox>
+
+				<TextBlock Grid.Column="0" Grid.Row="7" Margin="12"
+                           Text="{Binding RtsModeTitle}"></TextBlock>
+				<ComboBox Name="RtsModeSelector" Grid.Column="1" Grid.Row="7"
+                          SelectedIndex="{Binding SelectedRig.RtsMode, Mode=TwoWay}"
+                          Items="{Binding AllRtsModes, Mode=OneWay}">
+				</ComboBox>
+
+				<TextBlock Grid.Column="0" Grid.Row="8" Margin="12"
+                           Text="{Binding DtrModeTitle}"></TextBlock>
+				<ComboBox Name="DtrModeSelector" Grid.Column="1" Grid.Row="8"
+                          SelectedIndex="{Binding SelectedRig.DtrMode, Mode=TwoWay}"
+                          Items="{Binding AllDtrModes, Mode=OneWay}">
+				</ComboBox>
+
+				<TextBlock Grid.Column="0" Grid.Row="9" Margin="12"
+                           Text="{Binding PollMsTitle}"></TextBlock>
+				<NumericUpDown Grid.Column="1" Grid.Row="9" Minimum="500" Maximum="30000"
+                               Value="{Binding SelectedRig.PollMs}"></NumericUpDown>
+
+				<TextBlock Grid.Column="0" Grid.Row="10" Margin="12"
+                           Text="{Binding TimeoutMsTitle}"></TextBlock>
+				<NumericUpDown Grid.Column="1" Grid.Row="10" Minimum="1000" Maximum="30000"
+                               Value="{Binding SelectedRig.TimeoutMs}"></NumericUpDown>
+			</Grid>
+		</Border>
+	</DockPanel>
+</Window>

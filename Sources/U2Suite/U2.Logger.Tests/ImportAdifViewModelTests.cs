@@ -103,7 +103,7 @@ namespace U2.Logger.Tests
             Assert.AreEqual(1, model.AdifFileDuplicates);
         }
 
-        private async Task CanImportRecords_Prepare(
+        private void CanImportRecords_Prepare(
             ImportAdifFromFileViewModel model,
             Guid duplicateId)
         {
@@ -121,11 +121,11 @@ namespace U2.Logger.Tests
         }
 
         [TestMethod]
-        public async Task CanImportRecords_OverwriteDuplicates()
+        public void CanImportRecords_OverwriteDuplicates()
         {
             var duplicateId = Guid.NewGuid();
             var model = GetViewModel();
-            await CanImportRecords_Prepare(model, duplicateId);
+            CanImportRecords_Prepare(model, duplicateId);
 
             // duplicate record should be overwritten
             model._duplicateRecordSaveOption = DuplicateRecordSaveOption.Overwrite;
@@ -136,11 +136,11 @@ namespace U2.Logger.Tests
         }
 
         [TestMethod]
-        public async Task CanImportRecords_IgnoreDuplicates()
+        public void CanImportRecords_IgnoreDuplicates()
         {
             var duplicateId = Guid.NewGuid();
             var model = GetViewModel();
-            await CanImportRecords_Prepare(model, duplicateId);
+            CanImportRecords_Prepare(model, duplicateId);
 
             // duplicate record should be overwritten
             model._duplicateRecordSaveOption = DuplicateRecordSaveOption.Ignore;
@@ -151,13 +151,13 @@ namespace U2.Logger.Tests
         }
 
         [TestMethod]
-        public async Task CanImportRecords_AddDuplicates()
+        public void CanImportRecords_AddDuplicates()
         {
             var expectedCount = TestData.GetLogRecords().Count() + 1;
 
             var duplicateId = Guid.NewGuid();
             var model = GetViewModel();
-            await CanImportRecords_Prepare(model, duplicateId);
+            CanImportRecords_Prepare(model, duplicateId);
 
             // duplicate record should be overwritten
             model._duplicateRecordSaveOption = DuplicateRecordSaveOption.Add;

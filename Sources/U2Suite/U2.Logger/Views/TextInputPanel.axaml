@@ -8,10 +8,6 @@
              xmlns:logger="clr-namespace:U2.Logger"
              xmlns:core="clr-namespace:U2.Core;assembly=U2.Core">
 
-  <Control.Resources>
-    <core:ToUpperCaseConverter x:Key="UpperCaseConverter" />
-  </Control.Resources>
-
   <Design.DataContext>
     <logger:TextInputPanelViewModel/>
   </Design.DataContext>

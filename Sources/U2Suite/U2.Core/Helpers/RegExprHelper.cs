@@ -33,7 +33,7 @@ public static class RegularExpressionHelper
     public static string MatchAndGetFirst(string template, string input)
     {
         var res = string.Empty;
-        if (Match(template, input, out var m, RegexOptions.IgnoreCase | RegexOptions.Singleline) && m.Count > 1)
+        if (Match(template, input, RegexOptions.IgnoreCase | RegexOptions.Singleline, out var m) && m.Count > 1)
         {
             res = m[1];
         }
@@ -51,7 +51,7 @@ public static class RegularExpressionHelper
     }
 
     //===========================================
-    public static bool Match(string template, string input, out List<string> matches, RegexOptions opt)
+    public static bool Match(string template, string input, RegexOptions opt, out List<string> matches)
     {
         var m = Regex.Match(input, template, opt);
         var res = m.Success;
@@ -66,7 +66,7 @@ public static class RegularExpressionHelper
 
     public static bool Match(string template, string input, out List<string> matches)
     {
-        var res = Match(template, input, out matches, RegexOptions.IgnoreCase);
+        var res = Match(template, input, RegexOptions.IgnoreCase, out matches);
         return res;
     }
 

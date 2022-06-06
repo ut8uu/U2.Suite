@@ -196,6 +196,24 @@ namespace U2.Logger {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to CAT control.
+        /// </summary>
+        internal static string ConfigCatMenuTitle {
+            get {
+                return ResourceManager.GetString("ConfigCatMenuTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Config.
+        /// </summary>
+        internal static string ConfigMenuTitle {
+            get {
+                return ResourceManager.GetString("ConfigMenuTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Create new log.
         /// </summary>
         internal static string CreateNewLog {

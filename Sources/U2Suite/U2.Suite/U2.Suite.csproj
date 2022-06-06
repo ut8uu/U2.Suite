@@ -3,7 +3,7 @@
 		<OutputType>WinExe</OutputType>
 		<TargetFramework>net6.0</TargetFramework>
 		<RuntimeIdentifiers>win-x64;osx-x64;linux-x64</RuntimeIdentifiers>
-		<Nullable>enable</Nullable>
+		<Nullable>disable</Nullable>
 		<Version>1.3.2</Version>
 		<AssemblyVersion>1.3.2.20416</AssemblyVersion>
 		<FileVersion>1.3.2.20416</FileVersion>
@@ -15,7 +15,7 @@
 		<ApplicationIcon>u2suite.ico</ApplicationIcon>
 		<EnableNETAnalyzers>true</EnableNETAnalyzers>
 		<SignAssembly>true</SignAssembly>
-		<AssemblyOriginatorKeyFile>u2suite.snk</AssemblyOriginatorKeyFile>
+		<AssemblyOriginatorKeyFile>../../u2suite.snk</AssemblyOriginatorKeyFile>
 		<Authors>Sergey Usmanov</Authors>
 	</PropertyGroup>
 	<ItemGroup>

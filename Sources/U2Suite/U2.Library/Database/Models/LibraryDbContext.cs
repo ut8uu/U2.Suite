@@ -36,8 +36,8 @@ namespace U2.Library.Database.Models
             _databasePath = FileSystemHelper.GetFullPath(DataBaseName);
         }
 
-        public DbSet<VendorDbo> Vendors { get; set; }
-        public DbSet<RigDbo> Rigs { get; set; }
+        public DbSet<VendorDbo>? Vendors { get; set; }
+        public DbSet<RigDbo>? Rigs { get; set; }
 
         private string GetConnectionString()
         {
@@ -102,6 +102,11 @@ namespace U2.Library.Database.Models
                 {
                     var json = File.ReadAllText(jsonFile);
                     var rigInfos = JsonSerializer.Deserialize<List<RigInfo>>(json, options);
+                    if (rigInfos == null)
+                    {
+                        continue;
+                    }
+
                     foreach (var rigInfo in rigInfos)
                     {
                         Debug.Assert(!string.IsNullOrEmpty(rigInfo.Name));

@@ -28,8 +28,8 @@ using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia.Extensions;
 using Avalonia.Threading;
+using U2.CommonControls;
 using U2.Contracts;
-using U2.Logger.ViewModels;
 
 namespace U2.Logger
 {

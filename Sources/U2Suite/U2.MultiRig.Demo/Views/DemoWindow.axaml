@@ -1,0 +1,43 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:viewModels="clr-namespace:U2.MultiRig.Demo.ViewModels"
+        mc:Ignorable="d" d:DesignWidth="430" d:DesignHeight="350"
+		Width="430" Height="350"
+        x:Class="U2.MultiRig.Demo.Views.DemoWindow"
+		WindowStartupLocation="CenterScreen"
+        Title="DemoWindow">
+
+	<Design.DataContext>
+		<viewModels:DemoViewModel/>
+	</Design.DataContext>
+
+	<DockPanel>
+		<Border DockPanel.Dock="Top" Classes="Card">
+			<StackPanel Orientation="Horizontal">
+				<ComboBox Name="SourceTypeComboBox" 
+                          SelectedIndex="{Binding SourceType, Mode=TwoWay}">
+					<ComboBoxItem>Internal</ComboBoxItem>
+					<ComboBoxItem>External</ComboBoxItem>
+				</ComboBox>
+				<Button Margin="5 0 0 0" Content="Configure RIG" 
+                        Command="{Binding ExecuteConfigureRigAction}"
+                        IsVisible="{Binding ConfigureRigButtonVisible}"></Button>
+				<Button Margin="5 0 0 0" Content="{Binding ConnectButtonTitle}"
+                        Command="{Binding ExecuteConnectRigAction}"
+                        IsEnabled="{Binding ConnectButtonEnabled}"></Button>
+			</StackPanel>
+		</Border>
+
+		<Border Classes="Card">
+			<Grid RowDefinitions="Auto,Auto" ColumnDefinitions="200,Auto">
+				<TextBlock Grid.Column="0" Grid.Row="0">Freq A</TextBlock>
+				<TextBlock Grid.Column="0" Grid.Row="1" FontSize="32" Text="{Binding FreqA}"></TextBlock>
+
+				<TextBlock Grid.Column="1" Grid.Row="0">Freq B</TextBlock>
+				<TextBlock Grid.Column="1" Grid.Row="1" FontSize="32" Text="{Binding FreqB}"></TextBlock>
+			</Grid>
+		</Border>
+	</DockPanel>
+</Window>
