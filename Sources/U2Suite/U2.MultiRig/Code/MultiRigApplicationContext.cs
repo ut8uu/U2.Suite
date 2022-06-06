@@ -23,7 +23,7 @@ namespace U2.MultiRig.Code
 
         public static MultiRigApplicationContext Instance { get; set; }
 
-        public ContainerBuilder Builder { get; }
+        public ContainerBuilder Builder { get; private set; }
 
         public IContainer Container
         {
@@ -34,6 +34,12 @@ namespace U2.MultiRig.Code
         public void BuildContainer()
         {
             Container ??= Builder.Build();
+        }
+
+        public void ResetBuilder()
+        {
+            Builder = new ContainerBuilder();
+            _container = null;
         }
     }
 }
