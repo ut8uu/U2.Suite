@@ -41,7 +41,6 @@ public abstract class CustomRig : IDisposable
 {
     private readonly RigControlType _rigControlType;
     protected readonly ushort ApplicationId;
-    private readonly ILog _logger = LogManager.GetLogger(typeof(CustomRig));
     protected RigUdpMessenger UdpMessenger;
     protected CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
     protected bool _online = false;
@@ -78,7 +77,7 @@ public abstract class CustomRig : IDisposable
 
     #region Properties
 
-    public MessageDisplayModes MessageDisplayModes { get; set; }
+    public virtual MessageDisplayModes MessageDisplayModes { get; set; }
 
     public bool Enabled { get; set; }
 

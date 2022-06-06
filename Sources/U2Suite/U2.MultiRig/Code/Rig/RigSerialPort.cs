@@ -63,7 +63,9 @@ public sealed class RigSerialPort : IRigSerialPort
 
     public RigSerialPort()
     {
-        MessageDisplayModes = MessageDisplayModes.All;
+        MessageDisplayModes = MessageDisplayModes.Error 
+            | MessageDisplayModes.Warning
+            | MessageDisplayModes.Info;
     }
 
     public event SerialPortInput.ConnectionStatusChangedEventHandler ConnectionStatusChanged;
@@ -152,9 +154,30 @@ public sealed class RigSerialPort : IRigSerialPort
 
     private void DisplayMessage(MessageDisplayModes messageMode, string message)
     {
-        if (MessageDisplayModes.HasFlag(messageMode))
+        if (MessageDisplayModes == MessageDisplayModes.All || MessageDisplayModes.HasFlag(messageMode))
         {
             Console.WriteLine(message);
+
+            if (MessageDisplayModes.HasFlag(MessageDisplayModes.Diagnostics1)
+                || MessageDisplayModes.HasFlag(MessageDisplayModes.Diagnostics2)
+                || MessageDisplayModes.HasFlag(MessageDisplayModes.Diagnostics3)
+                || MessageDisplayModes.HasFlag(MessageDisplayModes.Debug)
+               )
+            {
+                LogDebug(message);
+            }
+            else if (MessageDisplayModes.HasFlag(MessageDisplayModes.Error))
+            {
+                _logger.Error(message);
+            }
+            else if (MessageDisplayModes.HasFlag(MessageDisplayModes.Warning))
+            {
+                _logger.Warn(message);
+            }
+            else if (MessageDisplayModes.HasFlag(MessageDisplayModes.Info))
+            {
+                _logger.Info(message);
+            }
         }
     }
 }

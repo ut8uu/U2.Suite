@@ -55,6 +55,7 @@ public sealed class HostRig : Rig
     private readonly Timer _timeoutTimer;
     private readonly ILog _logger = LogManager.GetLogger(typeof(HostRig));
     private readonly IRigSerialPort _rigSerialPort;
+    private MessageDisplayModes _messageDisplayModes;
 
     public HostRig(int rigNumber, ushort applicationId, 
         RigSettings rigSettings, RigCommands rigCommands)
@@ -506,7 +507,8 @@ public sealed class HostRig : Rig
 
         property.SetValue(this, parameterValue);
         _changedParams.Add(parameter);
-        Logger.DebugFormat("RIG{0} status changed: {1} = {2}", RigNumber, parameter.ToString(), Convert.ToString(parameterValue));
+        DisplayMessage(MessageDisplayModes.Debug,
+            $"RIG{RigNumber} status changed: {parameter.ToString()} = {Convert.ToString(parameterValue)}");
         var packet = UdpPacketFactory.CreateSingleParameterReportingPacket(RigNumber,
             senderId: ApplicationId, receiverId: KnownIdentifiers.MultiCast,
             parameter, parameterValue);
@@ -520,6 +522,16 @@ public sealed class HostRig : Rig
     }
 
     #region Setter overloads
+
+    public override MessageDisplayModes MessageDisplayModes
+    {
+        get => _messageDisplayModes;
+        set
+        {
+            _messageDisplayModes = value;
+            _rigSerialPort.MessageDisplayModes = value;
+        }
+    }
 
     public override void SetFreq(int value)
     {
