@@ -92,12 +92,20 @@ static bool ManageIcom705(object[] parameters)
 
 static bool ManageIcom705Port(params object[] parameters)
 {
+    MultiRigApplicationContext.Instance.ResetBuilder();
+    MultiRigApplicationContext.Instance.Builder
+        .Register(c => new RigSerialPort())
+        .As<IRigSerialPort>();
+    MultiRigApplicationContext.Instance.BuildContainer();
+
     Log("Entered PollIcom705()");
 
     Console.WriteLine("Polling the Icom IC-705");
     Console.Write("Select the COM port the device is connected to.");
 
     var rig = GetIC705HostRig(parameters);
+    rig.Enabled = true;
+    rig.MessageDisplayModes = MessageDisplayModes.All;
     rig.Start();
 
     Console.WriteLine("Press any key to abort.");
@@ -118,6 +126,9 @@ static bool ManageIcom705Port(params object[] parameters)
 
     Console.WriteLine("Press Enter to continue.");
     Console.ReadLine();
+
+    rig.Enabled = false;
+    rig.Stop();
 
     return true;
 }
@@ -175,12 +186,17 @@ static void ManageFlow(List<ConsoleManagementElement> input)
 
 static bool PollIcom705Port(params object[] parameters)
 {
+    MultiRigApplicationContext.Instance.Builder
+        .Register(c => new RigSerialPort())
+        .As<IRigSerialPort>();
+
     Log("Entered PollIcom705()");
 
     Console.WriteLine(@"Polling the Icom IC-705");
     Console.Write(@"Select the COM port the device is connected to.");
 
     var host = GetIC705HostRig(parameters);
+    host.MessageDisplayModes = MessageDisplayModes.All;
     host.Enabled = true;
     host.Start();
 
@@ -310,7 +326,7 @@ static bool TestIc705Emulator(object[] parameters)
                                   | MessageDisplayModes.Warning
                                   | MessageDisplayModes.Info
                                   | MessageDisplayModes.Diagnostics2
-                                  //| MessageDisplayModes.Diagnostics3
+                                  | MessageDisplayModes.Diagnostics3
                                   ;
     hostRig.Enabled = true;
     hostRig.Start();
@@ -324,7 +340,7 @@ static bool TestIc705Emulator(object[] parameters)
                                   | MessageDisplayModes.Warning
                                   | MessageDisplayModes.Info
                                   | MessageDisplayModes.Diagnostics2
-                                  //| MessageDisplayModes.Diagnostics3
+                                  | MessageDisplayModes.Diagnostics3
                                   ;
     guest.Enabled = true;
     guest.Start();
@@ -333,9 +349,9 @@ static bool TestIc705Emulator(object[] parameters)
     Console.WriteLine("Switching to AM");
     hostRig.Mode = RigParameter.AM;
 
-    //Thread.Sleep(1000);
-    //Console.WriteLine("Changing the frequency to 28.145 MHz.");
-    //hostRig.FreqA = 28145000;
+    Thread.Sleep(1000);
+    Console.WriteLine("Changing the frequency to 28.145 MHz.");
+    hostRig.FreqA = 28145000;
 
     Thread.Sleep(1000);
     Console.WriteLine("Turning the TX on.");
@@ -349,6 +365,7 @@ static bool TestIc705Emulator(object[] parameters)
     Console.WriteLine("Turning split on.");
     hostRig.Split = RigParameter.SplitOn;
 
+    /*
     Console.WriteLine("Increasing FreqA 30 times from 28145000 every 5 seconds.");
 
     for (int i = 1; i < 30; i++)
@@ -356,6 +373,19 @@ static bool TestIc705Emulator(object[] parameters)
         Thread.Sleep(5000);
         hostRig.FreqA = 28145000 + i;
         Console.WriteLine($"Changing the frequency to {hostRig.FreqA}.");
+    }
+    */
+
+    hostRig.MessageDisplayModes = MessageDisplayModes.Error;
+
+    Console.WriteLine("Enter FreqA value:");
+    var newValue = Console.ReadLine();
+    if (!string.IsNullOrEmpty(newValue))
+    {
+        if (int.TryParse(newValue, out var value))
+        {
+            hostRig.FreqA = value;
+        }
     }
 
     Console.WriteLine("Press Enter to continue.");
