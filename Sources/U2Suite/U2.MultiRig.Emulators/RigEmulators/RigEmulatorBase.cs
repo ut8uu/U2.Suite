@@ -251,11 +251,12 @@ public abstract class RigEmulatorBase : IRigEmulator
         return true;
     }
 
-    public bool TryExtractValue(RigCommands rigCommands, byte[] request)
+    public bool TryExtractValue(RigCommands commands, byte[] request)
     {
         var requestHex = ByteFunctions.BytesToHex(request);
+        DisplayMessage(MessageDisplayModes.Diagnostics3, $"Extracting value from {requestHex}");
 
-        foreach (var (rigParameter, command) in rigCommands.WriteCmd)
+        foreach (var (rigParameter, command) in commands.WriteCmd)
         {
             if (command.Code.Length != request.Length)
             {

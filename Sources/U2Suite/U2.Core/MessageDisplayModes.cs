@@ -24,7 +24,7 @@ namespace U2.Core;
 [Flags]
 public enum MessageDisplayModes
 {
-    Nothing = 0,
+    None = 0,
     Info = 1,
     Warning = 2,
     Error = 4,
