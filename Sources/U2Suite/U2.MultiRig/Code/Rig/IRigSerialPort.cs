@@ -37,9 +37,8 @@ public interface IRigSerialPort
 
     event SerialPortMessageReceivedEventHandler SerialPortMessageReceived;
 
-    void Start();
-    void Stop();
-
     bool Connect();
+    void Disconnect();
+
     void SendMessage(byte[] data);
 }

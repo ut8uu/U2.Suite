@@ -84,11 +84,7 @@ public sealed class RigSerialPort : IRigSerialPort
 
     public MessageDisplayModes MessageDisplayModes { get; set; }
     public bool IsConnected => _serialPort?.IsConnected ?? false;
-    public void Start()
-    {
-    }
-
-    public void Stop()
+    public void Disconnect()
     {
         _serialPort.Disconnect();
     }

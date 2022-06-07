@@ -861,7 +861,6 @@ public sealed class HostRig : Rig
             AddCommands(_rigCommands.StatusCmd, CommandKind.Status);
         }
 
-        _rigSerialPort.Start();
         EnableConnectivityTimer();
     }
 
@@ -873,7 +872,7 @@ public sealed class HostRig : Rig
         {
             _cancellationTokenSource.Cancel();
             _online = false;
-            _rigSerialPort.Stop();
+            _rigSerialPort.Disconnect();
         }
     }
 
