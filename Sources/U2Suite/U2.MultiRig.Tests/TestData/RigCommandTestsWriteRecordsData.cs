@@ -87,8 +87,8 @@ Validate=FEFEA4E025000000000000FD.FEFEE0A4FBFD",
                 Format = ValueFormat.BcdLU,
                 Mult = 1,
                 Add = 0,
-                Param = RigParameter.None, // by default
-            }
+                Param = RigParameter.FreqA, 
+            },
         };
     }
 
@@ -118,8 +118,8 @@ Validate=FEFEA4E025010000000000FD.FEFEE0A4FBFD",
                 Format = ValueFormat.BcdLU,
                 Mult = 1,
                 Add = 0,
-                Param = RigParameter.None, // by default
-            }
+                Param = RigParameter.FreqB,
+            },
         };
     }
 
@@ -140,6 +140,10 @@ Validate=FEFEA4E02100000000FD.FEFEE0A4FBFD",
             {
                 0xFE, 0xFE, 0xA4, 0xE0, 0x21, 0x00, 0x00, 0x00, 0x00,
                 0xFD, 0xFE, 0xFE, 0xE0, 0xA4, 0xFB, 0xFD,
+            },
+            ParameterValue = new ParameterValue
+            {
+                Param = RigParameter.Rit0,
             },
         };
     }
@@ -171,8 +175,8 @@ Validate=FEFEA4E014090000FD.FEFEE0A4FBFD",
                 Format = ValueFormat.BcdBU,
                 Mult = 0.425,
                 Add = -127.5,
-                Param = RigParameter.None, // by default
-            }
+                Param = RigParameter.Pitch,
+            },
         };
     }
 
@@ -193,6 +197,10 @@ Validate=FEFEA4E00F01FD.FEFEE0A4FBFD",
             {
                 0xFE, 0xFE, 0xA4, 0xE0, 0x0F, 0x01,
                 0xFD, 0xFE, 0xFE, 0xE0, 0xA4, 0xFB, 0xFD,
+            },
+            ParameterValue = new ParameterValue
+            {
+                Param = RigParameter.SplitOn,
             },
         };
     }
@@ -215,6 +223,10 @@ Validate=FEFEA4E00F00FD.FEFEE0A4FBFD",
                 0xFE, 0xFE, 0xA4, 0xE0, 0x0F, 0x00,
                 0xFD, 0xFE, 0xFE, 0xE0, 0xA4, 0xFB, 0xFD,
             },
+            ParameterValue = new ParameterValue
+            {
+                Param = RigParameter.SplitOff,
+            },
         };
     }
 
@@ -235,6 +247,10 @@ Validate=FEFEA4E00700FD.FEFEE0A4FBFD",
             {
                 0xFE, 0xFE, 0xA4, 0xE0, 0x07, 0x00,
                 0xFD, 0xFE, 0xFE, 0xE0, 0xA4, 0xFB, 0xFD,
+            },
+            ParameterValue = new ParameterValue
+            {
+                Param = RigParameter.VfoA,
             },
         };
     }
@@ -257,6 +273,10 @@ Validate=FEFEA4E00701FD.FEFEE0A4FBFD",
                 0xFE, 0xFE, 0xA4, 0xE0, 0x07, 0x01,
                 0xFD, 0xFE, 0xFE, 0xE0, 0xA4, 0xFB, 0xFD,
             },
+            ParameterValue = new ParameterValue
+            {
+                Param = RigParameter.VfoB,
+            },
         };
     }
 
@@ -278,6 +298,10 @@ Validate=FEFEA4E007A0FD.FEFEE0A4FBFD",
                 0xFE, 0xFE, 0xA4, 0xE0, 0x07, 0xA0,
                 0xFD, 0xFE, 0xFE, 0xE0, 0xA4, 0xFB, 0xFD,
             },
+            ParameterValue = new ParameterValue
+            {
+                Param = RigParameter.VfoEqual,
+            },
         };
     }
 
@@ -298,6 +322,10 @@ Validate=FEFEA4E007B0FD.FEFEE0A4FBFD",
             {
                 0xFE, 0xFE, 0xA4, 0xE0, 0x07, 0xB0,
                 0xFD, 0xFE, 0xFE, 0xE0, 0xA4, 0xFB, 0xFD,
+            },
+            ParameterValue = new ParameterValue
+            {
+                Param = RigParameter.VfoSwap,
             },
         };
     }
@@ -322,6 +350,10 @@ Validate=FEFEA4E00700FD.FEFEA4E00F00FD.FEFEE0A4FBFD",
                 0xFE, 0xFE, 0xA4, 0xE0, 0x0F, 0x00, 0xFD, 
                 0xFE, 0xFE, 0xE0, 0xA4, 0xFB, 0xFD,
             },
+            ParameterValue = new ParameterValue
+            {
+                Param = RigParameter.VfoAA,
+            },
         };
     }
 
@@ -344,6 +376,10 @@ Validate=FEFEA4E00700FD.FEFEA4E00F01FD.FEFEE0A4FBFD",
                 0xFE, 0xFE, 0xA4, 0xE0, 0x07, 0x00, 0xFD,
                 0xFE, 0xFE, 0xA4, 0xE0, 0x0F, 0x01, 0xFD, 
                 0xFE, 0xFE, 0xE0, 0xA4, 0xFB, 0xFD,
+            },
+            ParameterValue = new ParameterValue
+            {
+                Param = RigParameter.VfoAB,
             },
         };
     }
@@ -368,6 +404,10 @@ Validate=FEFEA4E00701FD.FEFEA4E00F00FD.FEFEE0A4FBFD",
                 0xFE, 0xFE, 0xA4, 0xE0, 0x0F, 0x00, 0xFD, 
                 0xFE, 0xFE, 0xE0, 0xA4, 0xFB, 0xFD,
             },
+            ParameterValue = new ParameterValue
+            {
+                Param = RigParameter.VfoBA,
+            },
         };
     }
 
@@ -375,7 +415,7 @@ Validate=FEFEA4E00701FD.FEFEA4E00F00FD.FEFEE0A4FBFD",
     {
         return new WriteTestData
         {
-            Text = @"[pmVfoAB]
+            Text = @"[pmVfoBB]
 Command=FEFEA4E0.0701.FD.FEFEA4E0.0F00.FD
 ReplyLength=20
 Validate=FEFEA4E00701FD.FEFEA4E00F00FD.FEFEE0A4FBFD",
@@ -390,6 +430,10 @@ Validate=FEFEA4E00701FD.FEFEA4E00F00FD.FEFEE0A4FBFD",
                 0xFE, 0xFE, 0xA4, 0xE0, 0x07, 0x01, 0xFD,
                 0xFE, 0xFE, 0xA4, 0xE0, 0x0F, 0x00, 0xFD, 
                 0xFE, 0xFE, 0xE0, 0xA4, 0xFB, 0xFD,
+            },
+            ParameterValue = new ParameterValue
+            {
+                Param = RigParameter.VfoBB,
             },
         };
     }
@@ -412,6 +456,10 @@ Validate=FEFEA4E0210101FD.FEFEE0A4FBFD",
                 0xFE, 0xFE, 0xA4, 0xE0, 0x21, 0x01, 0x01, 0xFD, 
                 0xFE, 0xFE, 0xE0, 0xA4, 0xFB, 0xFD,
             },
+            ParameterValue = new ParameterValue
+            {
+                Param = RigParameter.RitOn,
+            },
         };
     }
 
@@ -432,6 +480,10 @@ Validate=FEFEA4E0210100FD.FEFEE0A4FBFD",
             {
                 0xFE, 0xFE, 0xA4, 0xE0, 0x21, 0x01, 0x00, 0xFD, 
                 0xFE, 0xFE, 0xE0, 0xA4, 0xFB, 0xFD,
+            },
+            ParameterValue = new ParameterValue
+            {
+                Param = RigParameter.RitOff,
             },
         };
     }
@@ -454,6 +506,10 @@ Validate=FEFEA4E0210201FD.FEFEE0A4FBFD",
                 0xFE, 0xFE, 0xA4, 0xE0, 0x21, 0x02, 0x01, 0xFD, 
                 0xFE, 0xFE, 0xE0, 0xA4, 0xFB, 0xFD,
             },
+            ParameterValue = new ParameterValue
+            {
+                Param = RigParameter.XitOn,
+            },
         };
     }
 
@@ -474,6 +530,10 @@ Validate=FEFEA4E0210200FD.FEFEE0A4FBFD",
             {
                 0xFE, 0xFE, 0xA4, 0xE0, 0x21, 0x02, 0x00, 0xFD, 
                 0xFE, 0xFE, 0xE0, 0xA4, 0xFB, 0xFD,
+            },
+            ParameterValue = new ParameterValue
+            {
+                Param = RigParameter.XitOff,
             },
         };
     }
@@ -496,6 +556,10 @@ Validate=FEFEA4E01C0000FD.FEFEE0A4FBFD",
                 0xFE, 0xFE, 0xA4, 0xE0, 0x1C, 0x00, 0x00, 0xFD, 
                 0xFE, 0xFE, 0xE0, 0xA4, 0xFB, 0xFD,
             },
+            ParameterValue = new ParameterValue
+            {
+                Param = RigParameter.Rx,
+            },
         };
     }
 
@@ -516,6 +580,10 @@ Validate=FEFEA4E01C0001FD.FEFEE0A4FBFD",
             {
                 0xFE, 0xFE, 0xA4, 0xE0, 0x1C, 0x00, 0x01, 0xFD, 
                 0xFE, 0xFE, 0xE0, 0xA4, 0xFB, 0xFD,
+            },
+            ParameterValue = new ParameterValue
+            {
+                Param = RigParameter.Tx,
             },
         };
     }

@@ -54,8 +54,6 @@ public class IC705SerialPortEmulatorTests : RigTestsBase
             responseReceived = true;
         };
 
-        serialPort.Start();
-
         serialPort.SendMessage(testData.RigCommand.Code);
 
         while (!responseReceived)

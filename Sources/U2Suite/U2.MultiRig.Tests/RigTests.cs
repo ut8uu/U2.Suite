@@ -20,23 +20,34 @@ namespace U2.MultiRig.Tests
         {
             var packetReceived = false;
             var guestRig = GetGuestRig();
+            guestRig.Enabled = true;
             guestRig.UdpPacketReceived += (sender, args) => packetReceived = true;
+            guestRig.Start();
             
             var hostRig = GetHostRig();
+            hostRig.Enabled = true;
+            hostRig.Start();
 
             var task = Task.Run(() =>
             {
+                Thread.Sleep(TimeSpan.FromSeconds(1));
                 hostRig.FreqA = 1234567;
-
                 while (!packetReceived)
                 {
-                    
+                    Thread.Sleep(TimeSpan.FromMilliseconds(100));
                 }
             });
 
-            task.Wait(CancellationToken.None);
+            task.Wait();//TimeSpan.FromSeconds(5));
+
+            hostRig.Enabled = false;
+            hostRig.Stop();
+
+            guestRig.Enabled = false;
+            guestRig.Stop();
 
             Assert.Equal(hostRig.FreqA, guestRig.FreqA);
+            Assert.True(packetReceived, "Packet was not received.");
         }
     }
 }
