@@ -14,8 +14,6 @@
                     Spacing="5"
                     Margin="3">
             <Button Name="SaveButton" Content="Save" />
-            <ComboBox Name="syntaxModeCombo" />
-            <Button Name="changeThemeBtn" Content="Change theme"/>
         </StackPanel>
         <StackPanel Name="StatusBar" Background="Purple" Height="25" DockPanel.Dock="Bottom" Orientation="Horizontal">
             <TextBlock Name="StatusText" Text="Ready" Margin="5 0 0 0" VerticalAlignment="Center" FontSize="12"/>

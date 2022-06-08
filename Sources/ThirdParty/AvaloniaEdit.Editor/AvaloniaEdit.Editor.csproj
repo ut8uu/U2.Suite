@@ -39,13 +39,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Avalonia.Desktop" Version="0.10.11" />
-    <PackageReference Include="CommandLineParser" Version="2.8.0" />
+    <PackageReference Include="Avalonia.Desktop" Version="0.10.15" />
+    <PackageReference Include="AvaloniaEdit.TextMate" Version="0.10.12.2" />
+    <PackageReference Include="AvaloniaEdit.TextMate.Grammars" Version="0.10.12" />
+    <PackageReference Include="CommandLineParser" Version="2.9.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\U2Suite\U2.Core\U2.Core.csproj" />
-    <ProjectReference Include="..\AvaloniaEdit.TextMate\AvaloniaEdit.TextMate.csproj" />
   </ItemGroup>
 
   <ItemGroup>
