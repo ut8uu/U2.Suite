@@ -95,7 +95,7 @@ namespace U2.Logger.Tests
             var logDirectory = FileSystemHelper.GetDatabaseFolderPath(ApplicationNames.LoggerLinux);
             var expectedDatabaseFile = Path.Combine(logDirectory, logFileName);
 
-            AppSettings.Default.LogName = logName;
+            LoggerAppSettings.Default.LogName = logName;
 
             var model = GetViewModel();
             var message = new ExecuteCommandMessage(CommandToExecute.SwitchLog, logName);
@@ -108,9 +108,8 @@ namespace U2.Logger.Tests
         [TestMethod]
         public void CreateNewLog_AlreadyExists()
         {
-            var model = GetViewModel();
-
-            var expectedLogName = AppSettings.Default.LogName;
+            var tempPath = TestHelpers.GetLocalTempPath();
+            FileSystemHelper.GetDatabaseFolderFunc = (applicationName) => tempPath;
 
             var parameters = LogInfoTestHelper.GetLogInfo();
 
@@ -131,7 +130,7 @@ namespace U2.Logger.Tests
             Assert.AreEqual(expectedFileContent.Length, fileInfo.Length);
 
             // settings should point to the current log
-            Assert.AreEqual(parameters.LogName, AppSettings.Default.LogName);
+            Assert.AreEqual(parameters.LogName, LoggerAppSettings.Default.LogName);
         }
 
         [TestMethod]
@@ -149,7 +148,7 @@ namespace U2.Logger.Tests
             var message = new ExecuteCommandMessage(CommandToExecute.UpdateLog, expectedLogInfo);
             Messenger.Default.Send(message);
 
-            var currentLogInfo = LogInfoHelper.LoadLogInfo(AppSettings.Default.LogName);
+            var currentLogInfo = LogInfoHelper.LoadLogInfo(LoggerAppSettings.Default.LogName);
             TestHelpers.AssertAreEqual(expectedLogInfo, currentLogInfo);
         }
     }

@@ -57,7 +57,7 @@ namespace U2.Logger
 
             if (commandToExecute == CommandToExecute.UpdateLog)
             {
-                SetLogInfo(LogInfoHelper.LoadLogInfo(AppSettings.Default.LogName));
+                SetLogInfo(LogInfoHelper.LoadLogInfo(LoggerAppSettings.Default.LogName));
             }
         }
 

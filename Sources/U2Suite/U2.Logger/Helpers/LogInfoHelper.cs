@@ -35,13 +35,13 @@ namespace U2.Logger
         {
             try
             {
-                return LoadLogInfo(AppSettings.Default.LogName);
+                return LoadLogInfo(LoggerAppSettings.Default.LogName);
             }
             catch (LogInfoNotFoundException)
             {
                 return new LogInfo
                 {
-                    LogName = AppSettings.Default.LogName,
+                    LogName = LoggerAppSettings.Default.LogName,
                 };
             }
         }

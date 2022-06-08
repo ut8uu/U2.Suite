@@ -57,10 +57,10 @@
 			<AutoGen>True</AutoGen>
 			<DependentUpon>Resources.resx</DependentUpon>
 		</Compile>
-		<Compile Update="AppSettings.Designer.cs">
+		<Compile Update="LoggerAppSettings.Designer.cs">
 			<DesignTimeSharedInput>True</DesignTimeSharedInput>
 			<AutoGen>True</AutoGen>
-			<DependentUpon>AppSettings.settings</DependentUpon>
+			<DependentUpon>LoggerAppSettings.settings</DependentUpon>
 		</Compile>
 		<Compile Update="Views\ImportAdifFromFileWindow.axaml.cs">
 		  <DependentUpon>ImportAdifFromFileWindow.axaml</DependentUpon>
@@ -91,9 +91,9 @@
 		<None Update="logger.ico">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
-		<None Update="AppSettings.settings">
+		<None Update="LoggerAppSettings.settings">
 			<Generator>SettingsSingleFileGenerator</Generator>
-			<LastGenOutput>AppSettings.Designer.cs</LastGenOutput>
+			<LastGenOutput>LoggerAppSettings.Designer.cs</LastGenOutput>
 		</None>
 	</ItemGroup>
 </Project>

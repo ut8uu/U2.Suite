@@ -63,7 +63,7 @@ namespace U2.Logger.Tests
 
             var dbDirectory = FileSystemHelper.GetDatabaseFolderPath(U2.Resources.ApplicationNames.LoggerOsx);
 
-            AppSettings.Default.LogName = badDatabase;
+            LoggerAppSettings.Default.LogName = badDatabase;
             var badDatabasePath = Path.Combine(dbDirectory, badDatabase);
             File.WriteAllText(badDatabasePath, badDatabase);
 
