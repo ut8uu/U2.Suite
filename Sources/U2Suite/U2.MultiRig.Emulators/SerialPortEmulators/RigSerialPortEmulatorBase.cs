@@ -53,11 +53,7 @@ public abstract class RigSerialPortEmulatorBase : IRigSerialPort
         }
     }
 
-    public void Start()
-    {
-    }
-
-    public void Stop()
+    public void Disconnect()
     {
         IsConnected = false;
     }

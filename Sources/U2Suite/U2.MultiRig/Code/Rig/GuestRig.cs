@@ -17,6 +17,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+using U2.Contracts;
 using U2.Core;
 
 namespace U2.MultiRig;

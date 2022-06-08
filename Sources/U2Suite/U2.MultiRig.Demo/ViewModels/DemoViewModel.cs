@@ -26,17 +26,18 @@ using System.Text;
 using System.Threading.Tasks;
 using log4net;
 using U2.CommonControls;
+using U2.Contracts;
 
 namespace U2.MultiRig.Demo.ViewModels
 {
     public sealed class DemoViewModel : WindowViewModelBase, IDisposable
     {
-        private Rig? _rig;
+        private HostRig? _hostRig;
+        private GuestRig? _guestRig;
         private bool _connected = false;
         private readonly ILog _logger = LogManager.GetLogger(typeof(DemoViewModel));
         private RigSettings? _rigSettings;
         private int _sourceType = 0;
-        private UdpMessenger _udpClient;
 
         public const string Internal = nameof(Internal);
         public const string External = nameof(External);
@@ -47,6 +48,12 @@ namespace U2.MultiRig.Demo.ViewModels
             _rigSettings = AllRigsSettings.AllRigs.FirstOrDefault();
             ConnectButtonEnabled = _rigSettings != null;
             OnPropertyChanged(nameof(ConnectButtonEnabled));
+        }
+
+        public void Dispose()
+        {
+            _hostRig?.Stop();
+            _hostRig?.Dispose();
         }
 
         public string ConnectButtonTitle { get; set; } = "Connect";
@@ -86,13 +93,13 @@ namespace U2.MultiRig.Demo.ViewModels
                 ConnectButtonTitle = "Connect";
                 if (_sourceType == 0)
                 {
-                    _rig?.Stop();
-                    _rig?.Dispose();
+                    _hostRig?.Stop();
+                    _hostRig?.Dispose();
                 }
                 else
                 {
-                    _udpClient.Stop();
-                    _udpClient.Dispose();
+                    //_udpClient.Stop();
+                    //_udpClient.Dispose();
                 }
             }
             else
@@ -126,13 +133,23 @@ namespace U2.MultiRig.Demo.ViewModels
         {
             try
             {
-                _udpClient = new UdpClient(CancellationToken.None);
-                _udpClient.MessageReceived += UdpClientOnMessageReceived;
-                _udpClient.Start();
+                _guestRig = new GuestRig(1, KnownIdentifiers.U2MultiRigDemo);
+                _guestRig.UdpPacketReceived += GuestRigOnUdpPacketReceived;
+                _guestRig.Start();
+
+                _connected = true;
             }
             catch (Exception ex)
             {
                 throw new ApplicationException(ex.Message, ex);
+            }
+        }
+
+        private void GuestRigOnUdpPacketReceived(object sender, RigUdpMessengerPacketEventArgs eventargs)
+        {
+            if (!_connected)
+            {
+                return;
             }
         }
 
@@ -158,9 +175,9 @@ namespace U2.MultiRig.Demo.ViewModels
 
             switch (key)
             {
-                case UdpMessageType.Parameter:
-                    ReportParameter(rigNumber, param1, param2);
-                    break;
+                //case UdpMessageType.Parameter:
+                //    ReportParameter(rigNumber, param1, param2);
+                //    break;
                 default:
                     Console.WriteLine($@"{key} not recognized.");
                     break;
@@ -200,9 +217,9 @@ namespace U2.MultiRig.Demo.ViewModels
                 throw new ApplicationException("RIG settings not found.");
             }
 
-            _rig = new Rig(1, _rigSettings, rigCommands);
-            _rig.RigParameterChanged += RigOnRigParameterChanged;
-            _rig.Start();
+            _hostRig = new HostRig(1, KnownIdentifiers.U2MultiRig, _rigSettings, rigCommands);
+            _hostRig.RigParameterChanged += RigOnRigParameterChanged;
+            _hostRig.Start();
         }
 
         private void RigOnRigParameterChanged(object sender, int rigNumber, 
@@ -282,14 +299,6 @@ namespace U2.MultiRig.Demo.ViewModels
                 default:
                     throw new ArgumentOutOfRangeException(nameof(parameter), parameter, null);
             }
-        }
-
-        public void Dispose()
-        {
-            _rig?.Stop();
-            _rig?.Dispose();
-            _udpClient?.Stop();
-            _udpClient?.Dispose();
         }
     }
 }

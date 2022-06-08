@@ -32,10 +32,6 @@ namespace U2.MultiRig.Tests
 {
     public class RigCommandTests : RigTestsBase, IDisposable
     {
-        private static readonly string TempPath = TestHelpers.GetLocalTempPath();
-        private static readonly string TestsDirectory = Path.Combine(TempPath, nameof(RigCommandTests));
-        private static readonly string IniDirectory = Path.Combine(TempPath, nameof(RigCommandTests), "INI");
-
         [Fact]
         public void AllRigCommands()
         {

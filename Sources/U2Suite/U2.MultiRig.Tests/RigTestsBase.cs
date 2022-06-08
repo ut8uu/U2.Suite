@@ -25,6 +25,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Autofac;
+using U2.Contracts;
 using U2.Core;
 using U2.MultiRig.Code;
 using U2.MultiRig.Emulators;
@@ -36,9 +37,9 @@ namespace U2.MultiRig.Tests;
 
 public abstract class RigTestsBase
 {
-    private static readonly string TempPath = TestHelpers.GetLocalTempPath();
-    private static readonly string TestsDirectory = Path.Combine(TempPath, nameof(RigTestsBase));
-    private static readonly string IniDirectory = Path.Combine(TempPath, nameof(RigTestsBase), "INI");
+    protected static readonly string TempPath = TestHelpers.GetLocalTempPath();
+    protected static readonly string TestsDirectory = Path.Combine(TempPath, nameof(RigTestsBase));
+    protected static readonly string IniDirectory = Path.Combine(TempPath, nameof(RigTestsBase), "INI");
 
     protected IRigEmulator Emulator;
 
@@ -47,6 +48,7 @@ public abstract class RigTestsBase
         FileSystemHelper.GetLocalFolderFunc = () => TestsDirectory;
         InitTestFolder();
 
+        MultiRigApplicationContext.Instance.ResetBuilder();
         IC705Emulator.Register();
         MultiRigApplicationContext.Instance.BuildContainer();
         Emulator = RigEmulatorBase.Instance;
@@ -121,11 +123,17 @@ public abstract class RigTestsBase
             TimeoutMs = 0,
         };
         return new HostRig(1, KnownIdentifiers.U2MultiRig,
-            settings, commands);
+            settings, commands)
+        {
+            Enabled = true,
+        };
     }
 
     protected GuestRig GetGuestRig()
     {
-        return new GuestRig(1, KnownIdentifiers.U2Logger);
+        return new GuestRig(1, KnownIdentifiers.U2Logger)
+        {
+            Enabled = true,
+        };
     }
 }

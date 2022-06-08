@@ -25,6 +25,7 @@ using Autofac;
 using DynamicData;
 using log4net;
 using SimpleUdp;
+using U2.Contracts;
 using U2.Core;
 using U2.MultiRig;
 using U2.MultiRig.Code;
@@ -325,8 +326,8 @@ static bool TestIc705Emulator(object[] parameters)
     hostRig.MessageDisplayModes = MessageDisplayModes.Error
                                   | MessageDisplayModes.Warning
                                   | MessageDisplayModes.Info
-                                  | MessageDisplayModes.Diagnostics2
-                                  | MessageDisplayModes.Diagnostics3
+                                  //| MessageDisplayModes.Diagnostics2
+                                  //| MessageDisplayModes.Diagnostics3
                                   ;
     hostRig.Enabled = true;
     hostRig.Start();
@@ -339,6 +340,7 @@ static bool TestIc705Emulator(object[] parameters)
     guest.MessageDisplayModes = MessageDisplayModes.Error
                                   | MessageDisplayModes.Warning
                                   | MessageDisplayModes.Info
+                                  | MessageDisplayModes.Diagnostics1
                                   | MessageDisplayModes.Diagnostics2
                                   | MessageDisplayModes.Diagnostics3
                                   ;
@@ -365,7 +367,7 @@ static bool TestIc705Emulator(object[] parameters)
     Console.WriteLine("Turning split on.");
     hostRig.Split = RigParameter.SplitOn;
 
-    /*
+    
     Console.WriteLine("Increasing FreqA 30 times from 28145000 every 5 seconds.");
 
     for (int i = 1; i < 30; i++)
@@ -374,7 +376,7 @@ static bool TestIc705Emulator(object[] parameters)
         hostRig.FreqA = 28145000 + i;
         Console.WriteLine($"Changing the frequency to {hostRig.FreqA}.");
     }
-    */
+    //*/
 
     hostRig.MessageDisplayModes = MessageDisplayModes.Error;
 

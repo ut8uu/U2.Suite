@@ -32,6 +32,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Autofac;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using U2.Contracts;
 using U2.Core;
 using U2.MultiRig.Code;
 
@@ -861,7 +862,6 @@ public sealed class HostRig : Rig
             AddCommands(_rigCommands.StatusCmd, CommandKind.Status);
         }
 
-        _rigSerialPort.Start();
         EnableConnectivityTimer();
     }
 
@@ -873,7 +873,7 @@ public sealed class HostRig : Rig
         {
             _cancellationTokenSource.Cancel();
             _online = false;
-            _rigSerialPort.Stop();
+            _rigSerialPort.Disconnect();
         }
     }
 
