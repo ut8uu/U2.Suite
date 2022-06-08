@@ -38,7 +38,7 @@
     <PackageReference Include="IPAddressRange" Version="4.2.0" />
     <PackageReference Include="log4net" Version="2.0.14" />
     <PackageReference Include="MonoSerialPort" Version="1.0.15" />
-    <PackageReference Include="PropertyChanged.Fody" Version="3.4.0" />
+    <PackageReference Include="PropertyChanged.Fody" Version="3.4.1" />
     <PackageReference Include="SimpleUdp" Version="1.2.0" />
     <PackageReference Include="SoftCircuits.IniFileParser" Version="2.1.0" />
   </ItemGroup>
