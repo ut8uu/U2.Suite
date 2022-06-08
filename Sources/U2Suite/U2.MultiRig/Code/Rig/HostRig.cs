@@ -32,6 +32,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Autofac;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using U2.Contracts;
 using U2.Core;
 using U2.MultiRig.Code;
 

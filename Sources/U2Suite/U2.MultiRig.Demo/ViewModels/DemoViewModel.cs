@@ -26,6 +26,7 @@ using System.Text;
 using System.Threading.Tasks;
 using log4net;
 using U2.CommonControls;
+using U2.Contracts;
 
 namespace U2.MultiRig.Demo.ViewModels
 {

@@ -25,6 +25,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Autofac;
+using U2.Contracts;
 using U2.Core;
 using U2.MultiRig.Code;
 using U2.MultiRig.Emulators;
