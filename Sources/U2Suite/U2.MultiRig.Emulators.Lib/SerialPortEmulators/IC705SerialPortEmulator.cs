@@ -26,16 +26,15 @@ using Autofac;
 using JetBrains.Annotations;
 using U2.MultiRig.Code;
 
-namespace U2.MultiRig.Emulators
+namespace U2.MultiRig.Emulators.Lib;
+
+public sealed class IC705SerialPortEmulator : RigSerialPortEmulatorBase
 {
-    public sealed class IC705SerialPortEmulator : RigSerialPortEmulatorBase
+    public IC705SerialPortEmulator()
+        : base(EmulatorResources.IC_705)
     {
-        public IC705SerialPortEmulator() 
-            : base(EmulatorResources.IC_705)
-        {
-            MultiRigApplicationContext.Instance.Builder
-                .Register(c => new IC705SerialPortEmulator())
-                .As<IRigSerialPort>();
-        }
+        MultiRigApplicationContext.Instance.Builder
+            .Register(c => new IC705SerialPortEmulator())
+            .As<IRigSerialPort>();
     }
 }

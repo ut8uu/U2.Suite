@@ -9,7 +9,7 @@ using Autofac;
 using CommandLineParser.Arguments;
 using Newtonsoft.Json.Linq;
 using U2.MultiRig.Code;
-using U2.MultiRig.Emulators;
+using U2.MultiRig.Emulators.Lib;
 using Xunit;
 
 namespace U2.MultiRig.Tests;

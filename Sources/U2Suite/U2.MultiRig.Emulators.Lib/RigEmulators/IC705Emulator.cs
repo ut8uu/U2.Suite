@@ -25,7 +25,7 @@ using System.Threading.Tasks;
 using Autofac;
 using U2.MultiRig.Code;
 
-namespace U2.MultiRig.Emulators;
+namespace U2.MultiRig.Emulators.Lib;
 
 public sealed class IC705Emulator : RigEmulatorBase
 {

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace U2.MultiRig.Emulators {
+namespace U2.MultiRig.Emulators.Lib {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace U2.MultiRig.Emulators {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("U2.MultiRig.Emulators.EmulatorResources", typeof(EmulatorResources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("U2.MultiRig.Emulators.Lib.EmulatorResources", typeof(EmulatorResources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

@@ -27,7 +27,7 @@ using Autofac;
 using U2.Core;
 using U2.MultiRig.Code;
 
-namespace U2.MultiRig.Emulators;
+namespace U2.MultiRig.Emulators.Lib;
 
 public abstract class RigSerialPortEmulatorBase : IRigSerialPort
 {
