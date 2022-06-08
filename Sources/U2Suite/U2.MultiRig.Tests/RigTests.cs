@@ -38,7 +38,8 @@ namespace U2.MultiRig.Tests
                 }
             });
 
-            task.Wait();//TimeSpan.FromSeconds(5));
+            task.Wait(TimeSpan.FromSeconds(25)); // a watchdog
+            Assert.True(packetReceived, "Packet was not received.");
 
             hostRig.Enabled = false;
             hostRig.Stop();
@@ -47,7 +48,6 @@ namespace U2.MultiRig.Tests
             guestRig.Stop();
 
             Assert.Equal(hostRig.FreqA, guestRig.FreqA);
-            Assert.True(packetReceived, "Packet was not received.");
         }
     }
 }

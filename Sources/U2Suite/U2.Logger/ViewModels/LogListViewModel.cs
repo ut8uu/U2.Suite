@@ -93,7 +93,7 @@ public class LogListViewModel : ViewModelBase
             return;
         }
 
-        AppSettings.Default.LogName = SelectedItem.LogName;
+        LoggerAppSettings.Default.LogName = SelectedItem.LogName;
         var message = new ExecuteCommandMessage(CommandToExecute.SwitchLog);
         Messenger.Default.Send(message);
 

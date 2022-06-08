@@ -57,7 +57,7 @@ namespace U2.Logger.Tests
         public void CreateWindow_UpdateLog_SetTitle()
         {
             var logInfo = LogInfoTestHelper.GetLogInfo();
-            AppSettings.Default.LogName = logInfo.LogName;
+            LoggerAppSettings.Default.LogName = logInfo.LogName;
             LogInfoHelper.SaveLogInfo(logInfo);
 
             var model = new LogInfoWindowViewModel(CommandToExecute.UpdateLog);

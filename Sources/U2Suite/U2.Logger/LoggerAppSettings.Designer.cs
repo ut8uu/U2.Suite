@@ -12,12 +12,12 @@ namespace U2.Logger {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.1.0.0")]
-    internal sealed partial class AppSettings : global::System.Configuration.ApplicationSettingsBase {
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.2.0.0")]
+    internal sealed partial class LoggerAppSettings : global::System.Configuration.ApplicationSettingsBase {
         
-        private static AppSettings defaultInstance = ((AppSettings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new AppSettings())));
+        private static LoggerAppSettings defaultInstance = ((LoggerAppSettings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new LoggerAppSettings())));
         
-        public static AppSettings Default {
+        public static LoggerAppSettings Default {
             get {
                 return defaultInstance;
             }

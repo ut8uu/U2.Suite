@@ -53,7 +53,7 @@ namespace U2.Logger.Tests
             var dbDirectory = FileSystemHelper.GetDatabaseFolderPath(U2.Resources.ApplicationNames.LoggerOsx);
 
             var dbName = "ImportAdifViewModelTests";
-            AppSettings.Default.LogName = dbName;
+            LoggerAppSettings.Default.LogName = dbName;
             var databasePath = Path.Combine(dbDirectory, dbName);
             File.WriteAllText(databasePath, dbName);
 

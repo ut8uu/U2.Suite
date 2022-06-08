@@ -71,7 +71,7 @@ namespace U2.Logger
 
         private void SetWindowTitle()
         {
-            WindowTitle = $"U2.Logger - {AppSettings.Default.LogName}";
+            WindowTitle = $"U2.Logger - {LoggerAppSettings.Default.LogName}";
         }
 
         public Window? Owner { get; set; } = null;
@@ -166,8 +166,8 @@ namespace U2.Logger
 
                     LogInfoHelper.SaveLogInfo(logInfo);
 
-                    AppSettings.Default.LogName = logInfo.LogName;
-                    AppSettings.Default.Save();
+                    LoggerAppSettings.Default.LogName = logInfo.LogName;
+                    LoggerAppSettings.Default.Save();
 
                     var switchLogMessage = new ExecuteCommandMessage(CommandToExecute.SwitchLog, null);
                     Messenger.Default.Send(switchLogMessage);

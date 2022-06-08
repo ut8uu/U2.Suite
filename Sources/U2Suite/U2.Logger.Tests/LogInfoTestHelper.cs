@@ -32,7 +32,7 @@ namespace U2.Logger.Tests
             return new LogInfo
             {
                 Description = String.Empty,
-                LogName = AppSettings.Default.LogName,
+                LogName = LoggerAppSettings.Default.LogName,
                 StationCallsign = "UT8UU/P",
                 OperatorCallsign = "UT8UU",
                 ActivatedReference = "URFF-0100",

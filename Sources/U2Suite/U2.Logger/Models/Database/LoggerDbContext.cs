@@ -44,7 +44,7 @@ public sealed class LoggerDbContext : DbContext
     {
         var dbDirectory = FileSystemHelper.GetDatabaseFolderPath(U2.Resources.ApplicationNames.LoggerOsx);
         Directory.CreateDirectory(dbDirectory);
-        _dataBaseName = $"{AppSettings.Default.LogName}{CommonConstants.DatabaseExtension}";
+        _dataBaseName = $"{LoggerAppSettings.Default.LogName}{CommonConstants.DatabaseExtension}";
         _databasePath = Path.Combine(dbDirectory, _dataBaseName);
 
         CheckIntegrity();
