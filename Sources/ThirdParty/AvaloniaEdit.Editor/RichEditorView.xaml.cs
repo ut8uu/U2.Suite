@@ -12,8 +12,10 @@ using Avalonia.Media.Imaging;
 using AvaloniaEdit.CodeCompletion;
 using AvaloniaEdit.Document;
 using AvaloniaEdit.Editing;
+using AvaloniaEdit.Highlighting;
 using AvaloniaEdit.Rendering;
 using AvaloniaEdit.TextMate;
+using AvaloniaEdit.TextMate.Grammars;
 
 namespace AvaloniaEdit.Editor
 {
@@ -22,14 +24,10 @@ namespace AvaloniaEdit.Editor
     public class RichEditorView : Window
     {
         private readonly TextEditor _textEditor;
-        private readonly TextMate.TextMate.Installation _textMateInstallation;
         private CompletionWindow _completionWindow;
         private OverloadInsightWindow _insightWindow;
-        private readonly Button _changeThemeBtn;
-        private readonly ComboBox _syntaxModeCombo;
         private readonly TextBlock _statusTextBlock;
         private readonly ElementGenerator _generator = new ElementGenerator();
-        private int _currentTheme = (int)ThemeName.DarkPlus;
         private readonly Button _saveButton;
 
         public RichEditorView()
@@ -46,9 +44,9 @@ namespace AvaloniaEdit.Editor
             {
                 Items = new List<MenuItem>
                 {
-                    new MenuItem { Header = "Copy", InputGesture = new KeyGesture(Key.C, KeyModifiers.Control) },
-                    new MenuItem { Header = "Paste", InputGesture = new KeyGesture(Key.V, KeyModifiers.Control) },
-                    new MenuItem { Header = "Cut", InputGesture = new KeyGesture(Key.X, KeyModifiers.Control) }
+                    new() { Header = "Copy", InputGesture = new KeyGesture(Key.C, KeyModifiers.Control) },
+                    new() { Header = "Paste", InputGesture = new KeyGesture(Key.V, KeyModifiers.Control) },
+                    new() { Header = "Cut", InputGesture = new KeyGesture(Key.X, KeyModifiers.Control) }
                 }
             };
             _textEditor.TextArea.Background = this.Background;
@@ -57,23 +55,7 @@ namespace AvaloniaEdit.Editor
             _textEditor.TextArea.IndentationStrategy = new Indentation.CSharp.CSharpIndentationStrategy();
             _textEditor.TextArea.Caret.PositionChanged += Caret_PositionChanged;
 
-            _changeThemeBtn = this.FindControl<Button>("changeThemeBtn");
-            _changeThemeBtn.Click += _changeThemeBtn_Click;
-
             _textEditor.TextArea.TextView.ElementGenerators.Add(_generator);
-
-            _textMateInstallation = _textEditor.InstallTextMate(
-                (ThemeName)_currentTheme,
-                null);
-
-            var jsonLanguage = _textMateInstallation.RegistryOptions.GetLanguageByExtension(".json");
-
-            _syntaxModeCombo = this.FindControl<ComboBox>("syntaxModeCombo");
-            _syntaxModeCombo.Items = _textMateInstallation.RegistryOptions.GetAvailableLanguages();
-            _syntaxModeCombo.SelectedItem = jsonLanguage;
-            _syntaxModeCombo.SelectionChanged += _syntaxModeCombo_SelectionChanged;
-
-            _textMateInstallation.SetGrammarByLanguageId(jsonLanguage.Id);
 
             _statusTextBlock = this.Find<TextBlock>("StatusText");
 
@@ -88,10 +70,9 @@ namespace AvaloniaEdit.Editor
             {
                 var content = File.ReadAllText(Program.InputFile);
                 _textEditor.Document = new TextDocument(content);
-                var extension = System.IO.Path.GetExtension(Program.InputFile);
-                var language = _textMateInstallation.RegistryOptions.GetLanguageByExtension(extension);
-                _textMateInstallation.SetGrammarByLanguageId(language.Id);
             }
+
+            _textEditor.SyntaxHighlighting = HighlightingManager.Instance.GetDefinition("JSON");
         }
 
         private void _saveButton_Click(object sender, RoutedEventArgs e)
@@ -106,30 +87,6 @@ namespace AvaloniaEdit.Editor
         {
             var caret = _textEditor.TextArea.Caret;
             _statusTextBlock.Text = $"Line {caret.Line} Column {caret.Column}";
-        }
-
-        protected override void OnClosed(EventArgs e)
-        {
-            base.OnClosed(e);
-
-            _textMateInstallation.Dispose();
-        }
-
-        private void _syntaxModeCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            var language = (Language)_syntaxModeCombo.SelectedItem;
-            if (language == null)
-            {
-                return;
-            }
-            _textMateInstallation.SetGrammarByLanguageId(language.Id);
-        }
-
-        void _changeThemeBtn_Click(object sender, RoutedEventArgs e)
-        {
-            _currentTheme = (_currentTheme + 1) % Enum.GetNames(typeof(ThemeName)).Length;
-
-            _textMateInstallation.SetTheme((ThemeName)_currentTheme);
         }
 
         private void InitializeComponent()
