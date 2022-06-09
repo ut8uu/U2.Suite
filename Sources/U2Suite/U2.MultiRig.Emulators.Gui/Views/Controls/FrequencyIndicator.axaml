@@ -1,0 +1,27 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:gui="clr-namespace:U2.MultiRig.Emulators.Gui"
+             mc:Ignorable="d" d:DesignWidth="450" d:DesignHeight="110"
+             x:Class="U2.MultiRig.Emulators.Gui.FrequencyIndicator"
+             Width="{Binding Width}" Height="110">
+
+    <Design.DataContext>
+        <gui:DemoFrequencyIndicatorViewModel/>
+    </Design.DataContext>
+
+    <StackPanel Orientation="Horizontal">
+        <gui:UpDownDigit Name="Digit9" Index="9" Frequency="{Binding Frequency}"></gui:UpDownDigit>
+        <gui:UpDownDigit Name="Digit8" Index="8" Frequency="{Binding Frequency}"></gui:UpDownDigit>
+        <gui:UpDownDigit Name="Digit7" Index="7" Frequency="{Binding Frequency}"></gui:UpDownDigit>
+        <gui:UpDownDigit Name="Digit6" Index="6" Frequency="{Binding Frequency}"></gui:UpDownDigit>
+        <gui:UpDownDigit Name="Digit5" Index="5" Frequency="{Binding Frequency}"></gui:UpDownDigit>
+        <gui:UpDownDigit Name="Digit4" Index="4" Frequency="{Binding Frequency}"></gui:UpDownDigit>
+        <gui:UpDownDigit Name="Digit3" Index="3" Frequency="{Binding Frequency}"></gui:UpDownDigit>
+        <gui:UpDownDigit Name="Digit2" Index="2" Frequency="{Binding Frequency}"></gui:UpDownDigit>
+        <gui:UpDownDigit Name="Digit1" Index="1" Frequency="{Binding Frequency}"></gui:UpDownDigit>
+        <gui:UpDownDigit Name="Digit0" Index="0" Frequency="{Binding Frequency}"></gui:UpDownDigit>
+    </StackPanel>
+
+</UserControl>

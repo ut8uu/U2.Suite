@@ -1,17 +1,45 @@
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:vm="using:U2.MultiRig.Emulators.Gui.ViewModels"
+        xmlns:vm="using:U2.MultiRig.Emulators.Gui"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-        x:Class="U2.MultiRig.Emulators.Gui.Views.MainWindow"
+        mc:Ignorable="d" d:DesignWidth="500" d:DesignHeight="250"
+        x:Class="U2.MultiRig.Emulators.Gui.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
         Title="U2.MultiRig.Emulators.Gui">
 
-    <Design.DataContext>
-        <vm:MainWindowViewModel/>
-    </Design.DataContext>
+	<Design.DataContext>
+		<vm:DemoMainWindowViewModel/>
+	</Design.DataContext>
 
-    <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+	<Control.Styles>
+		<Style Selector="vm|FrequencyIndicator">
+			<Setter Property="Margin" Value="10 0"></Setter>
+		</Style>
+	</Control.Styles>
+
+	<DockPanel>
+		<Border Classes="Card"  DockPanel.Dock="Bottom">
+			<StackPanel Name="Status" Orientation="Horizontal">
+				<TextBlock Text="{Binding Status}"></TextBlock>
+			</StackPanel>
+		</Border>
+
+		<Menu DockPanel.Dock="Top">
+			<MenuItem Header="File">
+				<MenuItem Header="Exit" Command="{Binding ExecuteExitCommand}"></MenuItem>
+			</MenuItem>
+		</Menu>
+
+		<DockPanel>
+			<StackPanel Name="Buttons" DockPanel.Dock="Bottom">
+
+			</StackPanel>
+
+			<Grid ColumnDefinitions="*,*" RowDefinitions="Auto">
+				<vm:FrequencyIndicator Frequency="{Binding FreqA}"></vm:FrequencyIndicator>
+			</Grid>
+		</DockPanel>
+	</DockPanel>
 
 </Window>
