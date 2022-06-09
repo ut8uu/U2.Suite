@@ -20,6 +20,7 @@
 using System;
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Data;
 using Avalonia.Markup.Xaml;
 using ReactiveUI.Fody.Helpers;
 
@@ -28,6 +29,8 @@ namespace U2.MultiRig.Emulators.Gui;
 public partial class UpDownDigit : UserControl
 {
     private readonly UpDownDigitViewModel _viewModel;
+    private int _frequency;
+    private int _index;
 
     public UpDownDigit()
     {
@@ -42,18 +45,58 @@ public partial class UpDownDigit : UserControl
     [Reactive] 
     public int DisplayValue => _viewModel.DisplayValue;
 
+    [Reactive]
+    public int Index
+    {
+        get => _index;
+        set
+        {
+            _index = value;
+            _viewModel.Index = value;
+        }
+    }
+
+    [Reactive]
+    public int Frequency
+    {
+        get => _frequency;
+        set
+        {
+            _frequency = value;
+            _viewModel.Value = value;
+        }
+    }
+
+    public static readonly DirectProperty<UpDownDigit, int> IndexProperty =
+        AvaloniaProperty.RegisterDirect<UpDownDigit, int>(nameof(Index),
+            getter: o => o.Index, 
+            setter: (o, v) => o.Index = v,
+            unsetValue: 0,
+            defaultBindingMode: BindingMode.TwoWay,
+            false
+        );
+
+    public static readonly DirectProperty<UpDownDigit, int> FrequencyProperty =
+        AvaloniaProperty.RegisterDirect<UpDownDigit, int>(nameof(Frequency),
+            getter: o => o.Frequency, 
+            setter: (o, v) => o.Frequency = v,
+            unsetValue: 0,
+            defaultBindingMode: BindingMode.TwoWay,
+            false
+        );
+
     private void InitializeComponent()
     {
         AvaloniaXamlLoader.Load(this);
     }
 
-    public void ExecuteUpButtonClick()
+    public void ExecuteButtonUpClick()
     {
         _viewModel.Increment();
         OnValueChanged(_viewModel.Value, ValueChangeType.Increment);
     }
 
-    public void ExecuteDownButtonClick()
+    public void ExecuteButtonDownClick()
     {
         _viewModel.Decrement();
         OnValueChanged(_viewModel.Value, ValueChangeType.Decrement);

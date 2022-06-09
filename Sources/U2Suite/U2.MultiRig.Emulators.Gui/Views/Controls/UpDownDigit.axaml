@@ -17,13 +17,15 @@
         </Style>
     </Control.Styles>
     <StackPanel>
-      <Button Classes="WithMargin">
+      <Button Classes="WithMargin"
+              Command="{Binding ExecuteButtonUpClick}">
           <Image Source="../../Images/up.png"></Image>
       </Button>
       <TextBlock Text="{Binding DisplayValue}" HorizontalAlignment="Center" Classes="Big">
 
       </TextBlock>
-      <Button Classes="WithMargin" Command="{Binding ExecuteDownButtonClick}">
+      <Button Classes="WithMargin" 
+              Command="{Binding ExecuteButtonDownClick}">
           <Image Source="../../Images/down.png"></Image>
       </Button>
   </StackPanel>
