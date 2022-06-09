@@ -1,0 +1,30 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="35" d:DesignHeight="98"
+             x:Class="U2.MultiRig.Emulators.Gui.UpDownDigit">
+  
+    <Control.Styles>
+        <Style Selector="TextBlock.Big">
+            <Setter Property="Foreground" Value="{DynamicResource ThemeForegroundBrush}" />
+            <Setter Property="FontFamily" Value="Ubuntu" />
+            <Setter Property="FontSize" Value="64" />
+            <Setter Property="Margin" Value="0 -19 0 -11"></Setter>
+        </Style>
+        <Style Selector="Button.WithMargin">
+            <Setter Property="Margin" Value="2 0"></Setter>
+        </Style>
+    </Control.Styles>
+    <StackPanel>
+      <Button Classes="WithMargin">
+          <Image Source="../../Images/up.png"></Image>
+      </Button>
+      <TextBlock Text="{Binding DisplayValue}" HorizontalAlignment="Center" Classes="Big">
+
+      </TextBlock>
+      <Button Classes="WithMargin" Command="{Binding ExecuteDownButtonClick}">
+          <Image Source="../../Images/down.png"></Image>
+      </Button>
+  </StackPanel>
+</UserControl>
