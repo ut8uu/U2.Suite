@@ -46,8 +46,10 @@
 						 SelectedItem="{Binding SelectedVfo}"
                          Items="{Binding VfoItems}">
                 </ListBox>
-                <vm:FrequencyIndicator Grid.Column="1" 
-                                       Frequency="{Binding Frequency}">
+                <vm:FrequencyIndicator 
+                    Name="FrequencyIndicator"
+                    Grid.Column="1" 
+                    Frequency="{Binding Frequency, Mode=TwoWay}">
                 </vm:FrequencyIndicator>
 			</Grid>
 		</DockPanel>
