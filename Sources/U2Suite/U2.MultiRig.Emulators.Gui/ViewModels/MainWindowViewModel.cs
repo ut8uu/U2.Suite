@@ -92,9 +92,6 @@ public class MainWindowViewModel : ViewModelBase
                     ChangeStatus($"VFO B frequency changed to {value}");
                     break;
             }
-
-
-            //_frequencyIndicatorViewModel.Frequency = _frequency;
         }
     }
 

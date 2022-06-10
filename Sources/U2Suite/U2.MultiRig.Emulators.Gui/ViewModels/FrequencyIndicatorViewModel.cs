@@ -27,20 +27,26 @@ public class FrequencyIndicatorViewModel : ViewModelBase
             _owner = value;
 
             _digits.Clear();
-            for (var i = 0; i < 10; i++)
+            var index = 0;
+            while (true)
             {
-                var control = _owner.FindControl<UpDownDigit>($"Digit{i}");
-                Debug.Assert(control != null, $"An UpDownDigit control Digit{i} not found.");
-                control.ValueChanged += ControlOnFrequencyChanged;
+                var control = _owner.FindControl<UpDownDigit>($"Digit{index}");
+                if (control == null)
+                {
+                    break;
+                }
+                control.ValueChanged += UpDownDigit_OnFrequencyChanged;
                 _digits.Add(control);
+                index++;
+            }
+
+            var maxValue = (long)Math.Pow(10, _digits.Count);
+
+            foreach (var digit in _digits)
+            {
+                digit.ViewModel.MaxValue = maxValue;
             }
         }
-    }
-
-    private void ControlOnFrequencyChanged(object sender, ValueChangedEventArgs eventArgs)
-    {
-        Frequency = eventArgs.Value;
-        OnFrequencyChanged(Frequency);
     }
 
     public long Frequency
@@ -57,6 +63,12 @@ public class FrequencyIndicatorViewModel : ViewModelBase
     }
 
     public int Width { get; set; } = 445;
+
+    private void UpDownDigit_OnFrequencyChanged(object sender, ValueChangedEventArgs eventArgs)
+    {
+        Frequency = eventArgs.Value;
+        OnFrequencyChanged(Frequency);
+    }
 
     protected virtual void OnFrequencyChanged(long frequency)
     {
