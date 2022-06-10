@@ -38,7 +38,8 @@ public partial class App : Application
             var viewModel = new MainWindowViewModel
             {
                 Owner = window,
-                FreqA = 123456789,
+                FreqA = 438500425,
+                SelectedVfo = MainWindowViewModel.VfoA,
                 Status = "Load finished."
             };
             window.DataContext = viewModel;

@@ -29,8 +29,8 @@ namespace U2.MultiRig.Emulators.Gui;
 
 public class MainWindowViewModel : ViewModelBase
 {
-    private const string VfoA = "VFO A";
-    private const string VfoB = "VFO B";
+    public const string VfoA = "VFO A";
+    public const string VfoB = "VFO B";
 
     private string _status;
     private string _selectedVfo = VfoA;
@@ -42,6 +42,7 @@ public class MainWindowViewModel : ViewModelBase
     public MainWindowViewModel()
     {
         _frequency = FreqA;
+        _selectedVfo = VfoA;
     }
 
     public long FreqA { get; set; } = 438500000;
@@ -64,6 +65,8 @@ public class MainWindowViewModel : ViewModelBase
             {
                 _frequencyIndicatorViewModel.Frequency = _frequency;
             }
+
+            ChangeStatus($"VFO changed to {value}");
         }
     }
 
@@ -82,14 +85,23 @@ public class MainWindowViewModel : ViewModelBase
             {
                 case VfoA:
                     FreqA = value;
+                    ChangeStatus($"VFO A frequency changed to {value}");
                     break;
                 case VfoB:
                     FreqB = value;
+                    ChangeStatus($"VFO B frequency changed to {value}");
                     break;
             }
 
+
             //_frequencyIndicatorViewModel.Frequency = _frequency;
         }
+    }
+
+    private void ChangeStatus(string message)
+    {
+        Status = message;
+        OnPropertyChanged(nameof(Status));
     }
 
     public string Status
@@ -117,6 +129,17 @@ public class MainWindowViewModel : ViewModelBase
     private void FrequencyIndicator_OnFrequencyChanged(object sender, long frequency)
     {
         _frequency = frequency;
+        ChangeStatus($"A frequency changed to {frequency}");
+
+        switch (SelectedVfo)
+        {
+            case VfoA:
+                FreqA = frequency;
+                break;
+            case VfoB:
+                FreqB = frequency;
+                break;
+        }
     }
 
     public void ExecuteExitCommand()
