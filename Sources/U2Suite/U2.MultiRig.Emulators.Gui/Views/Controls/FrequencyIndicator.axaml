@@ -20,8 +20,8 @@
     </UserControl.Styles>
 
     <StackPanel Orientation="Horizontal">
-        <gui:UpDownDigit Name="Digit11" Index="9" Frequency="{Binding Frequency}"></gui:UpDownDigit>
-        <gui:UpDownDigit Name="Digit10" Index="9" Frequency="{Binding Frequency}"></gui:UpDownDigit>
+        <gui:UpDownDigit Name="Digit11" Index="11" Frequency="{Binding Frequency}"></gui:UpDownDigit>
+        <gui:UpDownDigit Name="Digit10" Index="10" Frequency="{Binding Frequency}"></gui:UpDownDigit>
         <gui:UpDownDigit Name="Digit9" Index="9" Frequency="{Binding Frequency}"></gui:UpDownDigit>
 		<TextBlock Text="." Classes="Divider"></TextBlock>
         <gui:UpDownDigit Name="Digit8" Index="8" Frequency="{Binding Frequency}"></gui:UpDownDigit>
