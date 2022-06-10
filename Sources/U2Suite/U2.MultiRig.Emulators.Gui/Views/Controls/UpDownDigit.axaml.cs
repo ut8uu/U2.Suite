@@ -29,7 +29,7 @@ namespace U2.MultiRig.Emulators.Gui;
 public partial class UpDownDigit : UserControl
 {
     private readonly UpDownDigitViewModel _viewModel;
-    private int _frequency;
+    private long _frequency;
     private int _index;
 
     public UpDownDigit()
@@ -61,7 +61,7 @@ public partial class UpDownDigit : UserControl
         }
     }
 
-    public int Frequency
+    public long Frequency
     {
         get => _frequency;
         set
@@ -80,8 +80,8 @@ public partial class UpDownDigit : UserControl
             false
         );
 
-    public static readonly DirectProperty<UpDownDigit, int> FrequencyProperty =
-        AvaloniaProperty.RegisterDirect<UpDownDigit, int>(nameof(Frequency),
+    public static readonly DirectProperty<UpDownDigit, long> FrequencyProperty =
+        AvaloniaProperty.RegisterDirect<UpDownDigit, long>(nameof(Frequency),
             getter: o => o.Frequency, 
             setter: (o, v) => o.Frequency = v,
             unsetValue: 0,
@@ -106,7 +106,7 @@ public partial class UpDownDigit : UserControl
         OnValueChanged(_viewModel.Value, ValueChangeType.Decrement);
     }
 
-    private void OnValueChanged(int value, ValueChangeType changeType)
+    private void OnValueChanged(long value, ValueChangeType changeType)
     {
         var eventArgs = new ValueChangedEventArgs
         {
@@ -116,7 +116,7 @@ public partial class UpDownDigit : UserControl
         ValueChanged?.Invoke(this, eventArgs);
     }
 
-    private void InputElement_OnPointerWheelChanged(object? sender, 
+    private void InputElement_OnPointerWheelChanged(object sender, 
         PointerWheelEventArgs e)
     {
         if (e.Delta.Y > 0)
@@ -130,12 +130,12 @@ public partial class UpDownDigit : UserControl
 
     }
 
-    private void InputElement_OnPointerEnter(object? sender, PointerEventArgs e)
+    private void InputElement_OnPointerEnter(object sender, PointerEventArgs e)
     {
         _viewModel.AreUpDownButtonsVisible = true;
     }
 
-    private void InputElement_OnPointerLeave(object? sender, PointerEventArgs e)
+    private void InputElement_OnPointerLeave(object sender, PointerEventArgs e)
     {
         _viewModel.AreUpDownButtonsVisible = false;
     }

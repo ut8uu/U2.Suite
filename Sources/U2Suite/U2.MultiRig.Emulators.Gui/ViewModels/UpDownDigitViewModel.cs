@@ -33,7 +33,7 @@ public enum ValueChangeType
 
 public sealed class ValueChangedEventArgs : EventArgs
 {
-    public int Value { get; set; }
+    public long Value { get; set; }
     public ValueChangeType ChangeType { get; set; }
 }
 
@@ -41,14 +41,14 @@ public delegate void ValueChangedEventHandler(object sender, ValueChangedEventAr
 
 public sealed class UpDownDigitViewModel : ViewModelBase
 {
-    private int _value;
+    private long _value;
     private bool _areUpDownButtonsVisible;
     public event ValueChangedEventHandler ValueChanged;
     private const long maxValue = 9999999999;
 
     public int Index { get; set; }
 
-    public int Value
+    public long Value
     {
         get => _value;
         set
@@ -80,10 +80,10 @@ public sealed class UpDownDigitViewModel : ViewModelBase
         }
     }
 
-    internal int CalculateNewValue(int oldValue, ValueChangeType changeType)
+    internal long CalculateNewValue(long oldValue, ValueChangeType changeType)
     {
         var multiplier = changeType == ValueChangeType.Increment ? 1 : -1;
-        var addValue = (int)Math.Pow(10, Index) * multiplier;
+        var addValue = (long)Math.Pow(10, Index) * multiplier;
         return oldValue + addValue;
     }
 
@@ -133,7 +133,7 @@ public sealed class UpDownDigitViewModel : ViewModelBase
         return false;
     }
 
-    private void OnValueChanged(int value, ValueChangeType changeType)
+    private void OnValueChanged(long value, ValueChangeType changeType)
     {
         var eventArgs = new ValueChangedEventArgs
         {
