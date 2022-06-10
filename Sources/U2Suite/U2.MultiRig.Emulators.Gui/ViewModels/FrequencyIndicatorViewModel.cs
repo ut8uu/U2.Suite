@@ -51,7 +51,7 @@ public class FrequencyIndicatorViewModel : ViewModelBase
         }
     }
 
-    public int Width { get; set; } = 440;
+    public int Width { get; set; } = 445;
 }
 
 public class DemoFrequencyIndicatorViewModel : FrequencyIndicatorViewModel

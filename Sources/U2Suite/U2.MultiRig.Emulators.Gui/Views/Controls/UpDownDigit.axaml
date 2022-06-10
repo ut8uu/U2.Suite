@@ -18,25 +18,32 @@
 	</Control.Styles>
 
 	<Grid ColumnDefinitions="*" RowDefinitions="*">
-        <TextBlock Grid.Column="0" Grid.Row="0" Text="{Binding DisplayValue}"
+		<TextBlock Grid.Column="0" Grid.Row="0" Text="{Binding DisplayValue}"
                    HorizontalAlignment="Center" Classes="Big"
                    PointerWheelChanged="InputElement_OnPointerWheelChanged"
                    PointerEnter="InputElement_OnPointerEnter"
-                   PointerLeave="InputElement_OnPointerLeave">
-        </TextBlock>
-        <Button Grid.Column="0" Grid.Row="0"
-                Opacity="90" Height="16" 
+                   PointerLeave="InputElement_OnPointerLeave"
+                   >
+		</TextBlock>
+		<Button Grid.Column="0" Grid.Row="0"
+                Opacity="90" Height="16"
                 Margin="0 -30 0 0"
+                PointerWheelChanged="InputElement_OnPointerWheelChanged"
+                PointerEnter="InputElement_OnPointerEnter"
+                PointerLeave="InputElement_OnPointerLeave"
                 IsVisible="{Binding AreUpDownButtonsVisible}"
                 Command="{Binding ExecuteButtonUpClick}">
-            <Image Source="../../Images/up.png"></Image>
-        </Button>
-        <Button Grid.Column="0" Grid.Row="0"
-                Opacity="90" Height="16" 
+			<Image Source="../../Images/up.png"></Image>
+		</Button>
+		<Button Grid.Column="0" Grid.Row="0"
+                Opacity="90" Height="16"
                 Margin="0 35 0 0"
+                PointerWheelChanged="InputElement_OnPointerWheelChanged"
+                PointerEnter="InputElement_OnPointerEnter"
+                PointerLeave="InputElement_OnPointerLeave"
                 IsVisible="{Binding AreUpDownButtonsVisible}"
                 Command="{Binding ExecuteButtonDownClick}">
-            <Image Source="../../Images/down.png"></Image>
-        </Button>
-    </Grid>
+			<Image Source="../../Images/down.png"></Image>
+		</Button>
+	</Grid>
 </UserControl>

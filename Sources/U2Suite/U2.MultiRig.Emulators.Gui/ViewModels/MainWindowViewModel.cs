@@ -19,6 +19,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Text;
 using Avalonia.Controls;
@@ -27,9 +28,60 @@ namespace U2.MultiRig.Emulators.Gui;
 
 public class MainWindowViewModel : ViewModelBase
 {
+    private const string VfoA = "VFO A";
+    private const string VfoB = "VFO B";
+
     private string _status;
-    public int FreqA { get; set; } = 438500000;
-    public int FreqB { get; set; } = 145500000;
+    private string _selectedVfo = VfoA;
+    private long _frequency = 438500000;
+
+    public MainWindowViewModel()
+    {
+        _frequency = FreqA;
+    }
+
+    public long FreqA { get; set; } = 438500000;
+    public long FreqB { get; set; } = 145500000;
+
+    public string SelectedVfo
+    {
+        get => _selectedVfo;
+        set
+        {
+            _selectedVfo = value;
+            _frequency = _selectedVfo switch
+            {
+                VfoA => FreqA,
+                VfoB => FreqB,
+                _ => _frequency
+            };
+
+            OnPropertyChanged(nameof(Frequency));
+        }
+    }
+
+    public ObservableCollection<string> VfoItems { get; } = new()
+    {
+        VfoA, VfoB,
+    };
+
+    public long Frequency
+    {
+        get => _frequency;
+        set
+        {
+            _frequency = value;
+            switch (SelectedVfo)
+            {
+                case VfoA:
+                    FreqA = value;
+                    break;
+                case VfoB:
+                    FreqB = value;
+                    break;
+            }
+        }
+    }
 
     public string Status
     {
