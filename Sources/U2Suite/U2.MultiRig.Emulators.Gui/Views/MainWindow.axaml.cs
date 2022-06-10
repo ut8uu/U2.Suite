@@ -23,17 +23,8 @@ namespace U2.MultiRig.Emulators.Gui;
 
 public partial class MainWindow : Window
 {
-    private readonly MainWindowViewModel _viewModel;
-
     public MainWindow()
     {
         InitializeComponent();
-
-        _viewModel = new MainWindowViewModel();
-        DataContext = _viewModel;
-        _viewModel.Owner = this;
-        _viewModel.FreqA = 123456789;
-
-        _viewModel.Status = "Load finished.";
     }
 }

@@ -34,10 +34,16 @@ public partial class App : Application
     {
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
-            desktop.MainWindow = new MainWindow
+            var window = new MainWindow();
+            var viewModel = new MainWindowViewModel
             {
-                DataContext = new MainWindowViewModel(),
+                Owner = window,
+                FreqA = 123456789,
+                Status = "Load finished."
             };
+            window.DataContext = viewModel;
+
+            desktop.MainWindow = window;
         }
 
         base.OnFrameworkInitializationCompleted();
