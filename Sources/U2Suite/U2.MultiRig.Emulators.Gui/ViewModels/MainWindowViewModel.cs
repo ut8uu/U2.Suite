@@ -21,6 +21,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Text;
 using Avalonia.Controls;
 
@@ -34,6 +35,9 @@ public class MainWindowViewModel : ViewModelBase
     private string _status;
     private string _selectedVfo = VfoA;
     private long _frequency = 438500000;
+
+    private FrequencyIndicatorViewModel _frequencyIndicatorViewModel;
+    private Window _owner;
 
     public MainWindowViewModel()
     {
@@ -56,7 +60,10 @@ public class MainWindowViewModel : ViewModelBase
                 _ => _frequency
             };
 
-            OnPropertyChanged(nameof(Frequency));
+            if (_frequencyIndicatorViewModel != null)
+            {
+                _frequencyIndicatorViewModel.Frequency = _frequency;
+            }
         }
     }
 
@@ -80,6 +87,8 @@ public class MainWindowViewModel : ViewModelBase
                     FreqB = value;
                     break;
             }
+
+            //_frequencyIndicatorViewModel.Frequency = _frequency;
         }
     }
 
@@ -92,7 +101,23 @@ public class MainWindowViewModel : ViewModelBase
         }
     }
 
-    public Window Owner { get; set; }
+    public Window Owner
+    {
+        get => _owner;
+        set
+        {
+            _owner = value;
+            _frequencyIndicatorViewModel = (FrequencyIndicatorViewModel)
+                _owner.FindControl<FrequencyIndicator>("FrequencyIndicator").DataContext;
+            Debug.Assert(_frequencyIndicatorViewModel != null, "A FrequencyIndicator not found.");
+            _frequencyIndicatorViewModel.FrequencyChanged += FrequencyIndicator_OnFrequencyChanged;
+        }
+    }
+
+    private void FrequencyIndicator_OnFrequencyChanged(object sender, long frequency)
+    {
+        _frequency = frequency;
+    }
 
     public void ExecuteExitCommand()
     {
@@ -104,8 +129,9 @@ public class DemoMainWindowViewModel : MainWindowViewModel
 {
     public DemoMainWindowViewModel()
     {
+        Frequency = 1234567890;
         FreqA = 14125300;
         FreqB = 21450250;
-        Status = "Loaded";
+        Status = "Connected";
     }
 }

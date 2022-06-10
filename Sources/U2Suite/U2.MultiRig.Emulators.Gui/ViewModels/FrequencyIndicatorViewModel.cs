@@ -9,11 +9,15 @@ using Avalonia.Input;
 
 namespace U2.MultiRig.Emulators.Gui;
 
+public delegate void FrequencyChangedEventHandler(object sender, long frequency);
+
 public class FrequencyIndicatorViewModel : ViewModelBase
 {
     private UserControl _owner;
     private readonly List<UpDownDigit> _digits = new();
-    private int _frequency;
+    private long _frequency;
+
+    public event FrequencyChangedEventHandler FrequencyChanged;
 
     public UserControl Owner
     {
@@ -36,9 +40,10 @@ public class FrequencyIndicatorViewModel : ViewModelBase
     private void ControlOnFrequencyChanged(object sender, ValueChangedEventArgs eventArgs)
     {
         Frequency = eventArgs.Value;
+        OnFrequencyChanged(Frequency);
     }
 
-    public int Frequency
+    public long Frequency
     {
         get => _frequency;
         set
@@ -52,6 +57,11 @@ public class FrequencyIndicatorViewModel : ViewModelBase
     }
 
     public int Width { get; set; } = 445;
+
+    protected virtual void OnFrequencyChanged(long frequency)
+    {
+        FrequencyChanged?.Invoke(this, frequency);
+    }
 }
 
 public class DemoFrequencyIndicatorViewModel : FrequencyIndicatorViewModel
