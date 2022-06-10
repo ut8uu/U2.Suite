@@ -27,7 +27,7 @@ namespace U2.MultiRig.Emulators.Gui;
 public partial class FrequencyIndicator : UserControl
 {
     private readonly FrequencyIndicatorViewModel _viewModel;
-    private int _frequency = 1810000;
+    private long _frequency = 1810000;
 
     public FrequencyIndicator()
     {
@@ -38,8 +38,8 @@ public partial class FrequencyIndicator : UserControl
         _viewModel.Owner = this;
     }
 
-    public static readonly DirectProperty<FrequencyIndicator, int> FrequencyProperty =
-        AvaloniaProperty.RegisterDirect<FrequencyIndicator, int>(nameof(Frequency),
+    public static readonly DirectProperty<FrequencyIndicator, long> FrequencyProperty =
+        AvaloniaProperty.RegisterDirect<FrequencyIndicator, long>(nameof(Frequency),
             getter: o => o.Frequency, 
             setter: (o, v) => o.Frequency = v,
             unsetValue:0,
@@ -52,7 +52,7 @@ public partial class FrequencyIndicator : UserControl
         AvaloniaXamlLoader.Load(this);
     }
 
-    public int Frequency
+    public long Frequency
     {
         get => _frequency;
         set

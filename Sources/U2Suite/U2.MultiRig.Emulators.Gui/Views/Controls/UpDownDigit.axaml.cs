@@ -37,8 +37,8 @@ public partial class UpDownDigit : UserControl
         InitializeComponent();
 
         _viewModel = new UpDownDigitViewModel();
-        DataContext = _viewModel;
-        _viewModel.ValueChanged += ViewModelOnValueChanged;
+        DataContext = ViewModel;
+        ViewModel.ValueChanged += ViewModelOnValueChanged;
     }
 
     private void ViewModelOnValueChanged(object sender, ValueChangedEventArgs eventargs)
@@ -49,7 +49,7 @@ public partial class UpDownDigit : UserControl
 
     public event ValueChangedEventHandler ValueChanged;
 
-    public int DisplayValue => _viewModel.DisplayValue;
+    public long DisplayValue => ViewModel.DisplayValue;
 
     public int Index
     {
@@ -57,7 +57,7 @@ public partial class UpDownDigit : UserControl
         set
         {
             _index = value;
-            _viewModel.Index = value;
+            ViewModel.Index = value;
         }
     }
 
@@ -67,9 +67,11 @@ public partial class UpDownDigit : UserControl
         set
         {
             _frequency = value;
-            _viewModel.Value = value;
+            ViewModel.Value = value;
         }
     }
+
+    public UpDownDigitViewModel ViewModel => _viewModel;
 
     public static readonly DirectProperty<UpDownDigit, int> IndexProperty =
         AvaloniaProperty.RegisterDirect<UpDownDigit, int>(nameof(Index),
@@ -96,14 +98,14 @@ public partial class UpDownDigit : UserControl
 
     public void ExecuteButtonUpClick()
     {
-        _viewModel.Increment();
-        OnValueChanged(_viewModel.Value, ValueChangeType.Increment);
+        ViewModel.Increment();
+        OnValueChanged(ViewModel.Value, ValueChangeType.Increment);
     }
 
     public void ExecuteButtonDownClick()
     {
-        _viewModel.Decrement();
-        OnValueChanged(_viewModel.Value, ValueChangeType.Decrement);
+        ViewModel.Decrement();
+        OnValueChanged(ViewModel.Value, ValueChangeType.Decrement);
     }
 
     private void OnValueChanged(long value, ValueChangeType changeType)
@@ -132,11 +134,11 @@ public partial class UpDownDigit : UserControl
 
     private void InputElement_OnPointerEnter(object sender, PointerEventArgs e)
     {
-        _viewModel.AreUpDownButtonsVisible = true;
+        ViewModel.AreUpDownButtonsVisible = true;
     }
 
     private void InputElement_OnPointerLeave(object sender, PointerEventArgs e)
     {
-        _viewModel.AreUpDownButtonsVisible = false;
+        ViewModel.AreUpDownButtonsVisible = false;
     }
 }

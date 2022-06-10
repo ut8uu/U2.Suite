@@ -44,7 +44,8 @@ public sealed class UpDownDigitViewModel : ViewModelBase
     private long _value;
     private bool _areUpDownButtonsVisible;
     public event ValueChangedEventHandler ValueChanged;
-    private const long maxValue = 9999999999;
+
+    public long MaxValue { get; set; }
 
     public int Index { get; set; }
 
@@ -61,12 +62,12 @@ public sealed class UpDownDigitViewModel : ViewModelBase
         }
     }
 
-    public int DisplayValue
+    public long DisplayValue
     {
         get
         {
             var divider = Math.Pow(10, Index);
-            return (int)(Value / divider) % 10;
+            return (long)(Value / divider) % 10;
         }
     }
 
@@ -109,13 +110,13 @@ public sealed class UpDownDigitViewModel : ViewModelBase
     public bool Increment()
     {
         var newValue = CalculateNewValue(Value, ValueChangeType.Increment);
-        if (newValue < maxValue)
+        if (newValue > MaxValue)
         {
-            Value = newValue;
-            return true;
+            return false;
         }
 
-        return false;
+        Value = newValue;
+        return true;
     }
 
     /// <summary>
