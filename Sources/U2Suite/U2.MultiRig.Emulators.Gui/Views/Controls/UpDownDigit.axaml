@@ -2,7 +2,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d" d:DesignWidth="35" d:DesignHeight="110"
+             mc:Ignorable="d" d:DesignWidth="35" d:DesignHeight="55"
              x:Class="U2.MultiRig.Emulators.Gui.UpDownDigit">
 
 	<Control.Styles>
@@ -17,19 +17,26 @@
 		</Style>
 	</Control.Styles>
 
-	<StackPanel>
-		<Button Classes="WithMargin"
-				Command="{Binding ExecuteButtonUpClick}">
-			<Image Source="../../Images/up.png"></Image>
-		</Button>
-		<TextBlock Text="{Binding DisplayValue}" 
+	<Grid ColumnDefinitions="*" RowDefinitions="*">
+        <TextBlock Grid.Column="0" Grid.Row="0" Text="{Binding DisplayValue}"
                    HorizontalAlignment="Center" Classes="Big"
-                   PointerWheelChanged="InputElement_OnPointerWheelChanged">
-
-		</TextBlock>
-		<Button Classes="WithMargin"
-				Command="{Binding ExecuteButtonDownClick}">
-			<Image Source="../../Images/down.png"></Image>
-		</Button>
-	</StackPanel>
+                   PointerWheelChanged="InputElement_OnPointerWheelChanged"
+                   PointerEnter="InputElement_OnPointerEnter"
+                   PointerLeave="InputElement_OnPointerLeave">
+        </TextBlock>
+        <Button Grid.Column="0" Grid.Row="0"
+                Opacity="90" Height="16" 
+                Margin="0 -30 0 0"
+                IsVisible="{Binding AreUpDownButtonsVisible}"
+                Command="{Binding ExecuteButtonUpClick}">
+            <Image Source="../../Images/up.png"></Image>
+        </Button>
+        <Button Grid.Column="0" Grid.Row="0"
+                Opacity="90" Height="16" 
+                Margin="0 35 0 0"
+                IsVisible="{Binding AreUpDownButtonsVisible}"
+                Command="{Binding ExecuteButtonDownClick}">
+            <Image Source="../../Images/down.png"></Image>
+        </Button>
+    </Grid>
 </UserControl>

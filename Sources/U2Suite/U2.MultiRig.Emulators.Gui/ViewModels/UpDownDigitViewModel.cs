@@ -22,7 +22,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ReactiveUI.Fody.Helpers;
 
 namespace U2.MultiRig.Emulators.Gui;
 
@@ -43,6 +42,7 @@ public delegate void ValueChangedEventHandler(object sender, ValueChangedEventAr
 public sealed class UpDownDigitViewModel : ViewModelBase
 {
     private int _value;
+    private bool _areUpDownButtonsVisible;
     public event ValueChangedEventHandler ValueChanged;
     private const long maxValue = 9999999999;
 
@@ -67,6 +67,16 @@ public sealed class UpDownDigitViewModel : ViewModelBase
         {
             var divider = Math.Pow(10, Index);
             return (int)(Value / divider) % 10;
+        }
+    }
+
+    public bool AreUpDownButtonsVisible
+    {
+        get => _areUpDownButtonsVisible;
+        set
+        {
+            _areUpDownButtonsVisible = value;
+            OnPropertyChanged(nameof(AreUpDownButtonsVisible));
         }
     }
 

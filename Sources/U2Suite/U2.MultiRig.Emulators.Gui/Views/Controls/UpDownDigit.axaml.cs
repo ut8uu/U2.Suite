@@ -129,4 +129,14 @@ public partial class UpDownDigit : UserControl
         }
 
     }
+
+    private void InputElement_OnPointerEnter(object? sender, PointerEventArgs e)
+    {
+        _viewModel.AreUpDownButtonsVisible = true;
+    }
+
+    private void InputElement_OnPointerLeave(object? sender, PointerEventArgs e)
+    {
+        _viewModel.AreUpDownButtonsVisible = false;
+    }
 }
