@@ -21,8 +21,8 @@ using System;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Data;
+using Avalonia.Input;
 using Avalonia.Markup.Xaml;
-using ReactiveUI.Fody.Helpers;
 
 namespace U2.MultiRig.Emulators.Gui;
 
@@ -38,14 +38,19 @@ public partial class UpDownDigit : UserControl
 
         _viewModel = new UpDownDigitViewModel();
         DataContext = _viewModel;
+        _viewModel.ValueChanged += ViewModelOnValueChanged;
+    }
+
+    private void ViewModelOnValueChanged(object sender, ValueChangedEventArgs eventargs)
+    {
+        Frequency = eventargs.Value;
+        OnValueChanged(eventargs.Value, eventargs.ChangeType);
     }
 
     public event ValueChangedEventHandler ValueChanged;
 
-    [Reactive] 
     public int DisplayValue => _viewModel.DisplayValue;
 
-    [Reactive]
     public int Index
     {
         get => _index;
@@ -56,7 +61,6 @@ public partial class UpDownDigit : UserControl
         }
     }
 
-    [Reactive]
     public int Frequency
     {
         get => _frequency;
@@ -110,5 +114,19 @@ public partial class UpDownDigit : UserControl
             ChangeType = changeType,
         };
         ValueChanged?.Invoke(this, eventArgs);
+    }
+
+    private void InputElement_OnPointerWheelChanged(object? sender, 
+        PointerWheelEventArgs e)
+    {
+        if (e.Delta.Y > 0)
+        {
+            ExecuteButtonUpClick();
+        }
+        else if (e.Delta.Y < 0)
+        {
+            ExecuteButtonDownClick();
+        }
+
     }
 }
