@@ -77,6 +77,10 @@ namespace AvaloniaEdit.Editor
 
         private void _saveButton_Click(object sender, RoutedEventArgs e)
         {
+            if (_saveButton == null)
+            {
+                return;
+            }
             if (!string.IsNullOrEmpty(Program.InputFile))
             {
                 File.WriteAllText(Program.InputFile, _textEditor.Document.Text);
@@ -151,7 +155,7 @@ namespace AvaloniaEdit.Editor
             }
         }
 
-        private class MyOverloadProvider : IOverloadProvider
+        private sealed class MyOverloadProvider : IOverloadProvider
         {
             private readonly IList<(string header, string content)> _items;
             private int _selectedIndex;
@@ -189,7 +193,7 @@ namespace AvaloniaEdit.Editor
             }
         }
 
-        public class MyCompletionData : ICompletionData
+        public sealed class MyCompletionData : ICompletionData
         {
             public MyCompletionData(string text)
             {
@@ -214,9 +218,9 @@ namespace AvaloniaEdit.Editor
             }
         }
 
-        class ElementGenerator : VisualLineElementGenerator, IComparer<Pair>
+        sealed class ElementGenerator : VisualLineElementGenerator, IComparer<Pair>
         {
-            private readonly List<Pair> _controls = new List<Pair>();
+            private readonly List<Pair> _controls = new();
 
             /// <summary>
             /// Gets the first interested offset using binary search

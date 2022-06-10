@@ -3,13 +3,13 @@ using CommandLine;
 
 namespace AvaloniaEdit.Editor
 {
-    public class EditorOptions
+    public sealed class EditorOptions
     {
         [Option("inputFile", Required = true, HelpText = "A full path to the input file.")]
         public string InputFile { get; set; }
     }
 
-    class Program
+    static class Program
     {
         public static string InputFile { get; set; }
 

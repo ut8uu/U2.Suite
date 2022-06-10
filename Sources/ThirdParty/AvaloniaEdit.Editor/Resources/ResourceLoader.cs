@@ -3,7 +3,7 @@ using System.Reflection;
 
 namespace AvaloniaEdit.Editor.Resources
 {
-    internal class ResourceLoader
+    internal static class ResourceLoader
     {
         const string SampleFilesPrefix = "AvaloniaEdit.Demo.Resources.SampleFiles.";
 
