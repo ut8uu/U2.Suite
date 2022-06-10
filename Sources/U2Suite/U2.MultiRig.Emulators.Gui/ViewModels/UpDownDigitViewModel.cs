@@ -22,6 +22,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ReactiveUI.Fody.Helpers;
 
 namespace U2.MultiRig.Emulators.Gui;
 
@@ -39,11 +40,26 @@ public sealed class ValueChangedEventArgs : EventArgs
 
 public delegate void ValueChangedEventHandler(object sender, ValueChangedEventArgs eventArgs);
 
-public sealed class UpDownDigitViewModel
+public sealed class UpDownDigitViewModel : ViewModelBase
 {
+    private int _value;
+    public event ValueChangedEventHandler ValueChanged;
+    private const long maxValue = 9999999999;
+
     public int Index { get; set; }
 
-    public int Value { get; set; }
+    public int Value
+    {
+        get => _value;
+        set
+        {
+            if (_value != value)
+            {
+                _value = value;
+                OnPropertyChanged(nameof(DisplayValue));
+            }
+        }
+    }
 
     public int DisplayValue
     {
@@ -61,19 +77,60 @@ public sealed class UpDownDigitViewModel
         return oldValue + addValue;
     }
 
+    public void ExecuteButtonUpClick()
+    {
+        if (Increment())
+        {
+            OnValueChanged(Value, ValueChangeType.Increment);
+        }
+    }
+
+    public void ExecuteButtonDownClick()
+    {
+        if (Decrement())
+        {
+            OnValueChanged(Value, ValueChangeType.Decrement);
+        }
+    }
+
     /// <summary>
     /// Increments value at the digit's position
     /// </summary>
-    public void Increment()
+    public bool Increment()
     {
-        Value = CalculateNewValue(Value, ValueChangeType.Increment);
+        var newValue = CalculateNewValue(Value, ValueChangeType.Increment);
+        if (newValue < maxValue)
+        {
+            Value = newValue;
+            return true;
+        }
+
+        return false;
     }
 
     /// <summary>
     /// Decrements value at the digit's position
     /// </summary>
-    public void Decrement()
+    public bool Decrement()
     {
-        Value = CalculateNewValue(Value, ValueChangeType.Decrement);
+        var newValue = CalculateNewValue(Value, ValueChangeType.Decrement);
+        if (newValue > 0)
+        {
+            Value = newValue;
+            return true;
+        }
+
+        return false;
     }
+
+    private void OnValueChanged(int value, ValueChangeType changeType)
+    {
+        var eventArgs = new ValueChangedEventArgs
+        {
+            Value = value,
+            ChangeType = changeType,
+        };
+        ValueChanged?.Invoke(this, eventArgs);
+    }
+
 }

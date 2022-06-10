@@ -19,17 +19,27 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 using Avalonia.Controls;
-using ReactiveUI.Fody.Helpers;
 
 namespace U2.MultiRig.Emulators.Gui;
 
 public class MainWindowViewModel : ViewModelBase
 {
-    [Reactive] public string FreqA { get; set; }
-    [Reactive] public string FreqB { get; set; }
-    [Reactive] public string Status { get; set; }
+    private string _status;
+    public int FreqA { get; set; } = 438500000;
+    public int FreqB { get; set; } = 145500000;
+
+    public string Status
+    {
+        get => _status;
+        set
+        {
+            _status = value;
+        }
+    }
+
     public Window Owner { get; set; }
 
     public void ExecuteExitCommand()
@@ -42,8 +52,8 @@ public class DemoMainWindowViewModel : MainWindowViewModel
 {
     public DemoMainWindowViewModel()
     {
-        FreqA = "14125300";
-        FreqB = "21450250";
+        FreqA = 14125300;
+        FreqB = 21450250;
         Status = "Loaded";
     }
 }

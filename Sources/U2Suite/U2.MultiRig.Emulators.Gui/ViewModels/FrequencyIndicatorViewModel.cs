@@ -5,11 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Avalonia.Controls;
-using ReactiveUI.Fody.Helpers;
+using Avalonia.Input;
 
 namespace U2.MultiRig.Emulators.Gui;
 
-public class FrequencyIndicatorViewModel
+public class FrequencyIndicatorViewModel : ViewModelBase
 {
     private UserControl _owner;
     private readonly List<UpDownDigit> _digits = new();
@@ -38,7 +38,6 @@ public class FrequencyIndicatorViewModel
         Frequency = eventArgs.Value;
     }
 
-    [Reactive]
     public int Frequency
     {
         get => _frequency;
@@ -52,13 +51,7 @@ public class FrequencyIndicatorViewModel
         }
     }
 
-    [Reactive] 
-    public int Width { get; set; } = 450;
-
-    public void ValueChanged(object sender, ValueChangedEventArgs eventArgs)
-    {
-        Frequency = eventArgs.Value;
-    }
+    public int Width { get; set; } = 560;
 }
 
 public class DemoFrequencyIndicatorViewModel : FrequencyIndicatorViewModel

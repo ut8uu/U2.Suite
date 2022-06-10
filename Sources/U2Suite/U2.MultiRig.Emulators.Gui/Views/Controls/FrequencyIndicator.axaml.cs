@@ -27,7 +27,7 @@ namespace U2.MultiRig.Emulators.Gui;
 public partial class FrequencyIndicator : UserControl
 {
     private readonly FrequencyIndicatorViewModel _viewModel;
-    private int _frequency;
+    private int _frequency = 1810000;
 
     public FrequencyIndicator()
     {
