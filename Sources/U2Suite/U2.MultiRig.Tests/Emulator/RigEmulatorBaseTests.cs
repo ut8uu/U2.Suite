@@ -17,11 +17,15 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+using DynamicData;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using U2.Core;
 using U2.MultiRig.Code;
 using U2.MultiRig.Emulators.Lib;
 using U2.MultiRig.Tests.TestData;
@@ -35,11 +39,88 @@ public class RigEmulatorBaseTests
     [ClassData(typeof(CanPrepareWriteCommandResponseTestData))]
     public void CanPrepareWriteCommandResponse(WriteCommandResponseTestData testData)
     {
+        MultiRigApplicationContext.Instance.ResetBuilder();
+
         IC705Emulator.Register();
         MultiRigApplicationContext.Instance.BuildContainer();
         var emulator = RigEmulatorBase.Instance;
 
         Assert.True(emulator.TryPrepareWriteCommandResponse(testData.RigParameter, testData.RigCommand, out var response));
         Assert.True(testData.ExpectedResponse.SequenceEqual(testData.ExpectedResponse));
+    }
+
+    [Theory]
+    [ClassData(typeof(CanExtractValueTestData))]
+    public void CanExtractValue(ExtractValueTestData testData)
+    {
+        MultiRigApplicationContext.Instance.ResetBuilder();
+
+        IC705Emulator.Register();
+        MultiRigApplicationContext.Instance.BuildContainer();
+        var emulator = RigEmulatorBase.Instance;
+
+        var currentDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+        var iniFilePath = Path.Combine(currentDirectory,
+            "TestData", "RigCommand", "INI", "IC-705.ini");
+        Assert.True(File.Exists(iniFilePath));
+        var rigCommands = RigCommandUtilities.LoadRigCommands(iniFilePath);
+        Assert.NotEmpty(rigCommands.InitCmd);
+        
+        Assert.True(emulator.TryExtractValue(rigCommands, testData.Code));
+
+        if (!testData.ExpectsValue)
+        {
+            switch (testData.RigParameter)
+            {
+                case RigParameter.AM:
+                case RigParameter.FM:
+                case RigParameter.CW_L:
+                case RigParameter.CW_U:
+                case RigParameter.SSB_L:
+                case RigParameter.SSB_U:
+                case RigParameter.DIG_L:
+                case RigParameter.DIG_U:
+                    Assert.Equal(testData.RigParameter, emulator.Mode);
+                    break;
+                case RigParameter.Tx:
+                case RigParameter.Rx:
+                    Assert.Equal(testData.RigParameter, emulator.Tx);
+                    break;
+                case RigParameter.XitOff:
+                case RigParameter.XitOn:
+                    Assert.Equal(testData.RigParameter, emulator.Xit);
+                    break;
+                case RigParameter.RitOff:
+                case RigParameter.RitOn:
+                    Assert.Equal(testData.RigParameter, emulator.Rit);
+                    break;
+                case RigParameter.SplitOff:
+                case RigParameter.SplitOn:
+                    Assert.Equal(testData.RigParameter, emulator.Split);
+                    break;
+                case RigParameter.Pitch:
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        if (testData.ExpectsValue)
+        {
+            switch (testData.RigParameter)
+            {
+                case RigParameter.FreqA:
+                    Assert.Equal(testData.ExpectedValue, emulator.FreqA);
+                    break;
+                case RigParameter.FreqB:
+                    Assert.Equal(testData.ExpectedValue, emulator.FreqB);
+                    break;
+                case RigParameter.Pitch:
+                    // TODO implement injection and extration of the Pitch
+                    //Assert.Equal(testData.ExpectedValue, emulator.Pitch);
+                    break;
+            }
+        }
+
     }
 }
