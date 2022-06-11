@@ -3,11 +3,11 @@
         xmlns:vm="using:U2.MultiRig.Emulators.Gui"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="550" d:DesignHeight="250"
+        mc:Ignorable="d" d:DesignWidth="550" d:DesignHeight="200"
         x:Class="U2.MultiRig.Emulators.Gui.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
         Title="Emulator UI"
-		Width="550" Height="250">
+		Width="550" Height="200">
 
 	<Design.DataContext>
 		<vm:DemoMainWindowViewModel/>
@@ -20,7 +20,7 @@
 		<Style Selector="ToggleButton">
 			<Setter Property="Padding" Value="2"></Setter>
 			<Setter Property="Margin" Value="1"></Setter>
-        </Style>
+		</Style>
 	</Control.Styles>
 
 	<DockPanel>
@@ -37,20 +37,29 @@
 		</Menu>
 
 		<DockPanel>
-			<StackPanel Name="Buttons" DockPanel.Dock="Bottom">
-
-			</StackPanel>
+			<Border Classes="Card" DockPanel.Dock="Bottom">
+				<StackPanel Name="Buttons" Orientation="Horizontal">
+					<TextBlock Text="Mode:" Margin="5 5 15 0"></TextBlock>
+					<ListBox  SelectedItem="{Binding SelectedMode}"
+                             Items="{Binding Modes}">
+						<ListBox.ItemsPanel>
+							<ItemsPanelTemplate>
+								<VirtualizingStackPanel Orientation="Horizontal"></VirtualizingStackPanel>
+							</ItemsPanelTemplate>
+						</ListBox.ItemsPanel>
+					</ListBox>
+				</StackPanel>
+			</Border>
 
 			<Grid Margin="0 10" ColumnDefinitions="90,*" RowDefinitions="Auto">
-				<ListBox Grid.Column="0" Margin="10 0" 
+				<ListBox Grid.Column="0" Margin="10 0"
 						 SelectedItem="{Binding SelectedVfo}"
                          Items="{Binding VfoItems}">
-                </ListBox>
-                <vm:FrequencyIndicator 
-                    Name="FrequencyIndicator"
-                    Grid.Column="1" 
+				</ListBox>
+				<vm:FrequencyIndicator
+                    Name="FrequencyIndicator" Grid.Column="1"
                     Frequency="{Binding Frequency, Mode=TwoWay}">
-                </vm:FrequencyIndicator>
+				</vm:FrequencyIndicator>
 			</Grid>
 		</DockPanel>
 	</DockPanel>

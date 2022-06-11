@@ -75,6 +75,12 @@ public class MainWindowViewModel : ViewModelBase
         VfoA, VfoB,
     };
 
+    public string SelectedMode { get; set; } = "AM";
+    public ObservableCollection<string> Modes { get; } = new()
+    {
+        "AM", "FM", "USB", "LSB", "CW-L", "CW-U", "DIGI-L", "DIGI-R",
+    };
+
     public long Frequency
     {
         get => _frequency;
