@@ -141,6 +141,15 @@ public abstract class RigEmulatorBase : IRigEmulator
             RigParameter.FreqB,
             RigParameter.Pitch,
             RigParameter.RitOffset,
+            RigParameter.Rit0,
+            RigParameter.VfoA,
+            RigParameter.VfoB,
+            RigParameter.VfoEqual,
+            RigParameter.VfoSwap,
+            RigParameter.VfoAA,
+            RigParameter.VfoAB,
+            RigParameter.VfoBA,
+            RigParameter.VfoBB,
         };
 
         if (parametersWithValues.Contains(parameter))

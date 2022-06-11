@@ -38,7 +38,7 @@ namespace U2.MultiRig.Tests
                 }
             });
 
-            task.Wait(TimeSpan.FromSeconds(25)); // a watchdog
+            task.Wait(TimeSpan.FromSeconds(5)); // a watchdog
             Assert.True(packetReceived, "Packet was not received.");
 
             hostRig.Enabled = false;

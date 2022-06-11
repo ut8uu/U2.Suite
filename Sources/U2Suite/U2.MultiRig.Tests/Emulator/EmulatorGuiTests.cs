@@ -16,6 +16,7 @@ namespace U2.MultiRig.Tests
             {
                 Value = 1234567890,
                 Index = index,
+                MaxValue = 9999999999,
             };
         }
 
