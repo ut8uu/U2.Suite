@@ -73,6 +73,11 @@ public sealed class UdpMulticastSender : IDisposable
         return 0;
     }
 
+    /// <summary>
+    /// Sends the given array
+    /// </summary>
+    /// <param name="data">An array to be sent</param>
+    /// <returns>Returns the number of sent bytes or 0 in case of error.</returns>
     public int Send(byte[] data)
     {
         try

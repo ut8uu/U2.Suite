@@ -288,20 +288,6 @@ static RigUdpMessengerPacket CreateNewPacket(byte messageId,
     return result;
 }
 
-static void OnNewDataFromUdpServerArrived(object sender, UdpDataReceivedEventArgs e)
-{
-    if (e.Data.Length == 0)
-    {
-        return;
-    }
-    var s = ByteFunctions.BytesToHex(e.Data);
-    if (!string.IsNullOrEmpty(s))
-    {
-        var ep = (IPEndPoint)e.EndPoint;
-        Console.WriteLine($"{ep.Address}:{ep.Port} {s}");
-    }
-}
-
 static bool TestIc705Emulator(object[] parameters)
 {
     // prepare the stuff
