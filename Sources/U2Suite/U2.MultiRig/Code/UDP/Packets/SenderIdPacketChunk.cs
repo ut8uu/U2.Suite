@@ -19,9 +19,7 @@
 
 using System.ComponentModel;
 using System.Diagnostics;
-using U2.MultiRig.Code;
 using U2.MultiRig.Code.Exceptions;
-using U2.MultiRig.Code.UDP;
 
 namespace U2.MultiRig;
 

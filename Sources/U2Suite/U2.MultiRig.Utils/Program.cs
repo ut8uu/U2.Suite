@@ -29,7 +29,6 @@ using U2.Contracts;
 using U2.Core;
 using U2.MultiRig;
 using U2.MultiRig.Code;
-using U2.MultiRig.Code.UDP;
 using U2.MultiRig.Emulators.Lib;
 using U2.MultiRig.Utils;
 
