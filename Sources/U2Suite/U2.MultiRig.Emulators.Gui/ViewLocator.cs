@@ -1,4 +1,4 @@
-﻿/* 
+/* 
  * This file is part of the U2.Suite distribution
  * (https://github.com/ut8uu/U2.Suite).
  * 
@@ -17,29 +17,31 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+using Avalonia.Controls;
+using Avalonia.Controls.Templates;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Autofac;
-using U2.MultiRig.Code;
 
-namespace U2.MultiRig.Emulators;
+namespace U2.MultiRig.Emulators.Gui;
 
-public sealed class IC705Emulator : RigEmulatorBase
+public class ViewLocator : IDataTemplate
 {
-    public IC705Emulator() : base(EmulatorResources.IC_705)
+    public IControl Build(object data)
     {
+        var name = data.GetType().FullName!.Replace("ViewModel", "View");
+        var type = Type.GetType(name);
+
+        if (type != null)
+        {
+            return (Control)Activator.CreateInstance(type)!;
+        }
+        else
+        {
+            return new TextBlock { Text = "Not Found: " + name };
+        }
     }
 
-    public static void Register()
+    public bool Match(object data)
     {
-        MultiRigApplicationContext.Instance.Builder
-            .Register(c => new IC705Emulator())
-            .As<IRigEmulator>();
-        MultiRigApplicationContext.Instance.Builder
-            .Register(c => new IC705SerialPortEmulator())
-            .As<IRigSerialPort>();
+        return data is ViewModelBase;
     }
 }

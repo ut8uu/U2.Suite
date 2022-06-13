@@ -26,12 +26,10 @@ using System.Linq;
 using System.Net.Sockets;
 using log4net;
 using U2.Core;
-using U2.MultiRig.Code;
-using U2.MultiRig.Code.UDP;
 
 namespace U2.MultiRig;
 
-public enum RigCtlStatus
+public enum RigControlStatus
 {
     NotConfigured, Disabled, PortBusy, NotResponding, OnLine
 }
@@ -81,7 +79,7 @@ public abstract class CustomRig : IDisposable
 
     public bool Enabled { get; set; }
 
-    public RigCtlStatus Status => GetStatus();
+    public RigControlStatus Status => GetStatus();
 
     public int Freq
     {
@@ -171,27 +169,27 @@ public abstract class CustomRig : IDisposable
         }
     }
 
-    private RigCtlStatus GetStatus()
+    private RigControlStatus GetStatus()
     {
         lock (GetStatusLockObject)
         {
             if (_rigControlType == RigControlType.Guest)
             {
-                return RigCtlStatus.OnLine;
+                return RigControlStatus.OnLine;
             }
             if (!Enabled)
             {
-                return RigCtlStatus.Disabled;
+                return RigControlStatus.Disabled;
             }
             if (!IsConnected())
             {
-                return RigCtlStatus.PortBusy;
+                return RigControlStatus.PortBusy;
             }
             if (!_online)
             {
-                return RigCtlStatus.NotResponding;
+                return RigControlStatus.NotResponding;
             }
-            return RigCtlStatus.OnLine;
+            return RigControlStatus.OnLine;
         }
     }
 

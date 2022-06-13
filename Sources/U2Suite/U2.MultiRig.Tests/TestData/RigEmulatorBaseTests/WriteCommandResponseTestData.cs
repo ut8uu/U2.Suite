@@ -17,20 +17,12 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-using System.Net;
+namespace U2.MultiRig.Tests;
 
-namespace U2.MultiRig;
-
-#nullable disable
-public class UdpDataReceivedEventArgs
+public sealed class WriteCommandResponseTestData
 {
-    public UdpDataReceivedEventArgs(byte[] data, EndPoint endpoint)
-    {
-        Data = data;
-        EndPoint = endpoint;
-    }
-
-    public byte[] Data { get; set; }
-
-    public EndPoint EndPoint { get; set; }
+    public RigParameter RigParameter { get; set; }
+    public RigCommand RigCommand { get; set; }
+    public byte[] ExpectedResponse { get; set; }
+    public bool ExpectedResult { get; set; }
 }

@@ -25,22 +25,10 @@ using Autofac;
 using U2.Core;
 using U2.MultiRig.Code;
 
-namespace U2.MultiRig.Emulators;
+namespace U2.MultiRig.Emulators.Lib;
 
 public abstract class RigEmulatorBase : IRigEmulator
 {
-    private int _freq;
-    private int _freqA;
-    private int _freqB;
-    private int _pitch;
-    private int _ritOffset;
-    private RigParameter _vfo;
-    private RigParameter _rit;
-    private RigParameter _xit;
-    private RigParameter _tx;
-    private RigParameter _mode;
-    private RigParameter _split;
-
     private static IRigEmulator _instance;
 
     protected RigEmulatorBase(string iniFileContent)
@@ -67,71 +55,27 @@ public abstract class RigEmulatorBase : IRigEmulator
 
     public MessageDisplayModes MessageDisplayModes { get; set; }
 
-    public int Freq
-    {
-        get => _freq;
-        set => _freq = value;
-    }
+    public int Freq { get; set; }
 
-    public int FreqA
-    {
-        get => _freqA;
-        set => _freqA = value;
-    }
+    public int FreqA { get; set; }
 
-    public int FreqB
-    {
-        get => _freqB;
-        set => _freqB = value;
-    }
+    public int FreqB { get; set; }
 
-    public int Pitch
-    {
-        get => _pitch;
-        set => _pitch = value;
-    }
+    public int Pitch { get; set; }
 
-    public int RitOffset
-    {
-        get => _ritOffset;
-        set => _ritOffset = value;
-    }
+    public int RitOffset { get; set; }
 
-    public RigParameter Vfo
-    {
-        get => _vfo;
-        set => _vfo = value;
-    }
+    public RigParameter Vfo { get; set; }
 
-    public RigParameter Rit
-    {
-        get => _rit;
-        set => _rit = value;
-    }
+    public RigParameter Rit { get; set; }
 
-    public RigParameter Xit
-    {
-        get => _xit;
-        set => _xit = value;
-    }
+    public RigParameter Xit { get; set; }
 
-    public RigParameter Tx
-    {
-        get => _tx;
-        set => _tx = value;
-    }
+    public RigParameter Tx { get; set; }
 
-    public RigParameter Mode
-    {
-        get => _mode;
-        set => _mode = value;
-    }
+    public RigParameter Mode { get; set; }
 
-    public RigParameter Split
-    {
-        get => _split;
-        set => _split = value;
-    }
+    public RigParameter Split { get; set; }
 
     private void DisplayMessage(MessageDisplayModes messageMode, string message)
     {
@@ -157,8 +101,6 @@ public abstract class RigEmulatorBase : IRigEmulator
                 return TryInjectValue(command, Pitch, out response);
             case RigParameter.RitOffset:
                 return TryInjectValue(command, RitOffset, out response);
-            default:
-                break;
         }
 
         var allParameters = new[] { Mode, Vfo, Rit, Xit, Tx, Split };
@@ -199,6 +141,15 @@ public abstract class RigEmulatorBase : IRigEmulator
             RigParameter.FreqB,
             RigParameter.Pitch,
             RigParameter.RitOffset,
+            RigParameter.Rit0,
+            RigParameter.VfoA,
+            RigParameter.VfoB,
+            RigParameter.VfoEqual,
+            RigParameter.VfoSwap,
+            RigParameter.VfoAA,
+            RigParameter.VfoAB,
+            RigParameter.VfoBA,
+            RigParameter.VfoBB,
         };
 
         if (parametersWithValues.Contains(parameter))
@@ -226,12 +177,7 @@ public abstract class RigEmulatorBase : IRigEmulator
             RigParameter.SplitOn,
         };
 
-        if (onOffParameters.Contains(parameter))
-        {
-            return true;
-        }
-
-        return false;
+        return onOffParameters.Contains(parameter);
     }
 
     private bool TryInjectValue(RigCommand command, int value, out byte[] response)
@@ -263,104 +209,145 @@ public abstract class RigEmulatorBase : IRigEmulator
                 continue;
             }
 
-            if (command.Code.SequenceEqual(request))
+            if (TryExtractBinaryValue(request, command, rigParameter))
             {
-                var parameter = (RigParameter)rigParameter;
-                switch (parameter)
-                {
-                    case RigParameter.AM:
-                    case RigParameter.FM:
-                    case RigParameter.CW_L:
-                    case RigParameter.CW_U:
-                    case RigParameter.SSB_L:
-                    case RigParameter.SSB_U:
-                    case RigParameter.DIG_L:
-                    case RigParameter.DIG_U:
-                        Mode = parameter;
-                        break;
-                    case RigParameter.Tx:
-                    case RigParameter.Rx:
-                        Tx = parameter;
-                        break;
-                    case RigParameter.XitOff:
-                    case RigParameter.XitOn:
-                        Xit = parameter;
-                        break;
-                    case RigParameter.RitOff:
-                    case RigParameter.RitOn:
-                        Rit = parameter;
-                        break;
-                    case RigParameter.SplitOff:
-                    case RigParameter.SplitOn:
-                        Split = parameter;
-                        break;
-                    case RigParameter.Pitch:
-                        var info = new ParameterValue();
-                        if (command.Value.Param == parameter)
-                        {
-                            info = command.Value;
-                        }
-                        else if (command.Values.FirstOrDefault().Param == parameter)
-                        {
-                            info = command.Values.FirstOrDefault();
-                        }
-
-                        if (info.Param != RigParameter.Pitch)
-                        {
-                            break;
-                        }
-                        Pitch = ConversionFunctions.UnformatValue(request, info);
-                        break;
-                    case RigParameter.VfoAA:
-                    case RigParameter.VfoAB:
-                        DisplayMessage(MessageDisplayModes.Debug, $"Parameter {parameter} supported, but not implemented yet.");
-                        break;
-                    default:
-                        //throw new ArgumentOutOfRangeException($"Parameter {parameter} not supported.");
-                        DisplayMessage(MessageDisplayModes.Error, $"Parameter {parameter} not supported.");
-                        break;
-                }
-
                 return true;
             }
-            else if (command.Value.Param != RigParameter.None)
-            {
-                // Freq, FreqA, FreqB, Pitch
-                if (command.Code.Length == request.Length)
-                {
-                    var clearRequest = request.ToArray();
-                    var cnt = 0;
-                    for (var i = command.Value.Start; cnt < command.Value.Len; cnt++)
-                    {
-                        clearRequest[i + cnt] = 0;
-                    }
 
-                    if (command.Code.SequenceEqual(clearRequest))
-                    {
-                        var value = ConversionFunctions.UnformatValue(request, command.Value);
-                        switch (command.Value.Param)
-                        {
-                            case RigParameter.Freq:
-                                Freq = value;
-                                break;
-                            case RigParameter.FreqA:
-                                FreqA = value;
-                                break;
-                            case RigParameter.FreqB:
-                                FreqB = value;
-                                break;
-                            case RigParameter.Pitch:
-                                Pitch = value;
-                                break;
-                            default:
-                                throw new NotSupportedException($"Parameter {command.Value.Param} not supported.");
-                        }
-                        return true;
-                    }
-                }
+            if (TryExtractNumericValue(request, command))
+            {
+                return true;
             }
         }
 
         return false;
+    }
+
+    /// <summary>
+    /// Performs an attempt to extract a value from the request.
+    /// </summary>
+    /// <param name="request"></param>
+    /// <param name="command"></param>
+    /// <returns>Returns <see langword="true"/> if value extracted, or <see langword="false"/> otherwise.</returns>
+    private bool TryExtractNumericValue(byte[] request, RigCommand command)
+    {
+        if (command.Value.Param == RigParameter.None)
+        {
+            return false;
+        }
+
+        // Freq, FreqA, FreqB, Pitch
+        if (command.Code.Length != request.Length)
+        {
+            return false;
+        }
+
+        var clearRequest = request.ToArray();
+        var cnt = 0;
+        for (var i = command.Value.Start; cnt < command.Value.Len; cnt++)
+        {
+            clearRequest[i + cnt] = 0;
+        }
+
+        if (!command.Code.SequenceEqual(clearRequest))
+        {
+            return false;
+        }
+
+        var value = ConversionFunctions.UnformatValue(request, command.Value);
+        switch (command.Value.Param)
+        {
+            case RigParameter.Freq:
+                Freq = value;
+                break;
+            case RigParameter.FreqA:
+                FreqA = value;
+                break;
+            case RigParameter.FreqB:
+                FreqB = value;
+                break;
+            case RigParameter.Pitch:
+                Pitch = value;
+                break;
+            default:
+                throw new NotSupportedException($"Parameter {command.Value.Param} not supported.");
+        }
+
+        return true;
+    }
+
+    /// <summary>
+    /// Performs an attempt to extract a valueless parameter,
+    /// whose value is itself.
+    /// </summary>
+    /// <param name="request"></param>
+    /// <param name="command"></param>
+    /// <param name="rigParameter"></param>
+    /// <returns>Returns <see langword="true"/> if value extracted, or <see langword="false"/> otherwise.</returns>
+    private bool TryExtractBinaryValue(byte[] request, RigCommand command, int rigParameter)
+    {
+        if (!command.Code.SequenceEqual(request))
+        {
+            return false;
+        }
+
+        var parameter = (RigParameter) rigParameter;
+        switch (parameter)
+        {
+            case RigParameter.AM:
+            case RigParameter.FM:
+            case RigParameter.CW_L:
+            case RigParameter.CW_U:
+            case RigParameter.SSB_L:
+            case RigParameter.SSB_U:
+            case RigParameter.DIG_L:
+            case RigParameter.DIG_U:
+                Mode = parameter;
+                break;
+            case RigParameter.Tx:
+            case RigParameter.Rx:
+                Tx = parameter;
+                break;
+            case RigParameter.XitOff:
+            case RigParameter.XitOn:
+                Xit = parameter;
+                break;
+            case RigParameter.RitOff:
+            case RigParameter.RitOn:
+                Rit = parameter;
+                break;
+            case RigParameter.SplitOff:
+            case RigParameter.SplitOn:
+                Split = parameter;
+                break;
+            case RigParameter.Pitch:
+                var info = new ParameterValue();
+                if (command.Value.Param == parameter)
+                {
+                    info = command.Value;
+                }
+                else if (command.Values.FirstOrDefault().Param == parameter)
+                {
+                    info = command.Values.FirstOrDefault();
+                }
+
+                if (info.Param != RigParameter.Pitch)
+                {
+                    break;
+                }
+
+                Pitch = ConversionFunctions.UnformatValue(request, info);
+                break;
+            case RigParameter.VfoAA:
+            case RigParameter.VfoAB:
+                DisplayMessage(MessageDisplayModes.Debug, $"Parameter {parameter} supported, but not implemented yet.");
+                break;
+            default:
+                //throw new ArgumentOutOfRangeException($"Parameter {parameter} not supported.");
+                DisplayMessage(MessageDisplayModes.Error, $"Parameter {parameter} not supported.");
+                break;
+        }
+
+        return true;
     }
 }

@@ -29,8 +29,7 @@ using U2.Contracts;
 using U2.Core;
 using U2.MultiRig;
 using U2.MultiRig.Code;
-using U2.MultiRig.Code.UDP;
-using U2.MultiRig.Emulators;
+using U2.MultiRig.Emulators.Lib;
 using U2.MultiRig.Utils;
 
 var startKey = ConsoleKey.D1;
@@ -287,20 +286,6 @@ static RigUdpMessengerPacket CreateNewPacket(byte messageId,
     };
 
     return result;
-}
-
-static void OnNewDataFromUdpServerArrived(object sender, UdpDataReceivedEventArgs e)
-{
-    if (e.Data.Length == 0)
-    {
-        return;
-    }
-    var s = ByteFunctions.BytesToHex(e.Data);
-    if (!string.IsNullOrEmpty(s))
-    {
-        var ep = (IPEndPoint)e.EndPoint;
-        Console.WriteLine($"{ep.Address}:{ep.Port} {s}");
-    }
 }
 
 static bool TestIc705Emulator(object[] parameters)

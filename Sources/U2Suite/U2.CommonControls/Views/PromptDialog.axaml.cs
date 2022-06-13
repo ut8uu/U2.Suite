@@ -43,15 +43,11 @@ public class PromptDialog : Window
 
     public PromptDialog()
     {
-        _ok = default!;
-        _cancel = default!;
         AssignControls();
     }
 
     public PromptDialog(string promptText, string promptInitialResponse = "")
     {
-        _ok = default!;
-        _cancel = default!;
         PromptText = promptText;
         PromptResponse = promptInitialResponse;
 
@@ -85,12 +81,20 @@ public class PromptDialog : Window
 
     private void Cancel_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
+        if (_cancel == null)
+        {
+            return;
+        }
         DialogResult = DialogResult.Cancel;
         this.Close();
     }
 
     private void Ok_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
+        if (_ok == null)
+        {
+            return;
+        }
         DialogResult = DialogResult.Ok;
         PromptResponse = _response.Text;
         this.Close();

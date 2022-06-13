@@ -18,7 +18,7 @@
  */
 using System.Net;
 
-namespace U2.MultiRig.Code.UDP;
+namespace U2.MultiRig;
 
 public sealed class UdpMulticastDataEventArgs
 {

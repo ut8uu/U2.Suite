@@ -26,94 +26,93 @@ using System.Text;
 using System.Threading.Tasks;
 using log4net;
 
-namespace U2.MultiRig.Code.UDP
+namespace U2.MultiRig;
+
+public delegate void MulticastDataReceivedEventHandler(object sender, UdpMulticastDataEventArgs eventArgs);
+
+public sealed class UdpMulticastReceiver : IDisposable
 {
-    public delegate void MulticastDataReceivedEventHandler(object sender, UdpMulticastDataEventArgs eventArgs);
+    private readonly UdpClient _client;
+    private readonly IPAddress _multicastAddress;
+    private readonly CancellationToken _token;
+    private readonly ILog _logger = LogManager.GetLogger(typeof(UdpMulticastReceiver));
+    private readonly IPEndPoint _localEndPoint;
+    private bool _disposed;
 
-    public sealed class UdpMulticastReceiver : IDisposable
+    public UdpMulticastReceiver(IPAddress multicastAddress, int port, CancellationToken token)
     {
-        private readonly UdpClient _client;
-        private readonly IPAddress _multicastAddress;
-        private readonly CancellationToken _token;
-        private readonly ILog _logger = LogManager.GetLogger(typeof(UdpMulticastReceiver));
-        private readonly IPEndPoint _localEndPoint;
-        private bool _disposed;
+        _token = token;
+        _multicastAddress = multicastAddress;
 
-        public UdpMulticastReceiver(IPAddress multicastAddress, int port, CancellationToken token)
+        _client = new UdpClient();
+        _localEndPoint = new IPEndPoint(IPAddress.Any, port);
+        _client.Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
+        _client.Client.Bind(_localEndPoint);
+
+        try
         {
-            _token = token;
-            _multicastAddress = multicastAddress;
-
-            _client = new UdpClient();
-            _localEndPoint = new IPEndPoint(IPAddress.Any, port);
-            _client.Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
-            _client.Client.Bind(_localEndPoint);
-
-            try
-            {
-                _client.JoinMulticastGroup(_multicastAddress);
-            }
-            catch (Exception e)
-            {
-                _logger.Error(e.ToString());
-            }
-
-            var state = new UdpState
-            {
-                Client = _client,
-                EndPoint = _localEndPoint,
-            };
-            _client.BeginReceive(DataReceived, state);
-
-            _logger.Info("UdpMulticastReceiver is running ...");
+            _client.JoinMulticastGroup(_multicastAddress);
+        }
+        catch (Exception e)
+        {
+            _logger.Error(e.ToString());
         }
 
-        public void Dispose()
+        var state = new UdpState
         {
-            _client.DropMulticastGroup(_multicastAddress);
-            _client.Dispose();
-            _disposed = true;
-        }
+            Client = _client,
+            EndPoint = _localEndPoint,
+        };
+        _client.BeginReceive(DataReceived, state);
 
-        public event MulticastDataReceivedEventHandler MulticastDataReceived;
+        _logger.Info("UdpMulticastReceiver is running ...");
+    }
 
-        private void DataReceived(IAsyncResult ar)
+    public void Dispose()
+    {
+        _client.DropMulticastGroup(_multicastAddress);
+        _client.Dispose();
+        _disposed = true;
+    }
+
+    public event MulticastDataReceivedEventHandler MulticastDataReceived;
+
+    private void DataReceived(IAsyncResult ar)
+    {
+        if (_disposed || _token.IsCancellationRequested)
         {
-            if (_disposed || _token.IsCancellationRequested)
-            {
-                return;
-            }
-            Debug.Assert(ar.AsyncState != null);
-            var state = (UdpState)ar.AsyncState;
-            var client = state.Client;
-            var endPoint = state.EndPoint;
-
-            Debug.Assert(client != null);
-            Debug.Assert(endPoint != null);
-
-            var receivedBytes = client.EndReceive(ar, ref endPoint);
-            Debug.Assert(endPoint != null);
-
-            var eventArgs = new UdpMulticastDataEventArgs(receivedBytes, endPoint);
-            OnMulticastDataReceived(eventArgs);
-
-            state = new UdpState
-            {
-                Client = _client,
-                EndPoint = _localEndPoint,
-            };
-            _client.BeginReceive(DataReceived, state);
+            return;
         }
+        Debug.Assert(ar.AsyncState != null);
+        var state = (UdpState)ar.AsyncState;
+        var client = state.Client;
+        var endPoint = state.EndPoint;
 
-        private void OnMulticastDataReceived(UdpMulticastDataEventArgs eventArgs)
+        Debug.Assert(client != null);
+        Debug.Assert(endPoint != null);
+
+        var receivedBytes = client.EndReceive(ar, ref endPoint);
+        Debug.Assert(endPoint != null);
+
+        var eventArgs = new UdpMulticastDataEventArgs(receivedBytes, endPoint);
+        OnMulticastDataReceived(eventArgs);
+
+        state = new UdpState
         {
-            MulticastDataReceived?.Invoke(this, eventArgs);
-        }
+            Client = _client,
+            EndPoint = _localEndPoint,
+        };
+        _client.BeginReceive(DataReceived, state);
+    }
 
-        struct UdpState
-        {
-            public UdpClient Client;
-            public IPEndPoint EndPoint;
-        }
+    private void OnMulticastDataReceived(UdpMulticastDataEventArgs eventArgs)
+    {
+        MulticastDataReceived?.Invoke(this, eventArgs);
+    }
+
+    struct UdpState
+    {
+        public UdpClient Client;
+        public IPEndPoint EndPoint;
     }
 }

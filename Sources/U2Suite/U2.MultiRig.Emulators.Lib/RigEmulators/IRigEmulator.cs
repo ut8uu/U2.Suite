@@ -19,7 +19,7 @@
 
 using U2.Core;
 
-namespace U2.MultiRig.Emulators;
+namespace U2.MultiRig.Emulators.Lib;
 
 public interface IRigEmulator
 {

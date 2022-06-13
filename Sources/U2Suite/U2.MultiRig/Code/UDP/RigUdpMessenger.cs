@@ -27,86 +27,85 @@ using System.Text;
 using System.Threading.Tasks;
 using log4net;
 
-namespace U2.MultiRig.Code.UDP
+namespace U2.MultiRig;
+
+public sealed class RigUdpMessenger : IDisposable
 {
-    public sealed class RigUdpMessenger : IDisposable
+    public readonly IPAddress MultiCastAddress = IPAddress.Parse("224.5.11.71");
+    public const int MessengerRxPort = 11501;
+    public const int MessengerTxPort = 11502;
+
+    private readonly CancellationToken _cancellationToken;
+    private readonly ILog _log = LogManager.GetLogger(typeof(RigUdpMessenger));
+    private readonly UdpMulticastSender _sender;
+    private readonly UdpMulticastReceiver _receiver;
+    private bool _disposed;
+
+    public event UdpPacketReceivedEventHandler UdpPacketReceived;
+
+    public RigUdpMessenger(RigControlType rigControlType, CancellationToken cancellationToken)
     {
-        public readonly IPAddress MultiCastAddress = IPAddress.Parse("224.5.11.71");
-        public const int MessengerRxPort = 11501;
-        public const int MessengerTxPort = 11502;
+        _cancellationToken = cancellationToken;
 
-        private readonly CancellationToken _cancellationToken;
-        private readonly ILog _log = LogManager.GetLogger(typeof(RigUdpMessenger));
-        private readonly UdpMulticastSender _sender;
-        private readonly UdpMulticastReceiver _receiver;
-        private bool _disposed;
+        var isHost = rigControlType == RigControlType.Guest;
+        var rxPort = isHost ? MessengerRxPort : MessengerTxPort;
+        var txPort = isHost ? MessengerTxPort : MessengerRxPort;
+        _sender = new UdpMulticastSender(MultiCastAddress, txPort, _cancellationToken);
+        _receiver = new UdpMulticastReceiver(MultiCastAddress, rxPort, _cancellationToken);
+        _receiver.MulticastDataReceived += ReceiverOnMulticastDataReceived;
+    }
 
-        public event UdpPacketReceivedEventHandler UdpPacketReceived;
-
-        public RigUdpMessenger(RigControlType rigControlType, CancellationToken cancellationToken)
+    private void ReceiverOnMulticastDataReceived(object sender, UdpMulticastDataEventArgs eventArgs)
+    {
+        if (_cancellationToken.IsCancellationRequested)
         {
-            _cancellationToken = cancellationToken;
-
-            var isHost = rigControlType == RigControlType.Guest;
-            var rxPort = isHost ? MessengerRxPort : MessengerTxPort;
-            var txPort = isHost ? MessengerTxPort : MessengerRxPort;
-            _sender = new UdpMulticastSender(MultiCastAddress, txPort, _cancellationToken);
-            _receiver = new UdpMulticastReceiver(MultiCastAddress, rxPort, _cancellationToken);
-            _receiver.MulticastDataReceived += ReceiverOnMulticastDataReceived;
+            return;
         }
-        
-        private void ReceiverOnMulticastDataReceived(object sender, UdpMulticastDataEventArgs eventArgs)
+
+        try
         {
-            if (_cancellationToken.IsCancellationRequested)
+            var packet = RigUdpMessengerPacket.FromUdpPacket(eventArgs.Data);
+            if (!packet.IsValid)
             {
                 return;
             }
 
-            try
+            var args = new RigUdpMessengerPacketEventArgs
             {
-                var packet = RigUdpMessengerPacket.FromUdpPacket(eventArgs.Data);
-                if (!packet.IsValid)
-                {
-                    return;
-                }
-
-                var args = new RigUdpMessengerPacketEventArgs
-                {
-                    Packet = packet,
-                    RemoteEndpoint = eventArgs.SenderEndPoint,
-                };
-                OnUdpPacketReceived(args);
-            }
-            catch (UdpPacketException ex)
-            {
-                _log.Error(ex.Message);
-            }
+                Packet = packet,
+                RemoteEndpoint = eventArgs.SenderEndPoint,
+            };
+            OnUdpPacketReceived(args);
         }
-
-        private void OnUdpPacketReceived(RigUdpMessengerPacketEventArgs eventArgs)
+        catch (UdpPacketException ex)
         {
-            UdpPacketReceived?.Invoke(this, eventArgs);
+            _log.Error(ex.Message);
         }
+    }
 
-        public void Dispose()
+    private void OnUdpPacketReceived(RigUdpMessengerPacketEventArgs eventArgs)
+    {
+        UdpPacketReceived?.Invoke(this, eventArgs);
+    }
+
+    public void Dispose()
+    {
+        if (_disposed)
         {
-            if (_disposed)
-            {
-                return;
-            }
-            _receiver.Dispose();
-            _sender.Dispose();
-            _disposed = true;
+            return;
         }
+        _receiver.Dispose();
+        _sender.Dispose();
+        _disposed = true;
+    }
 
-        public void SendMultiCastMessage(RigUdpMessengerPacket packet)
+    public void SendMultiCastMessage(RigUdpMessengerPacket packet)
+    {
+        var data = packet.GetBytes();
+        var sentBytes = _sender.Send(data);
+        if (sentBytes != data.Length)
         {
-            var data = packet.GetBytes();
-            var sentBytes = _sender.Send(data);
-            if (sentBytes != data.Length)
-            {
-                _log.Error($"Incorrect datagram sent. Expected to be {data.Length} bytes, only {sentBytes} sent.");
-            }
+            _log.Error($"Incorrect datagram sent. Expected to be {data.Length} bytes, only {sentBytes} sent.");
         }
     }
 }

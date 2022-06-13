@@ -19,23 +19,26 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using Autofac;
-using JetBrains.Annotations;
-using U2.MultiRig.Code;
+using Xunit;
 
-namespace U2.MultiRig.Emulators
+namespace U2.MultiRig.Tests;
+
+public abstract class RigEmulatorBaseTestData
 {
-    public sealed class IC705SerialPortEmulator : RigSerialPortEmulatorBase
+    protected readonly RigCommands _rigCommands;
+
+    protected RigEmulatorBaseTestData()
     {
-        public IC705SerialPortEmulator() 
-            : base(EmulatorResources.IC_705)
-        {
-            MultiRigApplicationContext.Instance.Builder
-                .Register(c => new IC705SerialPortEmulator())
-                .As<IRigSerialPort>();
-        }
+        var currentDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+        var iniFilePath = Path.Combine(currentDirectory,
+            "TestData", "RigCommand", "INI", "IC-705.ini");
+        Assert.True(File.Exists(iniFilePath));
+        _rigCommands = RigCommandUtilities.LoadRigCommands(iniFilePath);
+        Assert.NotEmpty(_rigCommands.InitCmd);
     }
 }

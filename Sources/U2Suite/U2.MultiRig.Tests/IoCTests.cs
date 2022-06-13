@@ -24,7 +24,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Autofac;
 using U2.MultiRig.Code;
-using U2.MultiRig.Emulators;
+using U2.MultiRig.Emulators.Lib;
 using U2.MultiRig.Utils;
 using Xunit;
 

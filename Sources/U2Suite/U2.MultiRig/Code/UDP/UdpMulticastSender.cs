@@ -25,66 +25,70 @@ using System.Text;
 using System.Threading.Tasks;
 using log4net;
 
-namespace U2.MultiRig.Code.UDP
+namespace U2.MultiRig;
+
+public sealed class UdpMulticastSender : IDisposable
 {
-    public sealed class UdpMulticastSender : IDisposable
+    private readonly UdpClient _client;
+    private readonly CancellationToken _token;
+    private readonly IPEndPoint _remoteEndpoint;
+    private readonly ILog _logger = LogManager.GetLogger(typeof(UdpMulticastSender));
+
+    public UdpMulticastSender(IPAddress multicastAddress, int port, CancellationToken token)
     {
-        private readonly UdpClient _client;
-        private readonly CancellationToken _token;
-        private readonly IPEndPoint _remoteEndpoint;
-        private readonly ILog _logger = LogManager.GetLogger(typeof(UdpMulticastSender));
+        _token = token;
 
-        public UdpMulticastSender(IPAddress multicastAddress, int port, CancellationToken token)
+        _client = new UdpClient();
+
+        try
         {
-            _token = token;
-
-            _client = new UdpClient();
-
-            try
-            {
-                // Join group
-                _client.JoinMulticastGroup(multicastAddress);
-            }
-            catch (Exception e) when (e is SocketException)
-            {
-                _logger.Error(e.ToString());
-            }
-
-            _remoteEndpoint = new IPEndPoint(multicastAddress, port);
+            // Join group
+            _client.JoinMulticastGroup(multicastAddress);
         }
-        
-        public void Dispose()
+        catch (Exception e) when (e is SocketException)
         {
-            _client.Dispose();
+            _logger.Error(e.ToString());
         }
 
-        public async Task<int> SendAsync(byte[] data)
-        {
-            try
-            {
-                var result = await _client.SendAsync(data, _remoteEndpoint, _token);
-                return result;
-            }
-            catch (Exception ex) when (ex is SocketException)
-            {
-                _logger.Error(ex);
-            }
+        _remoteEndpoint = new IPEndPoint(multicastAddress, port);
+    }
 
-            return 0;
+    public void Dispose()
+    {
+        _client.Dispose();
+    }
+
+    public async Task<int> SendAsync(byte[] data)
+    {
+        try
+        {
+            var result = await _client.SendAsync(data, _remoteEndpoint, _token);
+            return result;
+        }
+        catch (Exception ex) when (ex is SocketException)
+        {
+            _logger.Error(ex);
         }
 
-        public int Send(byte[] data)
-        {
-            try
-            {
-                return _client.Send(data, _remoteEndpoint);
-            }
-            catch (Exception ex) when (ex is SocketException)
-            {
-                _logger.Error(ex);
-            }
+        return 0;
+    }
 
-            return 0;
+    /// <summary>
+    /// Sends the given array
+    /// </summary>
+    /// <param name="data">An array to be sent</param>
+    /// <returns>Returns the number of sent bytes or 0 in case of error.</returns>
+    public int Send(byte[] data)
+    {
+        try
+        {
+            return _client.Send(data, _remoteEndpoint);
         }
+        catch (Exception ex) when (ex is SocketException)
+        {
+            _logger.Error(ex);
+        }
+
+        return 0;
     }
 }

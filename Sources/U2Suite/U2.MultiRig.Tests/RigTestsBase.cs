@@ -28,7 +28,7 @@ using Autofac;
 using U2.Contracts;
 using U2.Core;
 using U2.MultiRig.Code;
-using U2.MultiRig.Emulators;
+using U2.MultiRig.Emulators.Lib;
 using U2.MultiRig.Utils;
 using U2.Tests.Common;
 using Xunit;
