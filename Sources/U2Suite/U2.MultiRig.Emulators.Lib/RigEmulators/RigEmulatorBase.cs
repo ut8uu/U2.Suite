@@ -20,21 +20,32 @@
 using System;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using Autofac;
+using U2.Contracts;
 using U2.Core;
 using U2.MultiRig.Code;
 
+[assembly: InternalsVisibleTo("U2.MultiRig.Tests")]
 namespace U2.MultiRig.Emulators.Lib;
 
 public abstract class RigEmulatorBase : IRigEmulator
 {
     private static IRigEmulator _instance;
 
+    internal readonly HostRig _hostRig;
+    private readonly RigSettings _settings = new();
+
     protected RigEmulatorBase(string iniFileContent)
     {
         var stream = new MemoryStream(Encoding.ASCII.GetBytes(iniFileContent));
         RigCommands = RigCommandUtilities.LoadRigCommands(stream, "IC-705");
+
+        _hostRig = new HostRig(1, 
+            KnownIdentifiers.U2MultiRigEmulatorInstance,
+            _settings, RigCommands);
+        _hostRig.Enabled = true;
     }
 
     public static IRigEmulator Instance
@@ -76,6 +87,15 @@ public abstract class RigEmulatorBase : IRigEmulator
     public RigParameter Mode { get; set; }
 
     public RigParameter Split { get; set; }
+    public void Start()
+    {
+        _hostRig.Start();
+    }
+
+    public void Stop()
+    {
+        _hostRig.Stop();
+    }
 
     private void DisplayMessage(MessageDisplayModes messageMode, string message)
     {
@@ -349,5 +369,10 @@ public abstract class RigEmulatorBase : IRigEmulator
         }
 
         return true;
+    }
+
+    private void MessengerOnUdpPacketReceived(object sender, RigUdpMessengerPacketEventArgs eventargs)
+    {
+        throw new NotImplementedException();
     }
 }

@@ -64,4 +64,7 @@ public interface IRigEmulator
     RigParameter Vfo { get; set; }
     RigParameter Xit { get; set; }
     RigParameter Split { get; set; }
+
+    void Start();
+    void Stop();
 }
