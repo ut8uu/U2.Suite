@@ -24,7 +24,9 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using Avalonia.Media.Imaging;
 using U2.Core;
 using U2.MultiRig.Code;
 using U2.MultiRig.Emulators.Lib;
@@ -35,14 +37,18 @@ namespace U2.MultiRig.Tests.Emulator;
 
 public class RigEmulatorBaseTests
 {
-    [Theory]
-    [ClassData(typeof(CanPrepareWriteCommandResponseTestData))]
-    public void CanPrepareWriteCommandResponse(WriteCommandResponseTestData testData)
+    public RigEmulatorBaseTests()
     {
         MultiRigApplicationContext.Instance.ResetBuilder();
 
         IC705Emulator.Register();
         MultiRigApplicationContext.Instance.BuildContainer();
+    }
+
+    [Theory]
+    [ClassData(typeof(CanPrepareWriteCommandResponseTestData))]
+    public void CanPrepareWriteCommandResponse(WriteCommandResponseTestData testData)
+    {
         var emulator = RigEmulatorBase.Instance;
 
         Assert.True(emulator.TryPrepareWriteCommandResponse(testData.RigParameter, testData.RigCommand, out var response));
@@ -53,10 +59,6 @@ public class RigEmulatorBaseTests
     [ClassData(typeof(CanExtractValueTestData))]
     public void CanExtractValue(ExtractValueTestData testData)
     {
-        MultiRigApplicationContext.Instance.ResetBuilder();
-
-        IC705Emulator.Register();
-        MultiRigApplicationContext.Instance.BuildContainer();
         var emulator = RigEmulatorBase.Instance;
 
         var currentDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
@@ -122,5 +124,31 @@ public class RigEmulatorBaseTests
             }
         }
 
+    }
+
+    [Fact]
+    public void CanManageEmulatorByUdp()
+    {
+        const int expectedFreq = 145500000;
+        var emulator = RigEmulatorBase.Instance;
+        var viewModel = new Emulators.Gui.MainWindowViewModel();
+
+        Assert.True(((RigEmulatorBase)emulator)._hostRig.Enabled);
+
+        emulator.FreqA = expectedFreq;
+
+        var inTime = false;
+        var task = Task.Factory.StartNew(() =>
+        {
+            while (viewModel.FreqA != expectedFreq)
+            {
+            }
+            inTime = true;
+        });
+        //Assert.True(task.Wait(TimeSpan.FromMilliseconds(35000)));
+        Assert.True(task.Wait(TimeSpan.FromMilliseconds(-1)));
+
+        //emulator.
+        Assert.True(inTime);
     }
 }
