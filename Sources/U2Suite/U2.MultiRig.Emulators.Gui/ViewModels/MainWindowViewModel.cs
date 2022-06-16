@@ -23,11 +23,13 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Text;
+using System.Threading;
 using Avalonia.Controls;
+using U2.Contracts;
 
 namespace U2.MultiRig.Emulators.Gui;
 
-public class MainWindowViewModel : ViewModelBase
+public class MainWindowViewModel : ViewModelBase, IDisposable
 {
     public const string VfoA = "VFO A";
     public const string VfoB = "VFO B";
@@ -39,14 +41,23 @@ public class MainWindowViewModel : ViewModelBase
     private FrequencyIndicatorViewModel _frequencyIndicatorViewModel;
     private Window _owner;
 
+    internal readonly GuestRig _guestRig;
+
     public MainWindowViewModel()
     {
         _frequency = FreqA;
         _selectedVfo = VfoA;
+
+        if (this is MainWindowViewModel)
+        {
+            _guestRig = new GuestRig(1, KnownIdentifiers.U2MultiRigEmulatorGui);
+            _guestRig.Enabled = true;
+            _guestRig.Start();
+        }
     }
 
-    public long FreqA { get; set; } = 438500000;
-    public long FreqB { get; set; } = 145500000;
+    public long FreqA { get; set; } = 0;
+    public long FreqB { get; set; } = 0;
 
     public string SelectedVfo
     {
@@ -75,7 +86,7 @@ public class MainWindowViewModel : ViewModelBase
         VfoA, VfoB,
     };
 
-    public string SelectedMode { get; set; } = "AM";
+    public string SelectedMode { get; set; } = string.Empty;
     public ObservableCollection<string> Modes { get; } = new()
     {
         "AM", "FM", "USB", "LSB", "CW-L", "CW-U", "DIGI-L", "DIGI-R",
@@ -148,6 +159,17 @@ public class MainWindowViewModel : ViewModelBase
     public void ExecuteExitCommand()
     {
         Owner?.Close();
+    }
+
+    public void Dispose()
+    {
+        if (_guestRig != null)
+        {
+            _guestRig.Enabled = false;
+            _guestRig.Stop();
+        }
+
+        _guestRig?.Dispose();
     }
 }
 
