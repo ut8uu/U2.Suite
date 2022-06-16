@@ -22,6 +22,7 @@ using System.IO;
 using System.Data;
 using System.Collections;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 
 namespace U2.MultiRig;
 
@@ -35,18 +36,24 @@ public enum ExchangePhase
     Sending, Receiving, Idle
 }
 
-#nullable disable
+[DebuggerDisplay("{ToString(),nq}")]
 public sealed class QueueItem
 {
     public byte[] Code { get; set; }
     public CommandKind Kind { get; set; }
-    public RigParameter Param { get; set; } = new RigParameter();
+    public RigParameter Param { get; set; } = new();
     public int Number { get; set; } = 0;
-    public object CustSender { get; set; } = new object();
+    public object CustSender { get; set; } = new();
     public int ReplyLength { get; set; } = 0;
     public string ReplyEnd { get; set; } = string.Empty;
 
     public bool NeedsReply => ReplyLength > 0 || ReplyEnd != string.Empty;
+
+    public new string ToString()
+    {
+        var reply = NeedsReply ? "Reply" : "NoReply";
+        return $"{ByteFunctions.BytesToHex(Code)} : {Kind} : {Param} : {reply}";
+    }
 }
 
 
@@ -87,4 +94,3 @@ public sealed class CommandQueue : Collection<QueueItem>
 
     public QueueItem CurrentCmd => Items.FirstOrDefault();
 }
-#nullable restore
