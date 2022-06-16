@@ -34,5 +34,5 @@ public enum MessageDisplayModes
     
     Debug = 128,
 
-    All = 65535,
+    All = 32768,
 }
