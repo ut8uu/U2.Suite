@@ -39,7 +39,7 @@ public static class AllRigsSettings
     };
 
     internal static readonly string PathToSettings = Path.Combine(
-        FileSystemHelper.GetAppDataFolderPath(nameof(AllRigsSettings)), SettingsFileName);
+        FileSystemHelper.GetAppDataFolderPath("U2.MultiRig"), SettingsFileName);
     private static readonly JsonSerializerOptions SerializationOptions =
         new()
         {
