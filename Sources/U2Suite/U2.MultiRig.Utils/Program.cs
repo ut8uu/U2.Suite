@@ -295,25 +295,31 @@ static bool TestIc705Emulator(object[] parameters)
     MultiRigApplicationContext.Instance.BuildContainer();
     var emulator = RigEmulatorBase.Instance;
 
-    emulator.MessageDisplayModes = MessageDisplayModes.Error
-                                   | MessageDisplayModes.Warning
-                                   | MessageDisplayModes.Info;
+    emulator.MessageDisplayModes =
+        MessageDisplayModes.Error
+        | MessageDisplayModes.Warning
+        | MessageDisplayModes.Info
+        | MessageDisplayModes.All;
 
     emulator.Mode = RigParameter.FM;
     emulator.FreqA = 145500000;
+    emulator.FreqB = 1810000;
     emulator.Tx = RigParameter.Rx;
     emulator.Xit = RigParameter.XitOff;
     emulator.Rit = RigParameter.RitOff;
     emulator.Split = RigParameter.SplitOff;
+    emulator.Start();
 
     var hostRig = new HostRig(1, KnownIdentifiers.U2MultiRigDemo,
         new RigSettings(), emulator.RigCommands);
-    hostRig.MessageDisplayModes = MessageDisplayModes.Error
-                                  | MessageDisplayModes.Warning
-                                  | MessageDisplayModes.Info
-                                  //| MessageDisplayModes.Diagnostics2
-                                  //| MessageDisplayModes.Diagnostics3
-                                  ;
+    hostRig.MessageDisplayModes =
+        MessageDisplayModes.Error
+        | MessageDisplayModes.Warning
+        | MessageDisplayModes.Info
+        //| MessageDisplayModes.Diagnostics2
+        //| MessageDisplayModes.Diagnostics3
+        | MessageDisplayModes.All
+        ;
     hostRig.Enabled = true;
     hostRig.Start();
 
@@ -328,6 +334,7 @@ static bool TestIc705Emulator(object[] parameters)
                                   | MessageDisplayModes.Diagnostics1
                                   | MessageDisplayModes.Diagnostics2
                                   | MessageDisplayModes.Diagnostics3
+                                  | MessageDisplayModes.All
                                   ;
     guest.Enabled = true;
     guest.Start();
@@ -352,7 +359,7 @@ static bool TestIc705Emulator(object[] parameters)
     Console.WriteLine("Turning split on.");
     hostRig.Split = RigParameter.SplitOn;
 
-    
+
     Console.WriteLine("Increasing FreqA 30 times from 28145000 every 5 seconds.");
 
     for (int i = 1; i < 30; i++)
@@ -385,6 +392,6 @@ static bool TestIc705Emulator(object[] parameters)
     hostRig.Enabled = false;
     hostRig.Stop();
     hostRig.Dispose();
-    
+
     return true;
 }
