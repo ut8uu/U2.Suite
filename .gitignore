@@ -11,3 +11,5 @@ bin
 obj
 /Sources/.sonarqube/
 /Sources/TestResults/Coverlet/
+__pycache__
+.scannerwork
