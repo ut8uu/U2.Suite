@@ -276,41 +276,90 @@ public sealed class HostRig : Rig
     {
         foreach (var parameter in parameters)
         {
-            object parameterValue = parameter switch
+            object parameterValue;
+            switch (parameter)
             {
-                RigParameter.FreqA => FreqA,
-                RigParameter.None => 0,
-                RigParameter.Freq => Freq,
-                RigParameter.FreqB => FreqB,
-                RigParameter.Pitch => Pitch,
-                RigParameter.RitOffset => RitOffset,
-                RigParameter.Rit0 => Rit,
-                RigParameter.VfoAA => 0,
-                RigParameter.VfoAB => 0,
-                RigParameter.VfoBA => 0,
-                RigParameter.VfoBB => 0,
-                RigParameter.VfoA => 0,
-                RigParameter.VfoB => 0,
-                RigParameter.VfoEqual => 0,
-                RigParameter.VfoSwap => 0,
-                RigParameter.SplitOn => 1,
-                RigParameter.SplitOff => 0,
-                RigParameter.RitOn => 1,
-                RigParameter.RitOff => 0,
-                RigParameter.XitOn => 1,
-                RigParameter.XitOff => 0,
-                RigParameter.Rx => "RX",
-                RigParameter.Tx => "TX",
-                RigParameter.CW_U => "CW",
-                RigParameter.CW_L => "CW",
-                RigParameter.SSB_U => "USB",
-                RigParameter.SSB_L => "LSB",
-                RigParameter.DIG_U => "DIGI-U",
-                RigParameter.DIG_L => "DIGI-L",
-                RigParameter.AM => "AM",
-                RigParameter.FM => "FM",
-                _ => 0
-            };
+                case RigParameter.FreqA:
+                    parameterValue = FreqA;
+                    break;
+                case RigParameter.None:
+                    parameterValue = 0;
+                    break;
+                case RigParameter.Freq:
+                    parameterValue = Freq;
+                    break;
+                case RigParameter.FreqB:
+                    parameterValue = FreqB;
+                    break;
+                case RigParameter.Pitch:
+                    parameterValue = Pitch;
+                    break;
+                case RigParameter.RitOffset:
+                    parameterValue = RitOffset;
+                    break;
+                case RigParameter.Rit0:
+                    parameterValue = Rit;
+                    break;
+                case RigParameter.VfoAA:
+                case RigParameter.VfoAB:
+                case RigParameter.VfoBA:
+                case RigParameter.VfoBB:
+                case RigParameter.VfoA:
+                case RigParameter.VfoB:
+                case RigParameter.VfoEqual:
+                case RigParameter.VfoSwap:
+                    parameterValue = 0;
+                    break;
+                case RigParameter.SplitOn:
+                    parameterValue = 1;
+                    break;
+                case RigParameter.SplitOff:
+                    parameterValue = 0;
+                    break;
+                case RigParameter.RitOn:
+                    parameterValue = 1;
+                    break;
+                case RigParameter.RitOff:
+                    parameterValue = 0;
+                    break;
+                case RigParameter.XitOn:
+                    parameterValue = 1;
+                    break;
+                case RigParameter.XitOff:
+                    parameterValue = 0;
+                    break;
+                case RigParameter.Rx:
+                    parameterValue = "RX";
+                    break;
+                case RigParameter.Tx:
+                    parameterValue = "TX";
+                    break;
+                case RigParameter.CW_U:
+                case RigParameter.CW_L:
+                    parameterValue = "CW";
+                    break;
+                case RigParameter.SSB_U:
+                    parameterValue = "USB";
+                    break;
+                case RigParameter.SSB_L:
+                    parameterValue = "LSB";
+                    break;
+                case RigParameter.DIG_U:
+                    parameterValue = "DIGI-U";
+                    break;
+                case RigParameter.DIG_L:
+                    parameterValue = "DIGI-L";
+                    break;
+                case RigParameter.AM:
+                    parameterValue = "AM";
+                    break;
+                case RigParameter.FM:
+                    parameterValue = "FM";
+                    break;
+                default:
+                    parameterValue = 0;
+                    break;
+            }
 
             OnRigParameterChanged(RigNumber, parameter, parameterValue);
         }
