@@ -1,3 +1,6 @@
+Please note, this repository is no more updated.
+The application is rewriten in Python. All work is performed in a corresponding repository: U2.Suite.Python
+
 # U2.Suite
 
 U2.Suite (hereafter the Application) is an amateur radio-related bunch of software.
