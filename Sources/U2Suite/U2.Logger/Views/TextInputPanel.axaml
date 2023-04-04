@@ -6,11 +6,17 @@
              Width="600" Height="140"
              x:Class="U2.Logger.TextInputPanel"
              xmlns:logger="clr-namespace:U2.Logger"
-             xmlns:core="clr-namespace:U2.Core;assembly=U2.Core">
+             xmlns:core="clr-namespace:U2.Core;assembly=U2.Core"
+             xmlns:core_converters="clr-namespace:U2.Core.Converters;assembly=U2.Core"
+             >
 
   <Design.DataContext>
     <logger:TextInputPanelViewModel/>
   </Design.DataContext>
+
+  <UserControl.Resources>
+    <core_converters:CaseConverter x:Key="UpperCaseConverter"></core_converters:CaseConverter>
+  </UserControl.Resources>
 
   <Border Classes="Card">
     <StackPanel>
@@ -80,4 +86,5 @@
       </StackPanel>
     </StackPanel>
   </Border>
+
 </UserControl>
