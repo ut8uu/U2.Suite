@@ -39,7 +39,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Avalonia.Desktop" Version="0.10.19" />
     <PackageReference Include="AvaloniaEdit.TextMate" Version="0.10.12.2" />
     <PackageReference Include="AvaloniaEdit.TextMate.Grammars" Version="0.10.12" />
     <PackageReference Include="CommandLineParser" Version="2.9.1" />

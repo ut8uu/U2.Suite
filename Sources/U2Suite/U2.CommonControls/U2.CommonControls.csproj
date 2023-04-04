@@ -11,18 +11,4 @@
 	<ItemGroup>
 		<None Remove=".gitignore" />
 	</ItemGroup>
-	<ItemGroup>
-		<PackageReference Include="Avalonia" Version="0.10.19" />
-		<PackageReference Include="Avalonia.Desktop" Version="0.10.19" />
-		<!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
-		<PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="0.10.19" />
-		<PackageReference Include="Avalonia.ReactiveUI" Version="0.10.19" />
-		<PackageReference Include="MessageBox.Avalonia" Version="2.1.0" />
-		<PackageReference Include="PropertyChanged.Fody" Version="4.1.0" />
-	</ItemGroup>
-	<ItemGroup>
-	  <Compile Update="Views\OkCancelButtonsUserControl.axaml.cs">
-	    <DependentUpon>%(Filename)</DependentUpon>
-	  </Compile>
-	</ItemGroup>
 </Project>

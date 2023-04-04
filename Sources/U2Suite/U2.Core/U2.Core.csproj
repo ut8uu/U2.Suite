@@ -10,25 +10,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <AvaloniaXaml Remove="Avalonia\**" />
-    <AvaloniaXaml Remove="ViewModels\**" />
-    <AvaloniaXaml Remove="Views\**" />
-    <Compile Remove="Avalonia\**" />
-    <Compile Remove="ViewModels\**" />
-    <Compile Remove="Views\**" />
-    <EmbeddedResource Remove="Avalonia\**" />
-    <EmbeddedResource Remove="ViewModels\**" />
-    <EmbeddedResource Remove="Views\**" />
-    <None Remove="Avalonia\**" />
-    <None Remove="ViewModels\**" />
-    <None Remove="Views\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Avalonia" Version="0.10.19" />
-    <PackageReference Include="Avalonia.Desktop" Version="0.10.19" />
-    <PackageReference Include="Avalonia.Diagnostics" Version="0.10.19" />
-    <PackageReference Include="Avalonia.ReactiveUI" Version="0.10.19" />
     <PackageReference Include="System.IO.Ports" Version="7.0.0" />
     <PackageReference Include="System.Management" Version="7.0.0" />
   </ItemGroup>
