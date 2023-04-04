@@ -34,9 +34,9 @@ namespace U2.MultiRig.Tests
         [Fact]
         public void BytesAnd()
         {
-            var arr1 = new byte[] {0x10, 0x22, 0x80, 0x55};
-            var arr2 = new byte[] {0x30, 0xff, 0x00, 0xa9};
-            var expectedResult = new byte[] {0x10, 0x22, 0x00, 0x01};
+            var arr1 = new byte[] { 0x10, 0x22, 0x80, 0x55 };
+            var arr2 = new byte[] { 0x30, 0xff, 0x00, 0xa9 };
+            var expectedResult = new byte[] { 0x10, 0x22, 0x00, 0x01 };
             var actualResult = ByteFunctions.BytesAnd(arr1, arr2);
             Assert.True(actualResult.SequenceEqual(expectedResult));
         }
@@ -69,11 +69,11 @@ namespace U2.MultiRig.Tests
         }
 
         [Theory]
-        [InlineData("01.02.03.04.05", new byte[]{1,2,3,4,5})]
+        [InlineData("01.02.03.04.05", new byte[] { 1, 2, 3, 4, 5 })]
         [InlineData("01020 30405", new byte[] { 1, 2, 3, 4, 5 })]
         [InlineData("01 02 03 04 05", new byte[] { 1, 2, 3, 4, 5 })]
         [InlineData("(abc)", new byte[] { 0x61, 0x62, 0x63 })]
-        [InlineData("qwer0", new byte[]{})]
+        [InlineData("qwer0", new byte[] { })]
         public void StrToBytes(string str, byte[] expectedArray)
         {
             var actualArray = ByteFunctions.StrToBytes(str);
@@ -85,7 +85,7 @@ namespace U2.MultiRig.Tests
         {
             var bytes = new byte[]
             {
-                0xFE, 0xFE, 0xA4, 0xE0, 0x1A, 
+                0xFE, 0xFE, 0xA4, 0xE0, 0x1A,
                 0x05, 0x01, 0x32, 0x01, 0xFD,
             };
             var expectedString = "FEFEA4E01A05013201FD";
@@ -109,7 +109,7 @@ namespace U2.MultiRig.Tests
         [InlineData("0000000000000002.0304", RigParameter.FreqA, 772)]
         [InlineData("0000000000000002.00000304", RigParameter.FreqA, 772)]
         [InlineData("0000000000000002.0000000000000304", RigParameter.FreqA, 772)]
-        public void BytesToRigParameterValue(string hex, RigParameter expectedRigParameter, 
+        public void BytesToRigParameterValue(string hex, RigParameter expectedRigParameter,
             long expectedValue)
         {
             var data = ByteFunctions.HexStrToBytes(hex);

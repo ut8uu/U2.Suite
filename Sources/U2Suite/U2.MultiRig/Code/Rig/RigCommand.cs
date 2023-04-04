@@ -19,6 +19,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -65,11 +66,15 @@ public enum ValueFormat
     Float,
 }
 
+[DebuggerDisplay("{DebuggerDisplay,nq}")]
 public struct BitMask
 {
     public byte[] Mask { get; set; }   //do bitwise AND with this mask
     public byte[] Flags { get; set; }  //compare result to these bits
     public RigParameter Param { get; set; }   //report this param if bits match
+    
+    [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+    string DebuggerDisplay => $"Mask: {ByteFunctions.BytesToHex(Mask)}\r\n Flags: {ByteFunctions.BytesToHex(Flags)}\r\nParam: {Param}";
 }
 
 public enum RigParameter

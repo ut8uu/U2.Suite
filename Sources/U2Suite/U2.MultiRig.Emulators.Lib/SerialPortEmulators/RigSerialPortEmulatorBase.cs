@@ -74,7 +74,7 @@ public abstract class RigSerialPortEmulatorBase : IRigSerialPort
         {
             if (command.Code.SequenceEqual(data))
             {
-                ReportMessageReceivedAsync(ByteFunctions.BytesToHex(command.Validation.Flags));
+                ReportMessageReceivedAsync(ByteFunctions.BytesToHex(command.Validation.Flags)).GetAwaiter();
                 return;
             }
         }
@@ -89,7 +89,7 @@ public abstract class RigSerialPortEmulatorBase : IRigSerialPort
             // the actual value of the parameter
             if (RigEmulatorBase.Instance.TryPrepareResponse(statusCommand, out var response))
             {
-                ReportMessageReceivedAsync(ByteFunctions.BytesToHex(response));
+                ReportMessageReceivedAsync(ByteFunctions.BytesToHex(response)).GetAwaiter();
                 return;
             }
             Debug.Fail($"Processing the status command for {statusCommand.Values[0].Param} failed.");
