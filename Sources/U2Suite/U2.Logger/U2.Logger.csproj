@@ -18,30 +18,30 @@
 		<None Remove=".gitignore" />
 	</ItemGroup>
 	<ItemGroup>
-		<PackageReference Include="Avalonia" Version="0.10.15" />
-		<PackageReference Include="Avalonia.Desktop" Version="0.10.15" />
+		<PackageReference Include="Avalonia" Version="0.10.19" />
+		<PackageReference Include="Avalonia.Desktop" Version="0.10.19" />
 		<!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
-		<PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="0.10.15" />
-		<PackageReference Include="Avalonia.ReactiveUI" Version="0.10.15" />
+		<PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="0.10.19" />
+		<PackageReference Include="Avalonia.ReactiveUI" Version="0.10.19" />
 		<PackageReference Include="Citrus.Avalonia" Version="1.6.1" />
-		<PackageReference Include="Dove.Avalonia.Controls.Extensions" Version="1.8.2" />
-		<PackageReference Include="log4net" Version="2.0.14" />
-		<PackageReference Include="MessageBox.Avalonia" Version="2.0.0" />
-		<PackageReference Include="Microsoft.Data.Sqlite" Version="6.0.5" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.5">
+		<PackageReference Include="Dove.Avalonia.Controls.Extensions" Version="1.9.5" />
+		<PackageReference Include="log4net" Version="2.0.15" />
+		<PackageReference Include="MessageBox.Avalonia" Version="2.1.0" />
+		<PackageReference Include="Microsoft.Data.Sqlite" Version="7.0.4" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.4">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="6.0.5" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.4" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite.Design" Version="1.1.6" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.5">
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.4">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
 		<PackageReference Include="MvvmLightLibsStd10" Version="5.4.1.1" />
-		<PackageReference Include="PropertyChanged.Fody" Version="3.4.1" />
+		<PackageReference Include="PropertyChanged.Fody" Version="4.1.0" />
 		<PackageReference Include="SQLite" Version="3.13.0" />
-		<PackageReference Include="System.Data.SQLite" Version="1.0.116" />
+		<PackageReference Include="System.Data.SQLite" Version="1.0.117" />
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\U2.CommonControls\U2.CommonControls.csproj" />
