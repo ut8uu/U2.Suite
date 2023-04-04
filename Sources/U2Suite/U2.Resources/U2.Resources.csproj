@@ -3,8 +3,8 @@
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <RuntimeIdentifiers>win-x64;osx-x64;linux-x64</RuntimeIdentifiers>
-    <AssemblyVersion>1.0.1.20105</AssemblyVersion>
-    <FileVersion>1.3.1.20105</FileVersion>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <FileVersion>1.0.0.23093</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -32,77 +32,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <AvaloniaResource Include="**\*.xml">
-      <SubType>Designer</SubType>
-    </AvaloniaResource>
-  </ItemGroup>
-
-  <ItemGroup>
-    <AvaloniaResource Include="**\Citrus\*.xaml">
-      <SubType>Designer</SubType>
-    </AvaloniaResource>
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Remove="Styles\Citrus\Palette\CandyPalette.xaml" />
-    <None Remove="Styles\Citrus\Palette\CitrusPalette.xaml" />
-    <None Remove="Styles\Citrus\Palette\MagmaPalette.xaml" />
-    <None Remove="Styles\Citrus\Palette\RustPalette.xaml" />
-    <None Remove="Styles\Citrus\Palette\SeaPalette.xaml" />
-    <None Remove="Styles\Citrus\Theme\BorderStyles.xaml" />
-    <None Remove="Styles\Citrus\Theme\ButtonStyles.xaml" />
-    <None Remove="Styles\Citrus\Theme\CalendarStyles.xaml" />
-    <None Remove="Styles\Citrus\Theme\CheckBoxStyles.xaml" />
-    <None Remove="Styles\Citrus\Theme\ComboBoxStyles.xaml" />
-    <None Remove="Styles\Citrus\Theme\ExpanderStyles.xaml" />
-    <None Remove="Styles\Citrus\Theme\Index.xaml" />
-    <None Remove="Styles\Citrus\Theme\ListBoxStyles.xaml" />
-    <None Remove="Styles\Citrus\Theme\MenuStyles.xaml" />
-    <None Remove="Styles\Citrus\Theme\NumericUpDownStyles.xaml" />
-    <None Remove="Styles\Citrus\Theme\ProgressBarStyles.xaml" />
-    <None Remove="Styles\Citrus\Theme\RadioButtonStyles.xaml" />
-    <None Remove="Styles\Citrus\Theme\SliderStyles.xaml" />
-    <None Remove="Styles\Citrus\Theme\TabControlStyles.xaml" />
-    <None Remove="Styles\Citrus\Theme\TextBlockStyles.xaml" />
-    <None Remove="Styles\Citrus\Theme\TextBoxStyles.xaml" />
-    <None Remove="Styles\Citrus\Theme\ToggleButtonStyles.xaml" />
-    <None Remove="Styles\Citrus\Theme\TreeViewStyles.xaml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <AvaloniaResource Include="Styles\Citrus\Palette\CandyPalette.xaml" />
-    <AvaloniaResource Include="Styles\Citrus\Palette\CitrusPalette.xaml" />
-    <AvaloniaResource Include="Styles\Citrus\Palette\MagmaPalette.xaml" />
-    <AvaloniaResource Include="Styles\Citrus\Palette\RustPalette.xaml" />
-    <AvaloniaResource Include="Styles\Citrus\Palette\SeaPalette.xaml" />
-    <AvaloniaResource Include="Styles\Citrus\Theme\BorderStyles.xaml" />
-    <AvaloniaResource Include="Styles\Citrus\Theme\ButtonStyles.xaml" />
-    <AvaloniaResource Include="Styles\Citrus\Theme\CalendarStyles.xaml" />
-    <AvaloniaResource Include="Styles\Citrus\Theme\CheckBoxStyles.xaml" />
-    <AvaloniaResource Include="Styles\Citrus\Theme\ComboBoxStyles.xaml" />
-    <AvaloniaResource Include="Styles\Citrus\Theme\ExpanderStyles.xaml" />
-    <AvaloniaResource Include="Styles\Citrus\Theme\Index.xaml" />
-    <AvaloniaResource Include="Styles\Citrus\Theme\ListBoxStyles.xaml" />
-    <AvaloniaResource Include="Styles\Citrus\Theme\MenuStyles.xaml" />
-    <AvaloniaResource Include="Styles\Citrus\Theme\NumericUpDownStyles.xaml" />
-    <AvaloniaResource Include="Styles\Citrus\Theme\ProgressBarStyles.xaml" />
-    <AvaloniaResource Include="Styles\Citrus\Theme\RadioButtonStyles.xaml" />
-    <AvaloniaResource Include="Styles\Citrus\Theme\SliderStyles.xaml" />
-    <AvaloniaResource Include="Styles\Citrus\Theme\TabControlStyles.xaml" />
-    <AvaloniaResource Include="Styles\Citrus\Theme\TextBlockStyles.xaml" />
-    <AvaloniaResource Include="Styles\Citrus\Theme\TextBoxStyles.xaml" />
-    <AvaloniaResource Include="Styles\Citrus\Theme\ToggleButtonStyles.xaml" />
-    <AvaloniaResource Include="Styles\Citrus\Theme\TreeViewStyles.xaml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Avalonia.Desktop" Version="0.10.19" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <AvaloniaXaml Update="Styles\*.axaml">
-      <SubType>Designer</SubType>
-    </AvaloniaXaml>
+    <Folder Include="Collections\" />
+    <Folder Include="Styles\" />
   </ItemGroup>
 
 </Project>
