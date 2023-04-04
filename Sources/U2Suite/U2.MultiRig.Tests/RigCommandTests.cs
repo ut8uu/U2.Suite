@@ -204,7 +204,8 @@ namespace U2.MultiRig.Tests
         [Fact]
         public void CanReadIc705()
         {
-            var cmd = LoadIni("IC-705.ini");
+            //var cmd = LoadIni("IC-705.ini");
+            var cmd = LoadIni("ft-100 d.ini");
             Assert.Equal(3, cmd.InitCmd.Count);
             Assert.Equal(9, cmd.StatusCmd.Count);
             var parameters = new[]

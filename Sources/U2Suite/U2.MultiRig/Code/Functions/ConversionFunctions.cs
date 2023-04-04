@@ -176,15 +176,11 @@ public static class ConversionFunctions
 
     public static int FromBcdBS(byte[] data)
     {
-        int sign = 0;
+        int sign = -1;
 
         if (data[0] == 0)
         {
             sign = 1;
-        }
-        else
-        {
-            sign = -1;
         }
 
         data[0] = 0;
@@ -340,22 +336,35 @@ public static class ConversionFunctions
             return Array.Empty<byte>();
         }
 
-        return info.Format switch
+        switch (info.Format)
         {
-            ValueFormat.Text => ToText(value, info.Len),
-            ValueFormat.BinL => ToBinL(value, info.Len),
-            ValueFormat.BinB => ToBinB(value, info.Len),
-            ValueFormat.BcdLU => ToBcdLU(value, info.Len),
-            ValueFormat.BcdLS => ToBcdLS(value, info.Len),
-            ValueFormat.BcdBU => ToBcdBU(value, info.Len),
-            ValueFormat.BcdBS => ToBcdBS(value, info.Len),
-            ValueFormat.Yaesu => ToYaesu(value, info.Len),
-            ValueFormat.DPIcom => ToDPIcom(value, info.Len),
-            ValueFormat.TextUD => ToTextUD(value, info.Len),
-            ValueFormat.Float => ToFloat(value, info.Len),
-            ValueFormat.None => Array.Empty<byte>(),
-            _ => throw new ArgumentOutOfRangeException($"{info.Format} not recognized.")
-        };
+            case ValueFormat.Text:
+                return ToText(value, info.Len);
+            case ValueFormat.BinL:
+                return ToBinL(value, info.Len);
+            case ValueFormat.BinB:
+                return ToBinB(value, info.Len);
+            case ValueFormat.BcdLU:
+                return ToBcdLU(value, info.Len);
+            case ValueFormat.BcdLS:
+                return ToBcdLS(value, info.Len);
+            case ValueFormat.BcdBU:
+                return ToBcdBU(value, info.Len);
+            case ValueFormat.BcdBS:
+                return ToBcdBS(value, info.Len);
+            case ValueFormat.Yaesu:
+                return ToYaesu(value, info.Len);
+            case ValueFormat.DPIcom:
+                return ToDPIcom(value, info.Len);
+            case ValueFormat.TextUD:
+                return ToTextUD(value, info.Len);
+            case ValueFormat.Float:
+                return ToFloat(value, info.Len);
+            case ValueFormat.None:
+                return Array.Empty<byte>();
+            default:
+                throw new ArgumentOutOfRangeException($"{info.Format} not recognized.");
+        }
     }
 
     // ASCII codes of digits
