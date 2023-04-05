@@ -10,14 +10,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="6.0.15" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="6.0.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.3.2" />
-    <PackageReference Include="MSTest.TestAdapter" Version="2.2.10" />
-    <PackageReference Include="MSTest.TestFramework" Version="2.2.10" />
+    <PackageReference Include="MSTest.TestAdapter" Version="3.0.2" />
+    <PackageReference Include="MSTest.TestFramework" Version="3.0.2" />
     <PackageReference Include="coverlet.collector" Version="3.1.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\U2.LoggerSvc.RestApiClient\U2.LoggerSvc.RestApiClient.csproj" />
     <ProjectReference Include="..\U2.Logger\U2.Logger.Api\U2.LoggerSvc.Api.csproj" />
+    <ProjectReference Include="..\U2Suite\U2.Tests.Common\U2.Tests.Common.csproj" />
   </ItemGroup>
 
 </Project>
