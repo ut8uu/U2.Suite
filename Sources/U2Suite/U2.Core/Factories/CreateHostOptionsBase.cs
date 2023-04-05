@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Http.Abstractions;
 using Microsoft.AspNetCore.Internal;
+using Microsoft.AspNetCore.Routing;
 
 namespace U2.Core.Factories;
 
@@ -33,7 +34,7 @@ public abstract class CreateHostOptionsBase
             app.UseCors();
         }
 
-        app.UseEndpoint(delegate (IEndpointRouteBuilder endpoints)
+        app.UseEndpoints(delegate (IEndpointRouteBuilder endpoints)
         {
             if (UseMvcControllers)
             {

@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
 namespace U2.Core.Factories;
@@ -49,6 +53,14 @@ public static class HostFactory
         }
 
         options.ConfigureHostBuilder(hostBuilder);
+        hostBuilder.ConfigureHostOptions(delegate (HostBuilderContext context, HostOptions options)
+        {
+            
+        });
+        hostBuilder.ConfigureHostConfiguration(delegate (IConfigurationBuilder builder)
+        {
+            
+        });
         hostBuilder.ConfigureWebHost(delegate (IWebHostBuilder webBuilder)
         {
             webBuilder.ConfigureAppConfiguration(new Action<WebHostBuilderContext, IConfigurationBuilder>(serverOptions.BuildConfiguration));
@@ -58,7 +70,7 @@ public static class HostFactory
                 Assembly assembly = options.GetType().Assembly;
                 webBuilder.ConfigureServices(delegate (IServiceCollection services)
                 {
-                    IMvcBuilder mvcBuilder = services.AddControllers().AddApplicationPart(assembly).UseProblemDetails();
+                    IMvcBuilder mvcBuilder = services.AddControllers().AddApplicationPart(assembly);
                     options.ConfigureMvc(mvcBuilder);
                 });
             }

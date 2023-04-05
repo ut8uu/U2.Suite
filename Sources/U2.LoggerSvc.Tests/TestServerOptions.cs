@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using U2.Tests.Common.Common;
+using U2.Core.Factories;
 
 namespace U2.LoggerSvc.Tests;
 

@@ -11,6 +11,9 @@ using System.Threading.Tasks;
 using U2.Tests.Common.IO;
 using U2.Tests.Common.Common;
 using System.Net.Http.Formatting;
+using Microsoft.AspNetCore.TestHost;
+using U2.Core.Factories;
+using AutoMapper;
 
 namespace U2.LoggerSvc.Tests;
 
