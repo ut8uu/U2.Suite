@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿/*
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -6,9 +7,8 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
-using U2.Core.Extensions;
 
-namespace U2.Core.Exceptions;
+namespace U2.ApiCore;
 
 [Serializable]
 public sealed class ProblemDetailsException : Exception
@@ -38,3 +38,5 @@ public sealed class ProblemDetailsException : Exception
         ProblemDetails = JsonConvert.DeserializeObject<ProblemDetails>((string)info.GetValue("ProblemDetails", typeof(string)), _settings);
     }
 }
+
+//*/

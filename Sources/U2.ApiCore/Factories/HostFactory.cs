@@ -1,4 +1,5 @@
-﻿using System;
+﻿/*
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -44,23 +45,9 @@ public static class HostFactory
     //     Options used to configure Microsoft.AspNetCore.Hosting.IWebHostBuilder.
     public static IHost Create(string[] args, CreateHostOptionsBase options, ServerOptionsBase serverOptions)
     {
-        string[] valuesAfter;
-        bool num = TryRemoveValue("--service", args, out valuesAfter);
-        IHostBuilder hostBuilder = Host.CreateDefaultBuilder(valuesAfter);
-        if (num)
-        {
-            hostBuilder = hostBuilder.UseWindowsService();
-        }
+        IHostBuilder hostBuilder = Host.CreateDefaultBuilder(args);
 
         options.ConfigureHostBuilder(hostBuilder);
-        hostBuilder.ConfigureHostOptions(delegate (HostBuilderContext context, HostOptions options)
-        {
-            
-        });
-        hostBuilder.ConfigureHostConfiguration(delegate (IConfigurationBuilder builder)
-        {
-            
-        });
         hostBuilder.ConfigureWebHost(delegate (IWebHostBuilder webBuilder)
         {
             webBuilder.ConfigureAppConfiguration(new Action<WebHostBuilderContext, IConfigurationBuilder>(serverOptions.BuildConfiguration));
@@ -88,3 +75,4 @@ public static class HostFactory
         return result;
     }
 }
+//*/

@@ -8,7 +8,9 @@ using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.OpenApi.Models;
 using U2.Core.Factories;
+using U2.LoggerSvc.ApiTypes.v1;
 
 namespace U2.LoggerSvc.Tests;
 
@@ -33,6 +35,12 @@ public sealed partial class ApiIntegrationContext
 
             builder.ConfigureServices(services =>
             {
+                services.AddAutoMapper(typeof(LoggerSvcMappingProfile));
+                services.AddControllers();
+                services.AddSwaggerGen(c =>
+                {
+                    c.SwaggerDoc("v1", new OpenApiInfo { Title = "LoggerSvcTestServer", Version = "v1" });
+                });
             });
 
             if (MockServices != null)

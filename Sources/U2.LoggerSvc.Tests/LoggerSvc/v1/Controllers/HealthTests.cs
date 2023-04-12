@@ -7,7 +7,7 @@ namespace U2.LoggerSvc.Tests.LoggerSvc.v1.Controllers;
 public class HealthTests
 {
     [TestMethod]
-    public async Task HealthShouldBeOkay()
+    public async Task HealthIsOk()
     {
         await using var context = new ApiIntegrationContext();
         var client = context.HttpClient;

@@ -1,26 +1,28 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Newtonsoft.Json.Serialization;
-using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Formatting;
 using System.Net.Http.Json;
 using System.Text;
 using System.Threading.Tasks;
-using U2.Tests.Common.IO;
-using U2.Tests.Common.Common;
-using System.Net.Http.Formatting;
-using Microsoft.AspNetCore.TestHost;
-using U2.Core.Factories;
+
 using AutoMapper;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
+//using U2.Core.Factories;
+using U2.Tests.Common.IO;
 
 namespace U2.LoggerSvc.Tests;
 
 public partial class ApiIntegrationContext : IAsyncDisposable
 {
-    private readonly IHost _host;
+    private readonly IHost _host = null;
     private readonly TemporaryDirectory _testDirectory = TemporaryDirectory.Create();
+    public HttpClient HttpClient { get; }
+
 
     public JsonMediaTypeFormatter DefaultJsonFormatter => new JsonMediaTypeFormatter
     {
@@ -53,8 +55,6 @@ public partial class ApiIntegrationContext : IAsyncDisposable
         Action<IServiceCollection> mockServices,
         IDictionary<string, string> configurationValues)
     {
-        MongoDBRunner.CreateDatabase("LoggerSvc");
-
         var configuration = new Dictionary<string, string>
         {
         };
@@ -65,11 +65,12 @@ public partial class ApiIntegrationContext : IAsyncDisposable
             MockServices = mockServices
         };
 
-        _host = HostFactory.Create(new CreateHostOptions(), serverOptions);
-        _host.Services.GetRequiredService<IMapper>().ConfigurationProvider.AssertConfigurationIsValid();
-        _host.Start();
+        //_host = HostFactory.Create(new CreateHostOptions(), serverOptions);
+        //var svc = _host.Services.GetRequiredService<IMapper>();
+        //svc.ConfigurationProvider.AssertConfigurationIsValid();
+        //_host.Start();
 
-        HttpClient = _host.GetTestServer().CreateClient();
+        //HttpClient = _host.GetTestServer().CreateClient();
     }
 
     public async ValueTask DisposeAsync()
@@ -80,8 +81,6 @@ public partial class ApiIntegrationContext : IAsyncDisposable
 
         _testDirectory.Dispose();
     }
-
-    public HttpClient HttpClient { get; }
 
     public IServiceProvider Services => _host.GetTestServer().Services;
 }

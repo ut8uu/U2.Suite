@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿/*
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Serialization;
 using Newtonsoft.Json;
 using System;
@@ -122,3 +123,4 @@ public static class HttpResponseExtensions
         return stringBuilder.ToString();
     }
 }
+//*/

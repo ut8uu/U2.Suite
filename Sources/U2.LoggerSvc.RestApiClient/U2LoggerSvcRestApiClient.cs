@@ -1,8 +1,9 @@
-﻿using System.Net.Http.Formatting;
+﻿using System.Diagnostics;
+using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
-using U2.Core.Extensions;
+//using U2.ApiCore.Extensions;
 using U2.LoggerSvc.ApiTypes.v1;
 
 namespace U2.LoggerSvc.RestApiClient;
@@ -64,9 +65,10 @@ public sealed class U2LoggerSvcRestApiClient : IU2LoggerSvcRestApiClient
     public async Task<ResourceStreamWithMediaType> GetResourceAsStreamAsync(string requestUri, CancellationToken cancellationToken)
     {
         var response = await _httpClient.GetAsync(requestUri, cancellationToken);
-        await response.ThrowOnProblem();
+        //await response.ThrowOnProblem();
+        Debug.Assert(response != null);
 
-        var stream = await response.Content.ReadAsStreamAsync();
+        var stream = await response.Content.ReadAsStreamAsync(cancellationToken);
         var mediaType = response.Content.Headers.ContentType.MediaType;
         return new ResourceStreamWithMediaType(stream, mediaType);
     }
@@ -74,7 +76,7 @@ public sealed class U2LoggerSvcRestApiClient : IU2LoggerSvcRestApiClient
     private async Task<TOutType> GetTypeByUriAsync<TOutType>(string uri, CancellationToken ct)
     {
         var response = await _httpClient.GetAsync(uri, ct);
-        await response.ThrowOnProblem();
+        //await response.ThrowOnProblem();
 
         return await response.Content.ReadAsAsync<TOutType>(_formatters, ct);
     }

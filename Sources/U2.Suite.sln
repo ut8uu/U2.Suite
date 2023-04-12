@@ -29,13 +29,16 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Suite", "Suite", "{5AA52E0B
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentation", "{7B67A45A-7517-43AC-B62A-D5543A3352B5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "U2.LoggerSvc.Api", "U2.Logger\U2.Logger.Api\U2.LoggerSvc.Api.csproj", "{B40B2610-32AE-4A19-8D61-E88FB4365AE6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "U2.LoggerSvc.Api", "U2.Logger\U2.Logger.Api\U2.LoggerSvc.Api.csproj", "{B40B2610-32AE-4A19-8D61-E88FB4365AE6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "U2.LoggerSvc.Tests", "U2.LoggerSvc.Tests\U2.LoggerSvc.Tests.csproj", "{EF68EC78-08D4-4D72-A607-5C60E07FD021}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "U2.LoggerSvc.Tests", "U2.LoggerSvc.Tests\U2.LoggerSvc.Tests.csproj", "{EF68EC78-08D4-4D72-A607-5C60E07FD021}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C4246DD4-135E-4F15-B31E-2CCA31991538} = {C4246DD4-135E-4F15-B31E-2CCA31991538}
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "U2.LoggerSvc.RestApiClient", "U2.LoggerSvc.RestApiClient\U2.LoggerSvc.RestApiClient.csproj", "{25D4122E-50C2-4666-A5A4-ADBBAC522C1E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "U2.LoggerSvc.RestApiClient", "U2.LoggerSvc.RestApiClient\U2.LoggerSvc.RestApiClient.csproj", "{25D4122E-50C2-4666-A5A4-ADBBAC522C1E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "U2.LoggerSvc.ApiTypes", "U2.LoggerSvc.ApiTypes\U2.LoggerSvc.ApiTypes.csproj", "{C4246DD4-135E-4F15-B31E-2CCA31991538}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "U2.LoggerSvc.ApiTypes", "U2.LoggerSvc.ApiTypes\U2.LoggerSvc.ApiTypes.csproj", "{C4246DD4-135E-4F15-B31E-2CCA31991538}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "U2.Suite", "U2.Suite", "{6A63046E-ED04-4B9D-B834-D435F8BAABD2}"
 	ProjectSection(SolutionItems) = preProject
@@ -46,6 +49,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "U2.Logger", "U2.Logger", "{
 	ProjectSection(SolutionItems) = preProject
 		..\Documentation\U2.Logger\ReadMe.md = ..\Documentation\U2.Logger\ReadMe.md
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "U2.ApiCore", "U2.ApiCore\U2.ApiCore.csproj", "{AAB3D96E-3B9D-4DE6-8EC9-C79A30DB75BE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -89,6 +94,10 @@ Global
 		{C4246DD4-135E-4F15-B31E-2CCA31991538}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C4246DD4-135E-4F15-B31E-2CCA31991538}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C4246DD4-135E-4F15-B31E-2CCA31991538}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AAB3D96E-3B9D-4DE6-8EC9-C79A30DB75BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AAB3D96E-3B9D-4DE6-8EC9-C79A30DB75BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AAB3D96E-3B9D-4DE6-8EC9-C79A30DB75BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AAB3D96E-3B9D-4DE6-8EC9-C79A30DB75BE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -108,6 +117,7 @@ Global
 		{C4246DD4-135E-4F15-B31E-2CCA31991538} = {B32E844E-1D71-43DE-B934-C8562413DDEC}
 		{6A63046E-ED04-4B9D-B834-D435F8BAABD2} = {7B67A45A-7517-43AC-B62A-D5543A3352B5}
 		{C243DCBE-AFE4-49F0-BDF4-3BF83C92C145} = {7B67A45A-7517-43AC-B62A-D5543A3352B5}
+		{AAB3D96E-3B9D-4DE6-8EC9-C79A30DB75BE} = {E0104E5F-6C0E-4CA5-BA0E-37B2B3CC13D6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E8720C83-17E2-4C14-AFA9-CAAD4F71F4D6}
