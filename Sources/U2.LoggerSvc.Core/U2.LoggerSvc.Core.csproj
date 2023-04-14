@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\U2.Logger.Data\U2.Logger.Data.csproj" />
+    <ProjectReference Include="..\U2Suite\U2.Contracts\U2.Contracts.csproj" />
   </ItemGroup>
 
 </Project>
