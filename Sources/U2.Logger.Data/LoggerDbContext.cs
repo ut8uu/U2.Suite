@@ -16,7 +16,7 @@ public class LoggerDbContext : IdentityDbContext, ILoggerDbContext
     public virtual DbSet<LogEntry> LogEntries { get; set; }
 
     // <snippet1>
-    public async virtual Task<List<LogEntry>> GetLogEntriesAsync(CancellationToken cancellationToken)
+    public async virtual Task<IEnumerable<LogEntry>> GetLogEntriesAsync(CancellationToken cancellationToken)
     {
         return await LogEntries
             .OrderByDescending(x => x.DateTimeOff)

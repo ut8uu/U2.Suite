@@ -11,7 +11,7 @@ public interface ILoggerDbContext
 {
     DbSet<LogEntry> LogEntries { get; set; }
 
-    Task<List<LogEntry>> GetLogEntriesAsync(CancellationToken cancellationToken);
+    Task<IEnumerable<LogEntry>> GetLogEntriesAsync(CancellationToken cancellationToken);
     Task AddLogEntryAsync(LogEntry entry, CancellationToken cancellationToken);
     Task DeleteAllEntriesAsync(CancellationToken cancellationToken);
     Task DeleteLogEntryAsync(int id, CancellationToken cancellationToken);

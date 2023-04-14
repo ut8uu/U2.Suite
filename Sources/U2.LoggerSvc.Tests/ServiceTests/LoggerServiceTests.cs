@@ -13,41 +13,47 @@ namespace U2.LoggerSvc.Tests.ServiceTests;
 
 public class LoggerServiceTests
 {
-    private Contact ut8uuContact = new Contact();
+    private readonly Contact ut8uuContact = new();
 
-    private static Mock<ILoggerDbContext> MockLoggerDbContext()
+    private readonly List<Contact> _contacts = new();
+    private readonly Mock<ILoggerDbContext> _dbContext;
+
+    public LoggerServiceTests()
     {
-        var context = new Mock<ILoggerDbContext>();
-        context.Setup(_ => _.AddLogEntryAsync(It.IsAny<LogEntry>(), It.IsAny<CancellationToken>()))
+        _dbContext = new Mock<ILoggerDbContext>();
+    }
+
+    private void SetupLoggerDbContext()
+    {
+        _dbContext.Setup(_ => _.AddLogEntryAsync(It.IsAny<LogEntry>(), It.IsAny<CancellationToken>()))
             .Returns(Task.CompletedTask);
-        return context;
+
+        var entries = _contacts.Select(_ => _.ToLogEntry());
+        _dbContext.Setup(_ => _.GetLogEntriesAsync(It.IsAny<CancellationToken>()))
+            .Returns(Task.FromResult(entries));
     }
 
     [Fact]
     public async Task CanCreateContact()
     {
         CancellationToken cancellationToken = new();
-        var dbContextMock = MockLoggerDbContext();
+        _contacts.Clear();
+        SetupLoggerDbContext();
 
-        // this is to simulate empty database
-        dbContextMock.Setup(_ => _.GetLogEntriesAsync(It.IsAny<CancellationToken>()))
-            .Returns(Task.FromResult(new List<LogEntry>()));
-
-        var service = new LoggerService(dbContextMock.Object);
+        var service = new LoggerService(_dbContext.Object);
 
         var entries = await service.GetContactsAsync(cancellationToken);
         Assert.Empty(entries);
 
-        // this is to simulate empty database
-        dbContextMock.Setup(_ => _.GetLogEntriesAsync(It.IsAny<CancellationToken>()))
-            .Returns(Task.FromResult(new List<LogEntry>
-            {
-                ut8uuContact.ToLogEntry(),
-            }));
-
         var contact = new Contact();
         await service.CreateAsync(contact, new CancellationToken());
+
+        // re-setup the mocked object
+        _contacts.Add(ut8uuContact);
+        SetupLoggerDbContext();
+
         entries = await service.GetContactsAsync(cancellationToken);
         Assert.NotEmpty(entries);
     }
+
 }
