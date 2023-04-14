@@ -11,7 +11,7 @@ using Assert = Xunit.Assert;
 
 namespace U2.LoggerSvc.Tests.ServiceTests;
 
-public class LoggerServiceCrudOperationsTests : LoggerServiceTestsBase
+public class LoggerServiceCreateContactTests : LoggerServiceTestsBase
 {
     [Fact]
     public async Task CanCreateContact()
@@ -26,7 +26,7 @@ public class LoggerServiceCrudOperationsTests : LoggerServiceTestsBase
         Assert.Empty(entries);
 
         var contact = new Contact();
-        await service.CreateAsync(contact, new CancellationToken());
+        await service.CreateAsync(contact, cancellationToken);
 
         // re-setup the mocked object
         _contacts.Add(ut8uuContact);
@@ -34,6 +34,18 @@ public class LoggerServiceCrudOperationsTests : LoggerServiceTestsBase
 
         entries = await service.GetContactsAsync(cancellationToken);
         Assert.NotEmpty(entries);
+    }
+
+    [Fact]
+    public async Task ThrowsErrorOnNullContact()
+    {
+        _contacts.Clear();
+        SetupLoggerDbContext();
+
+        var service = new LoggerService(_dbContext.Object);
+
+        await Assert.ThrowsAsync<ArgumentNullException>(async () 
+            => await service.CreateAsync(null, new CancellationToken()));
     }
 
 }
