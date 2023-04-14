@@ -11,28 +11,8 @@ using Assert = Xunit.Assert;
 
 namespace U2.LoggerSvc.Tests.ServiceTests;
 
-public class LoggerServiceTests
+public class LoggerServiceCrudOperationsTests : LoggerServiceTestsBase
 {
-    private readonly Contact ut8uuContact = new();
-
-    private readonly List<Contact> _contacts = new();
-    private readonly Mock<ILoggerDbContext> _dbContext;
-
-    public LoggerServiceTests()
-    {
-        _dbContext = new Mock<ILoggerDbContext>();
-    }
-
-    private void SetupLoggerDbContext()
-    {
-        _dbContext.Setup(_ => _.AddLogEntryAsync(It.IsAny<LogEntry>(), It.IsAny<CancellationToken>()))
-            .Returns(Task.CompletedTask);
-
-        var entries = _contacts.Select(_ => _.ToLogEntry());
-        _dbContext.Setup(_ => _.GetLogEntriesAsync(It.IsAny<CancellationToken>()))
-            .Returns(Task.FromResult(entries));
-    }
-
     [Fact]
     public async Task CanCreateContact()
     {
