@@ -26,4 +26,10 @@
     <ProjectReference Include="..\U2.Core\U2.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="TestData\DXCC\cty.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

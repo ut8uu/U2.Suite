@@ -20,9 +20,9 @@ public class DxccParser
     string[] csadditions = new[] { "P", "R", "A", "M", "LH", "SK" };
     string[] noneadditions = new[] { "AM", "MM" };
 
-    public DxccParser()
+    public DxccParser(string ctyDatFilePath)
     {
-        read_cty();
+        ReadCty(ctyDatFilePath);
     }
 
     private static string CleanupPattern(string pattern)
@@ -218,10 +218,6 @@ public class DxccParser
         {                  // Runs through the DXCC list
             foreach (string test in prefixes[mainprefix])
             {
-                if (test.StartsWith("R0A"))
-                {
-                    Debug.Assert(true);
-                }
                 var len = test.Length;
                 if (!test.StartsWith(letter))
                 {
@@ -455,7 +451,6 @@ public class DxccParser
                         PregMatch(@"/(.*[A-Z])\d+/", matches[1], out var match); // Prefix w/o number in 1
                         prefix = match[1] + c; // Add attached number   
                     }
-                    //var_dump(prefix);
                 }
                 else if (csadditions.Any(_ => _.Equals(c, StringComparison.InvariantCultureIgnoreCase)))
                 {
@@ -521,15 +516,14 @@ public class DxccParser
         }
         else
         {
-            return "";
+            return string.Empty;
         }       // no proper callsign received.*/
     }           // wpx ends here
     /*
     * Read cty.dat from AD1C
     */
-    private void read_cty()
+    private void ReadCty(string file)
     {
-        var file = Path.Combine(FileSystemHelper.GetLocalFolder(), "Data", "DXCC", "cty.dat");
         var mainprefix = "";
 
         Debug.Assert(File.Exists(file));
@@ -549,10 +543,6 @@ public class DxccParser
                         .ToList();
                     mainprefix = chunks.Last();
                     dxcc[mainprefix] = chunks;
-                    if (mainprefix == "UA9")
-                    {
-                        Debug.Assert(true);
-                    }
                 }
             }
             else
@@ -563,7 +553,7 @@ public class DxccParser
                 // contains the information that this is a full call
 
                 line = line.Replace(";", "").Trim();
-                var calls = line.Split(",".ToCharArray());
+                var calls = line.Split(',');
                 foreach (var call in calls)
                 {
                     if (call.Length > 0)

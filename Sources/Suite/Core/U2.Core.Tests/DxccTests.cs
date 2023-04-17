@@ -10,30 +10,8 @@ public class DxccTests
 
     public DxccTests() 
     {
-        parser = new DxccParser();
-    }
-
-    [Fact]
-    public void CanDeserializeDxccList()
-    {
-        var currentDir = Directory.GetCurrentDirectory();
-        var path = Path.Combine(currentDir, "DXCC", "dxcc.json");
-        var dxccList = DxccHelper.FromFile(path);
-        Assert.NotNull(dxccList);
-        Assert.Equal(402, dxccList.Count);
-
-        var entry = dxccList[0];
-        Assert.NotNull(entry);
-        Assert.NotNull(entry.Continent);
-        Assert.Equal("NA", entry.Continent.First());
-    }
-
-    [Fact]
-    public void CanLoadDeafaultCollection()
-    {
-        var dxccList = DxccHelper.AllDxccRecords.Value;
-        Assert.NotNull(dxccList);
-        Assert.Equal(402, actual: dxccList.Count);
+        var path = Path.Combine(FileSystemHelper.GetLocalFolder(), "TestData", "DXCC", "cty.dat");
+        parser = new DxccParser(path);
     }
 
     [Theory]
@@ -81,5 +59,13 @@ public class DxccTests
         {
             Assert.Equal(expectedCountryName, dxcc[0]);
         }
+    }
+
+    [Fact]
+    public void CanUseDxccHelper()
+    {
+        var dxcc = DxccHelper.CalculateFromCall("ut8uu");
+        Assert.NotNull(dxcc);
+        Assert.Equal("UR", dxcc.CountryCode);
     }
 }
