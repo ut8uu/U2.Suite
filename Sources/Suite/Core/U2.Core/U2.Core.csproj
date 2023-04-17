@@ -42,4 +42,10 @@
     <ProjectReference Include="..\U2.Contracts\U2.Contracts.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Data\DXCC\cty.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

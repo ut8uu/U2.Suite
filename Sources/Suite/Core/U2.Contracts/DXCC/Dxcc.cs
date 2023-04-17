@@ -6,13 +6,13 @@ namespace U2.Contracts;
 public class Dxcc
 {
     [JsonProperty("continent")]
-    public List<string> Continent { get; set; }
+    public string[] Continent { get; set; }
 
     [JsonProperty("countryCode")]
     public string CountryCode { get; set; }
 
     [JsonProperty("cq")]
-    public List<int> Cq { get; set; }
+    public int[] Cq { get; set; }
 
     [JsonProperty("deleted")]
     public bool Deleted { get; set; }
@@ -24,7 +24,7 @@ public class Dxcc
     public string Flag { get; set; }
 
     [JsonProperty("itu")]
-    public List<int> Itu { get; set; }
+    public int[] Itu { get; set; }
 
     [JsonProperty("name")]
     public string Name { get; set; }
@@ -49,4 +49,14 @@ public class Dxcc
 
     [JsonProperty("validStart")]
     public string ValidStart { get; set; }
+
+    public static Dxcc None { 
+        get {
+            return new Dxcc
+            {
+                Name = "None",
+                EntityCode = 0,
+            };
+        } 
+    }
 }
