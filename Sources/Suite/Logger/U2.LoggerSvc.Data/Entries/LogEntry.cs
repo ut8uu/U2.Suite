@@ -4,17 +4,15 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 
 namespace U2.LoggerSvc.Data;
 
 #nullable disable
 
 [DebuggerDisplay("{GetDebuggerDisplay(),nq}")]
-[PrimaryKey(nameof(Id))]
 public sealed class LogEntry
 {
-    public Guid Id { get; set; }
+    public int Id { get; set; }
     public Guid UniqueId { get; set; } = Guid.NewGuid();
 
     public string Call { get; set; } = "";
