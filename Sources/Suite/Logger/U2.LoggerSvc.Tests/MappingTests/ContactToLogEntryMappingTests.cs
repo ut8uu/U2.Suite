@@ -33,7 +33,7 @@ public class ContactToLogEntryMappingTests
     [Fact]
     public void CanMapEmptyContact()
     {
-        var contact = new Contact();
+        var contact = GetSampleContact();
         var entry = contact.ToLogEntry();
 
         Assert.NotNull(entry);

@@ -17,9 +17,9 @@ public class LoggerServiceSelectionTests : LoggerServiceTestsBase
         CancellationToken cancellationToken = new();
         _contacts.Clear();
         _contacts.Add(ut8uuContact);
-        SetupLoggerDbContext();
+        await SetupLoggerDbContext();
 
-        var service = new LoggerService(_dbContext.Object);
+        var service = new LoggerService(_dbContext);
 
         var entries = await service.GetContactsAsync(cancellationToken);
         Assert.NotEmpty(entries);

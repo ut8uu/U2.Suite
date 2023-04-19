@@ -18,19 +18,15 @@ public class LoggerServiceCreateContactTests : LoggerServiceTestsBase
     {
         CancellationToken cancellationToken = new();
         _contacts.Clear();
-        SetupLoggerDbContext();
+        await SetupLoggerDbContext();
 
-        var service = new LoggerService(_dbContext.Object);
+        var service = new LoggerService(_dbContext);
 
         var entries = await service.GetContactsAsync(cancellationToken);
         Assert.Empty(entries);
 
-        var contact = new Contact();
+        var contact = ut8uuContact;
         await service.CreateAsync(contact, cancellationToken);
-
-        // re-setup the mocked object
-        _contacts.Add(ut8uuContact);
-        SetupLoggerDbContext();
 
         entries = await service.GetContactsAsync(cancellationToken);
         Assert.NotEmpty(entries);
@@ -42,7 +38,7 @@ public class LoggerServiceCreateContactTests : LoggerServiceTestsBase
         _contacts.Clear();
         SetupLoggerDbContext();
 
-        var service = new LoggerService(_dbContext.Object);
+        var service = new LoggerService(_dbContext);
 
         await Assert.ThrowsAsync<ArgumentNullException>(async () 
             => await service.CreateAsync(null, new CancellationToken()));

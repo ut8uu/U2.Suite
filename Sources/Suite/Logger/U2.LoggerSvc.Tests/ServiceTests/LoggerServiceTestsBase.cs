@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 using Moq;
 using U2.LoggerSvc.Data;
 using U2.LoggerSvc.Core;
+using Microsoft.EntityFrameworkCore;
 
 namespace U2.LoggerSvc.Tests;
 
-public abstract class LoggerServiceTestsBase
+public abstract class LoggerServiceTestsBase : IDisposable
 {
     protected readonly Contact ut8uuContact = new Contact
     {
@@ -20,20 +21,36 @@ public abstract class LoggerServiceTestsBase
     };
 
     protected readonly List<Contact> _contacts = new();
-    protected readonly Mock<ILoggerDbContext> _dbContext;
+    //protected readonly Mock<ILoggerDbContext> _dbContext;
+    protected readonly TestDbContext _dbContext;
 
     public LoggerServiceTestsBase()
     {
-        _dbContext = new Mock<ILoggerDbContext>();
+        _dbContext = new TestDbContext();
+        _dbContext.Database.EnsureCreated();
     }
 
-    protected void SetupLoggerDbContext()
+    public void Dispose()
     {
-        _dbContext.Setup(_ => _.AddLogEntryAsync(It.IsAny<LogEntry>(), It.IsAny<CancellationToken>()))
-            .Returns(Task.CompletedTask);
+        var dbName = Path.Combine(_dbContext.DbPath, _dbContext.DbName);
 
-        var entries = _contacts.Select(_ => _.ToLogEntry());
-        _dbContext.Setup(_ => _.GetLogEntriesAsync(It.IsAny<CancellationToken>()))
-            .Returns(Task.FromResult(entries));
+        _dbContext.SaveChanges();
+        _dbContext.Database.CloseConnection();
+        _dbContext.Dispose();
+
+        if (File.Exists(dbName))
+        {
+            File.Delete(dbName);
+        }
+    }
+
+    protected async Task SetupLoggerDbContext()
+    {
+        await _dbContext.DeleteAllEntriesAsync(CancellationToken.None);
+
+        foreach (var contact in _contacts)
+        {
+            await _dbContext.AddLogEntryAsync(contact.ToLogEntry(), CancellationToken.None);
+        }
     }
 }
