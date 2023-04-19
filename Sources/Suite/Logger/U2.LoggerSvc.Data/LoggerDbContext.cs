@@ -7,18 +7,30 @@ namespace U2.LoggerSvc.Data;
 public class LoggerDbContext : DbContext, ILoggerDbContext
 {
     public const string DefaultDatabaseName = "logger.sqlite";
-    public DbSet<LogEntry> LogEntries { get; set; }
 
-    public string DbPath { get; }
+    private readonly string _dbName = DefaultDatabaseName;
+    protected readonly string _dbPath;
 
-    public LoggerDbContext(string dbName = DefaultDatabaseName)
+    public LoggerDbContext(string dbPath = "", string dbName = DefaultDatabaseName)
     {
-        var path = FileSystemHelper.GetDatabaseFolderPath(applicationName: "Logger");
-        DbPath = Path.Join(path, dbName);
+        if (dbPath.Length > 0 && Directory.Exists(dbPath))
+        {
+            _dbPath = dbPath;
+        }
+        else
+        {
+            _dbPath = FileSystemHelper.GetDatabaseFolderPath(applicationName: "Logger");
+        }
+        Directory.CreateDirectory(_dbPath);
+        _dbName = dbName;
     }
 
-    // The following configures EF to create a Sqlite database file in the
-    // special "local" folder for your platform.
+    public DbSet<LogEntry> LogEntries { get; set; }
+
+    public string DbPath => Path.Combine(_dbPath, _dbName);
+
+    public string DbName => _dbName;
+
     protected override void OnConfiguring(DbContextOptionsBuilder options)
         => options.UseSqlite($"Data Source={DbPath}");
 
