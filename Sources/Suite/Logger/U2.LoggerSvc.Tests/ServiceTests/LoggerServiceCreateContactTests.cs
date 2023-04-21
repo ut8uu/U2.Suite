@@ -36,7 +36,7 @@ public class LoggerServiceCreateContactTests : LoggerServiceTestsBase
     public async Task ThrowsErrorOnNullContact()
     {
         _contacts.Clear();
-        SetupLoggerDbContext();
+        await SetupLoggerDbContext();
 
         var service = new LoggerService(_dbContext);
 
