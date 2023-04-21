@@ -16,7 +16,7 @@ public sealed class Contact
     public DateTime DateTimeOn { get; set; }
     public DateTime DateTimeOff { get; set; }
     public RadioBand Band { get; set; }
-    public RadioBand? BandRx { get; set; }
+    public RadioBand BandRx { get; set; }
     public Continent Continent { get; set; } = 0;
     public string Country { get; set; } = "";
     public int Cqz { get; set; } = 0;
