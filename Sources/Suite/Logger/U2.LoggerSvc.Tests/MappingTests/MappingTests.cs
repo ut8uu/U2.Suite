@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DeepEqual.Syntax;
 using U2.Contracts;
 using U2.Core;
 using U2.LoggerSvc.Core;
@@ -11,7 +12,7 @@ using Assert = Xunit.Assert;
 
 namespace U2.LoggerSvc.Tests.MappingTests;
 
-public class ContactToLogEntryMappingTests
+public class MappingTests
 {
     private static Contact GetSampleContact()
     {
@@ -31,11 +32,20 @@ public class ContactToLogEntryMappingTests
     }
 
     [Fact]
-    public void CanMapEmptyContact()
+    public void CanMapContactToLogEntry()
     {
         var contact = GetSampleContact();
         var entry = contact.ToLogEntry();
+        var contact2 = entry.ToContact();
+        contact.ShouldDeepEqual(contact2);
+    }
 
-        Assert.NotNull(entry);
+    [Fact]
+    public void CanMapContactToContactDto()
+    {
+        var contact = GetSampleContact();
+        var contactDto = contact.ToContactDto();
+        var contact2 = contactDto.ToContact();
+        contact.ShouldDeepEqual(contact2);
     }
 }
