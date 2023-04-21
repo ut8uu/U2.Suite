@@ -36,7 +36,7 @@ public static class ContactConversionHelper
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
     /// <exception cref="ConversionFailedException"></exception>
-    public static Contact ToContact(this LogEntry logEntry)
+    public static Contact ToContact(this LoggerEntry logEntry)
     {
         if (logEntry == null)
         {
@@ -49,7 +49,7 @@ public static class ContactConversionHelper
         }
         catch (Exception ex)
         {
-            throw new ConversionFailedException(typeof(LogEntry), typeof(Contact), ex.Message);
+            throw new ConversionFailedException(typeof(LoggerEntry), typeof(Contact), ex.Message);
         }
     }
 
@@ -60,7 +60,7 @@ public static class ContactConversionHelper
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
     /// <exception cref="ConversionFailedException"></exception>
-    public static LogEntry ToLogEntry(this Contact contact)
+    public static LoggerEntry ToLogEntry(this Contact contact)
     {
         if (contact == null)
         {
@@ -69,11 +69,11 @@ public static class ContactConversionHelper
 
         try
         {
-            return Mapper.Map<LogEntry>(contact);
+            return Mapper.Map<LoggerEntry>(contact);
         }
         catch (Exception ex)
         {
-            throw new ConversionFailedException(typeof(Contact), typeof(LogEntry), ex.Message);
+            throw new ConversionFailedException(typeof(Contact), typeof(LoggerEntry), ex.Message);
         }
     }
 

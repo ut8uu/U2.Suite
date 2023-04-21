@@ -10,7 +10,7 @@ namespace U2.LoggerSvc.Data;
 #nullable disable
 
 [DebuggerDisplay("{GetDebuggerDisplay(),nq}")]
-public sealed class LogEntry
+public sealed class LoggerEntry
 {
     public int Id { get; set; }
     public Guid UniqueId { get; set; } = Guid.NewGuid();

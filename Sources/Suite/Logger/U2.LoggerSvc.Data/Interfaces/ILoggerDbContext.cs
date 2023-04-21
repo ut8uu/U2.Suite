@@ -9,10 +9,10 @@ namespace U2.LoggerSvc.Data;
 
 public interface ILoggerDbContext
 {
-    DbSet<LogEntry> LogEntries { get; set; }
+    DbSet<LoggerEntry> LogEntries { get; set; }
 
-    Task<IEnumerable<LogEntry>> GetLogEntriesAsync(CancellationToken cancellationToken);
-    Task AddLogEntryAsync(LogEntry entry, CancellationToken cancellationToken);
+    Task<IEnumerable<LoggerEntry>> GetLogEntriesAsync(CancellationToken cancellationToken);
+    Task AddLogEntryAsync(LoggerEntry entry, CancellationToken cancellationToken);
     Task DeleteAllEntriesAsync(CancellationToken cancellationToken);
     Task DeleteLogEntryAsync(int id, CancellationToken cancellationToken);
 }
