@@ -12,6 +12,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using U2.LoggerSvc.Core;
+using U2.LoggerSvc.Data;
 
 namespace U2.LoggerSvc.Api;
 
@@ -27,6 +29,8 @@ public class Startup
     // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services)
     {
+        services.AddSingleton<ILoggerDbContext, LoggerDbContext>();
+        services.AddScoped<ILoggerService, LoggerService>();
         services.AddAutoMapper(typeof(Startup));
         services.AddControllers();
         services.AddSwaggerGen(c =>

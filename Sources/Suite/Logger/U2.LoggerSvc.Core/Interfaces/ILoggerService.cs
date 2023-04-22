@@ -22,7 +22,7 @@ public interface ILoggerService
     /// <param name="contact">A contact to be created.</param>
     /// <param name="cancellationToken"></param>
     /// <exception cref="ContactCreationFailedException"></exception>
-    Task CreateContactAsync(Contact contact, CancellationToken cancellationToken);
+    Task<int> CreateContactAsync(Contact contact, CancellationToken cancellationToken);
 
     /// <summary>
     /// Deletes a contact by its identifier.

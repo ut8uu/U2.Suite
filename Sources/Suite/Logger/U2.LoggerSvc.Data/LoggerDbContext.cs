@@ -42,10 +42,11 @@ public class LoggerDbContext : DbContext, ILoggerDbContext
             .ToListAsync(cancellationToken);
     }
 
-    public async virtual Task AddLogEntryAsync(LoggerEntry entry, CancellationToken cancellationToken)
+    public async virtual Task<int> AddLogEntryAsync(LoggerEntry entry, CancellationToken cancellationToken)
     {
         await LogEntries.AddAsync(entry, cancellationToken);
         await SaveChangesAsync(cancellationToken);
+        return entry.Id;
     }
 
     public async virtual Task DeleteAllEntriesAsync(CancellationToken cancellationToken)
