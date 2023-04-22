@@ -11,7 +11,7 @@ namespace U2.LoggerSvc.Tests;
 
 public abstract class TestsBase
 {
-    protected static Contact GetContact(
+    public static Contact GetContact(
         string call = "UT8UU",
         RadioBand? band = null,
         string country = "Ukraine",

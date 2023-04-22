@@ -35,8 +35,7 @@ public sealed class LoggerService : ILoggerService
     {
         try
         {
-            await _loggerDbContext.DeleteLogEntryAsync(id, cancellationToken);
-            return true;
+            return await _loggerDbContext.DeleteLogEntryAsync(id, cancellationToken);
         }
         catch (OperationCanceledException)
         {

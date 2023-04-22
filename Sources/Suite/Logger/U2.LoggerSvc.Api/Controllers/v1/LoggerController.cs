@@ -37,5 +37,31 @@ public class LoggerController : ControllerBase
         }
     }
 
+    [Description("Deletes a contact from the database.")]
+    [HttpGet]
+    [Route("delete/{id}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult> Delete(int id, CancellationToken cancellationToken)
+    {
+        try
+        {
+            if (await _loggerService.DeleteContactAsync(id, cancellationToken))
+            {
+                return Ok();
+            }
+            return NotFound(id);
+        }
+        catch (ContactRemovingFailedException ex)
+        {
+            return BadRequest(ex.Message);
+        }
+        catch (ContactNotFoundException ex)
+        {
+            return NotFound(ex.Message);
+        }
+    }
+
     #endregion
 }

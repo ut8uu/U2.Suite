@@ -8,12 +8,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace U2.LoggerSvc.Tests;
 
-public abstract class LoggerServiceTestsBase : TestsBase, IDisposable
+public abstract class LoggerTestsBase : TestsBase, IDisposable
 {
     protected readonly List<Contact> _contacts = new();
     protected readonly TestDbContext _dbContext;
 
-    public LoggerServiceTestsBase()
+    public LoggerTestsBase()
     {
         _dbContext = new TestDbContext();
         _dbContext.Database.EnsureCreated();

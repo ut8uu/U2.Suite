@@ -10,7 +10,7 @@ using Assert = Xunit.Assert;
 
 namespace U2.LoggerSvc.Tests;
 
-public class LoggerServiceSelectionTests : LoggerServiceTestsBase
+public class LoggerServiceTests : LoggerTestsBase
 {
     [Fact]
     public async Task ServiceCanListContacts()
@@ -46,6 +46,17 @@ public class LoggerServiceSelectionTests : LoggerServiceTestsBase
         contact.WithDeepEqual(contact2).IgnoreProperty<Contact>(x => x.Id).Assert();
     }
 
+    [Fact]
+    public async Task ThrowsErrorOnNullContact()
+    {
+        _contacts.Clear();
+        await SetupLoggerDbContext();
+
+        var service = new LoggerService(_dbContext);
+
+        await Assert.ThrowsAsync<ArgumentNullException>(async ()
+            => await service.CreateContactAsync(null, new CancellationToken()));
+    }
     [Fact]
     public async Task ServiceCanDeleteContact()
     {
