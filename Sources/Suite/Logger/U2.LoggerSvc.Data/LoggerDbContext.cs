@@ -25,7 +25,7 @@ public class LoggerDbContext : DbContext, ILoggerDbContext
         _dbName = dbName;
     }
 
-    public DbSet<LogEntry> LogEntries { get; set; }
+    public DbSet<LoggerEntry> LogEntries { get; set; }
 
     public string DbPath => Path.Combine(_dbPath, _dbName);
 
@@ -34,7 +34,7 @@ public class LoggerDbContext : DbContext, ILoggerDbContext
     protected override void OnConfiguring(DbContextOptionsBuilder options)
         => options.UseSqlite($"Data Source={DbPath}");
 
-    public async virtual Task<IEnumerable<LogEntry>> GetLogEntriesAsync(CancellationToken cancellationToken)
+    public async virtual Task<IEnumerable<LoggerEntry>> GetLogEntriesAsync(CancellationToken cancellationToken)
     {
         return await LogEntries
             .OrderByDescending(x => x.DateTimeOff)
@@ -42,7 +42,7 @@ public class LoggerDbContext : DbContext, ILoggerDbContext
             .ToListAsync(cancellationToken);
     }
 
-    public async virtual Task AddLogEntryAsync(LogEntry entry, CancellationToken cancellationToken)
+    public async virtual Task AddLogEntryAsync(LoggerEntry entry, CancellationToken cancellationToken)
     {
         await LogEntries.AddAsync(entry, cancellationToken);
         await SaveChangesAsync(cancellationToken);
@@ -50,7 +50,7 @@ public class LoggerDbContext : DbContext, ILoggerDbContext
 
     public async virtual Task DeleteAllEntriesAsync(CancellationToken cancellationToken)
     {
-        foreach (LogEntry entry in LogEntries)
+        foreach (LoggerEntry entry in LogEntries)
         {
             LogEntries.Remove(entry);
         }
