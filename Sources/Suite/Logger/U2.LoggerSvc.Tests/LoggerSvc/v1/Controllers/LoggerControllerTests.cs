@@ -63,4 +63,23 @@ public class LoggerControllerTests : LoggerTestsBase
         Assert.IsType<NotFoundObjectResult>(response);
     }
 
+    [Fact]
+    public async Task CanUpdateContact()
+    {
+        var newCall = "UT3UBR";
+
+        _contacts.Clear();
+        _contacts.Add(GetContact());
+        var controller = await CreateControllerAsync();
+
+        var token = new CancellationToken();
+        var entries = await _loggerService.GetContactsAsync(token);
+        var entry = entries.Single();
+        entry.Call = newCall;
+
+        await controller.Update(entry.Id, entry.ToContactDto(), token);
+        entries = await _loggerService.GetContactsAsync(token);
+        entry = entries.Single();
+        Assert.Equal(newCall, entry.Call);
+    }
 }

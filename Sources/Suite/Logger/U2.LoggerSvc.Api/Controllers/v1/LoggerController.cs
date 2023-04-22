@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel;
 using Microsoft.AspNetCore.Mvc;
+using U2.LoggerSvc.ApiTypes.v1;
 using U2.LoggerSvc.Core;
 
 namespace U2.LoggerSvc.Api.Controllers.v1;
@@ -54,6 +55,36 @@ public class LoggerController : ControllerBase
             return NotFound(id);
         }
         catch (ContactRemovingFailedException ex)
+        {
+            return BadRequest(ex.Message);
+        }
+        catch (ContactNotFoundException ex)
+        {
+            return NotFound(ex.Message);
+        }
+    }
+
+    [Description("Updates a contact by its id.")]
+    [HttpPost]
+    [Route("update/{id}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult> Update(int id, 
+        [FromBody] ContactDto contactDto, 
+        CancellationToken cancellationToken)
+    {
+        try
+        {
+            var contact = contactDto.ToContact();
+            contact.Id = id;
+            if (await _loggerService.UpdateContactAsync(contact, cancellationToken))
+            {
+                return Ok();
+            }
+            return NotFound(id);
+        }
+        catch (ContactUpdateFailedException ex)
         {
             return BadRequest(ex.Message);
         }
