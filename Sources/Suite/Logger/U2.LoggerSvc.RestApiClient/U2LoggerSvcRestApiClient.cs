@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
 using Newtonsoft.Json;
@@ -11,6 +12,10 @@ namespace U2.LoggerSvc.RestApiClient;
 public sealed class U2LoggerSvcRestApiClient : IU2LoggerSvcRestApiClient
 {
     private readonly Uri _healthPathUri = new Uri("logger-service/v1/health", UriKind.Relative);
+    private readonly Uri _createContactPathUri = new Uri("logger-service/v1/logger/create", UriKind.Relative);
+    private readonly Uri _listContactsPathUri = new Uri("logger-service/v1/logger/list", UriKind.Relative);
+    private readonly string _deleteContactPathUri = "logger-service/v1/logger/delete/{0}";
+    private readonly string _updateContactPathUri = "logger-service/v1/logger/update/{0}";
 
     private static readonly JsonMediaTypeFormatter _defaultJsonFormatter =
         new JsonMediaTypeFormatter
@@ -61,6 +66,74 @@ public sealed class U2LoggerSvcRestApiClient : IU2LoggerSvcRestApiClient
     {
         return await GetTypeByUriAsync<HealthDto>(_healthPathUri.ToString(), ct);
     }
+
+    #region Logger
+
+    public async Task<int> CreateContactAsync(ContactDto contactDto, CancellationToken ct)
+    {
+        if (contactDto == null)
+        {
+            throw new ArgumentNullException(nameof(contactDto));
+        }
+
+        var response = await _httpClient.PostAsync(_createContactPathUri, contactDto, _defaultJsonFormatter, ct);
+        response.EnsureSuccessStatusCode();
+
+        return await response.Content.ReadAsAsync<int>();
+    }
+
+    public async Task<bool> DeleteContactAsync(int id, CancellationToken ct)
+    {
+        try
+        {
+            var url = string.Format(_deleteContactPathUri, id);
+            var uri = new Uri(url, UriKind.Relative);
+
+            var response = await _httpClient.DeleteAsync(uri, ct);
+            response.EnsureSuccessStatusCode();
+
+            return await response.Content.ReadAsAsync<bool>();
+        }
+        catch (HttpRequestException)
+        {
+            return false;
+        }
+    }
+
+    public async Task<bool> UpdateContactAsync(int id, ContactDto contactDto, CancellationToken ct)
+    {
+        try
+        {
+            var url = string.Format(_updateContactPathUri, id);
+            var uri = new Uri(url, UriKind.Relative);
+
+            var response = await _httpClient.PostAsync(uri, contactDto, _defaultJsonFormatter, ct);
+            response.EnsureSuccessStatusCode();
+
+            return await response.Content.ReadAsAsync<bool>();
+        }
+        catch (HttpRequestException)
+        {
+            return false;
+        }
+    }
+
+    public async Task<IEnumerable<ContactDto>> GetContactsAsync(CancellationToken ct)
+    {
+        try
+        {
+            var response = await _httpClient.GetAsync(_listContactsPathUri, ct);
+            response.EnsureSuccessStatusCode();
+            var result = await response.Content.ReadAsAsync<IEnumerable<ContactDto>>();
+            return result;
+        }
+        catch (HttpRequestException)
+        {
+            return Enumerable.Empty<ContactDto>();
+        }
+    }
+
+    #endregion
 
     public async Task<ResourceStreamWithMediaType> GetResourceAsStreamAsync(string requestUri, CancellationToken cancellationToken)
     {
