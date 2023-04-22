@@ -6,6 +6,7 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Moq;
 using Newtonsoft.Json.Linq;
 using U2.LoggerSvc.Api.Controllers.v1;
+using U2.LoggerSvc.ApiTypes.v1;
 using U2.LoggerSvc.Core;
 using Xunit;
 using Assert = Xunit.Assert;
@@ -96,5 +97,22 @@ public class LoggerControllerTests : LoggerTestsBase
         var contactDto = GetContact().ToContactDto();
         var result = await controller.Update(NonExistentId, contactDto, token);
         Assert.IsType<NotFoundObjectResult>(result);
+    }
+
+    [Fact]
+    public async Task CanListContacts()
+    {
+        _contacts.Clear();
+        _contacts.Add(GetContact());
+        var controller = await CreateControllerAsync();
+
+        var token = new CancellationToken();
+        var entries = await controller.List(token);
+        Assert.IsType<OkObjectResult>(entries.Result);
+        var value = (OkObjectResult)entries.Result;
+        Assert.NotNull(value);
+        Assert.NotNull(value.Value);
+        var values = (IEnumerable<ContactDto>)value.Value;
+        Assert.Single(values);
     }
 }

@@ -94,5 +94,24 @@ public class LoggerController : ControllerBase
         }
     }
 
+    [Description("Lists all contacts from the database.")]
+    [HttpGet]
+    [Route("list")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<IEnumerable<ContactDto>>> List(CancellationToken cancellationToken)
+    {
+        try
+        {
+            var contacts = await _loggerService.GetContactsAsync(cancellationToken);
+            var contactsDto = contacts.Select(_ => _.ToContactDto());
+            return Ok(contactsDto);
+        }
+        catch
+        {
+            return BadRequest();
+        }
+    }
+
     #endregion
 }
