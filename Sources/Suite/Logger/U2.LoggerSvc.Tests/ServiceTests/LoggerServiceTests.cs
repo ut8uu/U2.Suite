@@ -39,7 +39,8 @@ public class LoggerServiceTests : LoggerTestsBase
         Assert.Empty(entries);
 
         var contact = GetContact();
-        await service.CreateContactAsync(contact, cancellationToken);
+        var id = await service.CreateContactAsync(contact, cancellationToken);
+        Assert.Equal(1, id);
         entries = await service.GetContactsAsync(cancellationToken);
 
         var contact2 = entries.Single();

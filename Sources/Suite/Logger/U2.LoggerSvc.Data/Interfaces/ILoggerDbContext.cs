@@ -12,7 +12,7 @@ public interface ILoggerDbContext
     DbSet<LoggerEntry> LogEntries { get; set; }
 
     Task<IEnumerable<LoggerEntry>> GetLogEntriesAsync(CancellationToken cancellationToken);
-    Task AddLogEntryAsync(LoggerEntry entry, CancellationToken cancellationToken);
+    Task<int> AddLogEntryAsync(LoggerEntry entry, CancellationToken cancellationToken);
     Task DeleteAllEntriesAsync(CancellationToken cancellationToken);
 
     /// <summary>

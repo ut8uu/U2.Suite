@@ -24,13 +24,13 @@ public class LoggerController : ControllerBase
     [Route("create")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult> Create([FromBody] Contact contact, CancellationToken cancellationToken)
+    public async Task<ActionResult<int>> Create([FromBody] Contact contact, CancellationToken cancellationToken)
     {
         try
         {
-            await _loggerService.CreateContactAsync(contact, cancellationToken);
+            var id = await _loggerService.CreateContactAsync(contact, cancellationToken);
 
-            return Ok();
+            return Ok(id);
         }
         catch (ContactCreationFailedException ex)
         {

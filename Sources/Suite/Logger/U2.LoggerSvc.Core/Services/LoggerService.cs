@@ -25,7 +25,7 @@ public sealed class LoggerService : ILoggerService
         return result;
     }
 
-    public Task CreateContactAsync(Contact contact, CancellationToken cancellationToken)
+    public Task<int> CreateContactAsync(Contact contact, CancellationToken cancellationToken)
     {
         var entry = contact.ToLogEntry();
         return _loggerDbContext.AddLogEntryAsync(entry, cancellationToken);
