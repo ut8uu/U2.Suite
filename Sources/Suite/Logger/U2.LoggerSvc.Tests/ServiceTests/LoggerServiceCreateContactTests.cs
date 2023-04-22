@@ -25,7 +25,7 @@ public class LoggerServiceCreateContactTests : LoggerServiceTestsBase
         var entries = await service.GetContactsAsync(cancellationToken);
         Assert.Empty(entries);
 
-        var contact = ut8uuContact;
+        var contact = GetContact();
         await service.CreateAsync(contact, cancellationToken);
 
         entries = await service.GetContactsAsync(cancellationToken);
