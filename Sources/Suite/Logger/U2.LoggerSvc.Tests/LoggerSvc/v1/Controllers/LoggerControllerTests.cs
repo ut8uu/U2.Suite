@@ -15,7 +15,7 @@ public class LoggerControllerTests
     private static Mock<ILoggerService> CreateLoggerServiceMock()
     {
         var service = new Mock<ILoggerService>();
-        service.Setup(_ => _.CreateAsync(It.IsAny<Contact>(), It.IsAny<CancellationToken>()))
+        service.Setup(_ => _.CreateContactAsync(It.IsAny<Contact>(), It.IsAny<CancellationToken>()))
             .Returns(Task.FromResult(Guid.NewGuid()));
         return service;
     }

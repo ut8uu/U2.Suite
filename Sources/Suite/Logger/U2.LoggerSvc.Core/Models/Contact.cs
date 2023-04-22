@@ -11,6 +11,7 @@ namespace U2.LoggerSvc.Core;
 [DebuggerDisplay("{GetDebuggerDisplay(),nq}")]
 public sealed class Contact
 {
+    public int Id { get; set; }
     public Guid UniqueId { get; set; } = Guid.NewGuid();
     public string Call { get; set; } = "";
     public DateTime DateTimeOn { get; set; }

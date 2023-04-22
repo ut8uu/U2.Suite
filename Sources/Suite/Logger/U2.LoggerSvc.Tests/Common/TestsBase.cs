@@ -45,7 +45,7 @@ public abstract class TestsBase
             Gridsquare = gridSquare,
             Iota = "EU-001",
             IotaIslandId = "GB",
-            IsRunQso = false,
+            IsRunQso = true,
             Ituz = 29,
             Lat = lat,
             Lon = lon,

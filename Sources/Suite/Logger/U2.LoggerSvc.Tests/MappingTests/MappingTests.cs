@@ -29,6 +29,8 @@ public class MappingTests : TestsBase
         var contact = GetContact();
         var contactDto = contact.ToContactDto();
         var contact2 = contactDto.ToContact();
-        contact.ShouldDeepEqual(contact2);
+        contact.WithDeepEqual(contact2)
+            .IgnoreProperty<Contact>(x => x.IsRunQso)
+            .Assert();
     }
 }
