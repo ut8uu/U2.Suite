@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel;
 using Microsoft.AspNetCore.Mvc;
+using U2.LoggerSvc.ApiTypes.v1;
 using U2.LoggerSvc.Core;
 
 namespace U2.LoggerSvc.Api.Controllers.v1;
@@ -27,13 +28,88 @@ public class LoggerController : ControllerBase
     {
         try
         {
-            await _loggerService.CreateAsync(contact, cancellationToken);
+            await _loggerService.CreateContactAsync(contact, cancellationToken);
 
             return Ok();
         }
         catch (ContactCreationFailedException ex)
         {
             return BadRequest(ex.Message);
+        }
+    }
+
+    [Description("Deletes a contact from the database.")]
+    [HttpDelete]
+    [Route("delete/{id}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult> Delete(int id, CancellationToken cancellationToken)
+    {
+        try
+        {
+            if (await _loggerService.DeleteContactAsync(id, cancellationToken))
+            {
+                return Ok();
+            }
+            return NotFound(id);
+        }
+        catch (ContactRemovingFailedException ex)
+        {
+            return BadRequest(ex.Message);
+        }
+        catch (ContactNotFoundException ex)
+        {
+            return NotFound(ex.Message);
+        }
+    }
+
+    [Description("Updates a contact by its id.")]
+    [HttpPut]
+    [Route("update/{id}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult> Update(int id, 
+        [FromBody] ContactDto contactDto, 
+        CancellationToken cancellationToken)
+    {
+        try
+        {
+            var contact = contactDto.ToContact();
+            contact.Id = id;
+            if (await _loggerService.UpdateContactAsync(contact, cancellationToken))
+            {
+                return Ok();
+            }
+            return NotFound(id);
+        }
+        catch (ContactUpdateFailedException ex)
+        {
+            return BadRequest(ex.Message);
+        }
+        catch (ContactNotFoundException ex)
+        {
+            return NotFound(ex.Message);
+        }
+    }
+
+    [Description("Lists all contacts from the database.")]
+    [HttpGet]
+    [Route("list")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<IEnumerable<ContactDto>>> List(CancellationToken cancellationToken)
+    {
+        try
+        {
+            var contacts = await _loggerService.GetContactsAsync(cancellationToken);
+            var contactsDto = contacts.Select(_ => _.ToContactDto());
+            return Ok(contactsDto);
+        }
+        catch
+        {
+            return BadRequest();
         }
     }
 

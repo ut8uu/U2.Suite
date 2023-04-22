@@ -58,14 +58,31 @@ public class LoggerDbContext : DbContext, ILoggerDbContext
         await SaveChangesAsync(cancellationToken);
     }
 
-    public async virtual Task DeleteLogEntryAsync(int id, CancellationToken cancellationToken)
+    public async virtual Task<bool> DeleteLogEntryAsync(int id, CancellationToken cancellationToken)
     {
         var entry = await LogEntries.FindAsync(id, cancellationToken);
 
-        if (entry != null)
+        if (entry == null)
         {
-            LogEntries.Remove(entry);
-            await SaveChangesAsync(cancellationToken);
+            return false;
         }
+
+        LogEntries.Remove(entry);
+        await SaveChangesAsync(cancellationToken);
+        return true;
+    }
+
+    public async Task<bool> UpdateLogEntryAsync(LoggerEntry entry, CancellationToken cancellationToken)
+    {
+        var existingEntry = await LogEntries.FindAsync(entry.Id, cancellationToken);
+
+        if (existingEntry == null)
+        {
+            return false;
+        }
+
+        LogEntries.Entry(existingEntry).CurrentValues.SetValues(entry);
+        await SaveChangesAsync(cancellationToken);
+        return true;
     }
 }

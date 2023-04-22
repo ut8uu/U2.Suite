@@ -8,7 +8,8 @@ namespace U2.LoggerSvc.Core;
 
 public abstract class LoggerException : Exception
 {
-    public LoggerException(string? message) : base(message)
+    public LoggerException(string? message, Exception? innerException = null) 
+        : base(message, innerException)
     {
     }
 }
