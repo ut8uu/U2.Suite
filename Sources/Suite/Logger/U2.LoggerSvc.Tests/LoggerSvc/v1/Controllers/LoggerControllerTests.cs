@@ -53,7 +53,7 @@ public class LoggerControllerTests : LoggerTestsBase
     }
 
     [Fact]
-    public async Task ShouldFailOnNonExistingId()
+    public async Task ShouldFailDeletionOnNonExistingId()
     {
         _contacts.Clear();
         var controller = await CreateControllerAsync();
@@ -77,9 +77,24 @@ public class LoggerControllerTests : LoggerTestsBase
         var entry = entries.Single();
         entry.Call = newCall;
 
-        await controller.Update(entry.Id, entry.ToContactDto(), token);
+        var result = await controller.Update(entry.Id, entry.ToContactDto(), token);
+        Assert.IsType<OkResult>(result);
+
         entries = await _loggerService.GetContactsAsync(token);
         entry = entries.Single();
         Assert.Equal(newCall, entry.Call);
+    }
+
+    [Fact]
+    public async Task ShouldFailUpdateOnNonExistingId()
+    {
+        _contacts.Clear();
+        _contacts.Add(GetContact());
+        var controller = await CreateControllerAsync();
+
+        var token = new CancellationToken();
+        var contactDto = GetContact().ToContactDto();
+        var result = await controller.Update(NonExistentId, contactDto, token);
+        Assert.IsType<NotFoundObjectResult>(result);
     }
 }

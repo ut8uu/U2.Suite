@@ -39,7 +39,7 @@ public class LoggerController : ControllerBase
     }
 
     [Description("Deletes a contact from the database.")]
-    [HttpGet]
+    [HttpDelete]
     [Route("delete/{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -65,7 +65,7 @@ public class LoggerController : ControllerBase
     }
 
     [Description("Updates a contact by its id.")]
-    [HttpPost]
+    [HttpPut]
     [Route("update/{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
