@@ -26,7 +26,7 @@ public class LoggerServiceCreateContactTests : LoggerServiceTestsBase
         Assert.Empty(entries);
 
         var contact = GetContact();
-        await service.CreateAsync(contact, cancellationToken);
+        await service.CreateContactAsync(contact, cancellationToken);
 
         entries = await service.GetContactsAsync(cancellationToken);
         Assert.NotEmpty(entries);
@@ -41,7 +41,7 @@ public class LoggerServiceCreateContactTests : LoggerServiceTestsBase
         var service = new LoggerService(_dbContext);
 
         await Assert.ThrowsAsync<ArgumentNullException>(async () 
-            => await service.CreateAsync(null, new CancellationToken()));
+            => await service.CreateContactAsync(null, new CancellationToken()));
     }
 
 }

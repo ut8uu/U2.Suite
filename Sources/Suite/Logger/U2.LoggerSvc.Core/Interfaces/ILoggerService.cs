@@ -22,5 +22,23 @@ public interface ILoggerService
     /// <param name="contact">A contact to be created.</param>
     /// <param name="cancellationToken"></param>
     /// <exception cref="ContactCreationFailedException"></exception>
-    Task CreateAsync(Contact contact, CancellationToken cancellationToken);
+    Task CreateContactAsync(Contact contact, CancellationToken cancellationToken);
+
+    /// <summary>
+    /// Deletes a contact by its identifier.
+    /// </summary>
+    /// <param name="id">An identifier of the contact to be deleted.</param>
+    /// <param name="cancellationToken"></param>
+    /// <returns>Returns <see langword="true"/> when entity was deleted or <see langword="false"/> otherwise.</returns>
+    /// <exception cref="ContactRemovingFailedException"></exception>
+    Task<bool> DeleteContactAsync(int id, CancellationToken cancellationToken);
+
+    /// <summary>
+    /// Updates given contact in the database.
+    /// </summary>
+    /// <param name="contact"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    /// <exception cref="ContactUpdateFailedException"></exception>
+    Task<bool> UpdateContactAsync(Contact contact, CancellationToken cancellationToken);
 }

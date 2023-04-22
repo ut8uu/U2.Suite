@@ -27,7 +27,7 @@ public class LoggerController : ControllerBase
     {
         try
         {
-            await _loggerService.CreateAsync(contact, cancellationToken);
+            await _loggerService.CreateContactAsync(contact, cancellationToken);
 
             return Ok();
         }
