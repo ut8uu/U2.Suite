@@ -18,7 +18,9 @@ public sealed class LoggerService : ILoggerService
         _loggerDbContext = loggerDbContext;
     }
 
-    public async Task<IEnumerable<Contact>> GetContactsAsync(CancellationToken cancellationToken)
+    public async Task<IEnumerable<Contact>> GetContactsAsync(
+        ApiTypes.LoggerFilteringSearchingPaginationParameters parameters, 
+        CancellationToken cancellationToken)
     {
         var entries = await _loggerDbContext.GetLogEntriesAsync(cancellationToken);
         var result = entries.Select(_ => _.ToContact());

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DeepEqual.Syntax;
+using U2.LoggerSvc.ApiTypes;
 using U2.LoggerSvc.Core;
 using Xunit;
 using Assert = Xunit.Assert;
@@ -21,8 +22,9 @@ public class LoggerServiceTests : LoggerTestsBase
         await SetupLoggerDbContext();
 
         var service = new LoggerService(_dbContext);
+        var parameters = new LoggerFilteringSearchingPaginationParameters();
 
-        var entries = await service.GetContactsAsync(cancellationToken);
+        var entries = await service.GetContactsAsync(parameters, cancellationToken);
         Assert.NotEmpty(entries);
     }
 
@@ -34,14 +36,15 @@ public class LoggerServiceTests : LoggerTestsBase
         await SetupLoggerDbContext();
 
         var service = new LoggerService(_dbContext);
+        var parameters = new LoggerFilteringSearchingPaginationParameters();
 
-        var entries = await service.GetContactsAsync(cancellationToken);
+        var entries = await service.GetContactsAsync(parameters, cancellationToken);
         Assert.Empty(entries);
 
         var contact = GetContact();
         var id = await service.CreateContactAsync(contact, cancellationToken);
         Assert.Equal(1, id);
-        entries = await service.GetContactsAsync(cancellationToken);
+        entries = await service.GetContactsAsync(parameters, cancellationToken);
 
         var contact2 = entries.Single();
         contact.WithDeepEqual(contact2).IgnoreProperty<Contact>(x => x.Id).Assert();
@@ -67,12 +70,13 @@ public class LoggerServiceTests : LoggerTestsBase
         await SetupLoggerDbContext();
 
         var service = new LoggerService(_dbContext);
+        var parameters = new LoggerFilteringSearchingPaginationParameters();
 
-        var entries = await service.GetContactsAsync(cancellationToken);
+        var entries = await service.GetContactsAsync(parameters, cancellationToken);
         var contact = entries.Single();
 
         await service.DeleteContactAsync(contact.Id, cancellationToken);
-        entries = await service.GetContactsAsync(cancellationToken);
+        entries = await service.GetContactsAsync(parameters, cancellationToken);
         Assert.Empty(entries);
     }
 
@@ -85,13 +89,14 @@ public class LoggerServiceTests : LoggerTestsBase
         await SetupLoggerDbContext();
 
         var service = new LoggerService(_dbContext);
+        var parameters = new LoggerFilteringSearchingPaginationParameters();
 
-        var entries = await service.GetContactsAsync(cancellationToken);
+        var entries = await service.GetContactsAsync(parameters, cancellationToken);
         var contact = entries.Single();
         contact.Call = "UT3UBR";
 
         await service.UpdateContactAsync(contact, cancellationToken);
-        entries = await service.GetContactsAsync(cancellationToken);
+        entries = await service.GetContactsAsync(parameters, cancellationToken);
         contact = entries.Single();
         Assert.Equal("UT3UBR", contact.Call);
     }

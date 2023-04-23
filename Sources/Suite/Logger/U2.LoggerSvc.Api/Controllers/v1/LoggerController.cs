@@ -1,6 +1,8 @@
 using System;
 using System.ComponentModel;
 using Microsoft.AspNetCore.Mvc;
+using U2.Core;
+using U2.LoggerSvc.ApiTypes;
 using U2.LoggerSvc.ApiTypes.v1;
 using U2.LoggerSvc.Core;
 
@@ -99,11 +101,23 @@ public class LoggerController : ControllerBase
     [Route("list")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<IEnumerable<ContactDto>>> List(CancellationToken cancellationToken)
+    public async Task<ActionResult<IEnumerable<ContactDto>>> List(
+        [FromQuery] SearchParameters searchParameters,
+        [FromQuery] LoggerFilteringParameters filteringParameters,
+        [FromQuery] PaginationParameters paginationParameters,
+        [FromQuery] SortingParameters sortingParameters,
+        CancellationToken cancellationToken)
     {
         try
         {
-            var contacts = await _loggerService.GetContactsAsync(cancellationToken);
+            var parameters = new LoggerFilteringSearchingPaginationParameters
+            {
+                SortingParameters = sortingParameters,
+                PaginationParameters = paginationParameters,
+                LoggerFilteringParameters = filteringParameters,
+                SearchParameters = searchParameters,
+            };
+            var contacts = await _loggerService.GetContactsAsync(parameters, cancellationToken);
             var contactsDto = contacts.Select(_ => _.ToContactDto());
             return Ok(contactsDto);
         }

@@ -14,7 +14,7 @@ public interface ILoggerService
     /// </summary>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task<IEnumerable<Contact>> GetContactsAsync(CancellationToken cancellationToken);
+    Task<IEnumerable<Contact>> GetContactsAsync(ApiTypes.LoggerFilteringSearchingPaginationParameters parameters, CancellationToken cancellationToken);
 
     /// <summary>
     /// Creates a new contact using given data.
