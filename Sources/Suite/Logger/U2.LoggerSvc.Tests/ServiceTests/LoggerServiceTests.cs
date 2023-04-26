@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DeepEqual.Syntax;
 using U2.LoggerSvc.ApiTypes;
+using U2.LoggerSvc.ApiTypes.v1;
 using U2.LoggerSvc.Core;
 using Xunit;
 using Assert = Xunit.Assert;
@@ -26,6 +27,34 @@ public class LoggerServiceTests : LoggerTestsBase
 
         var entries = await service.GetContactsAsync(parameters, cancellationToken);
         Assert.NotEmpty(entries);
+    }
+
+    [Theory]
+    [InlineData(false, "ZA1UU")]
+    [InlineData(true, "UT2UU")]
+    public async Task CanSortContactsByCall(bool ascending, string expectedCall)
+    {
+        CancellationToken cancellationToken = new();
+        _contacts.Clear();
+        _contacts.Add(GetContact(call: "ZA1UU"));
+        _contacts.Add(GetContact(call: "UT8UU"));
+        _contacts.Add(GetContact(call: "UT2UU"));
+        await SetupLoggerDbContext();
+
+        var service = new LoggerService(_dbContext);
+        var parameters = new LoggerFilteringSearchingPaginationParameters
+        {
+            SortingParameters = new U2.Core.SortingParameters
+            {
+                Ascending = ascending,
+                SortBy = (int)LoggerSortByField.Call,
+            },
+        };
+
+        var entries = await service.GetContactsAsync(parameters, cancellationToken);
+        Assert.Equal(3, entries.Count());
+        var entry1 = entries.First();
+        Assert.Equal(expectedCall, entry1.Call);
     }
 
     [Fact]

@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using U2.LoggerSvc.Data;
 using U2.LoggerSvc.Core;
 using Microsoft.EntityFrameworkCore;
+using U2.Core;
+using Microsoft.AspNetCore.Components;
 
 namespace U2.LoggerSvc.Core;
 
@@ -23,8 +25,46 @@ public sealed class LoggerService : ILoggerService
         CancellationToken cancellationToken)
     {
         var entries = await _loggerDbContext.GetLogEntriesAsync(cancellationToken);
+        if (parameters.SortingParameters != null)
+        {
+            entries = Sort(entries, parameters.SortingParameters);
+        }
         var result = entries.Select(_ => _.ToContact());
         return result;
+    }
+
+    public static IEnumerable<LoggerEntry> Sort(IEnumerable<LoggerEntry> entries, SortingParameters sortingParameters)
+    {
+        if (sortingParameters == null)
+        {
+            return entries;
+        }
+
+        var sortBy = (LoggerSortByField)sortingParameters.SortBy;
+        if (sortingParameters.Ascending)
+        {
+            return sortBy switch
+            {
+                LoggerSortByField.Call => entries.OrderBy(x => x.Call),
+                LoggerSortByField.DateTimeOn => entries.OrderBy(x => x.DateTimeOn),
+                LoggerSortByField.DateTimeOff => entries.OrderBy(x => x.DateTimeOff),
+                LoggerSortByField.Band => entries.OrderBy(x => x.Band),
+                LoggerSortByField.Mode => entries.OrderBy(x => x.Mode),
+                _ => entries,
+            };
+        }
+        else
+        {
+            return sortBy switch
+            {
+                LoggerSortByField.Call => entries.OrderByDescending(x => x.Call),
+                LoggerSortByField.DateTimeOn => entries.OrderByDescending(x => x.DateTimeOn),
+                LoggerSortByField.DateTimeOff => entries.OrderByDescending(x => x.DateTimeOff),
+                LoggerSortByField.Band => entries.OrderByDescending(x => x.Band),
+                LoggerSortByField.Mode => entries.OrderByDescending(x => x.Mode),
+                _ => entries,
+            };
+        }
     }
 
     public Task<int> CreateContactAsync(Contact contact, CancellationToken cancellationToken)
