@@ -57,6 +57,40 @@ public class LoggerServiceTests : LoggerTestsBase
         Assert.Equal(expectedCall, entry1.Call);
     }
 
+    [Theory]
+    [InlineData(0, 1, "UT2UU")]
+    [InlineData(1, 1, "UT8UU")]
+    [InlineData(1, 2, "ZA1UU")]
+    public async Task CanPaginateContactsByCall(int pageIndex, int pageSize, string expectedCall)
+    {
+        CancellationToken cancellationToken = new();
+        _contacts.Clear();
+        _contacts.Add(GetContact(call: "ZA1UU"));
+        _contacts.Add(GetContact(call: "UT8UU"));
+        _contacts.Add(GetContact(call: "UT2UU"));
+        await SetupLoggerDbContext();
+
+        var service = new LoggerService(_dbContext);
+        var parameters = new LoggerFilteringSearchingPaginationParameters
+        {
+            SortingParameters = new U2.Core.SortingParameters
+            {
+                Ascending = true,
+                SortBy = (int)LoggerSortByField.Call,
+            },
+            PaginationParameters = new U2.Core.PaginationParameters
+            {
+                PageIndex = pageIndex,
+                PageSize = pageSize,
+            },
+        };
+
+        var entries = await service.GetContactsAsync(parameters, cancellationToken);
+        Assert.True(pageSize >= entries.Count());
+        var entry1 = entries.First();
+        Assert.Equal(expectedCall, entry1.Call);
+    }
+
     [Fact]
     public async Task ServiceCanAddContact()
     {

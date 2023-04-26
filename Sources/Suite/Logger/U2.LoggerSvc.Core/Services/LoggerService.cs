@@ -29,8 +29,32 @@ public sealed class LoggerService : ILoggerService
         {
             entries = Sort(entries, parameters.SortingParameters);
         }
+        if (parameters.PaginationParameters != null)
+        {
+            entries = Paginate(entries, parameters.PaginationParameters);
+        }
         var result = entries.Select(_ => _.ToContact());
         return result;
+    }
+
+    private IEnumerable<LoggerEntry> Paginate(IEnumerable<LoggerEntry> entries, PaginationParameters paginationParameters)
+    {
+        if (paginationParameters == null)
+        {
+            return entries;
+        }
+
+        if (paginationParameters.PageIndex < 0)
+        {
+            throw new ArgumentException($"Wrong page index: {paginationParameters.PageIndex}");
+        }
+        if (paginationParameters.PageSize < 0)
+        {
+            throw new ArgumentException($"Wrong page size: {paginationParameters.PageSize}");
+        }
+
+        var skip = paginationParameters.PageIndex * paginationParameters.PageSize;
+        return entries.Skip(skip).Take(paginationParameters.PageSize);
     }
 
     public static IEnumerable<LoggerEntry> Sort(IEnumerable<LoggerEntry> entries, SortingParameters sortingParameters)
