@@ -25,6 +25,10 @@ public sealed class LoggerService : ILoggerService
         CancellationToken cancellationToken)
     {
         var entries = await _loggerDbContext.GetLogEntriesAsync(cancellationToken);
+        if (parameters.SearchParameters != null)
+        {
+            entries = Filter(entries, parameters.SearchParameters);
+        }
         if (parameters.SortingParameters != null)
         {
             entries = Sort(entries, parameters.SortingParameters);
@@ -34,6 +38,15 @@ public sealed class LoggerService : ILoggerService
             entries = Paginate(entries, parameters.PaginationParameters);
         }
         var result = entries.Select(_ => _.ToContact());
+        return result;
+    }
+
+    private IEnumerable<LoggerEntry> Filter(IEnumerable<LoggerEntry> entries, SearchParameters searchParameters)
+    {
+        var result = entries.Where(x => x.Mode.Equals(searchParameters.Search, StringComparison.InvariantCultureIgnoreCase)
+        || x.Band.Equals(searchParameters.Search, StringComparison.InvariantCultureIgnoreCase)
+        || x.Call.Contains(searchParameters.Search, StringComparison.InvariantCultureIgnoreCase));
+        
         return result;
     }
 

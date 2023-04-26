@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DeepEqual.Syntax;
+using U2.Contracts;
+using U2.Core;
 using U2.LoggerSvc.ApiTypes;
 using U2.LoggerSvc.ApiTypes.v1;
 using U2.LoggerSvc.Core;
@@ -61,7 +63,7 @@ public class LoggerServiceTests : LoggerTestsBase
     [InlineData(0, 1, "UT2UU")]
     [InlineData(1, 1, "UT8UU")]
     [InlineData(1, 2, "ZA1UU")]
-    public async Task CanPaginateContactsByCall(int pageIndex, int pageSize, string expectedCall)
+    public async Task CanPaginateContacts(int pageIndex, int pageSize, string expectedCall)
     {
         CancellationToken cancellationToken = new();
         _contacts.Clear();
@@ -89,6 +91,34 @@ public class LoggerServiceTests : LoggerTestsBase
         Assert.True(pageSize >= entries.Count());
         var entry1 = entries.First();
         Assert.Equal(expectedCall, entry1.Call);
+    }
+
+    [Theory]
+    [InlineData("AM", 1)]
+    [InlineData("20m", 1)]
+    [InlineData("UT", 2)]
+    [InlineData("8UU", 2)]
+    public async Task CanFilterContacts(string filter, int expectedCount)
+    {
+        CancellationToken cancellationToken = new();
+        _contacts.Clear();
+        _contacts.Add(GetContact(call: "ZA8UU", mode: new RadioModeAM(), band: new Band20M()));
+        _contacts.Add(GetContact(call: "UT8UU", mode: new RadioModeCW(), band: new Band80M()));
+        _contacts.Add(GetContact(call: "UT2UU", mode: new RadioModeRtty(), band: new Band40M()));
+        await SetupLoggerDbContext();
+
+        var service = new LoggerService(_dbContext);
+        var parameters = new LoggerFilteringSearchingPaginationParameters
+        {
+            SearchParameters = new SearchParameters
+            {
+                Search = filter,
+                SearchOption = U2.Core.SearchOption.Contains,
+            },
+        };
+
+        var entries = await service.GetContactsAsync(parameters, cancellationToken);
+        Assert.Equal(expectedCount, entries.Count());
     }
 
     [Fact]
