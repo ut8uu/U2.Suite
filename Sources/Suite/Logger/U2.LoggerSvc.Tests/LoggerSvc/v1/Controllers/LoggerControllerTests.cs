@@ -6,6 +6,7 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Moq;
 using Newtonsoft.Json.Linq;
 using U2.LoggerSvc.Api.Controllers.v1;
+using U2.LoggerSvc.ApiTypes;
 using U2.LoggerSvc.ApiTypes.v1;
 using U2.LoggerSvc.Core;
 using Xunit;
@@ -31,9 +32,10 @@ public class LoggerControllerTests : LoggerTestsBase
     {
         var controller = await CreateControllerAsync();
         var testData = GetContact();
+        var parameters = new LoggerFilteringSearchingPaginationParameters();
 
         await controller.Create(testData, new CancellationToken());
-        var entries = await _loggerService.GetContactsAsync(new CancellationToken());
+        var entries = await _loggerService.GetContactsAsync(parameters, new CancellationToken());
         Assert.Single(entries);
     }
 
@@ -43,13 +45,14 @@ public class LoggerControllerTests : LoggerTestsBase
         _contacts.Clear();
         _contacts.Add(GetContact());
         var controller = await CreateControllerAsync();
+        var parameters = new LoggerFilteringSearchingPaginationParameters();
 
         var token = new CancellationToken();
-        var entries = await _loggerService.GetContactsAsync(token);
+        var entries = await _loggerService.GetContactsAsync(parameters, token);
         var entry = entries.Single();
 
         await controller.Delete(entry.Id, token);
-        entries = await _loggerService.GetContactsAsync(token);
+        entries = await _loggerService.GetContactsAsync(parameters, token);
         Assert.Empty(entries);
     }
 
@@ -72,16 +75,17 @@ public class LoggerControllerTests : LoggerTestsBase
         _contacts.Clear();
         _contacts.Add(GetContact());
         var controller = await CreateControllerAsync();
+        var parameters = new LoggerFilteringSearchingPaginationParameters();
 
         var token = new CancellationToken();
-        var entries = await _loggerService.GetContactsAsync(token);
+        var entries = await _loggerService.GetContactsAsync(parameters, token);
         var entry = entries.Single();
         entry.Call = newCall;
 
         var result = await controller.Update(entry.Id, entry.ToContactDto(), token);
         Assert.IsType<OkResult>(result);
 
-        entries = await _loggerService.GetContactsAsync(token);
+        entries = await _loggerService.GetContactsAsync(parameters, token);
         entry = entries.Single();
         Assert.Equal(newCall, entry.Call);
     }
@@ -105,9 +109,15 @@ public class LoggerControllerTests : LoggerTestsBase
         _contacts.Clear();
         _contacts.Add(GetContact());
         var controller = await CreateControllerAsync();
+        var parameters = new LoggerFilteringSearchingPaginationParameters();
 
         var token = new CancellationToken();
-        var entries = await controller.List(token);
+        var entries = await controller.List(
+            parameters.SearchParameters, 
+            parameters.LoggerFilteringParameters, 
+            parameters.PaginationParameters,
+            parameters.SortingParameters,
+            token);
         Assert.IsType<OkObjectResult>(entries.Result);
         var value = (OkObjectResult)entries.Result;
         Assert.NotNull(value);

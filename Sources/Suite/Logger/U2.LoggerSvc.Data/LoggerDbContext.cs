@@ -37,7 +37,6 @@ public class LoggerDbContext : DbContext, ILoggerDbContext
     public async virtual Task<IEnumerable<LoggerEntry>> GetLogEntriesAsync(CancellationToken cancellationToken)
     {
         return await LogEntries
-            .OrderByDescending(x => x.DateTimeOff)
             .AsNoTracking()
             .ToListAsync(cancellationToken);
     }
