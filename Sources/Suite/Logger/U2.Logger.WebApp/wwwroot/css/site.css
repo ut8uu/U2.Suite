@@ -20,3 +20,15 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.panel {
+  padding: 5px;
+}
+
+.border1px {
+  border : 1px solid;
+}
+
+.black {
+  color: black;
+}

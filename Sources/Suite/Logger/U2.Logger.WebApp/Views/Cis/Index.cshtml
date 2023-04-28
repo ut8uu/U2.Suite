@@ -1,0 +1,14 @@
+﻿@model CisPage
+@{
+	ViewData["Title"] = "Call Info Service";
+}
+
+<div class="text-center">
+	@{
+		var callsPanel = new PanelControl
+			{
+				Children = new List<VisualControl> { new ShortCallListControl(Model.Calls) }
+			};
+		await Html.RenderPartialAsync(callsPanel.ViewName, callsPanel);
+	}
+</div>

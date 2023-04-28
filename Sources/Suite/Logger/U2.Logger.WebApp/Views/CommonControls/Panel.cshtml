@@ -1,0 +1,10 @@
+﻿@model PanelControl
+
+<div style="panel border1px black @Model.Style">
+	@{
+		foreach (var control in Model.Children)
+		{
+			await Html.RenderPartialAsync(control.ViewName, control);
+		}
+	}
+</div>

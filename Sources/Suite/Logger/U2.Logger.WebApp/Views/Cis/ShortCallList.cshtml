@@ -1,0 +1,11 @@
+﻿@model ShortCallListControl
+@{
+	<ul>
+		@{
+			foreach (var call in Model.Items)
+			{
+				<li>@call.Call</li>
+			}
+		}
+	</ul>
+}
