@@ -26,9 +26,33 @@ body {
 }
 
 .border1px {
-  border : 1px solid;
+  border: 1px solid;
 }
 
 .black {
   color: black;
+}
+
+.width100pics {
+  width: 100%;
+}
+
+.width200px {
+  width: 200px;
+}
+
+.floatLeft {
+  float: left;
+}
+
+.horizontal_flow_layout {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.vertical_flow_layout {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
 }

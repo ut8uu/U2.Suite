@@ -2,8 +2,9 @@
 
 public sealed class PanelControl : ContainerControl
 {
-	public PanelControl() 
-	{ 
-		ViewName = "/Views/CommonControls/Panel.cshtml";
+	public PanelControl(string name, List<VisualControl> items) 
+		: base(name, "/Views/CommonControls/Panel.cshtml")
+	{
+		this.Children = items;
 	}
 }

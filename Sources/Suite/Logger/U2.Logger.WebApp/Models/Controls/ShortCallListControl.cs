@@ -2,9 +2,8 @@
 
 public sealed class ShortCallListControl : ListBoxControl<CisCallShort>
 {
-	public ShortCallListControl(List<CisCallShort> items)
+	public ShortCallListControl(string name, List<CisCallShort> items) : base(name, "ShortCallList")
 	{
-		this.ViewName = "ShortCallList";
 		this.Items = items;
 	}
 }
