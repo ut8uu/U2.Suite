@@ -1,11 +1,11 @@
 ﻿@model ShortCallListControl
 @{
-	<ul class="width100pics">
+	<div class="vertical_flow_layout width100perc">
 		@{
 			foreach (var call in Model.Items)
 			{
-				<li><a href="/cis">@call.Call</a></li>
+				<div><a href="#">@call.Call</a></div>
 			}
 		}
-	</ul>
+	</div>
 }

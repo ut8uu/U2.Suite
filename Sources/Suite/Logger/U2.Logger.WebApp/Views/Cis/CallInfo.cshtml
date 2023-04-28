@@ -1,5 +1,12 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@model CallInfoControl
+
+<div class="vertical_flow_layout width100perc">
+	<div class="call_info_title width100perc">
+		@Model.CallInfo.Call
+	</div>
+	<div class="horizontal_flow_layout text_left">
+		<div class="width200px text_right">First name:</div>
+		<div class="spacer10px"></div>
+		<div>@Model.CallInfo.FirstName</div>
+	</div>
+</div>

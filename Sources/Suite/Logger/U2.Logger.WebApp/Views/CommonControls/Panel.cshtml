@@ -1,6 +1,6 @@
 ﻿@model PanelControl
 
-<div class="panel border1px black @Model.Class">
+<div id="@Model.Name" class="panel border1px black @Model.Class">
 	@{
 		foreach (var control in Model.Children)
 		{
