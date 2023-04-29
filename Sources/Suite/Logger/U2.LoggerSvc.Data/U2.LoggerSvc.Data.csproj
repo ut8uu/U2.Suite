@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Core\U2.Core\U2.Core.csproj" />
+    <ProjectReference Include="..\..\Suite\U2.Core\U2.Core.csproj" />
   </ItemGroup>
 
 </Project>

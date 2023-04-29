@@ -7,6 +7,7 @@ using U2.Core;
 
 namespace U2.LoggerSvc.ApiTypes;
 
+#nullable disable
 public sealed class LoggerFilteringSearchingPaginationParameters
 {
     public SearchParameters SearchParameters { get; set; }
