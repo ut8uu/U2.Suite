@@ -5,9 +5,9 @@
 		@Model.CallInfo.Call
 	</div>
 	@{
-		foreach (var callInfoRow in Model.CallInfo.GetCallInfoRows())
+		foreach (var section in Model.CallInfo.GetCallInfoRows())
 		{
-			await Html.RenderPartialAsync("CallInfoRow", callInfoRow);
+			await Html.RenderPartialAsync("CallInfoSection", section);
 		}
 	}
 </div>
