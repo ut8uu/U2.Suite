@@ -1,8 +1,7 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using U2.Logger.WebApp.Models;
 
-namespace U2.Logger.WebApp.Controllers
+namespace U2.WebApp.Controllers
 {
     public class HomeController : Controller
     {

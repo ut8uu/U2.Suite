@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace U2.Logger.WebApp;
+namespace U2.WebApp;
 
 public class CisController : Controller
 {

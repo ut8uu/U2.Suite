@@ -1,4 +1,4 @@
-﻿namespace U2.Logger.WebApp;
+﻿namespace U2.WebApp;
 
 #nullable disable
 

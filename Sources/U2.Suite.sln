@@ -55,7 +55,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "U2.LoggerSvc.Tests", "Suite
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "U2.Tests.Common", "Suite\Tests\U2.Tests.Common\U2.Tests.Common.csproj", "{A0F0B3DE-B397-46CA-865F-3276221301AE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "U2.Suite.WebApp", "Suite\Logger\U2.Logger.WebApp\U2.Suite.WebApp.csproj", "{3D418CAF-F4BD-435C-8AAF-937B8879F145}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "U2.WebApp", "Suite\Logger\U2.Logger.WebApp\U2.WebApp.csproj", "{3D418CAF-F4BD-435C-8AAF-937B8879F145}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CallInfoService", "CallInfoService", "{35827EE3-7D87-49F4-99D0-2C419F246092}"
 EndProject
