@@ -35,7 +35,7 @@ public class Startup
         services.AddControllers();
         services.AddSwaggerGen(c =>
         {
-            c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebApiAutoMapperDemo", Version = "v1" });
+            c.SwaggerDoc("v1", new OpenApiInfo { Title = "U2.LoggerSvc.API", Version = "v1" });
         });
     }
 
@@ -46,7 +46,7 @@ public class Startup
         {
             app.UseDeveloperExceptionPage();
             app.UseSwagger();
-            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "WebApiAutoMapperDemo v1"));
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "U2.LoggerSvc.API v1"));
         }
 
         app.UseHttpsRedirection();
