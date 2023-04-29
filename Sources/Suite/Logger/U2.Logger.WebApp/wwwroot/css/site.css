@@ -75,6 +75,11 @@ body {
 }
 
 .call_info_title {
+  font-size: 3em;
+  font-weight: bold;
+}
+
+.caption1 {
   font-size: 2em;
   font-weight: bold;
 }

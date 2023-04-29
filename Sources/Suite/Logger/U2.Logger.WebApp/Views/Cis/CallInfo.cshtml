@@ -4,9 +4,10 @@
 	<div class="call_info_title width100perc">
 		@Model.CallInfo.Call
 	</div>
-	<div class="horizontal_flow_layout text_left">
-		<div class="width200px text_right">First name:</div>
-		<div class="spacer10px"></div>
-		<div>@Model.CallInfo.FirstName</div>
-	</div>
+	@{
+		foreach (var callInfoRow in Model.CallInfo.GetCallInfoRows())
+		{
+			await Html.RenderPartialAsync("CallInfoRow", callInfoRow);
+		}
+	}
 </div>
