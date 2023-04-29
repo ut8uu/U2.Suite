@@ -1,0 +1,8 @@
+﻿@model CallInfoSection
+<div class="caption1">@Model.Title</div>
+@{
+	foreach (var callInfoRow in Model)
+	{
+		await Html.RenderPartialAsync("CallInfoRow", callInfoRow);
+	}
+}

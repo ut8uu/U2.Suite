@@ -1,0 +1,13 @@
+﻿@model CallInfoControl
+
+<div class="vertical_flow_layout width100perc">
+	<div class="call_info_title width100perc">
+		@Model.CallInfo.Call
+	</div>
+	@{
+		foreach (var section in Model.CallInfo.GetCallInfoRows())
+		{
+			await Html.RenderPartialAsync("CallInfoSection", section);
+		}
+	}
+</div>

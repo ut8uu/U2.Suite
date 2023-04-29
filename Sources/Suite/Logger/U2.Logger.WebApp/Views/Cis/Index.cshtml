@@ -1,0 +1,23 @@
+﻿@model CisPage
+@{
+	ViewData["Title"] = "Call Info Service";
+}
+
+<div class="text-center">
+	@{
+		var callsList = new ShortCallListControl("calls", Model.Calls);
+		var callsListPanel = new PanelControl("calls_list_panel", new() { callsList })
+		{
+			Class = "width200px",
+		};
+		var leftPanel = new VerticalLayoutControl("left_panel", new() { callsListPanel });
+		var callInfo = new CallInfoControl("call_info", Model.CallInfo);
+		var rightPanel = new PanelControl("call_info_panel", new() { callInfo })
+		{
+			Class = "width500px",
+		};
+
+		var mainControl = new HorizontalLayoutControl("main", new() { leftPanel, rightPanel });
+		await Html.RenderPartialAsync(mainControl.ViewName, mainControl);
+	}
+</div>

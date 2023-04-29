@@ -1,0 +1,15 @@
+﻿@model CallInfoRow
+<div class="horizontal_flow_layout text_left">
+	@{
+		if (Model.IsCaption)
+		{
+			<div class="caption1">@Model.Title</div>
+		}
+		else
+		{
+			<div class="width200px text_right">@Model.Title</div>
+			<div class="spacer10px"></div>
+			<div>@Model.Value</div>
+		}
+	}
+</div>
