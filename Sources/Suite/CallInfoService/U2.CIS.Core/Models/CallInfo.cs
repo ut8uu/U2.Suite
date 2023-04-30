@@ -1,11 +1,17 @@
-﻿namespace U2.CIS.ApiTypes.v1;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace U2.CIS.Core;
 
 #nullable disable
 
 /// <summary>
-/// Represents a data transfer object used for call information
+/// Represents a call information object.
 /// </summary>
-public class CallInfoDto
+public sealed class CallInfo
 {
 	public int Id { get; set; }
 	public string Call { get; set; }
@@ -30,5 +36,4 @@ public class CallInfoDto
 	public bool? AcceptsEqsl { get; set; }
 	public bool? AcceptsLotw { get; set; }
 	public bool? UsesPaperQsl { get; set; }
-
 }

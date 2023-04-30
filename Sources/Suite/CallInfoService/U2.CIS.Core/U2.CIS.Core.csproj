@@ -6,4 +6,17 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Helpers\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="12.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\U2.CIS.ApiTypes\U2.CIS.ApiTypes.csproj" />
+    <ProjectReference Include="..\U2.CIS.Data\U2.CIS.Data.csproj" />
+  </ItemGroup>
+
 </Project>
