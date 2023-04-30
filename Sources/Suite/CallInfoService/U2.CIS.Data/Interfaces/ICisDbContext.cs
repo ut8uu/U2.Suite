@@ -11,7 +11,7 @@ public interface ICisDbContext
 {
 	DbSet<CallInfoEntry> Entries { get; set; }
 
-	Task<CallInfoEntry> GetCallInfoEntryAsync(string call, CancellationToken cancellationToken);
+	Task<CallInfoEntry?> GetCallInfoEntryAsync(string call, CancellationToken cancellationToken);
 
 	/// <summary>
 	/// Adds given call entry in the database.

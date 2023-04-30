@@ -22,7 +22,7 @@ public interface ICallInfoService
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
 	/// <exception cref="CallDeleteFailedException"></exception>
-	Task DeleteCallAsync(string call, CancellationToken cancellationToken);
+	Task<bool> DeleteCallAsync(string call, CancellationToken cancellationToken);
 
 	/// <summary>
 	/// Deletes given call from the database.

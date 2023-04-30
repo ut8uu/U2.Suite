@@ -41,14 +41,23 @@ public class CisDbContext : DbContext, ICisDbContext
 		return addedEntry.Entity.Id;
 	}
 
-	public Task<bool> DeleteCallInfoEntryAsync(int id, CancellationToken cancellationToken)
+	public async Task<bool> DeleteCallInfoEntryAsync(int id, CancellationToken cancellationToken)
 	{
-		throw new NotImplementedException();
+		var entry = await Entries.FindAsync(id, cancellationToken);
+
+		if (entry == null)
+		{
+			return false;
+		}
+
+		Entries.Remove(entry);
+		await SaveChangesAsync(cancellationToken);
+		return true;
 	}
 
-	public Task<CallInfoEntry> GetCallInfoEntryAsync(string call, CancellationToken cancellationToken)
+	public Task<CallInfoEntry?> GetCallInfoEntryAsync(string call, CancellationToken cancellationToken)
 	{
-		throw new NotImplementedException();
+		return Entries.FirstOrDefaultAsync(x => x.Call == call, cancellationToken: cancellationToken);
 	}
 
 	public Task<bool> UpdateCallInfoEntryAsync(CallInfoEntry entry, CancellationToken cancellationToken)

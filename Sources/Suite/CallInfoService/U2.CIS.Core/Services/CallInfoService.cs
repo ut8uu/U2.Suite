@@ -22,9 +22,14 @@ public sealed class CallInfoService : ICallInfoService
 		return _dbContext.AddCallInfoEntryAsync(newEntry, cancellationToken);
 	}
 
-	public Task DeleteCallAsync(string call, CancellationToken cancellationToken)
+	public async Task<bool> DeleteCallAsync(string call, CancellationToken cancellationToken)
 	{
-		throw new NotImplementedException();
+		var entry = await _dbContext.GetCallInfoEntryAsync(call, cancellationToken);
+		if (entry == null) 
+		{
+			return false;
+		}
+		return await _dbContext.DeleteCallInfoEntryAsync(entry.Id, cancellationToken);
 	}
 
 	public int GetCallInfoCount()
