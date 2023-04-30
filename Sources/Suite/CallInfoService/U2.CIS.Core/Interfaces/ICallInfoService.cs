@@ -4,6 +4,8 @@ namespace U2.CIS.Core;
 
 public interface ICallInfoService
 {
+	int GetCallInfoCount();
+
 	/// <summary>
 	/// Adds given call to the database.
 	/// </summary>
@@ -11,7 +13,7 @@ public interface ICallInfoService
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
 	/// <exception cref="CallAddFailedException"></exception>
-	Task AddCallAsync(string call, CancellationToken cancellationToken);
+	Task<int> AddCallAsync(string call, CancellationToken cancellationToken);
 
 	/// <summary>
 	/// Deletes given call from the database.

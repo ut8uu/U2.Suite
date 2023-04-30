@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Threading;
+using Microsoft.EntityFrameworkCore;
 using U2.Core;
 
 namespace U2.CIS.Data;
@@ -33,9 +34,11 @@ public class CisDbContext : DbContext, ICisDbContext
 	protected override void OnConfiguring(DbContextOptionsBuilder options)
 		=> options.UseSqlite($"Data Source={DbPath}");
 
-	public Task<int> AddCallInfoEntryAsync(CallInfoEntry entry, CancellationToken cancellationToken)
+	public async Task<int> AddCallInfoEntryAsync(CallInfoEntry entry, CancellationToken cancellationToken)
 	{
-		throw new NotImplementedException();
+		var addedEntry = await Entries.AddAsync(entry, cancellationToken);
+		await SaveChangesAsync(cancellationToken);
+		return addedEntry.Entity.Id;
 	}
 
 	public Task<bool> DeleteCallInfoEntryAsync(int id, CancellationToken cancellationToken)
@@ -53,8 +56,13 @@ public class CisDbContext : DbContext, ICisDbContext
 		throw new NotImplementedException();
 	}
 
-	public Task DeleteAllEntriesAsync(CancellationToken none)
+	public async Task DeleteAllEntriesAsync(CancellationToken cancellationToken)
 	{
-		throw new NotImplementedException();
+		foreach (var entry in Entries)
+		{
+			Entries.Remove(entry);
+		}
+
+		await SaveChangesAsync(cancellationToken);
 	}
 }

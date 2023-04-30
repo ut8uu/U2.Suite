@@ -33,7 +33,7 @@ public abstract class CisTestsBase : TestsBase, IDisposable
         }
     }
 
-    protected async Task SetupLoggerDbContext()
+    protected async Task SetupCisDbContext()
     {
         await _dbContext.DeleteAllEntriesAsync(CancellationToken.None);
 
