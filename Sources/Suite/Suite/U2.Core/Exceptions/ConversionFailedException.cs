@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace U2.LoggerSvc.Core;
+namespace U2.Core;
 
-public class ConversionFailedException : LoggerException
+public class ConversionFailedException : Exception
 {
     public ConversionFailedException(Type sourceType, Type targetType, string message) 
         : base($"Conversion from {sourceType} to {targetType} failed. {message}")
