@@ -52,4 +52,9 @@ public class CisDbContext : DbContext, ICisDbContext
 	{
 		throw new NotImplementedException();
 	}
+
+	public Task DeleteAllEntriesAsync(CancellationToken none)
+	{
+		throw new NotImplementedException();
+	}
 }

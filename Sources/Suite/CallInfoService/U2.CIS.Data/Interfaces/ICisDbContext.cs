@@ -31,6 +31,8 @@ public interface ICisDbContext
 	/// <exception cref="OperationCanceledException"></exception>
 	Task<bool> DeleteCallInfoEntryAsync(int id, CancellationToken cancellationToken);
 
+	Task DeleteAllEntriesAsync(CancellationToken none);
+
 	/// <summary>
 	/// Updates given log entry.
 	/// </summary>
