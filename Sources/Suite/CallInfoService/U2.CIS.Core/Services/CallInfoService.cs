@@ -32,14 +32,29 @@ public sealed class CallInfoService : ICallInfoService
 		return await _dbContext.DeleteCallInfoEntryAsync(entry.Id, cancellationToken);
 	}
 
+	public async Task<CallInfo> GetCallInfoAsync(string call, CancellationToken cancellationToken)
+	{
+		var entry = await _dbContext.GetCallInfoEntryAsync(call, cancellationToken);
+		if (entry == null)
+		{
+			var newEntry = new CallInfoEntry { Call = call };
+			var id = await _dbContext.AddCallInfoEntryAsync(newEntry, cancellationToken);
+			entry = await _dbContext.GetCallInfoEntryAsync(call, cancellationToken);
+			entry ??= newEntry;
+		}
+		return entry.ToCallInfo();
+	}
+
 	public int GetCallInfoCount()
 	{
 		return _dbContext.Entries.Count();
 	}
 
-	public Task UpdateCallAsync(string call, CallInfo callInfo, CancellationToken cancellationToken)
+	public Task<bool> UpdateCallAsync(int id, CallInfo callInfo, CancellationToken cancellationToken)
 	{
-		throw new NotImplementedException();
+		var callInfoEntry = callInfo.ToCallInfoEntry();
+		callInfoEntry.Id = id;
+		return _dbContext.UpdateCallInfoEntryAsync(callInfoEntry, cancellationToken);
 	}
 
 	private string GetDebuggerDisplay()

@@ -1,4 +1,5 @@
 ﻿using System;
+using U2.CIS.Data;
 
 namespace U2.CIS.Core;
 
@@ -15,6 +16,8 @@ public interface ICallInfoService
 	/// <exception cref="CallAddFailedException"></exception>
 	Task<int> AddCallAsync(string call, CancellationToken cancellationToken);
 
+	Task<CallInfo> GetCallInfoAsync(string call, CancellationToken cancellationToken);
+
 	/// <summary>
 	/// Deletes given call from the database.
 	/// </summary>
@@ -27,9 +30,10 @@ public interface ICallInfoService
 	/// <summary>
 	/// Deletes given call from the database.
 	/// </summary>
-	/// <param name="call"></param>
+	/// <param name="id"></param>
+	/// <param name="callInfo"></param>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
 	/// <exception cref="CallDeleteFailedException"></exception>
-	Task UpdateCallAsync(string call, CallInfo callInfo, CancellationToken cancellationToken);
+	Task<bool> UpdateCallAsync(int id, CallInfo callInfo, CancellationToken cancellationToken);
 }

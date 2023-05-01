@@ -60,9 +60,18 @@ public class CisDbContext : DbContext, ICisDbContext
 		return Entries.FirstOrDefaultAsync(x => x.Call == call, cancellationToken: cancellationToken);
 	}
 
-	public Task<bool> UpdateCallInfoEntryAsync(CallInfoEntry entry, CancellationToken cancellationToken)
+	public async Task<bool> UpdateCallInfoEntryAsync(CallInfoEntry entry, CancellationToken cancellationToken)
 	{
-		throw new NotImplementedException();
+		var existingEntry = await Entries.FindAsync(entry.Id, cancellationToken);
+
+		if (existingEntry == null)
+		{
+			return false;
+		}
+
+		Entries.Entry(existingEntry).CurrentValues.SetValues(entry);
+		await SaveChangesAsync(cancellationToken);
+		return true;
 	}
 
 	public async Task DeleteAllEntriesAsync(CancellationToken cancellationToken)

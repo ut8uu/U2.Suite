@@ -13,7 +13,6 @@ namespace U2.CIS.Core;
 /// </summary>
 public sealed class CallInfo
 {
-	public int Id { get; set; }
 	public string Call { get; set; }
 	public string Aliases { get; set; }
 	public string FirstName { get; set; }

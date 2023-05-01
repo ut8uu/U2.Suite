@@ -7,7 +7,6 @@
 /// </summary>
 public class CallInfoDto
 {
-	public int Id { get; set; }
 	public string Call { get; set; }
 	public string Aliases { get; set; }
 	public string FirstName { get; set; }
