@@ -185,4 +185,14 @@ public static class ConversionHelper
         return rst;
     }
 
+	public static RadioBand BandNameToBand(string bandName)
+	{
+		var band = AllBands.FirstOrDefault(x => x.Name.Equals(bandName, StringComparison.InvariantCultureIgnoreCase));
+		return band;
+	}
+
+	public static RadioMode ModeNameToMode(string modeName)
+	{
+		return AllModes.FirstOrDefault(x => x.Name.Equals(modeName, StringComparison.InvariantCultureIgnoreCase));
+	}
 }
