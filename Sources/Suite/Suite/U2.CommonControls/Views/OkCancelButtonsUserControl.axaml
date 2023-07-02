@@ -1,0 +1,23 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="1000" d:DesignHeight="60"
+             xmlns:logger="clr-namespace:U2.CommonControls"
+			 x:Class="U2.CommonControls.OkCancelButtonsUserControl">
+	<Design.DataContext>
+		<logger:DemoOkCancelViewModel/>
+	</Design.DataContext>
+	<Border Classes="Card" DockPanel.Dock="Bottom">
+		<DockPanel>
+			<Button DockPanel.Dock="Right" Name="CancelButton" 
+					IsDefault="True" Margin="3 1"
+					Command="{Binding ExecuteCancelAction}"
+					Content="{Binding CancelButtonTitle}"></Button>
+			<Button DockPanel.Dock="Right" Name="OkButton" Margin="3 1"
+					Command="{Binding ExecuteOkAction}"
+					Content="{Binding OkButtonTitle}"></Button>
+			<Panel></Panel>
+		</DockPanel>
+	</Border>
+</UserControl>

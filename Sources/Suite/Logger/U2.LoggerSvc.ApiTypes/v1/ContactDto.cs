@@ -17,7 +17,7 @@ public sealed class ContactDto
     public Guid UniqueId { get; set; }
 
     [Description("A call of the remote station.")]
-    public string Call { get; set; } = "";
+    public string? Call { get; set; } = "";
 
     [Description("The date and time of the QSO start. Usually, equals to DateTimeOff.")]
     public DateTime DateTimeOn { get; set; }
@@ -26,16 +26,16 @@ public sealed class ContactDto
     public DateTime DateTimeOff { get; set; }
 
     [Description("A name of the band of the QSO. Usually, equals to BandRx.")]
-    public string Band { get; set; }
+    public string? Band { get; set; }
 
     [Description("A name of the receiving band of the QSO. Usually, equals to BandRx.")]
-    public string BandRx { get; set; }
+    public string? BandRx { get; set; }
 
     [Description("A continent of the remote party. If set to 0, will be calculated from call.")]
     public int Continent { get; set; } = 0;
 
     [Description("A country of the remote party. If empty, will be calculated from call.")]
-    public string Country { get; set; } = "";
+    public string? Country { get; set; } = "";
 
     [Description("A CQ zone of the remote party. If set to 0, will be calculated from call.")]
     public int Cqz { get; set; } = 0;
@@ -50,13 +50,13 @@ public sealed class ContactDto
     public decimal FrequencyRx { get; set; } = 0;
 
     [Description("A maidenhead grid square of the remote party. Optional.")]
-    public string Gridsquare { get; set; } = "";
+    public string? Gridsquare { get; set; } = "";
 
     [Description("An Iota of the remote party. Optional.")]
-    public string Iota { get; set; } = "";
+    public string? Iota { get; set; } = "";
 
     [Description("A name of the island of the remote party. Optional.")]
-    public string IotaIslandId { get; set; } = "";
+    public string? IotaIslandId { get; set; } = "";
 
     [Description("The ITU zone of the remote party. Optional.")]
     public int Ituz { get; set; } = 0;
@@ -68,19 +68,19 @@ public sealed class ContactDto
     public decimal Lon { get; set; } = 0;
 
     [Description("A mode of the QSO. Required.")]
-    public string Mode { get; set; }
+    public string? Mode { get; set; }
 
     [Description("A city of the operator. Optional.")]
-    public string MyCity { get; set; } = "";
+    public string? MyCity { get; set; } = "";
 
     [Description("A country of the operator. Optional.")]
-    public string MyCountry { get; set; } = "";
+    public string? MyCountry { get; set; } = "";
 
     [Description("A CQ zone of the operator. Optional.")]
     public int MyCqZone { get; set; } = 0;
 
     [Description("A maidnhead grid square of the operator. Optional.")]
-    public string MyGridsquare { get; set; } = "";
+    public string? MyGridsquare { get; set; } = "";
 
     [Description("A ITU zone of the operator. Optional. Will be calculated from operator's call if omitted.")]
     public int MyItuZone { get; set; } = 0;
@@ -92,31 +92,31 @@ public sealed class ContactDto
     public decimal MyLon { get; set; } = 0;
 
     [Description("A name of the operator. Optional.")]
-    public string MyName { get; set; } = "";
+    public string? MyName { get; set; } = "";
 
     [Description("A name of the operator at the remote party. Optional.")]
-    public string Name { get; set; } = "";
+    public string? Name { get; set; } = "";
 
     [Description("A name of the operator. Optional.")]
-    public string Operator { get; set; } = "";
+    public string? Operator { get; set; } = "";
 
     [Description("A propagation used in the QSO. Optional.")]
-    public string Propagation { get; set; } = "";
+    public string? Propagation { get; set; } = "";
 
     [Description("A sent report. Optional.")]
-    public string RstSent { get; set; } = "";
+    public string? RstSent { get; set; } = "";
 
     [Description("A received report. Optional.")]
-    public string RstRcvd { get; set; } = "";
+    public string? RstRcvd { get; set; } = "";
 
     [Description("A name of the satellite. Optional.")]
-    public string SatName { get; set; } = "";
+    public string? SatName { get; set; } = "";
 
     [Description("A mode used when working via satellite. Optional.")]
-    public string SatMode { get; set; } = "";
+    public string? SatMode { get; set; } = "";
 
     [Description("An identifier of the QSO at QRZ.com. Optional.")]
-    public string QrzId { get; set; } = "";
+    public string? QrzId { get; set; } = "";
 
     private string GetDebuggerDisplay() => $"{Call} @{Band} #{Mode}";
 }

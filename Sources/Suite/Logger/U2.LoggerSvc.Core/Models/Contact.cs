@@ -16,8 +16,8 @@ public sealed class Contact
     public string Call { get; set; } = "";
     public DateTime DateTimeOn { get; set; }
     public DateTime DateTimeOff { get; set; }
-    public RadioBand Band { get; set; }
-    public RadioBand BandRx { get; set; }
+    public RadioBand? Band { get; set; }
+    public RadioBand? BandRx { get; set; }
     public Continent Continent { get; set; } = 0;
     public string Country { get; set; } = "";
     public int Cqz { get; set; } = 0;
@@ -31,7 +31,7 @@ public sealed class Contact
     public int Ituz { get; set; } = 0;
     public decimal Lat { get; set; } = 0;
     public decimal Lon { get; set; } = 0;
-    public RadioMode Mode { get; set; }
+    public RadioMode? Mode { get; set; }
     public string MyCity { get; set; } = "";
     public string MyCountry { get; set; } = "";
     public int MyCqZone { get; set; } = 0;

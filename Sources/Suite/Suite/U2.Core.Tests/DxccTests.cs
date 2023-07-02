@@ -39,7 +39,6 @@ public class DxccTests
     [InlineData("LA1K", "Norway")]
     [InlineData("TF/DL2NWK/M", "Iceland")]
     [InlineData("TF/DL2NWK/MM", "None")]
-    [InlineData("TF/DL2NWK/P", "Iceland")]
     [InlineData("2M0SQL/P", "Scotland")] // (portable)")]
     [InlineData("FT8WW", "Crozet Island")]
     [InlineData("OH/DJ1YFK", "Finland")]

@@ -1,0 +1,306 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ActivatedReference" xml:space="preserve">
+    <value>Activated reference</value>
+  </data>
+  <data name="ActivatedReferenceToolTip" xml:space="preserve">
+    <value>One or more comma separated references activated simultaneously, if applicable.</value>
+  </data>
+  <data name="AdifFileDuplicatesTitle" xml:space="preserve">
+    <value>Duplicates</value>
+  </data>
+  <data name="AdifFileErrorsTitle" xml:space="preserve">
+    <value>Errors</value>
+  </data>
+  <data name="AdifFileLinesTitle" xml:space="preserve">
+    <value>Lines</value>
+  </data>
+  <data name="AdifFilenameTitle" xml:space="preserve">
+    <value>ADIF filename</value>
+  </data>
+  <data name="AdifFileRecordsTitle" xml:space="preserve">
+    <value>Records</value>
+  </data>
+  <data name="AdifFileWarningsTitle" xml:space="preserve">
+    <value>Warnings</value>
+  </data>
+  <data name="Band" xml:space="preserve">
+    <value>Band</value>
+  </data>
+  <data name="BandColumnHeader" xml:space="preserve">
+    <value>Band</value>
+  </data>
+  <data name="Callsign" xml:space="preserve">
+    <value>Callsign</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="CancelOperationButtonTitle" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="CloseButtonTitle" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="Comments" xml:space="preserve">
+    <value>Comments</value>
+  </data>
+  <data name="ConfigCatMenuTitle" xml:space="preserve">
+    <value>CAT control</value>
+  </data>
+  <data name="ConfigMenuTitle" xml:space="preserve">
+    <value>Config</value>
+  </data>
+  <data name="CreateNewLog" xml:space="preserve">
+    <value>Create new log</value>
+  </data>
+  <data name="DeleteButtonTitle" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="DescriptionToolTip" xml:space="preserve">
+    <value>A more or less informative description of the log.</value>
+  </data>
+  <data name="EditButtonTitle" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="EmptyLogNameException" xml:space="preserve">
+    <value>A log name cannot be empty.</value>
+  </data>
+  <data name="EmptyStationCallsignException" xml:space="preserve">
+    <value>A station callsign cannot be empty.</value>
+  </data>
+  <data name="ExportToAdifFailedMessage" xml:space="preserve">
+    <value>Export to ADIF failed.</value>
+  </data>
+  <data name="ExportToAdifSuccessfulMessage" xml:space="preserve">
+    <value>Export to ADIF successful.</value>
+  </data>
+  <data name="FreqMhz" xml:space="preserve">
+    <value>Freq (MHz)</value>
+  </data>
+  <data name="Frequency" xml:space="preserve">
+    <value>Frequency</value>
+  </data>
+  <data name="FrequencyNotResolvedFmt" xml:space="preserve">
+    <value>Frequency {0} not recognized as a valid one.</value>
+  </data>
+  <data name="ImportButtonTitle" xml:space="preserve">
+    <value>Import</value>
+  </data>
+  <data name="ImportFromAdifFileOptionsDuplicates" xml:space="preserve">
+    <value>Duplicates:</value>
+  </data>
+  <data name="ImportFromAdifFileOptionsDuplicatesAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="ImportFromAdifFileOptionsDuplicatesIgnore" xml:space="preserve">
+    <value>Ignore</value>
+  </data>
+  <data name="ImportFromAdifFileOptionsDuplicatesOverwrite" xml:space="preserve">
+    <value>Overwrite</value>
+  </data>
+  <data name="ImportFromAdifFileOptionsTitle" xml:space="preserve">
+    <value>Options</value>
+  </data>
+  <data name="ImportFromAdifWindowTitle" xml:space="preserve">
+    <value>Import from ADIF</value>
+  </data>
+  <data name="ImportProgressFormat" xml:space="preserve">
+    <value>Imported {0} records out of {1} ({2}%).</value>
+  </data>
+  <data name="LogInfoDetailsHeader" xml:space="preserve">
+    <value>Log details</value>
+  </data>
+  <data name="LogName" xml:space="preserve">
+    <value>Log name</value>
+  </data>
+  <data name="LogNameIsInUseFmt" xml:space="preserve">
+    <value>Log name {0} is already in use. Please use another one.</value>
+  </data>
+  <data name="LogNameToolTip" xml:space="preserve">
+    <value>A short yet descriptive name of the log.</value>
+  </data>
+  <data name="Mode" xml:space="preserve">
+    <value>Mode</value>
+  </data>
+  <data name="OK" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="OpenLog" xml:space="preserve">
+    <value>Open existing log</value>
+  </data>
+  <data name="OperationCancelledMessage" xml:space="preserve">
+    <value>Operation cancelled.</value>
+  </data>
+  <data name="Operator" xml:space="preserve">
+    <value>Operator</value>
+  </data>
+  <data name="OperatorCallsign" xml:space="preserve">
+    <value>Operator callsign</value>
+  </data>
+  <data name="OperatorCallsignToolTip" xml:space="preserve">
+    <value>One or more comma separated callsigns of the station's operator(s). </value>
+  </data>
+  <data name="QsoEditorWindowTitle" xml:space="preserve">
+    <value>Edit QSO</value>
+  </data>
+  <data name="Rcv" xml:space="preserve">
+    <value>Rcv</value>
+  </data>
+  <data name="ReadingAdifRecordsFormat" xml:space="preserve">
+    <value>Reading records from ADIF: {0} out of {1} ({2}%).</value>
+  </data>
+  <data name="realtime" xml:space="preserve">
+    <value>real-time</value>
+  </data>
+  <data name="RstReceived" xml:space="preserve">
+    <value>RST Received</value>
+  </data>
+  <data name="RstSent" xml:space="preserve">
+    <value>RST Sent</value>
+  </data>
+  <data name="SaveButtonTitle" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="Snt" xml:space="preserve">
+    <value>Snt</value>
+  </data>
+  <data name="StationCallsign" xml:space="preserve">
+    <value>Station callsign</value>
+  </data>
+  <data name="StationCallsignToolTip" xml:space="preserve">
+    <value>A callsign used during the operation.</value>
+  </data>
+  <data name="Timestamp" xml:space="preserve">
+    <value>Timestamp</value>
+  </data>
+  <data name="TimestampNotRecognized" xml:space="preserve">
+    <value>Timestamp not recognized as a valid date and time value.</value>
+  </data>
+  <data name="UpdateLog" xml:space="preserve">
+    <value>Update existing log</value>
+  </data>
+  <data name="WipeButtonTitle" xml:space="preserve">
+    <value>Wipe</value>
+  </data>
+</root>

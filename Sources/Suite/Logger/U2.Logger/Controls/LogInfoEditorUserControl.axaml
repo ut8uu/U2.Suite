@@ -1,0 +1,59 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="500" d:DesignHeight="450"
+	         xmlns:logger="clr-namespace:U2.Logger"
+             x:Class="U2.Logger.LogInfoEditorUserControl">
+
+	<Design.DataContext>
+		<logger:DemoLogInfoWindowViewModel/>
+	</Design.DataContext>
+	
+	<Grid DockPanel.Dock="Top"
+	  RowDefinitions="50,50,50,50,120"
+	  ColumnDefinitions="200,280">
+		<TextBlock Grid.Row="0" Grid.Column="0"
+				   Text="{Binding Path=LogNameTitle}"
+				   Margin="0 12"></TextBlock>
+		<TextBox Grid.Row="0" Grid.Column="1"
+				 Text="{Binding LogName}"
+				 ToolTip.Tip="{Binding LogNameToolTip}"></TextBox>
+
+		<TextBlock Grid.Row="0" Grid.Column="0"
+				   Text="{Binding Path=LogNameTitle}"
+				   Margin="0 12"></TextBlock>
+		<TextBox Grid.Row="0" Grid.Column="1"
+				 Text="{Binding LogName}"
+				 ToolTip.Tip="{Binding LogNameToolTip}"></TextBox>
+
+		<TextBlock Grid.Row="1" Grid.Column="0"
+				   Text="{Binding Path=StationCallsignTitle}"
+				   Margin="0 12"></TextBlock>
+		<TextBox Grid.Row="1" Grid.Column="1"
+				 Text="{Binding StationCallsign}"
+				 ToolTip.Tip="{Binding StationCallsignToolTip}"></TextBox>
+
+		<TextBlock Grid.Row="2" Grid.Column="0"
+				   Text="{Binding Path=OperatorCallsignTitle}"
+				   Margin="0 12"></TextBlock>
+		<TextBox Grid.Row="2" Grid.Column="1"
+				 Text="{Binding OperatorCallsign}"
+				 ToolTip.Tip="{Binding OperatorCallsignToolTip}"></TextBox>
+
+		<TextBlock Grid.Row="3" Grid.Column="0"
+				   Text="{Binding Path=ActivatedReferenceTitle}"
+				   Margin="0 12"></TextBlock>
+		<TextBox Grid.Row="3" Grid.Column="1"
+				 Text="{Binding ActivatedReference}"
+				 ToolTip.Tip="{Binding ActivatedReferenceToolTip}"></TextBox>
+
+		<TextBlock Grid.Row="4" Grid.Column="0"
+				   Text="{Binding DescriptionTitle}"
+				   Margin="0 12"></TextBlock>
+		<TextBox Grid.Row="4" Grid.Column="1"
+				 Text="{Binding Description}"
+				 ToolTip.Tip="{Binding DescriptionToolTip}"></TextBox>
+	</Grid>
+
+</UserControl>

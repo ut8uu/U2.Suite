@@ -104,8 +104,13 @@ public sealed class LoggerService : ILoggerService
         }
     }
 
-    public Task<int> CreateContactAsync(Contact contact, CancellationToken cancellationToken)
+    public Task<int> CreateContactAsync(Contact? contact, CancellationToken cancellationToken)
     {
+        if (contact == null)
+        {
+            throw new ArgumentNullException(nameof(contact));
+        }
+
         var entry = contact.ToLogEntry();
         return _loggerDbContext.AddLogEntryAsync(entry, cancellationToken);
     }

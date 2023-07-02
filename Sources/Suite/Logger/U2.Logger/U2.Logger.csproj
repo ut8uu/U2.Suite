@@ -1,0 +1,32 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <RuntimeIdentifiers>win-x64;osx-x64;linux-x64</RuntimeIdentifiers>
+    <Nullable>enable</Nullable>
+    <LangVersion>latest</LangVersion>
+    <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+  </PropertyGroup>
+
+  
+  <ItemGroup>
+    <AvaloniaResource Include="Assets\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Avalonia" Version="11.0.0-rc2.1" />
+    <PackageReference Include="Avalonia.Themes.Fluent" Version="11.0.0-rc2.1" />
+    <PackageReference Include="Avalonia.Fonts.Inter" Version="11.0.0-rc2.1" />
+    <PackageReference Include="Avalonia.ReactiveUI" Version="11.0.0-rc2.1" />
+    <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
+    <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.0.0-rc2.1" />
+    <PackageReference Include="log4net" Version="2.0.15" />
+    <PackageReference Include="MvvmLightLibsStd10" Version="5.4.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Suite\U2.CommonControls\U2.CommonControls.csproj" />
+    <ProjectReference Include="..\..\Suite\U2.Contracts\U2.Contracts.csproj" />
+    <ProjectReference Include="..\..\Suite\U2.Core\U2.Core.csproj" />
+    <ProjectReference Include="..\..\Suite\U2.Resources\U2.Resources.csproj" />
+  </ItemGroup>
+</Project>

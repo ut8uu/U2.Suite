@@ -1,0 +1,17 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:commonControls="clr-namespace:U2.CommonControls"
+             mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="70"
+             Height="70"
+             x:Class="U2.CommonControls.TextBoxWithTitle">
+    <Design.DataContext>
+        <commonControls:DemoTextBoxWithTitleViewModel/>
+    </Design.DataContext>
+    <DockPanel>
+        <TextBlock DockPanel.Dock="Top" Text="{Binding A1}"></TextBlock>
+        <TextBox Name="Content" Text="{Binding Value}"
+                 ToolTip.Tip="{Binding Tooltip}"></TextBox>
+    </DockPanel>
+</UserControl>
