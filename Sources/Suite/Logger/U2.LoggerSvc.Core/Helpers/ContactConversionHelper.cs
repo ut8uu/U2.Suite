@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
+using U2.Core;
 using U2.LoggerSvc.ApiTypes.v1;
 using U2.LoggerSvc.Data;
 

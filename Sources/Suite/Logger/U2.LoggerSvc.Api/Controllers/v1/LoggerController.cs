@@ -24,7 +24,7 @@ public class LoggerController : ControllerBase
     [Description("Adds a contact to the database.")]
     [HttpPost]
     [Route("create")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<int>> Create([FromBody] Contact contact, CancellationToken cancellationToken)
     {

@@ -44,7 +44,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Core\U2.Core\U2.Core.csproj" />
     <ProjectReference Include="..\..\Tests\U2.Tests.Common\U2.Tests.Common.csproj" />
     <ProjectReference Include="..\U2.LoggerSvc.Api\U2.LoggerSvc.Api.csproj" />
     <ProjectReference Include="..\U2.LoggerSvc.Core\U2.LoggerSvc.Core.csproj" />

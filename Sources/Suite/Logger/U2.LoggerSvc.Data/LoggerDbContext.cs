@@ -50,11 +50,7 @@ public class LoggerDbContext : DbContext, ILoggerDbContext
 
     public async virtual Task DeleteAllEntriesAsync(CancellationToken cancellationToken)
     {
-        foreach (LoggerEntry entry in LogEntries)
-        {
-            LogEntries.Remove(entry);
-        }
-
+        LogEntries.RemoveRange(LogEntries);
         await SaveChangesAsync(cancellationToken);
     }
 
