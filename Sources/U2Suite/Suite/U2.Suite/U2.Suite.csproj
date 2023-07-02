@@ -15,7 +15,7 @@
 		<ApplicationIcon>u2suite.ico</ApplicationIcon>
 		<EnableNETAnalyzers>true</EnableNETAnalyzers>
 		<SignAssembly>true</SignAssembly>
-		<AssemblyOriginatorKeyFile>../../u2suite.snk</AssemblyOriginatorKeyFile>
+		<AssemblyOriginatorKeyFile>../../../u2suite.snk</AssemblyOriginatorKeyFile>
 		<Authors>Sergey Usmanov</Authors>
 	</PropertyGroup>
 	<ItemGroup>
@@ -43,9 +43,9 @@
 		<PackageReference Include="Citrus.Avalonia" Version="1.6.1" />
 	</ItemGroup>
 	<ItemGroup>
-		<ProjectReference Include="..\U2.Contracts\U2.Contracts.csproj" />
-		<ProjectReference Include="..\U2.Core\U2.Core.csproj" />
-		<ProjectReference Include="..\U2.Resources\U2.Resources.csproj" />
+		<ProjectReference Include="..\..\Common\U2.Core\U2.Core.csproj" />
+		<ProjectReference Include="..\..\Common\U2.Contracts\U2.Contracts.csproj" />
+		<ProjectReference Include="..\..\Common\U2.Resources\U2.Resources.csproj" />
 	</ItemGroup>
 	<ItemGroup>
 		<Compile Update="Views\AboutFormView.axaml.cs">

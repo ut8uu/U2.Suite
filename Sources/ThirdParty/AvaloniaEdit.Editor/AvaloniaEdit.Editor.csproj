@@ -46,10 +46,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\U2Suite\U2.Core\U2.Core.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Compile Update="RichEditorView.xaml.cs">
       <DependentUpon>RichEditorView.xaml</DependentUpon>
     </Compile>
