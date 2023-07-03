@@ -44,7 +44,7 @@
 		<PackageReference Include="System.Data.SQLite" Version="1.0.117" />
 	</ItemGroup>
 	<ItemGroup>
-		<ProjectReference Include="..\..\Common\U2.CommonControls\U2.CommonControls.csproj" />
+		<ProjectReference Include="..\..\Common\U2.CommonControls\U2.Common.csproj" />
 		<ProjectReference Include="..\..\Common\U2.Resources\U2.Resources.csproj" />
 		<ProjectReference Include="..\..\Common\U2.Core\U2.Core.csproj" />
 	</ItemGroup>

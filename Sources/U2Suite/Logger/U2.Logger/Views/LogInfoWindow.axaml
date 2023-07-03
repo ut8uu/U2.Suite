@@ -4,7 +4,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:logger="clr-namespace:U2.Logger"
         xmlns:core="clr-namespace:U2.Core;assembly=U2.Core"
-        xmlns:commonControls="clr-namespace:U2.CommonControls;assembly=U2.CommonControls"
+        xmlns:commonControls="clr-namespace:U2.Common;assembly=U2.Common"
         mc:Ignorable="d" d:DesignWidth="500" d:DesignHeight="380"
 		Width="500" Height="380"
         x:Class="U2.Logger.LogInfoWindow"

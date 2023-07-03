@@ -29,7 +29,7 @@ using System.Text;
 using Avalonia.Controls;
 using GalaSoft.MvvmLight.Messaging;
 using log4net;
-using U2.CommonControls;
+using U2.Common;
 using U2.Core;
 
 namespace U2.Logger;

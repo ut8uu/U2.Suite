@@ -1,0 +1,32 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <TargetFramework>net7.0</TargetFramework>
+    <Nullable>disable</Nullable>
+    <ApplicationIcon />
+    <StartupObject />
+    <AssemblyVersion>1.1.0.20414</AssemblyVersion>
+    <FileVersion>1.1.0.20414</FileVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Remove=".gitignore" />
+  </ItemGroup>
+  
+  <Import Project="..\..\..\..\build\ReferenceAssemblies.props" />
+  <Import Project="..\..\..\..\build\Avalonia.props" />
+  <Import Project="..\..\..\..\build\Avalonia.Desktop.props" />
+  <Import Project="..\..\..\..\build\Avalonia.Diagnostics.props" />
+  <Import Project="..\..\..\..\build\Avalonia.Themes.Fluent.props" />
+  <Import Project="..\..\..\..\build\Avalonia.Fonts.Inter.props" />
+  <Import Project="..\..\..\..\build\ThemeEditor.Controls.ColorPicker.props" />
+
+  <ItemGroup>
+    <PackageReference Include="MessageBox.Avalonia" Version="2.1.0" />
+    <PackageReference Include="PropertyChanged.Fody" Version="4.1.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Views\OkCancelButtonsUserControl.axaml.cs">
+      <DependentUpon>%(Filename)</DependentUpon>
+    </Compile>
+  </ItemGroup>
+</Project>

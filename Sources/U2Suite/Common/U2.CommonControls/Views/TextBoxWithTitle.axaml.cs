@@ -24,7 +24,7 @@ using Avalonia.Data;
 using Avalonia.Markup.Xaml;
 using Avalonia.Metadata;
 
-namespace U2.CommonControls
+namespace U2.Common
 {
     [PropertyChanged.DoNotNotify]
     public partial class TextBoxWithTitle : UserControl

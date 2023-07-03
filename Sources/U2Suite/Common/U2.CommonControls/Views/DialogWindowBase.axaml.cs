@@ -21,7 +21,7 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 
-namespace U2.CommonControls.Views
+namespace U2.Common.Views
 {
     [PropertyChanged.DoNotNotify]
     public partial class DialogWindowBase : Window

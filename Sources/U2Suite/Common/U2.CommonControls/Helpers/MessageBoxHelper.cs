@@ -24,7 +24,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Avalonia.Controls;
 
-namespace U2.CommonControls
+namespace U2.Common
 {
     public static class MessageBoxHelper
     {

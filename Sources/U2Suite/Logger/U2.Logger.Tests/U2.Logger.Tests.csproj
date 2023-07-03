@@ -23,9 +23,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Common\U2.CommonControls\U2.Common.csproj" />
     <ProjectReference Include="..\..\Common\U2.Tests.Common\U2.Tests.Common.csproj" />
     <ProjectReference Include="..\..\Common\U2.Contracts\U2.Contracts.csproj" />
-    <ProjectReference Include="..\U2.Logger\U2.Logger.csproj" />
+    <ProjectReference Include="..\U2.Logger\U2.Logger.UI.csproj" />
   </ItemGroup>
 
   <ItemGroup>

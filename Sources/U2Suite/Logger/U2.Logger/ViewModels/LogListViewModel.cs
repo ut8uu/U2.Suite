@@ -27,7 +27,7 @@ using System.Text;
 using System.Text.Json;
 using Avalonia.Controls;
 using GalaSoft.MvvmLight.Messaging;
-using U2.CommonControls;
+using U2.Common;
 
 namespace U2.Logger;
 

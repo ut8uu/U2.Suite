@@ -20,7 +20,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using U2.CommonControls;
+using U2.Common;
 
 namespace U2.Logger
 {

@@ -20,7 +20,7 @@
         <Color x:Key="ThemeControlHighlightLowColor">#BBFFFFFF</Color>
         <Color x:Key="ThemeControlHighlightMidColor">#88FFFFFF</Color>
         <Color x:Key="ThemeControlHighlightHighColor">#44FFFFFF</Color>
-        <Color x:Key="ThemeForegroundColor">#FFFFFFFF</Color>
+        <Color x:Key="ThemeForegroundColor">#FF000000</Color>
         <Color x:Key="ThemeForegroundLowColor">#88FFFFFF</Color>
 
         <Color x:Key="HighlightBadgeColor">#40fd7d00</Color>

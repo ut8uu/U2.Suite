@@ -21,4 +21,9 @@
     <Style Selector="TextBlock.Accent">
         <Setter Property="Foreground" Value="{DynamicResource HighlightBrush}" />
     </Style>
+  <Design.PreviewWith>
+    <Border Padding="20">
+      <TextBlock>test message</TextBlock>
+    </Border>
+  </Design.PreviewWith>
 </Styles>

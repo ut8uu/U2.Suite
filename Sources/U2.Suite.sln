@@ -24,7 +24,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "U2.MultiRig", "U2.MultiRig"
 		..\Documentation\U2.MultiRig\UdpParameters.md = ..\Documentation\U2.MultiRig\UdpParameters.md
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "U2.Logger", "U2Suite\Logger\U2.Logger\U2.Logger.csproj", "{6FF2A8A4-5FE6-410A-ADA7-E58F68339D28}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "U2.Logger.UI", "U2Suite\Logger\U2.Logger\U2.Logger.UI.csproj", "{6FF2A8A4-5FE6-410A-ADA7-E58F68339D28}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "U2.Logger.Tests", "U2Suite\Logger\U2.Logger.Tests\U2.Logger.Tests.csproj", "{AFC1F241-07EC-43FF-AC1B-6386465B18D7}"
 EndProject
@@ -32,7 +32,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "U2.Suite", "U2Suite\Suite\U
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "U2.Suite.Tests", "U2Suite\Suite\U2.Suite.Tests\U2.Suite.Tests.csproj", "{206F2AA3-13A0-416B-96B4-408BFDD0FFB1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "U2.CommonControls", "U2Suite\Common\U2.CommonControls\U2.CommonControls.csproj", "{45F56B6D-B25B-457A-AB3A-18AEE09C854F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "U2.Common", "U2Suite\Common\U2.CommonControls\U2.Common.csproj", "{45F56B6D-B25B-457A-AB3A-18AEE09C854F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "U2.Contracts", "U2Suite\Common\U2.Contracts\U2.Contracts.csproj", "{C52CB3A3-D3C4-4CE4-85E2-D9E36A7DBBB3}"
 EndProject
@@ -53,6 +53,26 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "U2.LoggerSvc.RestApiClient", "U2Suite\Logger\U2.LoggerSvc.RestApiClient\U2.LoggerSvc.RestApiClient.csproj", "{4460A8AE-2065-4AF3-A4BF-F32685A19F09}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "U2.LoggerSvc.Tests", "U2Suite\Logger\U2.LoggerSvc.Tests\U2.LoggerSvc.Tests.csproj", "{E85EC1F5-3C96-4AA8-9BF1-1252E868C514}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{219DD404-E9EA-4674-858B-C2814FEABD4A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "props", "props", "{581B046E-90FA-4846-8629-FF5FBEC73896}"
+	ProjectSection(SolutionItems) = preProject
+		..\build\Avalonia.Desktop.props = ..\build\Avalonia.Desktop.props
+		..\build\Avalonia.Diagnostics.props = ..\build\Avalonia.Diagnostics.props
+		..\build\Avalonia.Fonts.Inter.props = ..\build\Avalonia.Fonts.Inter.props
+		..\build\Avalonia.props = ..\build\Avalonia.props
+		..\build\Avalonia.Themes.Fluent.props = ..\build\Avalonia.Themes.Fluent.props
+		..\build\Avalonia.Themes.Simple.props = ..\build\Avalonia.Themes.Simple.props
+		..\build\Base.props = ..\build\Base.props
+		..\build\CommunityToolkit.Mvvm.props = ..\build\CommunityToolkit.Mvvm.props
+		..\build\ReactiveMarbles.PropertyChanged.props = ..\build\ReactiveMarbles.PropertyChanged.props
+		..\build\ReferenceAssemblies.props = ..\build\ReferenceAssemblies.props
+		..\build\SignAssembly.props = ..\build\SignAssembly.props
+		..\build\SourceLink.props = ..\build\SourceLink.props
+		..\build\ThemeEditor.Controls.ColorPicker.props = ..\build\ThemeEditor.Controls.ColorPicker.props
+		..\build\XUnit.props = ..\build\XUnit.props
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -146,6 +166,7 @@ Global
 		{196EE24D-0D4A-4AD8-A643-A828D9614882} = {B32E844E-1D71-43DE-B934-C8562413DDEC}
 		{4460A8AE-2065-4AF3-A4BF-F32685A19F09} = {B32E844E-1D71-43DE-B934-C8562413DDEC}
 		{E85EC1F5-3C96-4AA8-9BF1-1252E868C514} = {B32E844E-1D71-43DE-B934-C8562413DDEC}
+		{581B046E-90FA-4846-8629-FF5FBEC73896} = {219DD404-E9EA-4674-858B-C2814FEABD4A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E8720C83-17E2-4C14-AFA9-CAAD4F71F4D6}

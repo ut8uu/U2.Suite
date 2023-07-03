@@ -20,26 +20,30 @@
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
+using Avalonia.ThemeManager;
 
-namespace U2.Logger
+namespace U2.Logger;
+
+public static IThemeManager? ThemeManager;
+	
+[PropertyChanged.DoNotNotify]
+public class App : Application
 {
-    [PropertyChanged.DoNotNotify]
-    public class App : Application
+    public override void Initialize()
     {
-        public override void Initialize()
+			ThemeManager = new FluentThemeManager();
+			ThemeManager.Initialize(this);
+			AvaloniaXamlLoader.Load(this);
+    }
+
+    public override void OnFrameworkInitializationCompleted()
+    {
+        if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
-            AvaloniaXamlLoader.Load(this);
+            var window = new LoggerMainWindow();
+            desktop.MainWindow = window;
         }
 
-        public override void OnFrameworkInitializationCompleted()
-        {
-            if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
-            {
-                var window = new LoggerMainWindow();
-                desktop.MainWindow = window;
-            }
-
-            base.OnFrameworkInitializationCompleted();
-        }
+        base.OnFrameworkInitializationCompleted();
     }
 }

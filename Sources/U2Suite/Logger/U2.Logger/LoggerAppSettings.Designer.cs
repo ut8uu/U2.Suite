@@ -8,11 +8,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace U2.Logger {
+namespace U2.Logger.UI {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.2.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.6.0.0")]
     internal sealed partial class LoggerAppSettings : global::System.Configuration.ApplicationSettingsBase {
         
         private static LoggerAppSettings defaultInstance = ((LoggerAppSettings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new LoggerAppSettings())));

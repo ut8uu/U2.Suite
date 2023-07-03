@@ -3,7 +3,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         Width="500" Height="150"
-        x:Class="U2.CommonControls.PromptDialog"
+        x:Class="U2.Common.PromptDialog"
         Title="PromptDialog">
   <StackPanel Margin="5">
     <TextBlock Margin="5" Classes="font20" Name="PromptText" Text="Prompt text"/>

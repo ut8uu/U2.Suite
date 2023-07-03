@@ -5,7 +5,7 @@
         mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="450"
         x:Class="U2.Logger.ImportAdifFromFileWindow"
         xmlns:logger="clr-namespace:U2.Logger"
-		xmlns:commonControls="clr-namespace:U2.CommonControls"
+		xmlns:commonControls="clr-namespace:U2.Common"
         Title="{Binding WindowTitle}"
 		MinWidth="250" MinHeight="200"
 		Width="600" Height="350"

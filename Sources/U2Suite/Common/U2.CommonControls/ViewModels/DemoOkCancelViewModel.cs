@@ -23,7 +23,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace U2.CommonControls
+namespace U2.Common
 {
     public sealed class DemoOkCancelViewModel
     {

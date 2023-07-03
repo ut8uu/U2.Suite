@@ -20,7 +20,7 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace U2.CommonControls
+namespace U2.Common
 {
     public class ViewModelBase : INotifyPropertyChanged
     {

@@ -21,7 +21,7 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 
-namespace U2.CommonControls
+namespace U2.Common
 {
     [PropertyChanged.DoNotNotify]
     public partial class OkCancelButtonsUserControl : UserControl

@@ -17,7 +17,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace U2.CommonControls;
+namespace U2.Common;
 
 public class TextBoxWithTitleViewModel
 {

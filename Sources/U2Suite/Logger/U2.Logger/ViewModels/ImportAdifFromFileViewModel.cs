@@ -28,7 +28,7 @@ using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia.Extensions;
 using Avalonia.Threading;
-using U2.CommonControls;
+using U2.Common;
 using U2.Contracts;
 
 namespace U2.Logger
