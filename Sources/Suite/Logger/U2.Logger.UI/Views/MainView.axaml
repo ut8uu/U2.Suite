@@ -1,0 +1,62 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:U2.Logger.ViewModels;assembly=U2.Logger.Core"
+             xmlns:vmc="clr-namespace:U2.Logger.ViewModels.Chat;assembly=U2.Logger.Core"
+             xmlns:objectModel="clr-namespace:System.Collections.ObjectModel;assembly=System.ObjectModel"
+             xmlns:converters="clr-namespace:U2.Logger.Converters"
+             xmlns:layout="clr-namespace:U2.Logger.Views.Layouts"
+             FontFamily="avares://Avalonia.Fonts.Inter/Assets#Inter"
+             mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="740"
+             x:Class="U2.Logger.Views.MainView"
+             x:CompileBindings="True" x:DataType="vm:MainViewModel">
+  <Design.DataContext>
+    <vm:MainViewModel>
+      <vm:MainViewModel.CurrentChat>
+        <vmc:ChatViewModel>
+          <vmc:ChatViewModel.Messages>
+            <objectModel:ObservableCollection x:TypeArguments="vmc:ChatMessageViewModel">
+              <vmc:ChatMessageViewModel IsSent="False" IsAwaiting="False" IsError="False" CanRemove="False">
+                <vmc:ChatMessageViewModel.Role>system</vmc:ChatMessageViewModel.Role>
+                <vmc:ChatMessageViewModel.Message>Hi! I'm Clippy, your Windows Assistant. Would you like to get some assistance?</vmc:ChatMessageViewModel.Message>
+              </vmc:ChatMessageViewModel>
+              <vmc:ChatMessageViewModel IsSent="True" IsAwaiting="False" IsError="False" CanRemove="False">
+                <vmc:ChatMessageViewModel.Role>system</vmc:ChatMessageViewModel.Role>
+                <vmc:ChatMessageViewModel.Message>Hi! I'm Clippy, your Windows Assistant. Would you like to get some assistance?</vmc:ChatMessageViewModel.Message>
+              </vmc:ChatMessageViewModel>
+              <vmc:ChatMessageViewModel IsSent="False" IsAwaiting="False" IsError="False" CanRemove="True">
+                <vmc:ChatMessageViewModel.Role>user</vmc:ChatMessageViewModel.Role>
+                <vmc:ChatMessageViewModel.Message>This is message</vmc:ChatMessageViewModel.Message>
+              </vmc:ChatMessageViewModel>
+              <vmc:ChatMessageViewModel IsSent="True" IsAwaiting="False" IsError="False" CanRemove="True">
+                <vmc:ChatMessageViewModel.Role>user</vmc:ChatMessageViewModel.Role>
+                <vmc:ChatMessageViewModel.Message>This is message</vmc:ChatMessageViewModel.Message>
+              </vmc:ChatMessageViewModel>
+              <vmc:ChatMessageViewModel IsSent="True" IsAwaiting="True" IsError="False" CanRemove="True">
+                <vmc:ChatMessageViewModel.Role>user</vmc:ChatMessageViewModel.Role>
+                <vmc:ChatMessageViewModel.Message>This is message</vmc:ChatMessageViewModel.Message>
+              </vmc:ChatMessageViewModel>
+              <vmc:ChatMessageViewModel IsSent="True" IsAwaiting="False" IsError="False" CanRemove="True">
+                <vmc:ChatMessageViewModel.Role>assistant</vmc:ChatMessageViewModel.Role>
+                <vmc:ChatMessageViewModel.Message>This is message</vmc:ChatMessageViewModel.Message>
+              </vmc:ChatMessageViewModel>
+              <vmc:ChatMessageViewModel IsSent="True" IsAwaiting="False" IsError="False" CanRemove="True">
+                <vmc:ChatMessageViewModel.Role>user</vmc:ChatMessageViewModel.Role>
+                <vmc:ChatMessageViewModel.Message>This is prompt</vmc:ChatMessageViewModel.Message>
+              </vmc:ChatMessageViewModel>
+            </objectModel:ObservableCollection>
+          </vmc:ChatViewModel.Messages>
+        </vmc:ChatViewModel>
+      </vm:MainViewModel.CurrentChat>
+    </vm:MainViewModel>
+  </Design.DataContext>
+
+  <Panel>
+    <layout:MobileLayoutView 
+      IsVisible="{Binding CurrentLayout, Converter={x:Static converters:LayoutVisibilityConverter.Instance}, ConverterParameter='Mobile'}" />
+    <layout:DesktopLayoutView 
+      IsVisible="{Binding CurrentLayout, Converter={x:Static converters:LayoutVisibilityConverter.Instance}, ConverterParameter='Desktop'}" />
+  </Panel>
+
+</UserControl>

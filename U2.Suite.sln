@@ -3,6 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32210.238
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{66E7EB25-0ECA-460B-AE4C-37F663050F2B}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		azure-pipelines.yml = azure-pipelines.yml
+		build.ps1 = build.ps1
+		build.sh = build.sh
+		Directory.Build.props = Directory.Build.props
+		global.json = global.json
+		u2.suite.public.snk = u2.suite.public.snk
+	EndProjectSection
+EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{E0104E5F-6C0E-4CA5-BA0E-37B2B3CC13D6}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Applications", "Applications", "{2D0CB1BE-6DF0-46C8-96AD-4F67892F1BE7}"
@@ -29,53 +40,60 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "U2.Logger", "U2.Logger", "{
 		..\Documentation\U2.Logger\ReadMe.md = ..\Documentation\U2.Logger\ReadMe.md
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "U2.LoggerSvc.Api", "Suite\Logger\U2.LoggerSvc.Api\U2.LoggerSvc.Api.csproj", "{EF705735-C471-4AE5-A2D4-2176569358ED}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "U2.LoggerSvc.Api", "Sources\Suite\Logger\U2.LoggerSvc.Api\U2.LoggerSvc.Api.csproj", "{EF705735-C471-4AE5-A2D4-2176569358ED}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "U2.LoggerSvc.ApiTypes", "Suite\Logger\U2.LoggerSvc.ApiTypes\U2.LoggerSvc.ApiTypes.csproj", "{86256169-E1D4-4D99-9B20-565C0D786970}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "U2.LoggerSvc.ApiTypes", "Sources\Suite\Logger\U2.LoggerSvc.ApiTypes\U2.LoggerSvc.ApiTypes.csproj", "{86256169-E1D4-4D99-9B20-565C0D786970}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "U2.LoggerSvc.Core", "Suite\Logger\U2.LoggerSvc.Core\U2.LoggerSvc.Core.csproj", "{1214AE94-5BA2-421C-B101-05D214942988}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "U2.LoggerSvc.Core", "Sources\Suite\Logger\U2.LoggerSvc.Core\U2.LoggerSvc.Core.csproj", "{1214AE94-5BA2-421C-B101-05D214942988}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "U2.LoggerSvc.Data", "Suite\Logger\U2.LoggerSvc.Data\U2.LoggerSvc.Data.csproj", "{C1B17064-0E7C-4231-AD15-A0AFCB56D748}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "U2.LoggerSvc.Data", "Sources\Suite\Logger\U2.LoggerSvc.Data\U2.LoggerSvc.Data.csproj", "{C1B17064-0E7C-4231-AD15-A0AFCB56D748}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "U2.LoggerSvc.RestApiClient", "Suite\Logger\U2.LoggerSvc.RestApiClient\U2.LoggerSvc.RestApiClient.csproj", "{F144F1B4-DED7-408A-A856-08B7021AC5AC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "U2.LoggerSvc.RestApiClient", "Sources\Suite\Logger\U2.LoggerSvc.RestApiClient\U2.LoggerSvc.RestApiClient.csproj", "{F144F1B4-DED7-408A-A856-08B7021AC5AC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "U2.LoggerSvc.Tests", "Suite\Logger\U2.LoggerSvc.Tests\U2.LoggerSvc.Tests.csproj", "{077028BA-C403-4ABA-ABCF-35A9F036F4BA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "U2.LoggerSvc.Tests", "Sources\Suite\Logger\U2.LoggerSvc.Tests\U2.LoggerSvc.Tests.csproj", "{077028BA-C403-4ABA-ABCF-35A9F036F4BA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "U2.Tests.Common", "Suite\Tests\U2.Tests.Common\U2.Tests.Common.csproj", "{A0F0B3DE-B397-46CA-865F-3276221301AE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "U2.Tests.Common", "Sources\Suite\Tests\U2.Tests.Common\U2.Tests.Common.csproj", "{A0F0B3DE-B397-46CA-865F-3276221301AE}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CallInfoService", "CallInfoService", "{35827EE3-7D87-49F4-99D0-2C419F246092}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "U2.CIS.Core", "Suite\CallInfoService\U2.CIS.Core\U2.CIS.Core.csproj", "{BF2F493F-3FCF-4B6E-BF90-CBCB6430AFE0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "U2.CIS.Core", "Sources\Suite\CallInfoService\U2.CIS.Core\U2.CIS.Core.csproj", "{BF2F493F-3FCF-4B6E-BF90-CBCB6430AFE0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "U2.CIS.API", "Suite\CallInfoService\U2.CIS.API\U2.CIS.API.csproj", "{B766E80A-B6C3-429F-A66C-232FD44D3445}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "U2.CIS.API", "Sources\Suite\CallInfoService\U2.CIS.API\U2.CIS.API.csproj", "{B766E80A-B6C3-429F-A66C-232FD44D3445}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "U2.CallInfoService", "U2.CallInfoService", "{632248E6-21F5-4983-9349-D1B8339B0918}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "U2.CIS.ApiTypes", "Suite\CallInfoService\U2.CIS.ApiTypes\U2.CIS.ApiTypes.csproj", "{66095F0A-187D-4A01-8E80-2B54D87DC4D9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "U2.CIS.ApiTypes", "Sources\Suite\CallInfoService\U2.CIS.ApiTypes\U2.CIS.ApiTypes.csproj", "{66095F0A-187D-4A01-8E80-2B54D87DC4D9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "U2.CIS.Data", "Suite\CallInfoService\U2.CIS.Data\U2.CIS.Data.csproj", "{6FB7C232-2A2B-42BE-BD24-D91FA22D31F6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "U2.CIS.Data", "Sources\Suite\CallInfoService\U2.CIS.Data\U2.CIS.Data.csproj", "{6FB7C232-2A2B-42BE-BD24-D91FA22D31F6}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "U2.CIS.Tests", "Suite\CallInfoService\U2.CIS.Tests\U2.CIS.Tests.csproj", "{5DE905BD-E470-4ABA-9B0F-30EF89672200}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "U2.CIS.Tests", "Sources\Suite\CallInfoService\U2.CIS.Tests\U2.CIS.Tests.csproj", "{5DE905BD-E470-4ABA-9B0F-30EF89672200}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "U2.CIS.RestApiClient", "Suite\CallInfoService\U2.CIS.RestApiClient\U2.CIS.RestApiClient.csproj", "{FDB2283B-6B60-4407-9DC2-2E64C5FDFF9C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "U2.CIS.RestApiClient", "Sources\Suite\CallInfoService\U2.CIS.RestApiClient\U2.CIS.RestApiClient.csproj", "{FDB2283B-6B60-4407-9DC2-2E64C5FDFF9C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "U2.WebApp", "Suite\Suite\U2.WebApp\U2.WebApp.csproj", "{D6DDC1E9-C41F-4091-9E0C-944270AC6835}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "U2.WebApp", "Sources\Suite\Suite\U2.WebApp\U2.WebApp.csproj", "{D6DDC1E9-C41F-4091-9E0C-944270AC6835}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "U2.ApiCore", "Suite\Suite\U2.ApiCore\U2.ApiCore.csproj", "{E6EC9E6A-4AB7-4EA7-A0FE-F1EE2DB0A21A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "U2.ApiCore", "Sources\Suite\Suite\U2.ApiCore\U2.ApiCore.csproj", "{E6EC9E6A-4AB7-4EA7-A0FE-F1EE2DB0A21A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "U2.CommonControls", "Suite\Suite\U2.CommonControls\U2.CommonControls.csproj", "{2CC388C7-CFD6-4938-97DE-D0FD7B16BC79}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "U2.CommonControls", "Sources\Suite\Suite\U2.CommonControls\U2.CommonControls.csproj", "{2CC388C7-CFD6-4938-97DE-D0FD7B16BC79}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "U2.Contracts", "Suite\Suite\U2.Contracts\U2.Contracts.csproj", "{7F0947D5-D8DF-4E22-9CA0-8C663A7B661C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "U2.Contracts", "Sources\Suite\Suite\U2.Contracts\U2.Contracts.csproj", "{7F0947D5-D8DF-4E22-9CA0-8C663A7B661C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "U2.Core", "Suite\Suite\U2.Core\U2.Core.csproj", "{917C5D58-3619-4BAB-AAF1-BB6696F096C9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "U2.Core", "Sources\Suite\Suite\U2.Core\U2.Core.csproj", "{917C5D58-3619-4BAB-AAF1-BB6696F096C9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "U2.Core.Tests", "Suite\Suite\U2.Core.Tests\U2.Core.Tests.csproj", "{9830DED1-0E9B-45CC-B699-49F039239595}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "U2.Core.Tests", "Sources\Suite\Suite\U2.Core.Tests\U2.Core.Tests.csproj", "{9830DED1-0E9B-45CC-B699-49F039239595}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "U2.Resources", "Suite\Suite\U2.Resources\U2.Resources.csproj", "{8D4A7167-ED8D-494F-822D-A2B9CC10A8B4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "U2.Resources", "Sources\Suite\Suite\U2.Resources\U2.Resources.csproj", "{8D4A7167-ED8D-494F-822D-A2B9CC10A8B4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "U2.Logger", "Suite\Logger\U2.Logger\U2.Logger.csproj", "{A0DE731E-1528-4DF0-81E9-FA20BBB19B63}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "U2.Logger.Desktop", "Sources\Suite\Logger\U2.Logger.Desktop\U2.Logger.Desktop.csproj", "{9453F5E8-240B-4FBD-8D66-578F533EF795}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "U2.Logger.Desktop", "Suite\Logger\U2.Logger.Desktop\U2.Logger.Desktop.csproj", "{9453F5E8-240B-4FBD-8D66-578F533EF795}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "U2.Logger.UI", "Sources\Suite\Logger\U2.Logger.UI\U2.Logger.UI.csproj", "{FCBC3E4E-BF69-4627-B521-BB7AF3F4F7E6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "U2.Logger.Core", "Sources\Suite\Logger\U2.Logger.Core\U2.Logger.Core.csproj", "{91A617EB-CFF2-4F2A-AC43-A75356302B9C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "nuget", "nuget", "{47A2AB6B-DF7A-4120-BBE3-9E26A4274BFD}"
+	ProjectSection(SolutionItems) = preProject
+		NuGet.Config = NuGet.Config
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -163,14 +181,18 @@ Global
 		{8D4A7167-ED8D-494F-822D-A2B9CC10A8B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8D4A7167-ED8D-494F-822D-A2B9CC10A8B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8D4A7167-ED8D-494F-822D-A2B9CC10A8B4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A0DE731E-1528-4DF0-81E9-FA20BBB19B63}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A0DE731E-1528-4DF0-81E9-FA20BBB19B63}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A0DE731E-1528-4DF0-81E9-FA20BBB19B63}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A0DE731E-1528-4DF0-81E9-FA20BBB19B63}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9453F5E8-240B-4FBD-8D66-578F533EF795}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9453F5E8-240B-4FBD-8D66-578F533EF795}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9453F5E8-240B-4FBD-8D66-578F533EF795}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9453F5E8-240B-4FBD-8D66-578F533EF795}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FCBC3E4E-BF69-4627-B521-BB7AF3F4F7E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FCBC3E4E-BF69-4627-B521-BB7AF3F4F7E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FCBC3E4E-BF69-4627-B521-BB7AF3F4F7E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FCBC3E4E-BF69-4627-B521-BB7AF3F4F7E6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{91A617EB-CFF2-4F2A-AC43-A75356302B9C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{91A617EB-CFF2-4F2A-AC43-A75356302B9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{91A617EB-CFF2-4F2A-AC43-A75356302B9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{91A617EB-CFF2-4F2A-AC43-A75356302B9C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -203,8 +225,10 @@ Global
 		{917C5D58-3619-4BAB-AAF1-BB6696F096C9} = {5AA52E0B-F852-48B1-B3F1-3058053A3C77}
 		{9830DED1-0E9B-45CC-B699-49F039239595} = {5AA52E0B-F852-48B1-B3F1-3058053A3C77}
 		{8D4A7167-ED8D-494F-822D-A2B9CC10A8B4} = {5AA52E0B-F852-48B1-B3F1-3058053A3C77}
-		{A0DE731E-1528-4DF0-81E9-FA20BBB19B63} = {B32E844E-1D71-43DE-B934-C8562413DDEC}
 		{9453F5E8-240B-4FBD-8D66-578F533EF795} = {B32E844E-1D71-43DE-B934-C8562413DDEC}
+		{FCBC3E4E-BF69-4627-B521-BB7AF3F4F7E6} = {B32E844E-1D71-43DE-B934-C8562413DDEC}
+		{91A617EB-CFF2-4F2A-AC43-A75356302B9C} = {B32E844E-1D71-43DE-B934-C8562413DDEC}
+		{47A2AB6B-DF7A-4120-BBE3-9E26A4274BFD} = {66E7EB25-0ECA-460B-AE4C-37F663050F2B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E8720C83-17E2-4C14-AFA9-CAAD4F71F4D6}

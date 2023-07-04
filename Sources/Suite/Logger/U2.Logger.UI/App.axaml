@@ -1,0 +1,33 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="U2.Logger.App"
+             Name="U2.Logger"
+             RequestedThemeVariant="Light">
+  <Application.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <MergeResourceInclude Source="/Themes/Themes.axaml" />
+        <MergeResourceInclude Source="/Themes/Icons.axaml" />
+        <MergeResourceInclude Source="/Themes/SelectingItemsControl.axaml" />
+      </ResourceDictionary.MergedDictionaries>
+    </ResourceDictionary>
+  </Application.Resources>
+  <Application.Styles>
+    <FluentTheme />
+  </Application.Styles>
+  <TrayIcon.Icons>
+    <TrayIcons>
+      <TrayIcon Icon="/Assets/clipart855284.ico" Clicked="TrayIcon_OnClicked" ToolTipText="U2.Logger">
+        <NativeMenu.Menu>
+          <NativeMenu>
+            <NativeMenuItem Header="Toggle Show" Click="ToggleShow_OnClick" />
+            <NativeMenuItemSeparator />
+            <NativeMenuItem Header="Toggle Acrylic" Click="ToggleAcrylic_OnClick" />
+            <NativeMenuItemSeparator />
+            <NativeMenuItem Header="Quit" Click="Quit_OnClick" />
+          </NativeMenu>
+        </NativeMenu.Menu>
+      </TrayIcon>
+    </TrayIcons>
+  </TrayIcon.Icons>
+</Application>

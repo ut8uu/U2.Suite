@@ -10,10 +10,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Avalonia.Desktop" Version="11.0.0-rc2.1" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\U2.Logger\U2.Logger.csproj" />
+    <PackageReference Include="Avalonia.Desktop" Version="$(AvaloniaVersion)" />
   </ItemGroup>
 </Project>
