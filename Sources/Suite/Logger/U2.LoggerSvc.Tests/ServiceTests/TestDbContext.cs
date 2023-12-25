@@ -8,9 +8,9 @@ using U2.LoggerSvc.Data;
 
 namespace U2.LoggerSvc.Tests;
 
-public sealed class TestDbContext : LoggerDbContext
+public sealed class TestDbContext : LoggerDbContext, IDisposable
 {
-    public TestDbContext() : base(TestDatabasedirectory, $"{Guid.NewGuid()}.sqlite") { }
+	public TestDbContext(Guid id) : base(TestDatabasedirectory, $"{id}.sqlite") { }
 
     private static string TestDatabasedirectory
     {
@@ -21,5 +21,15 @@ public sealed class TestDbContext : LoggerDbContext
             Directory.CreateDirectory(dir);
             return dir;
         }
+    }
+
+    public override void Dispose()
+    {
+        base.Dispose();
+
+        if (File.Exists(base.DbPath))
+        {
+            File.Delete(base.DbPath);
+		}
     }
 }
