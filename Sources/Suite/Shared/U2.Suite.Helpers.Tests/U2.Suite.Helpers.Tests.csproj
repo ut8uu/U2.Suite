@@ -10,7 +10,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="DeepEqual" Version="5.0.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.9.0" />
     <PackageReference Include="xunit" Version="2.7.0" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.5.7">
@@ -24,8 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\U2.CIS.Core\U2.CIS.Core.csproj" />
-    <ProjectReference Include="..\U2.CIS.Data\U2.CIS.Data.csproj" />
+    <ProjectReference Include="..\U2.Suite.Helpers\U2.Suite.Helpers.csproj" />
   </ItemGroup>
 
 </Project>

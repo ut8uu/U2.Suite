@@ -1,11 +1,10 @@
-﻿using SocketIO.Core;
-using SocketIOClient.Transport;
-using SocketIOClient;
+﻿using System.Collections.Concurrent;
 using Newtonsoft.Json;
-using System.Collections.Concurrent;
-using System.Xml.Linq;
-using U2.Suite.Helpers;
+using SocketIO.Core;
+using SocketIOClient;
+using SocketIOClient.Transport;
 using U2.Suite.Brandmeister.Contracts;
+using U2.Suite.Helpers;
 
 namespace U2.Suite.Brandmeister.Core;
 
