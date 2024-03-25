@@ -75,6 +75,16 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "U2.Resources", "Suite\Suite
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "U2.LoggerSvc.RestApiClient.Tests", "Suite\Logger\U2.LoggerSvc.RestApiClient.Tests\U2.LoggerSvc.RestApiClient.Tests.csproj", "{BBCC957B-A3FE-4CE0-8978-E515693877E8}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BrandmeisterMonitor", "BrandmeisterMonitor", "{9E93A51D-6641-4825-ABDD-D6520A97E58D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "U2.Suite.Brandmeister.Cli", "Suite\BrandmeisterMonitor\U2.Suite.Brandmeister.Cli\U2.Suite.Brandmeister.Cli.csproj", "{6050CF59-D34C-4751-8C5B-DD269699C81B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "U2.Suite.Brandmeister.Core", "Suite\BrandmeisterMonitor\U2.Suite.Brandmeister.Core\U2.Suite.Brandmeister.Core.csproj", "{B07D67A6-12D3-416D-ACB2-BE729443869C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "U2.Suite.Brandmeister.Core.Tests", "Suite\BrandmeisterMonitor\U2.Suite.Brandmeister.Core.Tests\U2.Suite.Brandmeister.Core.Tests.csproj", "{743048E4-9CBA-4762-AB4D-5095D099E804}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "U2.Suite.Brandmeister.Win", "Suite\BrandmeisterMonitor\U2.Suite.Brandmeister.Win\U2.Suite.Brandmeister.Win.csproj", "{6A5DA8A0-6F5C-4664-99E0-745BD4E10D3A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -165,6 +175,22 @@ Global
 		{BBCC957B-A3FE-4CE0-8978-E515693877E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BBCC957B-A3FE-4CE0-8978-E515693877E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BBCC957B-A3FE-4CE0-8978-E515693877E8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6050CF59-D34C-4751-8C5B-DD269699C81B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6050CF59-D34C-4751-8C5B-DD269699C81B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6050CF59-D34C-4751-8C5B-DD269699C81B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6050CF59-D34C-4751-8C5B-DD269699C81B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B07D67A6-12D3-416D-ACB2-BE729443869C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B07D67A6-12D3-416D-ACB2-BE729443869C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B07D67A6-12D3-416D-ACB2-BE729443869C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B07D67A6-12D3-416D-ACB2-BE729443869C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{743048E4-9CBA-4762-AB4D-5095D099E804}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{743048E4-9CBA-4762-AB4D-5095D099E804}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{743048E4-9CBA-4762-AB4D-5095D099E804}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{743048E4-9CBA-4762-AB4D-5095D099E804}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A5DA8A0-6F5C-4664-99E0-745BD4E10D3A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A5DA8A0-6F5C-4664-99E0-745BD4E10D3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A5DA8A0-6F5C-4664-99E0-745BD4E10D3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A5DA8A0-6F5C-4664-99E0-745BD4E10D3A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -198,6 +224,11 @@ Global
 		{9830DED1-0E9B-45CC-B699-49F039239595} = {5AA52E0B-F852-48B1-B3F1-3058053A3C77}
 		{8D4A7167-ED8D-494F-822D-A2B9CC10A8B4} = {5AA52E0B-F852-48B1-B3F1-3058053A3C77}
 		{BBCC957B-A3FE-4CE0-8978-E515693877E8} = {B32E844E-1D71-43DE-B934-C8562413DDEC}
+		{9E93A51D-6641-4825-ABDD-D6520A97E58D} = {2D0CB1BE-6DF0-46C8-96AD-4F67892F1BE7}
+		{6050CF59-D34C-4751-8C5B-DD269699C81B} = {9E93A51D-6641-4825-ABDD-D6520A97E58D}
+		{B07D67A6-12D3-416D-ACB2-BE729443869C} = {9E93A51D-6641-4825-ABDD-D6520A97E58D}
+		{743048E4-9CBA-4762-AB4D-5095D099E804} = {9E93A51D-6641-4825-ABDD-D6520A97E58D}
+		{6A5DA8A0-6F5C-4664-99E0-745BD4E10D3A} = {9E93A51D-6641-4825-ABDD-D6520A97E58D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E8720C83-17E2-4C14-AFA9-CAAD4F71F4D6}
