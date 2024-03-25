@@ -73,6 +73,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "U2.Core.Tests", "Suite\Suit
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "U2.Resources", "Suite\Suite\U2.Resources\U2.Resources.csproj", "{8D4A7167-ED8D-494F-822D-A2B9CC10A8B4}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "U2.LoggerSvc.RestApiClient.Tests", "Suite\Logger\U2.LoggerSvc.RestApiClient.Tests\U2.LoggerSvc.RestApiClient.Tests.csproj", "{BBCC957B-A3FE-4CE0-8978-E515693877E8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -159,6 +161,10 @@ Global
 		{8D4A7167-ED8D-494F-822D-A2B9CC10A8B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8D4A7167-ED8D-494F-822D-A2B9CC10A8B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8D4A7167-ED8D-494F-822D-A2B9CC10A8B4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BBCC957B-A3FE-4CE0-8978-E515693877E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BBCC957B-A3FE-4CE0-8978-E515693877E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BBCC957B-A3FE-4CE0-8978-E515693877E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BBCC957B-A3FE-4CE0-8978-E515693877E8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -191,6 +197,7 @@ Global
 		{917C5D58-3619-4BAB-AAF1-BB6696F096C9} = {5AA52E0B-F852-48B1-B3F1-3058053A3C77}
 		{9830DED1-0E9B-45CC-B699-49F039239595} = {5AA52E0B-F852-48B1-B3F1-3058053A3C77}
 		{8D4A7167-ED8D-494F-822D-A2B9CC10A8B4} = {5AA52E0B-F852-48B1-B3F1-3058053A3C77}
+		{BBCC957B-A3FE-4CE0-8978-E515693877E8} = {B32E844E-1D71-43DE-B934-C8562413DDEC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E8720C83-17E2-4C14-AFA9-CAAD4F71F4D6}

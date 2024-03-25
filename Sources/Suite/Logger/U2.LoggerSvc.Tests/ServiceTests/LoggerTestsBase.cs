@@ -15,7 +15,7 @@ public abstract class LoggerTestsBase : TestsBase, IDisposable
 
     public LoggerTestsBase()
     {
-        _dbContext = new TestDbContext();
+        _dbContext = new TestDbContext(Guid.NewGuid());
         _dbContext.Database.EnsureCreated();
     }
 
