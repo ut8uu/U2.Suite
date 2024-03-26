@@ -20,6 +20,8 @@ public partial class BrandmeisterReports : UserControl
         _listener.MessageThrown += Listener_MessageThrown;
     }
 
+    public int MaxDisplayedReports { get; set; } = 100;
+
     public Action? OnNewReport { get; set; }
     public Action<string>? OnNewCall { get; set; }
     public Action<int>? OnNewTalkGroup { get; set; }
@@ -126,6 +128,8 @@ public partial class BrandmeisterReports : UserControl
                     }
                 }
 
+                lvReports.BeginUpdate();
+
                 if (IsReportDisplayed(reports, rdd, out var displayIndex))
                 {
                     lvReports.Items[displayIndex].SubItems[3].Text = rdd.Duration.ToString();
@@ -140,6 +144,13 @@ public partial class BrandmeisterReports : UserControl
 
                     lvReports.Items.Insert(displayIndex, newItem);
                 }
+
+                while (lvReports.Items.Count > MaxDisplayedReports)
+                {
+                    lvReports.Items.RemoveAt(lvReports.Items.Count - 1);
+                }
+
+                lvReports.EndUpdate();
             });
         }
     }
