@@ -1,13 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using System.Data;
 using U2.Suite.Brandmeister.Contracts;
 using U2.Suite.Brandmeister.Core;
 
@@ -17,7 +8,6 @@ public partial class BrandmeisterReports : UserControl
 {
     BrandmeisterListener _listener;
     private int _totalReceived;
-    readonly Queue<SessionData> _queue = new();
 
     public BrandmeisterReports()
     {
@@ -49,9 +39,9 @@ public partial class BrandmeisterReports : UserControl
             return;
         }
         _totalReceived++;
-        OnNewReport?.Invoke();
         AddReport(data);
 
+        OnNewReport?.Invoke();
         OnNewCall?.Invoke(data.SourceCall);
         OnNewTalkGroup?.Invoke(data.DestinationID);
     }
@@ -88,22 +78,19 @@ public partial class BrandmeisterReports : UserControl
         _listener.Stop();
     }
 
-    public void AddReport(SessionData data)
-    {
-        if (CanBeDisplayed(data))
-        {
-            _queue.Enqueue(data);
-        }
-    }
-
     internal static bool CanBeDisplayed(SessionData data)
     {
+        if (data == null)
+        {
+            return false;
+        }
+
         if (data.Stop == 0 || (data.Stop - data.Start) < 5)
         {
             return false;
         }
 
-        if (ReportsFilter.IsFiltered(data.SourceCall, FilterTarget.Call))
+        if (ReportsFilter.IsFiltered(data.SourceCall!, FilterTarget.Call))
         {
             return true;
         }
@@ -118,6 +105,66 @@ public partial class BrandmeisterReports : UserControl
             return true;
         }
 
+        return false;
+    }
+
+    public void AddReport(SessionData data)
+    {
+        if (CanBeDisplayed(data))
+        {
+            var rdd = ReportDisplayData.FromSessionData(data);
+
+            Invoke(() =>
+            {
+                var reports = new List<ReportDisplayData>();
+
+                foreach (ListViewItem item in lvReports.Items)
+                {
+                    if (item.Tag is ReportDisplayData report && report != null)
+                    {
+                        reports.Add(report);
+                    }
+                }
+
+                if (IsReportDisplayed(reports, rdd, out var displayIndex))
+                {
+                    lvReports.Items[displayIndex].SubItems[3].Text = rdd.Duration.ToString();
+                }
+                else
+                {
+                    var newItem = new ListViewItem(rdd.DateTime.ToString());
+                    newItem.SubItems.Add(rdd.CallString);
+                    newItem.SubItems.Add(rdd.TalkGroupString);
+                    newItem.SubItems.Add(rdd.Duration.ToString());
+                    newItem.Tag = rdd;
+
+                    lvReports.Items.Insert(displayIndex, newItem);
+                }
+            });
+        }
+    }
+
+    public bool IsReportDisplayed(List<ReportDisplayData> reports, ReportDisplayData reportDisplayData, out int displayIndex)
+    {
+        displayIndex = 0;
+
+        var allDates = reports.Select(x => x.DateTime).ToList();
+        displayIndex = allDates.BinarySearch(reportDisplayData.DateTime, 
+            Comparer<DateTime>.Create((x, y) => y.CompareTo(x)));
+
+        var existingReport = reports.FirstOrDefault(r => r.Call == reportDisplayData.Call &&
+            r.TG == reportDisplayData.TG &&
+            r.DateTime == reportDisplayData.DateTime);
+
+        if (existingReport != null)
+        {
+            return true;
+        }
+
+        if (displayIndex < 0)
+        {
+            displayIndex = ~displayIndex;
+        }
         return false;
     }
 }

@@ -30,7 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BrandmeisterReports));
             toolStripContainerReports = new ToolStripContainer();
-            listView1 = new ListView();
+            lvReports = new ListView();
             colTimestamp = new ColumnHeader();
             colCallsign = new ColumnHeader();
             colTalkGroup = new ColumnHeader();
@@ -51,7 +51,7 @@
             // 
             // toolStripContainerReports.ContentPanel
             // 
-            toolStripContainerReports.ContentPanel.Controls.Add(listView1);
+            toolStripContainerReports.ContentPanel.Controls.Add(lvReports);
             toolStripContainerReports.ContentPanel.Margin = new Padding(2);
             toolStripContainerReports.ContentPanel.Size = new Size(802, 477);
             toolStripContainerReports.Dock = DockStyle.Fill;
@@ -66,22 +66,24 @@
             // 
             toolStripContainerReports.TopToolStripPanel.Controls.Add(toolStrip1);
             // 
-            // listView1
+            // lvReports
             // 
-            listView1.Columns.AddRange(new ColumnHeader[] { colTimestamp, colCallsign, colTalkGroup, colDuration });
-            listView1.Dock = DockStyle.Fill;
-            listView1.Location = new Point(0, 0);
-            listView1.Margin = new Padding(2);
-            listView1.Name = "listView1";
-            listView1.Size = new Size(802, 477);
-            listView1.TabIndex = 0;
-            listView1.UseCompatibleStateImageBehavior = false;
-            listView1.View = View.Details;
+            lvReports.Columns.AddRange(new ColumnHeader[] { colTimestamp, colCallsign, colTalkGroup, colDuration });
+            lvReports.Dock = DockStyle.Fill;
+            lvReports.FullRowSelect = true;
+            lvReports.GridLines = true;
+            lvReports.Location = new Point(0, 0);
+            lvReports.Margin = new Padding(2);
+            lvReports.Name = "lvReports";
+            lvReports.Size = new Size(802, 477);
+            lvReports.TabIndex = 0;
+            lvReports.UseCompatibleStateImageBehavior = false;
+            lvReports.View = View.Details;
             // 
             // colTimestamp
             // 
             colTimestamp.Text = "Timestamp";
-            colTimestamp.Width = 150;
+            colTimestamp.Width = 200;
             // 
             // colCallsign
             // 
@@ -91,6 +93,7 @@
             // colTalkGroup
             // 
             colTalkGroup.Text = "TG";
+            colTalkGroup.Width = 120;
             // 
             // colDuration
             // 
@@ -104,7 +107,7 @@
             toolStrip1.Items.AddRange(new ToolStripItem[] { btnStart, btnStop, toolStripSeparator1, btnFilter });
             toolStrip1.Location = new Point(4, 0);
             toolStrip1.Name = "toolStrip1";
-            toolStrip1.Size = new Size(157, 39);
+            toolStrip1.Size = new Size(126, 39);
             toolStrip1.TabIndex = 0;
             // 
             // btnStart
@@ -166,7 +169,7 @@
         #endregion
 
         private ToolStripContainer toolStripContainerReports;
-        private ListView listView1;
+        private ListView lvReports;
         private ColumnHeader colTimestamp;
         private ColumnHeader colCallsign;
         private ColumnHeader colTalkGroup;

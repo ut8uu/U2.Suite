@@ -14,11 +14,13 @@ public sealed class ReportDisplayData
     public string DxccDisplayString => DXCC.ToString();
     public string TalkGroupString => TG.ToString();
 
-    public void FromSessionData(SessionData data)
+    public string SessionID { get; set; } = Guid.NewGuid().ToString();
+
+    public static ReportDisplayData FromSessionData(SessionData data)
     {
         if (data == null)
         {
-            return;
+            return new ReportDisplayData();
         }
 
         DateTimeOffset dateTimeStart = DateTimeOffset.FromUnixTimeSeconds(data.Start);
@@ -30,12 +32,18 @@ public sealed class ReportDisplayData
             duration = TimeSpan.Zero;
         }
 
-        Call = data.SourceCall!;
-        CountryName = data.CountryName ?? "N/A";
-        DateTime = dateTime;
-        Duration = duration;
-        BER = data.BER;
-        TG = data.DestinationID;
-        DXCC = data.Dxcc;
+        var result = new ReportDisplayData()
+        {
+            SessionID = data.SessionID ?? Guid.NewGuid().ToString(),
+            Call = data.SourceCall!,
+            CountryName = data.CountryName ?? "N/A",
+            DateTime = dateTime,
+            Duration = duration,
+            BER = data.BER,
+            TG = data.DestinationID,
+            DXCC = data.Dxcc,
+        };
+
+        return result;
     }
 }
