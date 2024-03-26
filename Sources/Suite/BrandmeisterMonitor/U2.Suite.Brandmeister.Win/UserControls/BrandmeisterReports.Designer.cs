@@ -107,7 +107,7 @@
             toolStrip1.Items.AddRange(new ToolStripItem[] { btnStart, btnStop, toolStripSeparator1, btnFilter });
             toolStrip1.Location = new Point(4, 0);
             toolStrip1.Name = "toolStrip1";
-            toolStrip1.Size = new Size(126, 39);
+            toolStrip1.Size = new Size(157, 39);
             toolStrip1.TabIndex = 0;
             // 
             // btnStart
@@ -148,6 +148,7 @@
             btnFilter.Name = "btnFilter";
             btnFilter.Size = new Size(36, 36);
             btnFilter.Text = "Filter";
+            btnFilter.Click += btnFilter_Click;
             // 
             // BrandmeisterReports
             // 

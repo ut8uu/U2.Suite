@@ -79,6 +79,11 @@ public partial class BrandmeisterReports : UserControl
         StopListening();
     }
 
+    private void btnFilter_Click(object sender, EventArgs e)
+    {
+
+    }
+
     #endregion
 
     public void StartListening()
@@ -179,7 +184,7 @@ public partial class BrandmeisterReports : UserControl
         displayIndex = 0;
 
         var allDates = reports.Select(x => x.DateTime).ToList();
-        displayIndex = allDates.BinarySearch(reportDisplayData.DateTime, 
+        displayIndex = allDates.BinarySearch(reportDisplayData.DateTime,
             Comparer<DateTime>.Create((x, y) => y.CompareTo(x)));
 
         var existingReport = reports.FirstOrDefault(r => r.Call == reportDisplayData.Call &&
