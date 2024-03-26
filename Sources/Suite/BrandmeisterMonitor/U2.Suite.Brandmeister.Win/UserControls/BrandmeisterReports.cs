@@ -7,7 +7,9 @@ namespace U2.Suite.Brandmeister.Win.UserControls;
 public partial class BrandmeisterReports : UserControl
 {
     BrandmeisterListener _listener;
-    private int _totalReceived;
+    readonly Queue<SessionData> queue = new();
+    int _totalReceived;
+    System.Threading.Timer _updateItemsTimer;
 
     public BrandmeisterReports()
     {
@@ -18,6 +20,10 @@ public partial class BrandmeisterReports : UserControl
         _listener.Disconnected += Listener_Disconnected;
         _listener.SessionDataReceived += Listener_SessionDataReceived;
         _listener.MessageThrown += Listener_MessageThrown;
+
+        _updateItemsTimer = new System.Threading.Timer(state => { OnTimerTick(); }, null,
+            dueTime: 1000, period: 5000);
+
     }
 
     public int MaxDisplayedReports { get; set; } = 100;
@@ -28,6 +34,11 @@ public partial class BrandmeisterReports : UserControl
     public Action<string>? OnStatusChanged { get; set; }
 
     #region Event Handlers
+
+    private void OnTimerTick()
+    {
+        ProcessReports();
+    }
 
     private void Listener_MessageThrown(object sender, string message)
     {
@@ -114,10 +125,20 @@ public partial class BrandmeisterReports : UserControl
     {
         if (CanBeDisplayed(data))
         {
-            var rdd = ReportDisplayData.FromSessionData(data);
+            queue.Enqueue(data);
+        }
+    }
 
-            Invoke(() =>
+    public void ProcessReports()
+    {
+        Invoke(() =>
+        {
+            lvReports.BeginUpdate();
+
+            while (queue.TryDequeue(out var data))
             {
+                var rdd = ReportDisplayData.FromSessionData(data);
+
                 var reports = new List<ReportDisplayData>();
 
                 foreach (ListViewItem item in lvReports.Items)
@@ -127,8 +148,6 @@ public partial class BrandmeisterReports : UserControl
                         reports.Add(report);
                     }
                 }
-
-                lvReports.BeginUpdate();
 
                 if (IsReportDisplayed(reports, rdd, out var displayIndex))
                 {
@@ -149,10 +168,10 @@ public partial class BrandmeisterReports : UserControl
                 {
                     lvReports.Items.RemoveAt(lvReports.Items.Count - 1);
                 }
+            }
 
-                lvReports.EndUpdate();
-            });
-        }
+            lvReports.EndUpdate();
+        });
     }
 
     public bool IsReportDisplayed(List<ReportDisplayData> reports, ReportDisplayData reportDisplayData, out int displayIndex)
