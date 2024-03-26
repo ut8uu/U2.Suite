@@ -28,174 +28,93 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            statusStrip1 = new StatusStrip();
-            toolStripStatusLabel1 = new ToolStripStatusLabel();
-            toolStripContainer1 = new ToolStripContainer();
-            toolStrip1 = new ToolStrip();
-            btnStart = new ToolStripButton();
-            listView1 = new ListView();
-            colTimestamp = new ColumnHeader();
-            colCallsign = new ColumnHeader();
-            colTalkGroup = new ColumnHeader();
-            colDuration = new ColumnHeader();
-            btnStop = new ToolStripButton();
-            toolStripSeparator1 = new ToolStripSeparator();
-            btnFilter = new ToolStripButton();
-            statusStrip1.SuspendLayout();
-            toolStripContainer1.ContentPanel.SuspendLayout();
-            toolStripContainer1.TopToolStripPanel.SuspendLayout();
-            toolStripContainer1.SuspendLayout();
-            toolStrip1.SuspendLayout();
+            ucStatusBar = new UserControls.StatusBar();
+            tabControl1 = new TabControl();
+            tpReports = new TabPage();
+            ucReports = new UserControls.BrandmeisterReports();
+            tabPage2 = new TabPage();
+            tabControl1.SuspendLayout();
+            tpReports.SuspendLayout();
             SuspendLayout();
             // 
-            // statusStrip1
+            // ucStatusBar
             // 
-            statusStrip1.ImageScalingSize = new Size(24, 24);
-            statusStrip1.Items.AddRange(new ToolStripItem[] { toolStripStatusLabel1 });
-            statusStrip1.Location = new Point(0, 788);
-            statusStrip1.Name = "statusStrip1";
-            statusStrip1.Size = new Size(1573, 32);
-            statusStrip1.TabIndex = 0;
-            statusStrip1.Text = "statusStrip1";
+            ucStatusBar.Dock = DockStyle.Bottom;
+            ucStatusBar.Location = new Point(0, 472);
+            ucStatusBar.Margin = new Padding(1);
+            ucStatusBar.Name = "ucStatusBar";
+            ucStatusBar.Size = new Size(1056, 20);
+            ucStatusBar.TabIndex = 2;
             // 
-            // toolStripStatusLabel1
+            // tabControl1
             // 
-            toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            toolStripStatusLabel1.Size = new Size(195, 25);
-            toolStripStatusLabel1.Text = "Connection status: N/A";
+            tabControl1.Controls.Add(tpReports);
+            tabControl1.Controls.Add(tabPage2);
+            tabControl1.Dock = DockStyle.Fill;
+            tabControl1.Location = new Point(0, 0);
+            tabControl1.Margin = new Padding(2);
+            tabControl1.Name = "tabControl1";
+            tabControl1.SelectedIndex = 0;
+            tabControl1.Size = new Size(1056, 472);
+            tabControl1.TabIndex = 1;
             // 
-            // toolStripContainer1
+            // tpReports
             // 
+            tpReports.Controls.Add(ucReports);
+            tpReports.Location = new Point(4, 24);
+            tpReports.Margin = new Padding(2);
+            tpReports.Name = "tpReports";
+            tpReports.Padding = new Padding(2);
+            tpReports.Size = new Size(1048, 444);
+            tpReports.TabIndex = 0;
+            tpReports.Text = "Reports";
+            tpReports.UseVisualStyleBackColor = true;
             // 
-            // toolStripContainer1.ContentPanel
+            // ucReports
             // 
-            toolStripContainer1.ContentPanel.Controls.Add(listView1);
-            toolStripContainer1.ContentPanel.Size = new Size(1573, 747);
-            toolStripContainer1.Dock = DockStyle.Fill;
-            toolStripContainer1.Location = new Point(0, 0);
-            toolStripContainer1.Name = "toolStripContainer1";
-            toolStripContainer1.Size = new Size(1573, 788);
-            toolStripContainer1.TabIndex = 1;
-            toolStripContainer1.Text = "toolStripContainer1";
+            ucReports.Dock = DockStyle.Fill;
+            ucReports.Location = new Point(2, 2);
+            ucReports.Name = "ucReports";
+            ucReports.OnNewCall = null;
+            ucReports.OnNewReport = null;
+            ucReports.OnNewTalkGroup = null;
+            ucReports.OnStatusChanged = null;
+            ucReports.Size = new Size(1044, 440);
+            ucReports.TabIndex = 0;
             // 
-            // toolStripContainer1.TopToolStripPanel
+            // tabPage2
             // 
-            toolStripContainer1.TopToolStripPanel.Controls.Add(toolStrip1);
-            // 
-            // toolStrip1
-            // 
-            toolStrip1.Dock = DockStyle.None;
-            toolStrip1.ImageScalingSize = new Size(24, 24);
-            toolStrip1.Items.AddRange(new ToolStripItem[] { btnStart, btnStop, toolStripSeparator1, btnFilter });
-            toolStrip1.Location = new Point(4, 0);
-            toolStrip1.Name = "toolStrip1";
-            toolStrip1.Size = new Size(178, 41);
-            toolStrip1.TabIndex = 0;
-            // 
-            // btnStart
-            // 
-            btnStart.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            btnStart.Image = (Image)resources.GetObject("btnStart.Image");
-            btnStart.ImageScaling = ToolStripItemImageScaling.None;
-            btnStart.ImageTransparentColor = Color.Magenta;
-            btnStart.Name = "btnStart";
-            btnStart.Size = new Size(36, 36);
-            btnStart.Text = "Start";
-            btnStart.ToolTipText = "Start the connection";
-            // 
-            // listView1
-            // 
-            listView1.Columns.AddRange(new ColumnHeader[] { colTimestamp, colCallsign, colTalkGroup, colDuration });
-            listView1.Dock = DockStyle.Fill;
-            listView1.Location = new Point(0, 0);
-            listView1.Name = "listView1";
-            listView1.Size = new Size(1573, 747);
-            listView1.TabIndex = 0;
-            listView1.UseCompatibleStateImageBehavior = false;
-            listView1.View = View.Details;
-            // 
-            // colTimestamp
-            // 
-            colTimestamp.Text = "Timestamp";
-            colTimestamp.Width = 150;
-            // 
-            // colCallsign
-            // 
-            colCallsign.Text = "Callsign";
-            colCallsign.Width = 220;
-            // 
-            // colTalkGroup
-            // 
-            colTalkGroup.Text = "TG";
-            // 
-            // colDuration
-            // 
-            colDuration.Text = "Duration";
-            colDuration.Width = 150;
-            // 
-            // btnStop
-            // 
-            btnStop.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            btnStop.Image = (Image)resources.GetObject("btnStop.Image");
-            btnStop.ImageScaling = ToolStripItemImageScaling.None;
-            btnStop.ImageTransparentColor = Color.Magenta;
-            btnStop.Name = "btnStop";
-            btnStop.Size = new Size(36, 36);
-            btnStop.Text = "Stop";
-            btnStop.ToolTipText = "Stop the connection";
-            // 
-            // toolStripSeparator1
-            // 
-            toolStripSeparator1.Name = "toolStripSeparator1";
-            toolStripSeparator1.Size = new Size(6, 41);
-            // 
-            // btnFilter
-            // 
-            btnFilter.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            btnFilter.Image = (Image)resources.GetObject("btnFilter.Image");
-            btnFilter.ImageScaling = ToolStripItemImageScaling.None;
-            btnFilter.ImageTransparentColor = Color.Magenta;
-            btnFilter.Name = "btnFilter";
-            btnFilter.Size = new Size(36, 36);
-            btnFilter.Text = "Filter";
+            tabPage2.Location = new Point(4, 24);
+            tabPage2.Margin = new Padding(2);
+            tabPage2.Name = "tabPage2";
+            tabPage2.Padding = new Padding(2);
+            tabPage2.Size = new Size(1048, 444);
+            tabPage2.TabIndex = 1;
+            tabPage2.Text = "Unique Calls";
+            tabPage2.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
-            AutoScaleDimensions = new SizeF(10F, 25F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1573, 820);
-            Controls.Add(toolStripContainer1);
-            Controls.Add(statusStrip1);
+            ClientSize = new Size(1056, 492);
+            Controls.Add(tabControl1);
+            Controls.Add(ucStatusBar);
+            Margin = new Padding(2);
             Name = "MainForm";
             Text = "Brandmeister Monitor";
-            statusStrip1.ResumeLayout(false);
-            statusStrip1.PerformLayout();
-            toolStripContainer1.ContentPanel.ResumeLayout(false);
-            toolStripContainer1.TopToolStripPanel.ResumeLayout(false);
-            toolStripContainer1.TopToolStripPanel.PerformLayout();
-            toolStripContainer1.ResumeLayout(false);
-            toolStripContainer1.PerformLayout();
-            toolStrip1.ResumeLayout(false);
-            toolStrip1.PerformLayout();
+            FormClosing += MainForm_FormClosing;
+            Load += MainForm_Load;
+            tabControl1.ResumeLayout(false);
+            tpReports.ResumeLayout(false);
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
-
-        private StatusStrip statusStrip1;
-        private ToolStripStatusLabel toolStripStatusLabel1;
-        private ToolStripContainer toolStripContainer1;
-        private ToolStrip toolStrip1;
-        private ToolStripButton btnStart;
-        private ListView listView1;
-        private ColumnHeader colTimestamp;
-        private ColumnHeader colCallsign;
-        private ColumnHeader colTalkGroup;
-        private ColumnHeader colDuration;
-        private ToolStripButton btnStop;
-        private ToolStripSeparator toolStripSeparator1;
-        private ToolStripButton btnFilter;
+        private UserControls.StatusBar ucStatusBar;
+        private TabControl tabControl1;
+        private TabPage tpReports;
+        private TabPage tabPage2;
+        private UserControls.BrandmeisterReports ucReports;
     }
 }

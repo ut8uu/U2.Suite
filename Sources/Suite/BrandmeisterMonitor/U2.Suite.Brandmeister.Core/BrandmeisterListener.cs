@@ -22,7 +22,6 @@ public sealed class BrandmeisterListener : IDisposable
     const int oneThousandMs = 1000;
 
     readonly Timer _mqttTimer;
-    readonly Timer _watchdogTimer;
     readonly ConcurrentQueue<string> _mqttData = new ConcurrentQueue<string>();
     SocketIOClient.SocketIO _socket;
     bool _started = false;
@@ -45,7 +44,7 @@ public sealed class BrandmeisterListener : IDisposable
             Reconnection = true,
             EIO = EngineIO.V4,
             Transport = TransportProtocol.WebSocket,
-            ExtraHeaders = new Dictionary<string, string> { },
+            ExtraHeaders = [],
         });
 
         _socket.OnConnected += _socket_OnConnected;
@@ -60,7 +59,6 @@ public sealed class BrandmeisterListener : IDisposable
             Console.Write(".");
         });
         _mqttTimer = new Timer(state => { OnMqttTimerTick(); }, null, dueTime: Timeout.Infinite, period: Timeout.Infinite);
-        _watchdogTimer = new Timer(state => { OnWatchdogTimerTick(); }, null, dueTime: Timeout.Infinite, period: Timeout.Infinite);
     }
 
     void OnSessionDataReceived(SessionData data)
@@ -125,13 +123,11 @@ public sealed class BrandmeisterListener : IDisposable
             return;
         }
 
-        //_watchdogTimer.Change(dueTime: Timeout.Infinite, period: Timeout.Infinite);
         try
         {
             _socket.ConnectAsync().GetAwaiter();
         }
         catch { }
-        //_watchdogTimer.Change(dueTime: oneThousandMs, period: oneThousandMs);
     }
 
     bool _processingMqtt = false;
@@ -148,8 +144,6 @@ public sealed class BrandmeisterListener : IDisposable
         }
 
         _processingMqtt = true;
-
-        //_mqttTimer?.Change(Timeout.Infinite, Timeout.Infinite);
 
         Console.WriteLine("MQTT timer tick.");
 
@@ -190,9 +184,6 @@ public sealed class BrandmeisterListener : IDisposable
                 }
             }
         }
-
-        // start timer again
-        //_mqttTimer?.Change(dueTime: oneThousandMs, period: oneThousandMs);
 
         _processingMqtt = false;
     }

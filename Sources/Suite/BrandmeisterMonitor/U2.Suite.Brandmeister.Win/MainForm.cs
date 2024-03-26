@@ -5,36 +5,44 @@ namespace U2.Suite.Brandmeister.Win;
 
 public partial class MainForm : Form
 {
-    BrandmeisterListener _listener;
 
     public MainForm()
     {
         InitializeComponent();
 
-        _listener = new BrandmeisterListener();
-        _listener.Connected += Listener_Connected;
-        _listener.Disconnected += Listener_Disconnected;
-        _listener.SessionDataReceived += Listener_SessionDataReceived;
-        _listener.MessageThrown += Listener_MessageThrown;
+        ucReports.OnNewReport = ReportAdded;
+        ucReports.OnNewCall = OnNewCall;
+        ucReports.OnNewTalkGroup = OnNewTalkGroup;
+        ucReports.OnStatusChanged = OnStatusChanged;
     }
 
-    private void Listener_MessageThrown(object sender, string message)
+    private void OnStatusChanged(string status)
     {
-        throw new NotImplementedException();
+        ucStatusBar.SetStatus(status);
     }
 
-    private void Listener_SessionDataReceived(object sender, SessionData data)
+    private void OnNewTalkGroup(int tg)
     {
-        throw new NotImplementedException();
+        //BmTalkGroups.AddTalkGroup(data.DestinationID);
     }
 
-    private void Listener_Disconnected(object sender)
+    private void OnNewCall(string call)
     {
-        throw new NotImplementedException();
+        //BmUniqueCalls.AddCall(data.SourceCall);
     }
 
-    private void Listener_Connected(object sender)
+    private void ReportAdded()
     {
-        throw new NotImplementedException();
+        ucStatusBar.IncreaseCounter();
+    }
+
+    private void MainForm_Load(object sender, EventArgs e)
+    {
+        ucReports.StartListening();
+    }
+
+    private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+    {
+        ucReports.StopListening();
     }
 }
